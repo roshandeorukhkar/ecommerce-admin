@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isAuthenticated } from "./index";
+import { isAuthenticated } from "../common/utils";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
-        render={props =>
+        render={ props =>
             isAuthenticated() ? (
                 <Component {...props} />
             ) : (

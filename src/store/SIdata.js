@@ -1,0 +1,60 @@
+const SIdata=[
+    {
+        key : 1,
+        label : "Store Name",
+        placeholder : "Enter store name",
+        type : "text",
+        name : "storeName",
+        value : 'storeName',
+    },
+    {
+        key : 2,
+        label : "Store Owner Name",
+        placeholder : "Enter owner name",
+        type : "text",
+        name : "ownerName",
+        value : 'ownerName',
+    },
+    {
+        key : 3,
+        label : "Store Address",
+        placeholder : "Enter store address",
+        type : "text",
+        name : "address",
+        value : 'address',
+    },
+    {
+        key : 4,
+        label : "Store Login ID",
+        placeholder : "Enter Store Login ID",
+        type : "text",
+        name : "userName",
+        value : 'userName',
+    },
+    {
+        key : 5,
+        label : "Mobile No",
+        placeholder : "Enter Mobile No",
+        type : "number",
+        name : "mobile",
+        value : 'mobile',
+    },
+    {
+        key : 6,
+        label : "Store Password",
+        placeholder : "Enter Password",
+        type : "text",
+        name : "password",
+        value : 'password',
+    },
+    {
+        key : 7,
+        label : "Email Id",
+        placeholder : "Enter email id",
+        type : "email",
+        name : "email",
+        value : 'email',
+    },
+];
+
+export default SIdata;

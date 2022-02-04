@@ -1,109 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-import Layout from "../core/Layout";
-import { signin, authenticate, isAuthenticated } from "../auth";
+import { adminsignin } from "../auth/User";
+import { authenticate ,isAuthenticated} from '../common/utils';
+import { useHistory } from "react-router-dom";
 
-const Signin = () => {
-    const [values, setValues] = useState({
-        email: "roshan@gmail.com",
-        password: "rrrrrr9",
-        error: "",
-        loading: false,
-        redirectToReferrer: false
-    });
-
-    const { email, password, loading, error, redirectToReferrer } = values;
-    const { user } = isAuthenticated();
+const AdminSignin = () => {
+    const [values , setValues] = useState({})
+    const [error, setError] = useState('');
+    const { email , password } = values;
+    //const { admin } = isAuthenticated();
+    let history = useHistory();
 
     const handleChange = name => event => {
-        setValues({ ...values, error: false, [name]: event.target.value });
+        setValues({ ...values , [name]: event.target.value });
     };
 
-    const clickSubmit = event => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        setValues({ ...values, error: false, loading: true });
-        signin({ email, password }).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error, loading: false });
-            } else {
-                authenticate(data, () => {
-                    setValues({
-                        ...values,
-                        redirectToReferrer: true
-                    });
-                });
+       // setValues({ ...values, error : false ,loading: true });
+        const res = await adminsignin({ email , password })
+            const data = res.json();
+            if(res.status === 400 || !data){
+                setError('Please enter valid Email and Password!');
+            }else{
+                history.push("/admin/dashboard");
             }
-        });
+        
     };
 
     const signUpForm = () => (
-        <form>
-            <div className="form-group">
-                <label className="text-muted">Email</label>
-                <input
-                    onChange={handleChange("email")}
-                    type="email"
-                    className="form-control"
-                    value={email}
-                />
+        <div>
+            <div className="logoimage">
+                <img className="img-fluid" src="../assets/images/logo.png" alt="logo" />
             </div>
+            <div className="login_form">
+                <form> 
+                    <div className='admin_login'>
+                        <div>
+                            <i className='fa fa-mail'></i>
+                        </div>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                onChange={handleChange("email")}
+                                className="form-control"
+                                placeholder='email'
+                                value={email}
+                            />
+                        </div>
 
-            <div className="form-group">
-                <label className="text-muted">Password</label>
-                <input
-                    onChange={handleChange("password")}
-                    type="password"
-                    className="form-control"
-                    value={password}
-                />
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                onChange={handleChange("password")}
+                                className="form-control"
+                                placeholder='password'
+                                value={password}
+                            />
+                           {error && (<span className="validation"> {error} </span>)}
+                        </div>
+                        
+                        <Link to="#" className='admin_link'>forgotten Password</Link>
+
+                        <div className='button_align'>
+                            <div type="submit" onClick={handleSubmit} className="btn_1">
+                                Login
+                            </div>
+                        </div>
+                    </div>
+                </form>                                                         
             </div>
-            <button onClick={clickSubmit} className="btn btn-primary">
-                Submit
-            </button>
-        </form>
-    );
-
-    const showError = () => (
-        <div
-            className="alert alert-danger"
-            style={{ display: error ? "" : "none" }}
-        >
-            {error}
         </div>
     );
 
-    const showLoading = () =>
-        loading && (
-            <div className="alert alert-info">
-                <h2>Loading...</h2>
-            </div>
-        );
+    // const redirectUser = () => {
+    //     if (isAuthenticated()) {
+    //         return <Redirect to="/admin/dashboard" />;
+    //     }
+    // };
 
-    const redirectUser = () => {
-        if (redirectToReferrer) {
-            if (user && user.role === 1) {
-                return <Redirect to="/admin/dashboard" />;
-            } else {
-                return <Redirect to="/user/dashboard" />;
-            }
-        }
-        if (isAuthenticated()) {
-            return <Redirect to="/" />;
-        }
-    };
+    const AdminFooter =()=>(
+        <footer className='admin_footer'>
+            <Link className='admin_link' to="keasofttech.com"><small>KEA Softtech Pvt. Ltd</small></Link>
+            <small>"© 2017-2021 All Rights Reserved"</small>
+        </footer>
+    );
 
     return (
-        <Layout
-            title="Signin"
-            description="Signin to E-commerce"
-            className="container col-md-8 offset-md-2"
-        >
-            {showLoading()}
-            {showError()}
+        <>
             {signUpForm()}
-            {redirectUser()}
-        </Layout>
+            {AdminFooter()}
+            {/* {redirectUser()} */}
+        </>
     );
 };
 
-export default Signin;
+export default AdminSignin;

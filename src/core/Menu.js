@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { signout, isAuthenticated } from "../auth";
+import { signout } from "../auth/Cutomer";
+import {isAuthenticated } from "../common/utils"
 import { itemTotal } from "./cartHelpers";
 
 const isActive = (history, path) => {
@@ -13,8 +14,8 @@ const isActive = (history, path) => {
 
 const Menu = ({ history }) => (
     <div>
-        <ul className="nav nav-tabs bg-primary">
-            <li className="nav-item">
+        {/* <ul className="nav nav-tabs bg-primary"> */}
+            {/* <li className="nav-item">
                 <Link
                     className="nav-link"
                     style={isActive(history, "/")}
@@ -22,9 +23,9 @@ const Menu = ({ history }) => (
                 >
                     Home
                 </Link>
-            </li>
+            </li> */}
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <Link
                     className="nav-link"
                     style={isActive(history, "/shop")}
@@ -32,9 +33,9 @@ const Menu = ({ history }) => (
                 >
                     Shop
                 </Link>
-            </li>
+            </li> */}
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <Link
                     className="nav-link"
                     style={isActive(history, "/cart")}
@@ -45,9 +46,9 @@ const Menu = ({ history }) => (
                         <small className="cart-badge">{itemTotal()}</small>
                     </sup>
                 </Link>
-            </li>
+            </li> */}
 
-            {isAuthenticated() && isAuthenticated().user.role === 0 && (
+            {/* {isAuthenticated() && isAuthenticated().user.role === 0 && (
                 <li className="nav-item">
                     <Link
                         className="nav-link"
@@ -69,31 +70,29 @@ const Menu = ({ history }) => (
                         Dashboard
                     </Link>
                 </li>
-            )}
-
+            )} */}
+        <ul>   
+            <li className="nav-item">
             {!isAuthenticated() && (
                 <Fragment>
-                    <li className="nav-item">
-                        <Link
-                            className="nav-link"
-                            style={isActive(history, "/signin")}
-                            to="/signin"
-                        >
-                            Signin
-                        </Link>
-                    </li>
-
-                    <li className="nav-item">
-                        <Link
-                            className="nav-link"
-                            style={isActive(history, "/signup")}
-                            to="/signup"
-                        >
-                            Signup
-                        </Link>
-                    </li>
+                    <Link
+                        // className="nav-link"
+                        style={isActive(history, "/signin")}
+                        to="/signin"
+                    >
+                        Signin/
+                    </Link>
+                
+                    <Link
+                        //className="nav-link"
+                        style={isActive(history, "/signup")}
+                        to="/signup"
+                    >
+                        Signup
+                    </Link>
                 </Fragment>
             )}
+            </li>
 
             {isAuthenticated() && (
                 <li className="nav-item">

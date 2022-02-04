@@ -17,8 +17,8 @@ export default function Header({ history }){
         <div className="pd_header_main_wrapper float_left">
             <div className="container">
                 <div className="pd_top_header_wrapper">
-                    <div className="baz_top_header">
-                    <div className="row">
+                    {/* <div className="baz_top_header"> */}
+                    {/* <div className="row">
                         <div className="col-lg-4 col-md-4 col-12">
                             <div className="left_side">
                                 <ul>
@@ -40,8 +40,8 @@ export default function Header({ history }){
                                 <Menu/>
                             </div>
                         </div>
-                    </div>
-                    </div>
+                    </div> */}
+                    {/* </div> */}
                     <div className="middle_header float_left">
                     <div className="row">
                         <div className="col-md-2 col-12">
@@ -54,7 +54,10 @@ export default function Header({ history }){
                         <div className="col-md-7 col-12">
                             <Search/>
                         </div>
-                        <div className="col-md-3 col-12">
+                        <div  className="col-md-1 col-12">
+                            <Menu/>
+                        </div>
+                        <div className="col-md-2 col-12">
                             <div className="cart_shop">
                                 <Link to="#">
                                

@@ -83,12 +83,16 @@ export default function Footer(){
                         </div>
                     </div>
                     </div>
+                       
                 </div>
-                <div className="bz_bottom_footer_main_wrapper float_left">
+                <div className="copy_right_footer"> 
+                    <div>© Copyright 2021-22 - Design By Webstrot</div>
+                </div> 
+                {/* <div className="bz_bottom_footer_main_wrapper float_left">
                     <div className="copy_right">
                     <p> © Copyright 2021-22 - Design By Webstrot</p>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
