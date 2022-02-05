@@ -22,6 +22,8 @@ import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement';
 import AdminStatistics from './user/AdminStatistics';
 import AdminStoreMangement from './store/StoreManagement';
+import ManufacturerMangement from './manufacturer/ManufacturerManagement';
+import AddManufacturer from './manufacturer/AddManufacturer';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -46,6 +48,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/addrollmanagement" exact component={AddRollManagement} />
                 <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
+                <AdminRoute path="/admin/manufacturer" exact component={ManufacturerMangement} />
+                <AdminRoute path="/admin/manufacturer/add" exact component={AddManufacturer} />
             </Switch>
         </BrowserRouter>
     );
