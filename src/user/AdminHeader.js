@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AdminNotification from './AdminNotification';
 
 const AdminHeader = () =>{
+
+    const [showNotification ,setShowNotification] = useState(false);
+    const [showLogin , setShowLogin] = useState(false);
+
     return(
     <>
     <nav className="navbar navbar-default navbar-static-top m-b-0">
@@ -15,7 +20,7 @@ const AdminHeader = () =>{
                 </b>
                 <span>
                     {/* <img src="/assets/plugins/images/logo-text.png" alt="homepage" className="dark-logo" /> */}
-                    App Name
+                   E-commerce
                 </span>
             </a>
         </div>
@@ -25,69 +30,12 @@ const AdminHeader = () =>{
             </li>
         </ul>
         <ul className="nav navbar-top-links navbar-right pull-right">
-            <li className="dropdown">
-                <a className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" href='#'>
+                <li className={`dropdown ${showNotification == true ? "open" : ""}`}>
+                <a className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" onClick={() => setShowNotification(!showNotification)}>
                     <i className="icon-bell"></i>
-                    <span className="badge badge-xs badge-danger">6</span>
+                    <span className="badge badge-xs badge-danger">8</span>
                 </a>
-                <ul className="dropdown-menu mailbox animated bounceInDown">
-                    <li>
-                        <div className="drop-title">You have 4 new messages</div>
-                    </li>
-                    <li>
-                        <div className="message-center">
-                            <a href='#'>
-                                <div className="user-img">
-                                    <img src="/assets/plugins/images/users/1.jpg" alt="user" className="img-circle" />
-                                    <span className="profile-status online pull-right" ></span>
-                                </div>
-                                <div className="mail-contnet">
-                                    <h5>Pavan kumar</h5>
-                                    <span className="mail-desc">Just see the my admin!</span>
-                                    <span className="time">9:30 AM</span>
-                                </div>
-                            </a>
-                            <a href='#'>
-                                <div className="user-img">
-                                    <img src="/assets/plugins/images/users/2.jpg" alt="user" className="img-circle" />
-                                    <span className="profile-status busy pull-right"></span>
-                                </div>
-                                <div className="mail-contnet">
-                                    <h5>Sonu Nigam</h5>
-                                    <span className="mail-desc">I've sung a song! See you at</span>
-                                    <span className="time">9:10 AM</span>
-                                </div>
-                            </a>
-                            <a href='#'>
-                                <div className="user-img">
-                                    <img src="/assets/plugins/images/users/3.jpg" alt="user" className="img-circle" /><span className="profile-status away pull-right"></span>
-                                </div>
-                                <div className="mail-contnet">
-                                    <h5>Arijit Sinh</h5>
-                                    <span className="mail-desc">I am a singer!</span>
-                                    <span className="time">9:08 AM</span>
-                                </div>
-                            </a>
-                            <a href='#'>
-                                <div className="user-img">
-                                    <img src="/assets/plugins/images/users/4.jpg" alt="user" className="img-circle" />
-                                    <span className="profile-status offline pull-right"></span>
-                                </div>
-                                <div className="mail-contnet">
-                                    <h5>Pavan kumar</h5>
-                                    <span className="mail-desc">Just see the my admin!</span>
-                                    <span className="time">9:02 AM</span>
-                                </div>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <a className="text-center" href='#'>
-                            <strong>See all notifications</strong>
-                            <i className="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
+               <AdminNotification />
             </li>
             {/* <li className="right-side-toggle">
                 <a className="right-side-toggler waves-effect waves-light b-r-0" href='#' style={{display: "inline-flex"}}>
@@ -99,20 +47,20 @@ const AdminHeader = () =>{
                     <i className="icon-arrow-down" style={{ marginTop: '17px'}}></i>
                     </a>
             </li> */}
-            <li className="dropdown right-side-toggle">
-                <a className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown" href='#' style={{display: "inline-flex"}}>
+            <li className={`dropdown right-side-toggle ${showLogin == true ?"open" : "" }`}>
+                <a className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
                     <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  />
                     <p className='p-t-5'> 
                         <span className='font-bold text-dark'> Shubha Bankar</span>
                         <span className='font-12'>KeaSofttech@gmail.com</span>
                     </p>
-                    <i className="icon-arrow-down" style={{ marginTop: '17px'}}></i>
+                    <i className="icon-arrow-down m-t-15" ></i>
                 </a>
                 <ul className="dropdown-menu mailbox animated bounceInDown">
                     <li>
                         <div className="drop-title">
                             <p></p>
-                           <center> <a href='admin/signin' className='btn btn-primary btn-outline'>Sign Out</a></center>
+                           <center> <a href='/' className='btn btn-primary btn-outline'>Sign Out</a></center>
                         </div>
                     </li>
                 </ul>
