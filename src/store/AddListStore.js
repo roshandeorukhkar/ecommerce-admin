@@ -24,10 +24,41 @@ const AddListStore = () =>{
     const clickSubmit = event =>{
         event.preventDefault();
         setValues({...values});
-        addStoreData({...values})
+        addStoreData({...values}).then(data => {
+            console.log("data",data);
+            var alert = document.getElementById("alerttopright");
+            var msg = document.getElementById("alertMsg");
+            var hasError;
+            if(data.status == false){
+                alert.classList.add('alert-danger');
+                alert.classList.remove('alert-success');
+                msg.innerHTML= data.message;
+                for(let key in data.errors){
+                    console.log(key);
+                    hasError =  document.getElementById(key).classList.add('has-error');
+                    let div = document.getElementById(key+"_error");
+                    div.innerHTML =  data.errors[key];
+                }
+            }else{
+                document.querySelector('.page-wrapper').classList.remove('has-error');
+                document.querySelector('.page-wrapper').classList.remove('error');
+                alert.classList.remove('alert-danger');
+                alert.classList.add('alert-success');
+                msg.innerHTML= data.message;
+            }
+        })
     }
 
+    const successResult = () =>(
+        <div id="alerttopright" className="myadmin-alert  myadmin-alert-top-right"> 
+        <a href="#" className="closed">&times;</a>
+        <h4 id="alertMsg"></h4></div>
+        )
+    
+
     return(
+        <>
+        {successResult()}
         <div className="page-wrapper">
             <div className="container-fluid">
                 <h2 className="font-bold"> Store Management 
@@ -61,7 +92,8 @@ const AddListStore = () =>{
                 </div>
                 <StoreList/>
             </div>
-        </div>        
+        </div>    
+        </>    
         
     )
 }
