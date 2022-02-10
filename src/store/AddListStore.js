@@ -3,6 +3,7 @@ import AddStoreContent from "./AddStoreContent";
 import SIdata from "./SIdata";
 import StoreList from "./StoreList";
 import { addStoreData } from "./ApiStore";
+import { Link } from 'react-router-dom';
 
 const AddListStore = () =>{
     const [values , setValues] = useState({
@@ -51,7 +52,7 @@ const AddListStore = () =>{
 
     const successResult = () =>(
         <div id="alerttopright" className="myadmin-alert  myadmin-alert-top-right"> 
-        <a href="#" className="closed">&times;</a>
+        <Link to="#" className="closed">&times;</Link>
         <h4 id="alertMsg"></h4></div>
         )
     

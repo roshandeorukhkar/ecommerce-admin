@@ -3,6 +3,7 @@ import AdminStatistics from './AdminStatistics';
 import AdminFooter from './AdminFooter' ;
 import AdminStatisticProductGraph from './AdminStatisticProductGraph';
 import AdminStatisticTransactionGraph from './AdminStatisticTransactionGraph';
+import { Link } from 'react-router-dom';
 ;
 
 
@@ -16,7 +17,7 @@ const AdminStatisticPage = () =>{
                 <div className='row'>
                     <div className='col-lg-12'>
                         <h4 className='box-title'>Store Performances
-                            <a className='fa-pull-right'>View Details</a>
+                            <Link className='fa-pull-right'>View Details</Link>
                         </h4>
                         <hr/>
                         <div className='row'>
@@ -105,7 +106,7 @@ const AdminStatisticPage = () =>{
                     <div className='row'>
                         <div className='col-lg-12'>
                             <h4 className='box-title'>Product Data
-                                <a className='fa-pull-right'>Help</a>
+                                <Link className='fa-pull-right'>Help</Link>
                             </h4>
                             <hr/>
                             <div className='row'>
@@ -181,14 +182,14 @@ const AdminStatisticPage = () =>{
                                             </td>
                                             <td>
                                                 <img src="/assets/plugins/images/p1.png" alt="product" width="60" height="60"/>
-                                                <a href="#" className="p-l-25 text-link">Mobile</a>
+                                                <Link to="#" className="p-l-25 text-link">Mobile</Link>
                                             </td>
                                             <td>Daniel Kristeen</td>
                                             <td>Texas, US</td>
                                             <td>1</td>
                                             <td>
-                                                <a href="#" title='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" title='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></a>
+                                                <Link to="#" title='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></Link>
+                                                <Link to="#" title='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></Link>
                                             </td>
                                         </tr>
                                         <tr>
@@ -200,14 +201,14 @@ const AdminStatisticPage = () =>{
                                             </td>
                                             <td>
                                                 <img src="/assets/plugins/images/p2.png" alt="product" width="60" height="60"/>
-                                                <a href="#" className="p-l-25 text-link">Headphone</a>
+                                                <Link to="#" className="p-l-25 text-link">Headphone</Link>
                                             </td>
                                             <td>Hanna Gover</td>
                                             <td>Los Angeles, US</td>
                                             <td>2</td>
                                             <td>
-                                                <a href="#" type='Edit'  className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" type='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></a>
+                                                <Link to="#" type='Edit'  className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></Link>
+                                                <Link to="#" type='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></Link>
                                             </td>
                                         </tr>
                                         <tr>
@@ -219,14 +220,14 @@ const AdminStatisticPage = () =>{
                                             </td>
                                             <td>
                                                 <img src="/assets/plugins/images/p3.png" alt="product" width="60" height="60"/>
-                                                <a href="#" className="p-l-25 text-link">Earphone</a>
+                                                <Link to="#" className="p-l-25 text-link">Earphone</Link>
                                             </td>
                                             <td>Jeffery Brown</td>
                                             <td>Houston, US</td>
                                             <td>3</td>
                                             <td>
-                                                <a href="#" type='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" type="Delete" className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></a>
+                                                <Link to="#" type='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></Link>
+                                                <Link to="#" type="Delete" className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></Link>
                                             </td>
                                         </tr>
                                         <tr>
@@ -238,27 +239,27 @@ const AdminStatisticPage = () =>{
                                             </td>
                                             <td>
                                                 <img src="/assets/plugins/images/p4.png" alt="product" width="60" height="60"/>
-                                                <a href="#" className="p-l-25 text-link">Laptop</a>
+                                                <Link to="#" className="p-l-25 text-link">Laptop</Link>
                                             </td>
                                             <td>Elliot Dugteren</td>
                                             <td>San Antonio, US</td>
                                             <td>1</td>
                                             <td>
-                                                <a href="#" type='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></a>
-                                                <a href="#" type='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></a>
+                                                <Link to="#" type='Edit' className="btn btn-block btn-info font-16"><i className="fa fa-pencil" aria-hidden="true"></i></Link>
+                                                <Link to="#" type='Delete' className="btn btn-block btn-danger font-16"><i className="fa fa-trash" aria-hidden="true"></i></Link>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <ul className="pagination">
-                                <li><a>Previous</a></li>
-                                <li className="active"> <a href="#">1</a> </li>
-                                <li> <a href="#">2</a> </li>
-                                <li> <a href="#">3</a> </li>
-                                <li> <a href="#">4</a> </li>
-                                <li> <a href="#">5</a> </li>
-                                <li> <a href="#">Next</a></li>
+                                <li><Link> Previous</Link></li>
+                                <li className="active"> <Link to="#">1</Link> </li>
+                                <li> <Link to="#">2</Link> </li>
+                                <li> <Link to="#">3</Link> </li>
+                                <li> <Link to="#">4</Link> </li>
+                                <li> <Link to="#">5</Link> </li>
+                                <li> <Link to="#">Next</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -268,7 +269,7 @@ const AdminStatisticPage = () =>{
                     <div className='row'>
                         <div className='col-lg-12'>
                             <h4 className='box-title'>Transaction Data
-                                <a className='fa-pull-right'>Help</a>
+                                <Link className='fa-pull-right'>Help</Link>
                             </h4>
                             <hr/>
                             <div className='row'>
@@ -297,8 +298,8 @@ const AdminStatisticPage = () =>{
                              <i className='fa fa-credit-card'></i><br/>
                              <span>Income</span>
                              <h2 className='text-white font-bold'><i className='fa fa-rupee'></i> 12000</h2>
-                             <a className='text-white'>View Details
-                                {'      '}<i className='icon-arrow-right'></i></a>
+                             <Link className='text-white'>View Details
+                                {'      '}<i className='icon-arrow-right'></i></Link>
                          </div>
                      </div>
                      <div className='col-md-4 col-sm-12'>
@@ -306,7 +307,7 @@ const AdminStatisticPage = () =>{
                              <i className='fa fa-file'></i><br/>
                              <span>Refund</span>
                              <h2 className='text-white font-bold'><i className='fa fa-rupee'></i> 100</h2>
-                             <a className='text-white'>View Details  {'      '}<i className='icon-arrow-right'></i></a>
+                             <Link className='text-white'>View Details  {'      '}<i className='icon-arrow-right'></i></Link>
                          </div>
                      </div>
                      <div className='col-md-4 col-sm-12'>
@@ -314,7 +315,7 @@ const AdminStatisticPage = () =>{
                              <i className='fa fa-file'></i><br/>
                              <span>Top Ads Charges</span><br/>
                              <h2 className='text-white font-bold'> You haven't used</h2>
-                             <a className='text-white'>Try Now {'      '}<i className='icon-arrow-right'></i></a>
+                             <Link className='text-white'>Try Now {'      '}<i className='icon-arrow-right'></i></Link>
                          </div>
                      </div>
                  </div>

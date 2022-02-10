@@ -1,5 +1,7 @@
 import { Switch } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 const StoreList = () =>{
     return(
@@ -40,13 +42,13 @@ const StoreList = () =>{
                     </tbody>
                 </table>
                 <ul className="pagination pagination-sm m-b-0 fa-pull-right">
-                    <li className="disabled"> <a href="#"><i className="fa fa-angle-left"></i></a> </li>
-                    <li> <a href="#">1</a> </li>
-                    <li className="active"> <a href="#">2</a> </li>
-                    <li> <a href="#">3</a> </li>
-                    <li> <a href="#">4</a> </li>
-                    <li> <a href="#">5</a> </li>
-                    <li> <a href="#"><i className="fa fa-angle-right"></i></a> </li>
+                    <li className="disabled"> <Link to="#"><i className="fa fa-angle-left"></i></Link> </li>
+                    <li> <Link to="#">1</Link> </li>
+                    <li className="active"> <Link to="#">2</Link> </li>
+                    <li> <Link to="#">3</Link> </li>
+                    <li> <Link to="#">4</Link> </li>
+                    <li> <Link to="#">5</Link> </li>
+                    <li> <Link to="#"><i className="fa fa-angle-right"></i></Link> </li>
                 </ul>
             </div>  
     </div>
