@@ -86,6 +86,73 @@ export const listOrders = (userId, token) => {
         .catch(err => console.log(err));
 };
 
+
+
+export const createManufacturer = async (category) => {
+    try {
+        const response = await fetch(`${API}/manufacturer/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(category)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+export const getManufacturer = productId => {
+    return fetch(`${API}/manufacturer/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const getManufacturers = () => {
+    return fetch(`${API}/manufacturer?limit=undefined`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const updateManfacturer = (productId, category) => {
+    return fetch(`${API}/manufacturer/${productId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const deleteManufacturer = (productId) => {
+    return fetch(`${API}/manufacturer/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 export const getStatusValues = (userId, token) => {
     return fetch(`${API}/order/status-values/${userId}`, {
         method: 'GET',
@@ -135,7 +202,7 @@ export const getProducts = () => {
 };
 
 export const deleteProduct = (productId, userId, token) => {
-    return fetch(`${API}/product/${productId}/${userId}`, {
+    return fetch(`${API}/man/${productId}/${userId}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
