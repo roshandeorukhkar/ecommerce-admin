@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const AdminSidebar = () => {
 
@@ -13,68 +14,68 @@ const AdminSidebar = () => {
                             <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle" />
                         </div>
                         <div className="profile-name p-t-40">
-                            <p className="profile-text font-16"><a href="#"> Hanna Gover</a></p>
+                            <p className="profile-text font-16"><Link to="#"> Hanna Gover</Link></p>
                         </div>
                     </div>
                     <nav className="sidebar-nav">
                         <ul id="side-menu">
                             <li>
-                                <a href='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></a>
+                                <Link to='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></Link>
                             </li>
                             <li>
-                                <a href="/admin/statistic" aria-expanded="false"><i className="icon-chart fa-fw"></i><span className="hide-menu"> Statistics</span></a>
+                                <Link to="/admin/statistic" aria-expanded="false"><i className="icon-chart fa-fw"></i><span className="hide-menu"> Statistics</span></Link>
                             </li>
                             <li className={`two-column ${productSubMenu == true ? "active" : ""}`}>
-                                <a className="waves-effect"
-                                    aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span></a>
+                                <Link className="waves-effect"
+                                    aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span> <span class="label label-rounded pull-right"><i className= {`${productSubMenu == true ? 'icon-arrow-down' : 'icon-arrow-right'}`}></i></span></Link>
                                 <ul aria-expanded={`${productSubMenu == true ? "true" : "false"}`} className={`${productSubMenu == true ? "collapse in" : "collapse"}`}>
-                                    <li><a href="#">Product List</a></li>
-                                    <li><a href="#">Specification</a></li>
-                                    <li><a href="#">Attribute</a></li>
-                                    <li><a href="#">Category</a></li>
-                                    <li><a href="#">Manufacturer</a></li>
+                                    <li><Link to="#">Product List</Link></li>
+                                    <li><Link to="#">Specification</Link></li>
+                                    <li><Link to="#">Attribute</Link></li>
+                                    <li><Link to="#">Category</Link></li>
+                                    <li><Link to="#">Manufacturer</Link></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false"><i className="icon-people fa-fw"></i><span className="hide-menu"> Customers</span></a>
+                                <Link to="#" aria-expanded="false"><i className="icon-people fa-fw"></i><span className="hide-menu"> Customers</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></a>
+                                <Link to="#" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></Link>
                             </li>
                             <li>
-                                <a href="admin/storemanagement" aria-expanded="false">
+                                <Link to="/admin/storemanagement" aria-expanded="false">
                                     <i className="icon-grid fa-fw"></i>
-                                    <span className="hide-menu"> Store Management</span></a>
+                                    <span className="hide-menu"> Store Management</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-grid fa-fw"></i>
-                                    <span className="hide-menu"> Orders Management</span></a>
+                                    <span className="hide-menu"> Orders Management</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-credit-card fa-fw"></i>
-                                    <span className="hide-menu"> Transactions</span></a>
+                                    <span className="hide-menu"> Transactions</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-note fa-fw"></i>
-                                    <span className="hide-menu"> Feedback</span></a>
+                                    <span className="hide-menu"> Feedback</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-grid fa-fw"></i>
-                                    <span className="hide-menu"> Reviews</span></a>
+                                    <span className="hide-menu"> Reviews</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-docs fa-fw"></i>
-                                    <span className="hide-menu"> Reports</span></a>
+                                    <span className="hide-menu"> Reports</span></Link>
                             </li>
                             <li>
-                                <a href="calendar.html" aria-expanded="false">
+                                <Link to="#" aria-expanded="false">
                                     <i className="icon-settings fa-fw"></i>
-                                    <span className="hide-menu"> settings</span></a>
+                                    <span className="hide-menu"> settings</span></Link>
                             </li>
                         </ul>
                     </nav>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AdminNotification = () =>{
     return(
@@ -9,7 +10,7 @@ const AdminNotification = () =>{
                     </li>
                     <li>
                         <div className="message-center">
-                            <a href='#'>
+                            <Link to='#'>
                                 <div className="user-img">
                                     <img src="/assets/plugins/images/users/1.jpg" alt="user" className="img-circle" />
                                     <span className="profile-status online pull-right" ></span>
@@ -19,8 +20,8 @@ const AdminNotification = () =>{
                                     <span className="mail-desc">Just see the my admin!</span>
                                     <span className="time">9:30 AM</span>
                                 </div>
-                            </a>
-                            <a href='#'>
+                            </Link>
+                            <Link to='#'>
                                 <div className="user-img">
                                     <img src="/assets/plugins/images/users/2.jpg" alt="user" className="img-circle" />
                                     <span className="profile-status busy pull-right"></span>
@@ -30,8 +31,8 @@ const AdminNotification = () =>{
                                     <span className="mail-desc">I've sung a song! See you at</span>
                                     <span className="time">9:10 AM</span>
                                 </div>
-                            </a>
-                            <a href='#'>
+                            </Link>
+                            <Link to='#'>
                                 <div className="user-img">
                                     <img src="/assets/plugins/images/users/3.jpg" alt="user" className="img-circle" /><span className="profile-status away pull-right"></span>
                                 </div>
@@ -40,8 +41,8 @@ const AdminNotification = () =>{
                                     <span className="mail-desc">I am a singer!</span>
                                     <span className="time">9:08 AM</span>
                                 </div>
-                            </a>
-                            <a href='#'>
+                            </Link>
+                            <Link to='#'>
                                 <div className="user-img">
                                     <img src="/assets/plugins/images/users/4.jpg" alt="user" className="img-circle" />
                                     <span className="profile-status offline pull-right"></span>
@@ -51,14 +52,14 @@ const AdminNotification = () =>{
                                     <span className="mail-desc">Just see the my admin!</span>
                                     <span className="time">9:02 AM</span>
                                 </div>
-                            </a>
+                            </Link>
                         </div>
                     </li>
                     <li>
-                        <a className="text-center" href='#'>
+                        <Link className="text-center" to='#'>
                             <strong>See all notifications</strong>
                             <i className="fa fa-angle-right"></i>
-                        </a>
+                        </Link>
                     </li>
                 </ul>
         </>
