@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import AdminRoute from './auth/AdminRoute';
 import AdminDashboard from './user/AdminDashboard';
 import AddCategory from './user/AddCategory';
@@ -12,6 +12,12 @@ import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement';
 import AdminStatistics from './user/AdminStatistics';
 import AdminStoreMangement from './store/StoreManagement';
+
+import Manufacturer from './admin/Manufacturer';
+import ManageManufacturer from './admin/ManageManufacturer';
+import AddManufacturer from './admin/AddManufacturer';
+import UpdateManufacturer from './admin/UpdateManufacturer';
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -27,6 +33,12 @@ const Routes = () => {
                 <AdminRoute path="/admin/addrollmanagement" exact component={AddRollManagement} />
                 <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
+
+
+                <AdminRoute path="/admin/manufacturers" exact component={Manufacturer} />
+                <AdminRoute path="/admin/manufacturer" exact component={ManageManufacturer} />
+                <AdminRoute path="/admin/create/manufacturer" exact component={AddManufacturer} />
+                <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
             </Switch>
         </BrowserRouter>
     );
