@@ -26,8 +26,8 @@ const AdminSidebar = () => {
                                 <Link to="/admin/statistic" aria-expanded="false"><i className="icon-chart fa-fw"></i><span className="hide-menu"> Statistics</span></Link>
                             </li>
                             <li className={`two-column ${productSubMenu == true ? "active" : ""}`}>
-                                <Link className="waves-effect"
-                                    aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span> <span class="label label-rounded pull-right"><i className= {`${productSubMenu == true ? 'icon-arrow-down' : 'icon-arrow-right'}`}></i></span></Link>
+                                <Link className="waves-effect" to="#"
+                                    aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span> <span className="label label-rounded pull-right"><i className= {`${productSubMenu == true ? 'icon-arrow-down' : 'icon-arrow-right'}`}></i></span></Link>
                                 <ul aria-expanded={`${productSubMenu == true ? "true" : "false"}`} className={`${productSubMenu == true ? "collapse in" : "collapse"}`}>
                                     <li><Link to="#">Product List</Link></li>
                                     <li><Link to="#">Specification</Link></li>
