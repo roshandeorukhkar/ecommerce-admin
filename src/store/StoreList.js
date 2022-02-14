@@ -1,13 +1,32 @@
 import { Switch } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {storeList} from './ApiStore';
 
 
-const StoreList = () =>{
+const StoreList = (props) =>{
+    console.log("------------------",props.tableList);
+
+    const [list , setList] = useState(props.tableList);
+    const [checke , setCheck] = useState();
+
+    console.log("lidyhghjhjj",list)
+
+    const handleChange = (checked) =>{
+        console.log(checked)
+    }
+
+    const   getDate = (date) => {
+        const newDate = date.split('T')[0];
+        const dt =  newDate.split('-');
+        return dt[2]+'-'+dt[1]+'-'+dt[0];
+       }
+   //    console.log("list--------------", list);
+    var i = 1;
     return(
         <div className="white-box">
             <h3 className="box-title">
-                Store list
+            Store List
             </h3>   
             <div className="table-responsive">
                 <table className="table">
@@ -22,23 +41,28 @@ const StoreList = () =>{
                             </tr>
                     </thead>
                     <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>My shope</td>
-                                <td>shope@gmail.com</td>
+                        {
+                            list.map((ele,key) => (
+                                <tr key={key}>
+                                <td>{i++}</td>
+                                <td>{ele.storeName}</td>
+                                <td>{ele.email}</td>
                                 <td>
                                     <Switch name="checkedA"
                                         inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }}
-                                        color='primary' 
+                                        color='primary'
+                                        checked={ele.status} 
+                                        onChange={handleChange()}
                                     />
                                 </td>
-                                <td>31-12-2010</td>
+                                <td>{getDate(ele.createdDate)}</td>
                                 <td>
                                     <button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button>
                                     <button className='btn btn-outline btn-danger' aria-label='Delete'><i className='fa fa-trash-o font-15'></i></button>
                                 </td>
-                            </tr>
-
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
                 <ul className="pagination pagination-sm m-b-0 fa-pull-right">

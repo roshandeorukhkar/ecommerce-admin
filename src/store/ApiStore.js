@@ -15,15 +15,16 @@ export const addStoreData = data => {
     );
 }
 
-export const storeList = () => {
-    return fetch(`{API}/getStoreList`,{
+export const storeList = data => {
+    return  fetch(`${API}/getStoreList`,{
         "headers" : {
             "accept" : "application/json",
             "content-type" : "application/json"
         },
     }).then(response => {
-        console.log(response);
+        return response.json();
     }).catch(error =>
             console.log("error",error)
         );
 }
+

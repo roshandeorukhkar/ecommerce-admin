@@ -6,7 +6,8 @@ import { addStoreData } from "./ApiStore";
 import { Link } from 'react-router-dom';
 import FormMainTitle from "../common/FormMainTitle";
 import FormNotification from "../common/FormNotification";
-import TableComponent from "../common/TableComponent";
+import {storeList} from './ApiStore';
+
 
 const AddListStore = () =>{
     const [values , setValues] = useState({
@@ -23,10 +24,22 @@ const AddListStore = () =>{
     });
     const {storeName,ownerName,address,userName,mobile,password,email,errorNotification,alertColour,displayNotification} = values;
     const [storeInput , setStoreInput] = useState([]);
+    const [list , setList] = useState([]);
+
     useEffect(() => {
-        setStoreInput(SIdata)
+        console.log("hhh")
+        setStoreInput(SIdata);
+        getStoreList();
+        console.log("sssssss")
     },[]);
     
+    console.log("list",list)
+    const getStoreList = () => {
+        storeList().then(data =>{
+            setList(data.result);
+        })
+    }
+   
 
     const handleChange = name => event => {
         setValues({ ...values , [name]: event.target.value });
@@ -99,7 +112,10 @@ const AddListStore = () =>{
                         </div>
                     </div>
                 </div>
-                <StoreList/>
+                {!list ? (
+                    <StoreList tableList = {list}/>
+                ):null}
+                
                 {/* <TableComponent title="Store List"></TableComponent> */}
             </div>
         </div>    

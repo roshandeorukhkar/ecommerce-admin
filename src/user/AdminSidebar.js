@@ -14,7 +14,7 @@ const AdminSidebar = () => {
                             <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle" />
                         </div>
                         <div className="profile-name p-t-40">
-                            <p className="profile-text font-16"><Link to="#"> Hanna Gover</Link></p>
+                            <p className="profile-text font-16"><Link to="#"> Admin</Link></p>
                         </div>
                     </div>
                     <nav className="sidebar-nav">
@@ -30,7 +30,7 @@ const AdminSidebar = () => {
                                     aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span> <span className="label label-rounded pull-right"><i className= {`${productSubMenu == true ? 'icon-arrow-down' : 'icon-arrow-right'}`}></i></span></Link>
                                 <ul aria-expanded={`${productSubMenu == true ? "true" : "false"}`} className={`${productSubMenu == true ? "collapse in" : "collapse"}`}>
                                     <li><Link to="#">Product List</Link></li>
-                                    <li><Link to="#">Specification</Link></li>
+                                    <li><Link to="/admin/specification">Specification</Link></li>
                                     <li><Link to="#">Attribute</Link></li>
                                     <li><Link to="#">Category</Link></li>
                                     <li><Link to="/admin/manufacturers">Manufacturer</Link></li>

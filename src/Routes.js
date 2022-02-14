@@ -12,12 +12,13 @@ import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement';
 import AdminStatistics from './user/AdminStatistics';
 import AdminStoreMangement from './store/StoreManagement';
-
 import Manufacturer from './admin/Manufacturer';
 import ManageManufacturer from './admin/ManageManufacturer';
 import AddManufacturer from './admin/AddManufacturer';
 import UpdateManufacturer from './admin/UpdateManufacturer';
-
+import Addspecification from './admin/Addspecification';
+import ProductSpecification from './admin/ProductSpecification';
+import ProductManufacture from './admin/ProductManufacture';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -33,9 +34,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/addrollmanagement" exact component={AddRollManagement} />
                 <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
-
-
-                <AdminRoute path="/admin/manufacturers" exact component={Manufacturer} />
+                <AdminRoute path="/admin/specification" exact component={ProductSpecification} />
+                <AdminRoute path="/admin/manufacturers" exact component={ProductManufacture} />
                 <AdminRoute path="/admin/manufacturer" exact component={ManageManufacturer} />
                 <AdminRoute path="/admin/create/manufacturer" exact component={AddManufacturer} />
                 <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
