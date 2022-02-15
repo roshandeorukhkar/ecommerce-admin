@@ -292,3 +292,13 @@ export const deleteSpecification = (productId) => {
         }
     })
 };
+// show all user
+export const getCoustomer = () => {
+    return fetch(`${API}/customer?limit=undefined`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
