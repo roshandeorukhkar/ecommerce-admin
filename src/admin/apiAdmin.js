@@ -138,6 +138,21 @@ export const updateManfacturer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
+export const deleteManufacturer1 = (productId, category) => {
+    return fetch(`${API}/manufacturer/${productId}`, {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 export const deleteManufacturer = (productId) => {
     return fetch(`${API}/manufacturer/${productId}`, {
