@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { deleteManufacturer, getManufacturers } from "./apiAdmin";
+import { deleteManufacturer, getManufacturers, deleteManufacturer1 } from "./apiAdmin";
 
 const ManageManufacturer = () => {
     const [products, setProducts] = useState([]);
 
     const { user, token } = isAuthenticated();
+
+    const { manufacturerName } = isAuthenticated;
 
     const loadProducts = () => {
         getManufacturers().then(data => {
@@ -20,6 +22,19 @@ const ManageManufacturer = () => {
 
     const destroy = productId => {
         deleteManufacturer(productId).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadProducts();
+            }
+        });
+    };
+
+    const destroy1 = productId => {
+        // const category = {
+        //     manufacturerName: manufacturerName,
+        // };
+        deleteManufacturer1(productId).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -60,6 +75,7 @@ const ManageManufacturer = () => {
                             <td>
                                 <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)}><i className='fa fa-trash-o font-15'></i></button>
+                                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy1(p._id)}>Test</button>
                             </td>     
                         
                         </tr>
