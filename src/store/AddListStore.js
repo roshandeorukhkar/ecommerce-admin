@@ -112,7 +112,7 @@ const AddListStore = () =>{
                         </div>
                     </div>
                 </div>
-                {!list ? (
+                {list ? (
                     <StoreList tableList = {list}/>
                 ):null}
                 
