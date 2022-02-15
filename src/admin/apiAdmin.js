@@ -255,3 +255,41 @@ export const updateProduct = (productId, userId, token, product) => {
         })
         .catch(err => console.log(err));
 };
+
+export const createspecification = async (category) => {
+
+    try {
+        const response = await fetch(`${API}/specification/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(category)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const Specification = () => {
+    return fetch(`${API}/Specification?limit=undefined`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const deleteSpecification = (productId) => {
+    return fetch(`${API}/Specification/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
+};

@@ -27,32 +27,22 @@ const AdminHeader = () =>{
         </div>
         <ul className="nav navbar-top-links navbar-left hidden-xs">
             <li>
-                <Link className="sidebartoggler font-20 waves-effect waves-light"><i className="icon-arrow-left-circle"></i></Link>
+                <Link to="#" className="sidebartoggler font-20 waves-effect waves-light"><i className="icon-arrow-left-circle"></i></Link>
             </li>
         </ul>
         <ul className="nav navbar-top-links navbar-right pull-right">
                 <li className={`dropdown ${showNotification == true ? "open" : ""}`}>
-                <Link className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" onClick={() => setShowNotification(!showNotification)}>
+                <Link to="#" className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" onClick={() => setShowNotification(!showNotification)}>
                     <i className="icon-bell"></i>
                     <span className="badge badge-xs badge-danger">8</span>
                 </Link>
                <AdminNotification />
             </li>
-            {/* <li className="right-side-toggle">
-                <a className="right-side-toggler waves-effect waves-light b-r-0" to='#' style={{display: "inline-flex"}}>
-              
-                <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  />
-                <p className='p-t-5'> 
-                <span className='font-bold text-dark'> Shubha Bankar</span>
-                <span className='font-12'>KeaSofttech@gmail.com</span></p>
-                    <i className="icon-arrow-down" style={{ marginTop: '17px'}}></i>
-                    </Link>
-            </li> */}
             <li className={`dropdown right-side-toggle ${showLogin == true ?"open" : "" }`}>
-                <Link className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
+                <Link to="#" className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
                     <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  />
                     <p className='p-t-5'> 
-                        <span className='font-bold text-dark'> Shubha Bankar</span>
+                        <span className='font-bold text-dark'> Admin</span>
                         <span className='font-12'>KeaSofttech@gmail.com</span>
                     </p>
                     <i className="icon-arrow-down m-t-15" ></i>
