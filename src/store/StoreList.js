@@ -5,23 +5,22 @@ import {storeList} from './ApiStore';
 
 
 const StoreList = (props) =>{
-    console.log("------------------",props.tableList);
 
     const [list , setList] = useState(props.tableList);
-    const [checke , setCheck] = useState();
-
-    console.log("lidyhghjhjj",list)
+    const [check , setCheck] = useState();
 
     const handleChange = (checked) =>{
         console.log(checked)
     }
+    useEffect(() => {
+        setList(props.tableList);
+    },[props]);
 
     const   getDate = (date) => {
         const newDate = date.split('T')[0];
         const dt =  newDate.split('-');
         return dt[2]+'-'+dt[1]+'-'+dt[0];
        }
-   //    console.log("list--------------", list);
     var i = 1;
     return(
         <div className="white-box">
@@ -57,7 +56,7 @@ const StoreList = (props) =>{
                                 </td>
                                 <td>{getDate(ele.createdDate)}</td>
                                 <td>
-                                    <button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button>
+                                    <Link to={`/admin/storemanagement/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></Link>
                                     <button className='btn btn-outline btn-danger' aria-label='Delete'><i className='fa fa-trash-o font-15'></i></button>
                                 </td>
                                 </tr>
