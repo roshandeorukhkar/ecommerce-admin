@@ -97,6 +97,7 @@ import React, { useState } from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
+import { Redirect } from 'react-router-dom';
 
 
 const AddManufacturer = () =>{
@@ -105,10 +106,11 @@ const [values, setValues] = useState({
         manufacturerName: '',
         description: '',
         error: '',
-        success: false
+        success: false,
+        redirectToProfile: false
     });
 
-const { manufacturerName, description, success, error } = values;
+const { manufacturerName, description, success, error, redirectToProfile } = values;
 
 const handleChange = manufacturerName => event => {
     setValues({ ...values, error: false, [manufacturerName]: event.target.value });
@@ -126,7 +128,8 @@ const clickSubmit = event => {
                 manufacturerName: '',
                 description: '',
                 error: '',
-                success: true
+                success: true,
+                redirectToProfile: true
             });
         }
     });
@@ -142,18 +145,25 @@ const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
        <a class="text-center" style={{color:'white'}}> Manufacture add data successfully </a> 
     </div>
+    
+    
 );
+
+const redirectUser = () => {
+    if (redirectToProfile) { 
+        return <Redirect to="/admin/manufacturers" />;
+    }
+};
 
     return(
         <>
-        <div id="wrapper">
+            <div id="wrapper">
             <AdminHeader />
             <AdminSidebar />
            
             <div className="page-wrapper">
             <div className="container-fluid">
-                <h2 className="font-bold"> Add Manufacture 
-                <button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Manufacture</button></h2>
+                <h2 className="font-bold"> Add Manufacture </h2>
                 <div className="white-box">
                     <div className="row">
                         <div className="col-lg-12">
@@ -161,6 +171,7 @@ const showSuccess = () => (
                             <form>
                             {showSuccess()}
                             {showError()}
+                            {redirectUser()}
                             <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                 <div className="form-group">
                                     <label> <span style={{color:'red'}}>*</span> Manufacturer Name</label>
@@ -180,7 +191,10 @@ const showSuccess = () => (
             </div> 
             
         </div>
+       
+       
         </>
+
     )
 
 }
