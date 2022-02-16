@@ -19,6 +19,7 @@ import UpdateManufacturer from './admin/UpdateManufacturer';
 import Addspecification from './admin/Addspecification';
 import ProductSpecification from './admin/ProductSpecification';
 import ProductManufacture from './admin/ProductManufacture';
+
 import Customer from './admin/Customer';
 import CustomerManagement from './admin/CustomerManagement';
 const Routes = () => {

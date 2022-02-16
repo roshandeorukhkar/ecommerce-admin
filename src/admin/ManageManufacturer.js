@@ -53,12 +53,15 @@ const ManageManufacturer = () => {
     return (
 
             <div className="row">
-                <h4 className="box-title">List of Manufacturer {products.length}</h4><hr></hr>
+                <h2 className="font-bold"> List of Manufacturer {products.length}
+                    <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Manufacturer</button></Link></h2>
+               <hr></hr>
                 <div className="col-12">
                    <br></br>
                     <table className="table">
                     <thead>
                             <tr>
+                                <th><input type="checkbox" /></th>
                                 <th>Id</th>
                                 <th>Manufacturer Name</th>
                                 <th>Descrtiption</th>
@@ -69,7 +72,7 @@ const ManageManufacturer = () => {
                     <tbody>
                         {products.map((p, i) => (
                        <tr  key={i}>
-                           
+                           <td><input type="checkbox" /></td>
                             <td>{no++}</td>
                             <td>{p.manufacturerName}</td>
                             <td>{p.description}</td>

@@ -302,3 +302,13 @@ export const getCoustomer = () => {
         })
         .catch(err => console.log(err));
 };
+
+export const getCustomers = productId => {
+    return fetch(`${API}/cus/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
