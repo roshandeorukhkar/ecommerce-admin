@@ -19,6 +19,8 @@ import UpdateManufacturer from './admin/UpdateManufacturer';
 import Addspecification from './admin/Addspecification';
 import ProductSpecification from './admin/ProductSpecification';
 import ProductManufacture from './admin/ProductManufacture';
+import Customer from './admin/Customer';
+import CustomerManagement from './admin/CustomerManagement';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -40,6 +42,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/create/manufacturer" exact component={AddManufacturer} />
                 <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
                 <AdminRoute path="/admin/storemanagement/:storeId" exact component={AdminStoreMangement} />
+                <AdminRoute path="/admin/coustomer" exact component={Customer} />
+                <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />
             </Switch>
         </BrowserRouter>
     );

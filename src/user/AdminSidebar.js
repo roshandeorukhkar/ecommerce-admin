@@ -36,8 +36,9 @@ const AdminSidebar = () => {
                                     <li><Link to="/admin/manufacturers">Manufacturer</Link></li>
                                 </ul>
                             </li>
+                           
                             <li>
-                                <Link to="#" aria-expanded="false"><i className="icon-people fa-fw"></i><span className="hide-menu"> Customers</span></Link>
+                                <Link to="/admin/coustomers" aria-expanded="false"><i className="icon-people fa-fw"></i><span className="hide-menu"> Customers</span></Link>
                             </li>
                             <li>
                                 <Link to="#" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></Link>
