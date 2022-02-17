@@ -4,7 +4,6 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-import { Link } from "react-router-dom";
 
 const AddManufacturer = () =>{
     
@@ -55,35 +54,15 @@ const showError = () => (
 
 const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-        <Link to={`/admin/manufacturers`}><button className='btn btn-danger' aria-label='Edit' title="Add Manufacturer" style={{float:'right'}}><i className='fa fa-close'></i></button></Link>
-       <a class="text-center" style={{color:'white'}}> Manufacture add data successfully </a> 
+       <a class="text-center" style={{color:'white'}}> Manufacture data add successfully </a> 
     </div>  
 );
 
 const redirectUser = () => {
-    console.log("DSF");
-        // setTimeout(() => {
-            if(redirectToProfile) {
-                return <Redirect to="/admin/manufacturers" />;
-            }  
-       
-        // }, 1000);
+    if(redirectToProfile) {
+        return <Redirect to="/admin/manufacturers" />;
+     }  
 };
-
-// const redirectUser = () => {
-//     if (redirectToProfile) {
-//         if (!error) {
-//             //return <Redirect to="/admin/manufacturers" />;
-//             setTimeout(() => {
-//                 alert(1)
-//                 return <Redirect to="/admin/manufacturers" />;
-//             }, 2000)
-
-//             return '';
-//         }
-//     }
-// };
-
 return(
         <>
             <div id="wrapper">

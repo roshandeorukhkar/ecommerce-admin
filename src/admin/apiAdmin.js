@@ -328,3 +328,17 @@ export const updateCustomer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
+export const deleteCustomer = (productId, category) => {
+    return fetch(`${API}/cust/delete/${productId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
