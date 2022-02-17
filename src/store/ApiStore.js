@@ -28,3 +28,15 @@ export const storeList = data => {
         );
 }
 
+// export const getStoreDataById = data => {
+//     return fetch(`${API}/getStoreDataById/${data.id}`,{
+//         "headers" : {
+//             "accept" : "application/json",
+//             "content-type" : "application/json"
+//         },
+//     }).then(response => {
+//         return response.json("hello");
+//     }).catch( error => 
+//         console.log("Store get data error : ")
+//     )
+// }
