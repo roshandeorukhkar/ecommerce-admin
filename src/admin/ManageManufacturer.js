@@ -31,14 +31,17 @@ const ManageManufacturer = () => {
     };
 
     const destroy1 = productId => {
+       
         const category = {
            // manufacturerName: productId,
             manufacturerName: new Date(),
         };
         deleteManufacturer1(productId, category).then(data => {
             if (data.error) {
+                
                 console.log(data.error);
             } else {
+                alert('Are you soure you wont delete record!');
                 //console.log("test abc", manufacturerName);
                 loadProducts();
             }

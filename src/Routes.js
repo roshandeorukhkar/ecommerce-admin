@@ -22,6 +22,7 @@ import ProductManufacture from './admin/ProductManufacture';
 
 import Customer from './admin/Customer';
 import CustomerManagement from './admin/CustomerManagement';
+import UpdateCustomer from './admin/UpdateCustomer';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -45,6 +46,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/storemanagement/:storeId" exact component={AdminStoreMangement} />
                 <AdminRoute path="/admin/coustomer" exact component={Customer} />
                 <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />
+                <AdminRoute path="/admin/coustomers/update/:productId" exact component={UpdateCustomer} />
             </Switch>
         </BrowserRouter>
     );

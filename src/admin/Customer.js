@@ -65,7 +65,7 @@ const Customer = () => {
                             
                             <td>31-12-2010 </td>
                             <td>
-                                <Link to={`/admin/manufacturer/update/${customer._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                                <Link to={`/admin/coustomers/update/${customer._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(customer._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
                             </td>     
                         

@@ -294,7 +294,7 @@ export const deleteSpecification = (productId) => {
 };
 // show all user
 export const getCoustomer = () => {
-    return fetch(`${API}/customer?limit=undefined`, {
+    return fetch(`${API}/cust?limit=undefined`, {
         method: 'GET'
     })
         .then(response => {
@@ -303,9 +303,25 @@ export const getCoustomer = () => {
         .catch(err => console.log(err));
 };
 
-export const getCustomers = productId => {
-    return fetch(`${API}/cus/${productId}`, {
+export const getCust = productId => {
+    return fetch(`${API}/cust/${productId}`, {
         method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const updateCustomer = (productId, category) => {
+    return fetch(`${API}/cust/${productId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
     })
         .then(response => {
             return response.json();
