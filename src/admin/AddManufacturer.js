@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-
 
 const AddManufacturer = () =>{
     
@@ -38,7 +36,6 @@ const clickSubmit = event => {
                 redirectToProfile: true
             });
         }
-        redirectUser();
     });
 };
 
@@ -50,18 +47,34 @@ const showError = () => (
 
 const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-       <a class="text-center" style={{color:'white'}}> Manufacture add data successfully </a> 
-    </div>
-    
-    
+       <a class="text-center" style={{color:'white'}}> Manufacture add data successfully</a> 
+       <button className='btn btn-info'>Ok</button>
+    </div>  
 );
 
 const redirectUser = () => {
-    console.log("DSF");
+   
     if (redirectToProfile) { 
+        // setTimeout(() => {
+            console.log("DSF"); 
         return <Redirect to="/admin/manufacturers" />;
+        // }, 1000);
     }
 };
+
+// const redirectUser = () => {
+//     if (redirectToProfile) {
+//         if (success == true) {
+//             //return <Redirect to="/admin/manufacturers" />;
+//             // setTimeout(() => {
+//                 alert(1)
+//                 return <Redirect to="/admin/manufacturers" />;
+//             //}, 2000)
+
+//             return '';
+//         }
+//     }
+// };
 
     return(
         <>
@@ -79,7 +92,8 @@ const redirectUser = () => {
                         <div className="col-lg-12">
                             <hr />
                             <form>
-                            {showSuccess()}
+                              
+                            {showSuccess()}   
                             {showError()}
                             {redirectUser()}
                             <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
