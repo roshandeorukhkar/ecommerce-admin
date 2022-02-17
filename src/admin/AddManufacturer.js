@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const AddManufacturer = () =>{
     
@@ -33,8 +35,14 @@ const clickSubmit = event => {
                 description: '',
                 error: '',
                 success: true,
-                redirectToProfile: true
+                redirectToProfile: false
             });
+            setTimeout(function(){
+                setValues({
+                    ...values,
+                    redirectToProfile:true
+                })
+            },3000)
         }
     });
 };
@@ -47,77 +55,69 @@ const showError = () => (
 
 const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-       <a class="text-center" style={{color:'white'}}> Manufacture add data successfully</a> 
-       <button className='btn btn-info'>Ok</button>
+        <Link to={`/admin/manufacturers`}><button className='btn btn-danger' aria-label='Edit' title="Add Manufacturer" style={{float:'right'}}><i className='fa fa-close'></i></button></Link>
+       <a class="text-center" style={{color:'white'}}> Manufacture add data successfully </a> 
     </div>  
 );
 
 const redirectUser = () => {
-   
-    if (redirectToProfile) { 
+    console.log("DSF");
         // setTimeout(() => {
-            console.log("DSF"); 
-        return <Redirect to="/admin/manufacturers" />;
+            if(redirectToProfile) {
+                return <Redirect to="/admin/manufacturers" />;
+            }  
+       
         // }, 1000);
-    }
 };
 
 // const redirectUser = () => {
 //     if (redirectToProfile) {
-//         if (success == true) {
+//         if (!error) {
 //             //return <Redirect to="/admin/manufacturers" />;
-//             // setTimeout(() => {
+//             setTimeout(() => {
 //                 alert(1)
 //                 return <Redirect to="/admin/manufacturers" />;
-//             //}, 2000)
+//             }, 2000)
 
 //             return '';
 //         }
 //     }
 // };
 
-    return(
+return(
         <>
             <div id="wrapper">
             <AdminHeader />
             <AdminSidebar />
-           
             <div className="page-wrapper">
-            <div className="container-fluid">
-                
-                <h2 className="font-bold"> Add Manufacture </h2>
-                
-                <div className="white-box">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <hr />
-                            <form>
-                              
-                            {showSuccess()}   
-                            {showError()}
-                            {redirectUser()}
-                            <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                <div className="form-group">
-                                    <label> <span style={{color:'red'}}>*</span> Manufacturer Name</label>
-                                    <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Description</label>
-                                    <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" value={description}></textarea>
-                                </div>
-                                <button onClick={clickSubmit} className="btn btn-info"> Save </button>
+                <div className="container-fluid">
+                    <h2 className="font-bold"> Add Manufacture </h2>
+                        <div className="white-box">
+                            <div className="row">
+                                <div className="col-lg-12"><hr />
+                                    <form>
+                                        {showSuccess()}
+                                        {showError()}
+                                        {redirectUser()}
+                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                            <div className="form-group">
+                                                <label> <span style={{color:'red'}}>*</span> Manufacturer Name</label>
+                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Description</label>
+                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" value={description}></textarea>
+                                            </div>
+                                            <button onClick={clickSubmit} className="btn btn-info"> Save </button>
+                                    </div>
+                                </form>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
             </div> 
-            
         </div>
-       
-       
-        </>
+    </>
 
     )
 

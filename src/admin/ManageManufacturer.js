@@ -12,6 +12,7 @@ const ManageManufacturer = () => {
 
     const loadProducts = () => {
         getManufacturers().then(data => {
+        console.log("gaurav", data);
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -73,18 +74,25 @@ const ManageManufacturer = () => {
                             </tr>
                     </thead>
                     <tbody>
+                        
                         {products.map((p, i) => (
+                            
                        <tr  key={i}>
-                           <td><input type="checkbox" /></td>
-                            <td>{no++}</td>
-                            <td>{p.manufacturerName}</td>
-                            <td>{p.description}</td>
-                            <td>31-12-2010 </td>
-                            <td>
-                                <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-cube'></i></button>
-                            </td>     
+                           {!p.deletedAt ?(
+                               <>
+                                <td><input type="checkbox" /></td>
+                                <td>{no++}</td>
+                                <td>{p.manufacturerName}</td>
+                                <td>{p.description}</td>
+                                <td>31-12-2010 </td>
+                                <td>
+                                    <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+                                    <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-cube'></i></button>
+                                </td>  
+                               </>
+                           ):null}
+                        
                         
                         </tr>
                         
