@@ -72,14 +72,14 @@ const UpdateManufacturer = ({ match }) => {
         <div className="">
             <form className="mb-3" onSubmit={submitCategoryForm}>
             <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
+                <h6><b><span style={{color:'red'}}>*</span> Manufacturer Nmae</b></h6>
+                <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
             </div>
             <div className="form-group">
-                <label className="text-muted">Description</label>
-                <textarea onChange={handleChange_des('description')} className="form-control" value={description} description="description" required />
+               <h6><b>Description</b></h6>
+                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
             </div>
-            <button className="btn btn-info">Update</button>
+            <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
         </form>
         </div>
     );
@@ -109,7 +109,7 @@ const UpdateManufacturer = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Update Manufacturer</h2>
+                        <h2 className="font-bold"> Edit Manufacturer</h2>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">

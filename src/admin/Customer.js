@@ -42,7 +42,7 @@ const Customer = () => {
 
             <div className="row">
                 {/* <h4 className="box-title">Customer {products.length}</h4><hr></hr> */}
-                <h2><Link to={`create/customer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Customer</button></Link></h2>
+                {/* <h2><Link to={`create/customer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Customer</button></Link></h2> */}
                 <div className="col-12">
                    <br></br>
                     <table className="table">

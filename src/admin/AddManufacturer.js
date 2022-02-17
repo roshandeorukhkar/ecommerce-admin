@@ -73,21 +73,21 @@ return(
                     <h2 className="font-bold"> Add Manufacture </h2>
                         <div className="white-box">
                             <div className="row">
-                                <div className="col-lg-12"><hr />
+                                <div className="col-lg-12">
                                     <form>
                                         {showSuccess()}
                                         {showError()}
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group">
-                                                <label> <span style={{color:'red'}}>*</span> Manufacturer Name</label>
-                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} />
+                                                <h6><b><span style={{color:'red'}}>*</span> Manufacturer Name</b></h6>
+                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
                                             </div>
                                             <div className="form-group">
-                                                <label>Description</label>
-                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" value={description}></textarea>
+                                                <h6><b>Description</b></h6>
+                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
-                                            <button onClick={clickSubmit} className="btn btn-info"> Save </button>
+                                            <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
                                     </div>
                                 </form>
                             </div>
