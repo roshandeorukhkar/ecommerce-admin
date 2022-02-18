@@ -28,3 +28,29 @@ export const storeList = data => {
         );
 }
 
+export const getStoreDataById = data => {
+    return  fetch(`${API}/getStoreDataById/${data.storeId}`,{
+        "headers" : {
+            "accept" : "application/json",
+            "content-type" : "application/json"
+        },
+    }).then(response => {
+        return response.json();
+    }).catch(error =>
+            console.log("error",error)
+        );
+}
+
+export const deleteStore = data =>{
+    console.log(data);
+    return  fetch(`${API}/deleteStoreData/${data}`,{
+        "headers" : {
+            "accept" : "application/json",
+            "content-type" : "application/json"
+        },
+    }).then(response => {
+        return response.json();
+    }).catch(error =>
+            console.log("error",error)
+        );
+}

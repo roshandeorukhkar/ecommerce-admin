@@ -1,127 +1,208 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AddStoreContent from "./AddStoreContent";
-import SIdata from "./SIdata";
 import StoreList from "./StoreList";
 import { addStoreData } from "./ApiStore";
-import { Link } from 'react-router-dom';
+import { Link, useParams, useForm } from "react-router-dom";
 import FormMainTitle from "../common/FormMainTitle";
 import FormNotification from "../common/FormNotification";
-import {storeList} from './ApiStore';
+import { storeList } from "./ApiStore";
+import { getStoreDataById } from "./ApiStore";
 
-
-const AddListStore = () =>{
-    const [values , setValues] = useState({
-        storeName : " ",
-        ownerName : " ",
-        address : " ",
-        userName : " ",
-        mobile : " ",
-        password : " ",
-        email : " ",
-        errorNotification : "",
-        alertColour : "",
-        displayNotification : "none"
-    });
-    const {storeName,ownerName,address,userName,mobile,password,email,errorNotification,alertColour,displayNotification} = values;
-    const [storeInput , setStoreInput] = useState([]);
-    const [list , setList] = useState([]);
-
-    useEffect(() => {
-        console.log("hhh")
-        setStoreInput(SIdata);
-        getStoreList();
-        console.log("sssssss")
-    },[]);
-    
-    console.log("list",list)
-    const getStoreList = () => {
-        storeList().then(data =>{
-            setList(data.result);
-        })
+const AddListStore = () => {
+    const Initilize = {
+        storeName: "",
+        storeNameError: "",
+        ownerName: "",
+        ownerNameError: "",
+        address: "",
+        addressError: "",
+        userName: "",
+        userNameError: "",
+        mobile: "",
+        mobileError: "",
+        password: "",
+        passwordError: "",
+        email: "",
+        emailError: "",
     }
-   
+    const [values, setValues] = useState({
+        Initilize,
+        errorNotification: "",
+        alertColour: "",
+        displayNotification: "dn",
+        storeId: ""
+    });
 
-    const handleChange = name => event => {
-        setValues({ ...values , [name]: event.target.value });
+    const [list, setList] = useState([]);
+    const [checkParams, setCheckParams] = useState(false);
+
+
+    let params = useParams();
+console.log(params.storeId)
+    useEffect(() => {
+        if(params.storeId != undefined){
+            getStoreById();
+            setValues({ storeId: params.storeId })
+            setCheckParams(true);
+        }
+        getStoreList();
+    }, [checkParams]);
+
+    const getStoreList = () => {
+        storeList().then((data) => {
+            setList(data.result);
+        });
     };
 
-    const clickSubmit = event =>{
-        event.preventDefault();
-        addStoreData({...values}).then(data => {
-            if(data.status == false){
-                console.log("---------",data)
-                setValues({
-                    ...values,
-                    errorNotification : data.message,
-                    alertColour : "alert-danger",
-                    displayNotification : "block"
-                })
-                let storeInputArray = []
-                let errors = data.errors
-                storeInput.forEach(element => {
-                    element.error = errors[element.name]
-                    storeInputArray.push(element)
-                });
-                setStoreInput(storeInputArray);
-            }else{
-                setValues({
-                    ...values,
-                    errorNotification : data.message,
-                    alertColour : "alert-success",
-                    displayNotification : "block"
-                })
-            }
-        })
+    const getStoreById = async () => {
+        await getStoreDataById({ storeId: params.storeId }).then((data) => {
+            setValues({
+                storeName: data.storeName,
+                ownerName: data.ownerName,
+                address: data.address,
+                userName: data.userName,
+                mobile: data.mobile,
+                password: data.password,
+                email: data.email
+            });
+        });
     }
 
-    return(
+    const handleChange = (name) => (event) => {
+        setValues({ ...values, [name]: event.target.value });
+    };
+
+    const clickSubmit = (event) => {
+        event.preventDefault();
+        addStoreData({ ...values }).then((data) => {
+            if (data.status == false) {
+                setValues({
+                    ...values,
+                    storeNameError: data.errors.storeName,
+                    ownerNameError: data.errors.ownerName,
+                    addressError: data.errors.address,
+                    userNameError: data.errors.userName,
+                    mobileError: data.errors.mobile,
+                    passwordError: data.errors.password,
+                    emailError: data.errors.email,
+                    errorNotification: data.message,
+                    alertColour: "alert-danger",
+                    displayNotification: "db",
+                });
+            } else {
+                setValues({
+                    Initilize,
+                    errorNotification: data.message,
+                    alertColour: "alert-success",
+                    displayNotification: "db",
+                });
+                getStoreList();
+                document.getElementById("myForm").reset();
+            }
+        });
+    };
+
+    return (
         <>
-        <FormNotification
-                 message={errorNotification}
-                 alertClass={alertColour}
-                 style={{display : displayNotification}} />
-        <div className="page-wrapper">
-            <div className="container-fluid">
-                <FormMainTitle title="Store Management" btnName="Add Role" />
-                <div className="white-box">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <h4 className="box-title">Add Store</h4>
-                            <hr />
-                            <form className="form-horizontal" >
-                            {  
-                                storeInput.map(function data(val){
-                                const setName=val.name;
-                                return(
-                                    <AddStoreContent 
-                                        key = {val.key}
-                                        label= {val.label} 
-                                        placeholder= {val.placeholder}
-                                        type={val.type}
-                                        name={val.name}
-                                        value ={values.setName}
-                                        onChange ={handleChange(val.name)}
-                                        errorSpan = {val.error}
+            <FormNotification
+                message={values.errorNotification}
+                alertClass={values.alertColour}
+                show = {values.displayNotification}
+                // onClick ={}
+            />
+            <div className="page-wrapper">
+                <div className="container-fluid">
+                    <FormMainTitle title="Store Management"
+                        btnName="Add Role"
+                        btnSecond="Add Store"
+                        onClick={() => setCheckParams(!checkParams)}
+                        btnLink = "/admin/rolemanagement"
+                        btnSecondlink = "/admin/storemanagement"
+                    />
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <h4 className="box-title">
+                                    {!(params.storeId) ? "Add Store" : "Edit Store"}
+                                </h4>
+                                <hr />
+                                <form className="form-horizontal" id="myForm">
+                                    <AddStoreContent
+                                        label="Store Name"
+                                        placeholder="Enter store name"
+                                        type="text"
+                                        value={values.storeName}
+                                        onChange={handleChange("storeName")}
+                                        errorSpan={values.storeNameError}
                                     />
-                                )
-                            })}
-                                <div className="col-md-12 t-a-c">
-                                    <button type="submit" className="btn  btn-outline btn-rounded  btn-info" onClick={clickSubmit}><i className="fa fa-plus-circle"></i> Save Store</button>
-                                </div>
-                            </form>
+                                    <AddStoreContent
+                                        label="Store Owner Name"
+                                        placeholder="Enter owner name"
+                                        type="text"
+                                        value={values.ownerName}
+                                        onChange={handleChange("ownerName")}
+                                        errorSpan={values.ownerNameError}
+                                    />
+                                    <AddStoreContent
+                                        label="Store Address"
+                                        placeholder="Enter Store Address"
+                                        type="text"
+                                        value={values.address}
+                                        onChange={handleChange("address")}
+                                        errorSpan={values.addressError}
+                                    />
+                                    <AddStoreContent
+                                        label="Store Login ID"
+                                        placeholder="Enter Store Login ID"
+                                        type="text"
+                                        value={values.userName}
+                                        onChange={handleChange("userName")}
+                                        errorSpan={values.userNameError}
+                                    />
+                                    <AddStoreContent
+                                        label="Mobile No"
+                                        placeholder="Enter Mobile No"
+                                        type="text"
+                                        value={values.mobile}
+                                        onChange={handleChange("mobile")}
+                                        errorSpan={values.mobileError}
+                                    />
+                                    <AddStoreContent
+                                        label="Store Password"
+                                        placeholder="Enter Store Password"
+                                        type="text"
+                                        value={values.password}
+                                        onChange={handleChange("password")}
+                                        errorSpan={values.passwordError}
+                                    />
+                                    <AddStoreContent
+                                        label="Email Id"
+                                        placeholder="Enter Email Id"
+                                        type="text"
+                                        value={values.email}
+                                        onChange={handleChange("email")}
+                                        errorSpan={values.emailError}
+                                    />
+                                    <div className="col-md-12 t-a-c">
+                                        {params.storeId !== undefined ? <input type="hidden" value={values.storeId} onChange={handleChange("storeId")} /> : ""}
+                                        <button
+                                            type="submit"
+                                            className="btn  btn-outline btn-rounded  btn-info"
+                                            onClick={clickSubmit}
+                                        >
+                                            <i className="fa fa-plus-circle"></i>{" "}
+                                            {!params.storeId ? "Save Store" : "Update Store"}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    {list ? <StoreList tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null}
                 </div>
-                {list ? (
-                    <StoreList tableList = {list}/>
-                ):null}
-                
-                {/* <TableComponent title="Store List"></TableComponent> */}
             </div>
-        </div>    
-        </>    
-        
-    )
-}
+        </>
+    );
+};
 
 export default AddListStore;

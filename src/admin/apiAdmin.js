@@ -138,15 +138,14 @@ export const updateManfacturer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
-export const deleteManufacturer1 = (productId) => {
-    return fetch(`${API}/manufacturer/${productId}/updateDelete`, {
-        method: 'PUT',
+export const deleteManufacturer1 = (productId, category) => {
+    return fetch(`${API}/manufacturer/delete/${productId}`, {
+        method: 'POST',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json',
-            //Authorization: `Bearer ${token}`
-        }
-        //body: JSON.stringify(category)
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
     })
         .then(response => {
             return response.json();
@@ -292,4 +291,54 @@ export const deleteSpecification = (productId) => {
             //Authorization: `Bearer ${token}`
         }
     })
+};
+// show all user
+export const getCoustomer = () => {
+    return fetch(`${API}/cust?limit=undefined`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const getCust = productId => {
+    return fetch(`${API}/cust/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const updateCustomer = (productId, category) => {
+    return fetch(`${API}/cust/${productId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const deleteCustomer = (productId, category) => {
+    return fetch(`${API}/cust/delete/${productId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };

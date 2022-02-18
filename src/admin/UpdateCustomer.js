@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
-import { Link, Redirect } from 'react-router-dom';
-import { getManufacturer, updateManfacturer } from './apiAdmin';
+import { Redirect } from 'react-router-dom';
+import { getCust, updateCustomer } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 
 
-const UpdateManufacturer = ({ match }) => {
+const UpdateCustomer = ({ match }) => {
     const [values, setValues] = useState({
-        manufacturerName: '',
+        name: '',
+        email:'',
         description:'',
         error: '',
         redirectToProfile: false,
@@ -19,17 +19,18 @@ const UpdateManufacturer = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { manufacturerName, description, error, redirectToProfile } = values;
+    const { name, email, error, redirectToProfile, createdAt } = values;
 
     const init = productId => {
-        getManufacturer(productId).then(data => {
+        getCust(productId).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
-                    manufacturerName: data.manufacturerName,
-                    description: data.description
+                    name: data.name,
+                    email: data.email,
+                    createdAt:data.createdAt
                 });
             }
         });
@@ -39,28 +40,28 @@ const UpdateManufacturer = ({ match }) => {
         init(match.params.productId);
     }, []);
 
-    const handleChange = manufacturerName => event => {
-        setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+    const handleChange = name => event => {
+        setValues({ ...values, error: false, [name]: event.target.value });
     };
 
-    const handleChange_des = description => event => {
-        setValues({ ...values, error: false, [description]: event.target.value });
+    const handleChange_des = email => event => {
+        setValues({ ...values, error: false, [email]: event.target.value });
     };
 
     const submitCategoryForm = e => {
         e.preventDefault();
         const category = {
-            manufacturerName: manufacturerName,
-            description:description
+            name: name,
+            email:email
         };
-        updateManfacturer(match.params.productId, category).then(data => {
+        updateCustomer(match.params.productId, category).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
-                    manufacturerName: data.manufacturerName,
-                    description:data.description,
+                    name: data.name,
+                    email:data.email,
                     error: false,
                     redirectToProfile: true
                 });
@@ -72,14 +73,18 @@ const UpdateManufacturer = ({ match }) => {
         <div className="">
             <form className="mb-3" onSubmit={submitCategoryForm}>
             <div className="form-group">
-                <h6><b><span style={{color:'red'}}>*</span> Manufacturer Nmae</b></h6>
-                <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
+                <label className="text-muted">name</label>
+                <input onChange={handleChange('name')} type="text" className="form-control" value={name} required name="name" />
             </div>
             <div className="form-group">
-               <h6><b>Description</b></h6>
-                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
+                <label className="text-muted">email</label>
+                <input onChange={handleChange_des('email')} type="text" className="form-control" value={email} required email="email" />
             </div>
-            <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
+            <div className="form-group">
+                <label className="text-muted">Add Date</label>
+                <input type="text" className="form-control" value={createdAt} />
+            </div>
+            <button className="btn btn-info">Update</button>
         </form>
         </div>
     );
@@ -96,7 +101,7 @@ const UpdateManufacturer = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/manufacturers" />;
+                return <Redirect to="/admin/coustomers" />;
             }
         }
     };
@@ -109,7 +114,7 @@ const UpdateManufacturer = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Edit Manufacturer</h2>
+                        <h2 className="font-bold"> Update Manufacturer</h2>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">
@@ -127,4 +132,4 @@ const UpdateManufacturer = ({ match }) => {
             );
     };
 
-export default UpdateManufacturer;
+export default UpdateCustomer;
