@@ -73,7 +73,15 @@ const Customer = () => {
                             <td>{customer.name}</td>
                             <td>{customer.email}</td>
                             <td> 
-                                <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/>
+                                {customer.status == 1 
+                                    ?(
+                                    <>
+                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                    </>
+                                    ):
+                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                    }
+                               
                             </td>
                             <td>2233343434</td>
                             
