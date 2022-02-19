@@ -54,7 +54,7 @@ const showError = () => (
 
 const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-       <a class="text-center" style={{color:'white'}}> Manufacture data add successfully </a> 
+       <a class="text-center" style={{color:'white'}}> Manufacture add successfully </a> 
     </div>  
 );
 

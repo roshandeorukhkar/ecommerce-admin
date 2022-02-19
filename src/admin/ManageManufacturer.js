@@ -54,6 +54,12 @@ const ManageManufacturer = () => {
         loadProducts();
     }, []);
 
+    const Date = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
+
     return (
 
             <div className="row">
@@ -84,7 +90,7 @@ const ManageManufacturer = () => {
                                 <td><input type="checkbox" /></td>
                                 <td>{p.manufacturerName}</td>
                                 <td>{p.description}</td>
-                                <td>{p.createdAt} </td>
+                                <td>{Date(p.createdAt)} </td>
                                 <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
                                 <td>
                                     <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>

@@ -37,6 +37,11 @@ const Customer = () => {
         loadProducts();
     }, []);
 
+    const Date = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
     let no = 1;
     return (
 
@@ -72,7 +77,7 @@ const Customer = () => {
                             </td>
                             <td>2233343434</td>
                             
-                            <td>31-12-2010 </td>
+                            <td>{Date(customer.createdAt)} </td>
                             <td>
                                 <Link to={`/admin/coustomers/update/${customer._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(customer._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>

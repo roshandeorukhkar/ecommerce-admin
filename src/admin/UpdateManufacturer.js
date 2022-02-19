@@ -12,6 +12,7 @@ const UpdateManufacturer = ({ match }) => {
         manufacturerName: '',
         description:'',
         error: '',
+        success: false,
         redirectToProfile: false,
         formData: ''
     });
@@ -19,7 +20,7 @@ const UpdateManufacturer = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { manufacturerName, description, error, redirectToProfile } = values;
+    const { manufacturerName, description, error, success, redirectToProfile } = values;
 
     const init = productId => {
         getManufacturer(productId).then(data => {
@@ -55,15 +56,22 @@ const UpdateManufacturer = ({ match }) => {
         };
         updateManfacturer(match.params.productId, category).then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error });
+                setValues({ ...values, error: data.error, success: false });
             } else {
                 setValues({
                     ...values,
                     manufacturerName: data.manufacturerName,
                     description:data.description,
                     error: false,
-                    redirectToProfile: true
+                    success: true,
+                    redirectToProfile: false
                 });
+                setTimeout(function(){
+                    setValues({
+                        ...values,
+                        redirectToProfile:true
+                    })
+                },2000)
             }
         });
     };
@@ -82,6 +90,12 @@ const UpdateManufacturer = ({ match }) => {
             <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
         </form>
         </div>
+    );
+
+    const showSuccess = () => (
+        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+           <a class="text-center" style={{color:'white'}}> Manufacture update successfully </a> 
+        </div>  
     );
 
     const showError = () => (
@@ -114,6 +128,7 @@ const UpdateManufacturer = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                            {showSuccess()}
                                             {showError()}
                                             {updateCategoryForm()}
                                             {redirectUser()}
