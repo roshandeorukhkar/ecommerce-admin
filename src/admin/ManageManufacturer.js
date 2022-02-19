@@ -54,7 +54,7 @@ const ManageManufacturer = () => {
         loadProducts();
     }, []);
 
-    const Date = (date) => {
+    const getDate = (date) => {
         const newDate = date.split('T')[0];
         const DATE = newDate.split('-');
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
@@ -90,12 +90,12 @@ const ManageManufacturer = () => {
                                 <td><input type="checkbox" /></td>
                                 <td>{p.manufacturerName}</td>
                                 <td>{p.description}</td>
-                                <td>{Date(p.createdAt)} </td>
+                                <td>{getDate(p.createdAt)} </td>
                                 <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
                                 <td>
                                     <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
                                     <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                    {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+                                    <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
                                 </td>  
                                </>
                            ):null}
