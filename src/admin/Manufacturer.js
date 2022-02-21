@@ -26,6 +26,17 @@ const Manufacturer = () => {
                                             <li className="page-item"><a className="page-link" href="#">3</a></li>
                                             <li className="page-item"><a className="page-link" href="#">Next</a></li>
                                         </ul>
+                                        <div className="page_pagination">
+                                            <ul>
+                                                <li className="border_show"><a href="#">Previous</a></li>
+                                                <li><a href="#">1</a></li>
+                                                <li className="active"><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">5</a></li>
+                                                <li className="border_show"><a href="#">Next</a></li>
+                                            </ul>
+                                        </div>
                                         {/* pegination start */}
                                 </div>
                             </div>
