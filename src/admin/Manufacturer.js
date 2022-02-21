@@ -9,13 +9,13 @@ const Manufacturer = () => {
             <div id="wrapper">
                 <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Manufacturer Management 
-                            <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle font-15"></i> Add Manufacturer</button></Link>
-                            <button type="submit" className="btn  btn-outline btn-info fa-pull-right" style={{float: 'right', height:'42px', marginRight:'20px'}}><i className="fa fa-search font-15"></i></button>
-                            <input type="text" placeholder='search' style={{float: 'right'}} />
-                        </h2><br></br>
+                        <div className='row'>
+                            <div className='col-md-4'><p id="hedingTitle"> Manufacturer Management </p></div>
+                            <div className='col-md-4'><p><button type="submit" className="btn btn-info fa-pull-right" style={{height:'33px'}}><i className="fa fa-search"></i></button> <input type="text" id="search" placeholder='search' style={{float: 'right'}} /></p></div>
+                            <div className='col-md-4'><p> <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-info fa-pull-right" id="addButton">Add Manufacturer</button></Link> <button type="submit" className="btn btn-info btn-outline " id="DeletButton">Delete <i className="fa fa-trash-o"></i></button></p></div>
+                        </div>
                         <div className="white-box">
-                            <div className="row">
+                            <div className="row" >
                                 <div className="col-lg-12">
                                     <ManageManufacturer />
                                         {/* pegination start */}

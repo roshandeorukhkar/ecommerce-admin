@@ -63,16 +63,11 @@ const ManageManufacturer = () => {
     return (
 
             <div className="row">
-                <h2 className="font-bold"> 
-                {/* List of Manufacturer {products.length} */}
-                    {/* <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Manufacturer</button></Link> */}
-                </h2>
                 <div className="col-12">
-                   <br></br>
                     <table className="table">
                     <thead>
-                            <tr>
-                                <th><input type="checkbox" /></th>
+                            <tr id="TH">
+                                <th><input type="checkbox" id="checkboxTH"/></th>
                                 <th>Manufacturer Name</th>
                                 <th>Descrtiption</th>
                                 <th>Date</th>
@@ -84,10 +79,10 @@ const ManageManufacturer = () => {
                         
                         {products.map((p, i) => (
                             
-                       <tr  key={i}>
+                       <tr  key={i} id="tableInput">
                            {!p.deletedAt ?(
                                <>
-                                <td><input type="checkbox" /></td>
+                                <td><input type="checkbox"  id="checkboxTH" /></td>
                                 <td>{p.manufacturerName}</td>
                                 <td>{p.description}</td>
                                 <td>{getDate(p.createdAt)} </td>
@@ -95,7 +90,7 @@ const ManageManufacturer = () => {
                                 <td>
                                     <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
                                     <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                    <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                                    {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
                                 </td>  
                                </>
                            ):null}
