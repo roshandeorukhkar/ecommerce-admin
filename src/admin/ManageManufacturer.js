@@ -54,19 +54,20 @@ const ManageManufacturer = () => {
         loadProducts();
     }, []);
 
+    const getDate = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
+
     return (
 
             <div className="row">
-                <h2 className="font-bold"> 
-                {/* List of Manufacturer {products.length} */}
-                    {/* <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Manufacturer</button></Link> */}
-                </h2>
                 <div className="col-12">
-                   <br></br>
                     <table className="table">
                     <thead>
-                            <tr>
-                                <th><input type="checkbox" /></th>
+                            <tr id="TH">
+                                <th><input type="checkbox" id="checkboxTH"/></th>
                                 <th>Manufacturer Name</th>
                                 <th>Descrtiption</th>
                                 <th>Date</th>
@@ -78,13 +79,13 @@ const ManageManufacturer = () => {
                         
                         {products.map((p, i) => (
                             
-                       <tr  key={i}>
+                       <tr  key={i} id="tableInput">
                            {!p.deletedAt ?(
                                <>
-                                <td><input type="checkbox" /></td>
+                                <td><input type="checkbox"  id="checkboxTH" /></td>
                                 <td>{p.manufacturerName}</td>
                                 <td>{p.description}</td>
-                                <td>{p.createdAt} </td>
+                                <td>{getDate(p.createdAt)} </td>
                                 <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
                                 <td>
                                     <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>

@@ -37,7 +37,11 @@ const Customer = () => {
         loadProducts();
     }, []);
 
-    let no = 1;
+    const getData = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
     return (
 
             <div className="row">
@@ -49,7 +53,6 @@ const Customer = () => {
                     <thead>
                             <tr>
                                 <th><input type="checkbox"/></th>
-                                <th>Id</th>
                                 <th>Customer Name</th>
                                 <th>E-mail</th>
                                 <th>Status</th>
@@ -64,15 +67,22 @@ const Customer = () => {
                             {!customer.deletedAt ?(
                                <>
                            <td><input type="checkbox"/></td>
-                            <td>{no++}</td>
                             <td>{customer.name}</td>
                             <td>{customer.email}</td>
                             <td> 
-                                <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/>
+                                {customer.status == 1 
+                                    ?(
+                                    <>
+                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                    </>
+                                    ):
+                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                    }
+                               
                             </td>
                             <td>2233343434</td>
                             
-                            <td>31-12-2010 </td>
+                            <td>{getData(customer.createdAt)} </td>
                             <td>
                                 <Link to={`/admin/coustomers/update/${customer._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(customer._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
