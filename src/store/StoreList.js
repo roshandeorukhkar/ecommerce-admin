@@ -1,7 +1,7 @@
 import { Switch } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import FormDilog from '../common/FormDilog';
+import { deleteStore } from "../store/ApiStore";
 
 const StoreList = (props) => {
 
@@ -38,44 +38,29 @@ const StoreList = (props) => {
                     <tbody>
                         {
                             list.map((ele, key) => (
-                                <tr key={key}>
-                                    <td>{i++}</td>
-                                    <td>{ele.storeName}</td>
-                                    <td>{ele.email}</td>
-                                    <td>
-                                        <Switch name="checkedA"
-                                            inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
-                                            color='primary'
-                                            // checked="false" 
-                                            onClick={() => setCheck(!check)}
-                                        />
-                                    </td>
-                                    <td>{getDate(ele.createdDate)}</td>
-                                    <td>
-                                        <Link to={`/admin/storemanagement/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick}><i className='fa fa-pencil font-15'></i></Link>
-                                        {/* <FormDilog
-                                            btnClass="tn btn-outline btn-danger"
-                                            btnIcon="fa fa-trash-o font-15"
-                                            dilogTitle="Store Delete"
-                                            message="Are you sure you want to delete this store ?"
-                                            // deleteEle = {ele._id}
-                                        /> */}
-                                        {/* <button className='btn btn-outline btn-danger' aria-label='Delete'><i className='fa fa-trash-o font-15'></i></button> */}
-                                    </td>
-                                </tr>
+                                ele.isDelete != true ?
+                                    <tr key={key}>
+                                        <td>{i++}</td>
+                                        <td>{ele.storeName}</td>
+                                        <td>{ele.email}</td>
+                                        <td>
+                                            <Switch name="checkedA"
+                                                inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
+                                                color='primary'
+                                                onClick={() => setCheck(!check)}
+                                            />
+                                        </td>
+                                        <td>{getDate(ele.createdDate)}</td>
+                                        <td>
+                                            <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick}><i className='fa fa-pencil font-15'></i></Link>
+                                            <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
+                                        </td>
+                                    </tr>
+                                  : null 
                             ))
                         }
                     </tbody>
                 </table>
-                {/* <ul className="pagination pagination-sm m-b-0 fa-pull-right">
-                    <li className="disabled"> <Link to="#"><i className="fa fa-angle-left"></i></Link> </li>
-                    <li> <Link to="#">1</Link> </li>
-                    <li className="active"> <Link to="#">2</Link> </li>
-                    <li> <Link to="#">3</Link> </li>
-                    <li> <Link to="#">4</Link> </li>
-                    <li> <Link to="#">5</Link> </li>
-                    <li> <Link to="#"><i className="fa fa-angle-right"></i></Link> </li>
-                </ul> */}
             </div>
         </div>
     )

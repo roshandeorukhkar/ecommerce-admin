@@ -13,7 +13,7 @@ const AddStoreContent = (props) =>{
     return(
         <>
             <div className={`form-group col-md-6 ${props.name}`} id={`${props.name}`} >
-                <label className="col-md-12">{props.label}<span className='text-danger'>*</span></label>
+                <label className="col-md-12 lable">{props.label}<span className='text-danger'>*</span></label>
                 <div className="col-md-12">
                     <input type={props.type} 
                     className="form-control" 

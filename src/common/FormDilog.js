@@ -7,7 +7,6 @@ import {
   DialogTitle,
   Button
 } from "@material-ui/core";
-// import { deleteStore } from "../store/ApiStore";
 
 const FormDilog = (props) => {
   const [open, setOpen] = useState(false);
