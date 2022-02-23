@@ -7,7 +7,7 @@ import FormMainTitle from "../common/FormMainTitle";
 import FormNotification from "../common/FormNotification";
 import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 import { deleteStore } from "./ApiStore";
 
 

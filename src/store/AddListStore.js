@@ -9,10 +9,13 @@ import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { deleteStore } from "../store/ApiStore";
 import TableComponent from "../common/TableComponent";
+import StorePasswordInput from "./StorePasswordInput";
+import { StyledEngineProvider } from "@mui/material";
 
 
 const AddListStore = () => {
-    const Initilize = {
+
+    const [values, setValues] = useState({
         storeName: "",
         storeNameError: "",
         ownerName: "",
@@ -27,9 +30,6 @@ const AddListStore = () => {
         passwordError: "",
         email: "",
         emailError: "",
-    }
-    const [values, setValues] = useState({
-        Initilize,
         errorNotification: "",
         alertColour: "",
         displayNotification: "dn",
@@ -41,53 +41,68 @@ const AddListStore = () => {
     const history = useHistory();
 
 
+
     let params = useParams();
-    console.log(params,"param");
     useEffect(() => {
-        if(params.storeId != undefined){
+        if (params.storeId != undefined) {
             getStoreById();
+            window.scrollTo(0, 0);
             setValues({ storeId: params.storeId })
             setCheckParams(true);
-        }else if(params.deleteStoreId != undefined){
+
+        } else if (params.deleteStoreId != undefined) {
             deleteStoreDetails();
             clearNotification();
             setCheckParams(true);
             history.push("/admin/storemanagement");
-        }
-        else{
-            setValues({ 
-                Initilize,
+        } else {
+            setValues({
+                storeName: "",
+                storeNameError: "",
+                ownerName: "",
+                ownerNameError: "",
+                address: "",
+                addressError: "",
+                userName: "",
+                userNameError: "",
+                mobile: "",
+                mobileError: "",
+                password: "",
+                passwordError: "",
+                email: "",
+                emailError: "",
                 errorNotification: "",
                 alertColour: "",
                 displayNotification: "dn",
-                storeId: ""})
+                storeId: ""
+            })
             setCheckParams(true);
 
         }
         getStoreList();
     }, [checkParams]);
 
-     const deleteStoreDetails = () =>  {
-       const deleteStoreID= params.deleteStoreId;
-       deleteStore(deleteStoreID).then((data) => {
-           setValues({ 
-            Initilize,
-            errorNotification: data.message,
-            alertColour: "alert-success",
-            displayNotification: "db",
+    const deleteStoreDetails = () => {
+        const deleteStoreID = params.deleteStoreId;
+        deleteStore(deleteStoreID).then((data) => {
+            setValues({
+                ...values,
+                errorNotification: data.message,
+                alertColour: "alert-success",
+                displayNotification: "db",
+            })
         })
-       })
     }
 
-    const clearNotification = () =>{
-        setTimeout(()=>{
-            setValues({ 
+    const clearNotification = () => {
+        setTimeout(() => {
+            setValues({
                 ...values,
-                errorNotification:"",
+                errorNotification: "",
                 alertColour: "",
                 displayNotification: "dn",
             })
-        } ,2000);
+        }, 2000);
     }
 
     const getStoreList = () => {
@@ -104,7 +119,8 @@ const AddListStore = () => {
                 userName: data.userName,
                 mobile: data.mobile,
                 password: data.password,
-                email: data.email
+                email: data.email,
+                storeId: data._id
             });
         });
     }
@@ -133,16 +149,30 @@ const AddListStore = () => {
                 clearNotification();
             } else {
                 setValues({
-                    Initilize,
+                    storeName: "",
+                    storeNameError: "",
+                    ownerName: "",
+                    ownerNameError: "",
+                    address: "",
+                    addressError: "",
+                    userName: "",
+                    userNameError: "",
+                    mobile: "",
+                    mobileError: "",
+                    password: "",
+                    passwordError: "",
+                    email: "",
+                    emailError: "",
                     errorNotification: data.message,
                     alertColour: "alert-success",
                     displayNotification: "db",
                 });
                 getStoreList();
-                // clearNotification();
-                if(params.storeId != 'undefined') {  
+                clearNotification();
+                if (params.storeId != 'undefined') {
                     history.push("/admin/storemanagement")
                 }
+                // setCheckParams(true);
                 document.getElementById("myForm").reset();
             }
         });
@@ -153,7 +183,7 @@ const AddListStore = () => {
             <FormNotification
                 message={values.errorNotification}
                 alertClass={values.alertColour}
-                show = {values.displayNotification}
+                show={values.displayNotification}
             />
             <div className="page-wrapper">
                 <div className="container-fluid">
@@ -161,9 +191,9 @@ const AddListStore = () => {
                         btnName="Add Role"
                         // btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
-                        btnLink = "/admin/rolemanagement"
+                        btnLink="/admin/rolemanagement"
                         // btnSecondlink = "/admin/storemanagement"
-                        btnSecondIcon = "fa fa-plus-circle"
+                        btnSecondIcon="fa fa-plus-circle"
                     />
                     <div className="white-box">
                         <div className="row">
@@ -212,10 +242,10 @@ const AddListStore = () => {
                                         onChange={handleChange("mobile")}
                                         errorSpan={values.mobileError}
                                     />
-                                    <AddStoreContent
+                                    <StorePasswordInput
                                         label="Store Password"
                                         placeholder="Enter Store Password"
-                                        type="text"
+                                        type="password"
                                         value={values.password}
                                         onChange={handleChange("password")}
                                         errorSpan={values.passwordError}
@@ -229,11 +259,12 @@ const AddListStore = () => {
                                         errorSpan={values.emailError}
                                     />
                                     <div className="col-md-6 t-a-r">
-                                    <br></br>
-                                        {params.storeId !== undefined ? <input type="hidden" value={values.storeId} onChange={handleChange("storeId")} /> : ""}
+
+                                        <br></br>
+                                        {params.storeId != undefined ? <input type="hidden" value={values.storeId} name="storeId" /> : ""}
                                         <button
                                             type="submit"
-                                            className="btn btn-rounded-min btn-submit btn-primary"
+                                            className="btn btn-rounded-min btn-primary"
                                             onClick={clickSubmit}
                                         >
                                             {!params.storeId ? "Add Store" : "Update Store"}
@@ -243,8 +274,10 @@ const AddListStore = () => {
                             </div>
                         </div>
                     </div>
-                    {list ? <StoreList tableList={list} onClick={()=>setCheckParams(!checkParams)}  /> : null}
-                    {/* <TableComponent title=" Store List" /> */}
+                    {/* {list ? <StoreList tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
+                    <div className="white-box">
+                    { list != "" ? <TableComponent title=" Store List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null }
+                    </div>
                 </div>
             </div>
         </>

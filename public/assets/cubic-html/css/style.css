@@ -1635,7 +1635,7 @@ label {
 }
 
 .form-control {
-    background-color: #FFFFFF;
+    background-color: #FFFFFF !important;
     border: 2px solid #DBD7F4;
     border-radius: 8px;
     box-shadow: none;
@@ -4116,7 +4116,12 @@ table.focus-on tbody tr.focused th {
 
 .input-group-addon {
     border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, .2)
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    background-color: #fff;
+    border: 2px solid #DBD7F4;
+    border-left: none;
 }
 
 .input-daterange input:first-child,
@@ -16416,3 +16421,9 @@ border: 2px solid #9A9AB0;
 border-radius: 4px;
 opacity: 1;
 }
+/* shubha :  Input Number up-down arrow remove 22-02-2022 */
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  

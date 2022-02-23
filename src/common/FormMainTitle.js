@@ -15,7 +15,8 @@ const FormMainTitle = ({
         return (
             <>
                 <Link to={btnLink} className="btn btn-rounded-min btn-primary fa-pull-right">
-                    <i className="fa fa-plus-circle"></i> {btnName}
+                    {/* <i className="fa fa-plus-circle"></i>  */}
+                    {btnName}
                 </Link>
             </>)
     }

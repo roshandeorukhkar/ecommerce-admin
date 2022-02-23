@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { deleteCustomer, getCoustomer } from "./apiAdmin";
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 
 const Customer = () => {
     const [products, setProducts] = useState([]);

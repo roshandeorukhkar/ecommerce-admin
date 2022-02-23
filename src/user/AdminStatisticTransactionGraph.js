@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from '../core/Checkbox';
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 
 
 const AdminStatisticTransactionGraph = () =>{

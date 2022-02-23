@@ -9,7 +9,7 @@ const AddStoreContent = (props) =>{
      !props.value ? setValue('') : setValue(props.value);
      setValue(props.value)
     },[props.value])
-    // console.log('..........',value);
+
     return(
         <>
             <div className={`form-group col-md-6 ${props.name}`} id={`${props.name}`} >

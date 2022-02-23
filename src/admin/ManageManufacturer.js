@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { deleteManufacturer, getManufacturers, deleteManufacturer1 } from "./apiAdmin";
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 
 const ManageManufacturer = () => {
     const [products, setProducts] = useState([]);

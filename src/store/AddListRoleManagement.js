@@ -45,7 +45,6 @@ const AddListRoleManagement = () => {
                                 <h4 className="box-title">
                                     {!(params.storeId) ? "Add Role" : "Edit Role"}
                                 </h4>
-                                <hr />
                                 <form className="form-horizontal" id="myForm">
                                     <AddStoreContent
                                         label="Role Name"

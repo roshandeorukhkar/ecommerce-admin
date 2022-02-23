@@ -1,49 +1,249 @@
-import * as React from 'react';
-// import { DataGrid } from '@mui/x-data-grid';
+import MUIDataTable from "mui-datatables";
+import React, { useState, useEffect } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import { Link } from 'react-router-dom';
+import { Switch } from '@mui/material';
+const muiCache = createCache({
+  key: "mui-datatables",
+  prepend: true
+});
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
+const TableComponent = (props) => {
+  const [responsive, setResponsive] = useState("vertical");
+  const [tableBodyHeight, setTableBodyHeight] = useState("100%");
+  const [tableBodyMaxHeight, setTableBodyMaxHeight] = useState("");
+  const [searchBtn, setSearchBtn] = useState(true);
+  const [downloadBtn, setDownloadBtn] = useState(false);
+  const [printBtn, setPrintBtn] = useState(false);
+  const [viewColumnBtn, setViewColumnBtn] = useState(false);
+  const [filterBtn, setFilterBtn] = useState(false);
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
-export default function TableComponent() {
+  
+  const [list, setList] = useState(props.tableList);
+  const [check, setCheck] = useState(true);
+
+
+  useEffect(() => {
+    setList(props.tableList);
+  }, [props]);
+
+  const getDate = (date) => {
+    const newDate = date.split('T')[0];
+    const dt = newDate.split('-');
+    return dt[2] + '-' + dt[1] + '-' + dt[0];
+  }
+
+  const columns = [
+    { name: "Store Name", options: { filterOptions: { fullWidth: true } } },
+    "E-mail",
+    "Status",
+    "Date",
+    "Action"
+  ];
+
+  const options = {
+    search: searchBtn,
+    download: downloadBtn,
+    print: printBtn,
+    viewColumns: viewColumnBtn,
+    filter: filterBtn,
+    filterType: "dropdown",
+    responsive,
+    tableBodyHeight,
+    tableBodyMaxHeight,
+    onTableChange: (action, state) => {
+      console.log(action);
+      console.dir(state);
+    },
+    rowsPerPage : 5,
+    rowsPerPageOptions : [5,15,100],
+  };
+  var listData = [];
+  var i = 0;
+
+  const data = [];
+  list.map((ele, key) => {
+  if(ele.isDelete != true){
+    console.log("ele",ele.isDelete);
+    listData[i] = [
+      ele.storeName,
+      ele.email,
+      <Switch name="checkedA"
+        inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
+        color='primary'
+        onClick={() => setCheck(!check)}
+      />,
+      getDate(ele.createdDate),
+      <div>
+        <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
+        <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
+      </div>
+    ] 
+    data.push(listData[i]);
+    i++;
+  }
+  }
+  )
+
+ const getMuiTheme = () => createTheme({
+    components: {
+      MUIDataTableBodyCell: {
+        styleOverrides:{
+          root: {
+              backgroundColor: "#FF0000"
+          }
+        }
+      }
+    }
+  })
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      {/* <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        checkboxSelection
-      /> */}
-    </div>
+    <CacheProvider value={muiCache}>
+      <ThemeProvider theme={getMuiTheme()}>
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">
+            Responsive Option
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={responsive}
+            style={{ width: "200px", marginBottom: "10px", marginRight: 10 }}
+            onChange={(e) => setResponsive(e.target.value)}
+          >
+            <MenuItem value={"vertical"}>vertical</MenuItem>
+            <MenuItem value={"standard"}>standard</MenuItem>
+            <MenuItem value={"simple"}>simple</MenuItem>
+
+            <MenuItem value={"scroll"}>scroll (deprecated)</MenuItem>
+            <MenuItem value={"scrollMaxHeight"}>
+              scrollMaxHeight (deprecated)
+            </MenuItem>
+            <MenuItem value={"stacked"}>stacked (deprecated)</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">
+            Table Body Height
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={tableBodyHeight}
+            style={{ width: "200px", marginBottom: "10px", marginRight: 10 }}
+            onChange={(e) => setTableBodyHeight(e.target.value)}
+          >
+            <MenuItem value={""}>[blank]</MenuItem>
+            <MenuItem value={"400px"}>400px</MenuItem>
+            <MenuItem value={"800px"}>800px</MenuItem>
+            <MenuItem value={"100%"}>100%</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">
+            Max Table Body Height
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={tableBodyMaxHeight}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setTableBodyMaxHeight(e.target.value)}
+          >
+            <MenuItem value={""}>[blank]</MenuItem>
+            <MenuItem value={"400px"}>400px</MenuItem>
+            <MenuItem value={"800px"}>800px</MenuItem>
+            <MenuItem value={"100%"}>100%</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">Search Button</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={searchBtn}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setSearchBtn(e.target.value)}
+          >
+            <MenuItem value={"true"}>{"true"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
+            <MenuItem value={"disabled"}>disabled</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">Download Button</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={downloadBtn}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setDownloadBtn(e.target.value)}
+          >
+            <MenuItem value={"true"}>{"true"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
+            <MenuItem value={"disabled"}>disabled</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">Print Button</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={printBtn}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setPrintBtn(e.target.value)}
+          >
+            <MenuItem value={"true"}>{"true"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
+            <MenuItem value={"disabled"}>disabled</MenuItem>
+          </Select>
+        </FormControl> */}
+        {/* <FormControl>
+          <InputLabel id="demo-simple-select-label">
+            View Column Button
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={viewColumnBtn}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setViewColumnBtn(e.target.value)}
+          >
+            <MenuItem value={"true"}>{"true"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
+            <MenuItem value={"disabled"}>disabled</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">Filter Button</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterBtn}
+            style={{ width: "200px", marginBottom: "10px" }}
+            onChange={(e) => setFilterBtn(e.target.value)}
+          >
+            <MenuItem value={"true"}>{"true"}</MenuItem>
+            <MenuItem value={"false"}>{"false"}</MenuItem>
+            <MenuItem value={"disabled"}>disabled</MenuItem>
+          </Select>
+        </FormControl> */}
+        <MUIDataTable
+          title={props.list}
+          data={data}
+          columns={columns}
+          options={options}
+        />
+      </ThemeProvider>
+    </CacheProvider>
   );
 }
+
+export default TableComponent;
