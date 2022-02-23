@@ -1,17 +1,16 @@
 import React from 'react';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
 import AddListStore from "./AddListStore";
+import AdminLayout from '../core/AdminLayout';
 
-const StoreManagement = () =>{
+const StoreManagement = () => {
 
-    return(
+    return (
         <>
-        <div id="wrapper">
-            <AdminHeader />
-            <AdminSidebar />
-            <AddListStore />
-        </div>
+            <div id="wrapper">
+                <AdminLayout>
+                    <AddListStore />
+                </AdminLayout>
+            </div>
         </>
     )
 

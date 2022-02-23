@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Dialog } from "@material-ui/core";
+import { Dialog } from "@mui/material";
 import {
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
   Button
-} from "@material-ui/core";
-// import { deleteStore } from "../store/ApiStore";
+} from "@mui/material";
 
 const FormDilog = (props) => {
   const [open, setOpen] = useState(false);

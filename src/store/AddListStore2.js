@@ -2,20 +2,17 @@ import React, { useState, useEffect } from "react";
 import AddStoreContent from "./AddStoreContent";
 import StoreList from "./StoreList";
 import { addStoreData } from "./ApiStore";
-import { Link, useParams, useForm, useHistory } from "react-router-dom";
+import { Link, useParams, useForm } from "react-router-dom";
 import FormMainTitle from "../common/FormMainTitle";
 import FormNotification from "../common/FormNotification";
 import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
-import { deleteStore } from "../store/ApiStore";
-import TableComponent from "../common/TableComponent";
-import StorePasswordInput from "./StorePasswordInput";
-import { StyledEngineProvider } from "@mui/material";
+import { Switch } from '@mui/material';
+import { deleteStore } from "./ApiStore";
 
 
 const AddListStore = () => {
-
-    const [values, setValues] = useState({
+    const Initilize = {
         storeName: "",
         storeNameError: "",
         ownerName: "",
@@ -30,6 +27,9 @@ const AddListStore = () => {
         passwordError: "",
         email: "",
         emailError: "",
+    }
+    const [values, setValues] = useState({
+        Initilize,
         errorNotification: "",
         alertColour: "",
         displayNotification: "dn",
@@ -38,80 +38,51 @@ const AddListStore = () => {
 
     const [list, setList] = useState([]);
     const [checkParams, setCheckParams] = useState(false);
-    const history = useHistory();
+    const [check, setCheck] = useState(true);
 
 
-
+    const getDate = (date) => {
+        const newDate = date.split('T')[0];
+        const dt = newDate.split('-');
+        return dt[2] + '-' + dt[1] + '-' + dt[0];
+    }
+    var i = 1;
     let params = useParams();
+    console.log(params.storeId)
     useEffect(() => {
         if (params.storeId != undefined) {
             getStoreById();
-            window.scrollTo(0, 0);
             setValues({ storeId: params.storeId })
             setCheckParams(true);
-
-        } else if (params.deleteStoreId != undefined) {
-            deleteStoreDetails();
-            clearNotification();
-            setCheckParams(true);
-            history.push("/admin/storemanagement");
         } else {
             setValues({
-                storeName: "",
-                storeNameError: "",
-                ownerName: "",
-                ownerNameError: "",
-                address: "",
-                addressError: "",
-                userName: "",
-                userNameError: "",
-                mobile: "",
-                mobileError: "",
-                password: "",
-                passwordError: "",
-                email: "",
-                emailError: "",
+                Initilize,
                 errorNotification: "",
                 alertColour: "",
                 displayNotification: "dn",
                 storeId: ""
             })
-            setCheckParams(true);
-
         }
         getStoreList();
-    }, [checkParams]);
-
-    const deleteStoreDetails = () => {
-        const deleteStoreID = params.deleteStoreId;
-        deleteStore(deleteStoreID).then((data) => {
-            setValues({
-                ...values,
-                errorNotification: data.message,
-                alertColour: "alert-success",
-                displayNotification: "db",
-            })
-        })
-    }
-
-    const clearNotification = () => {
-        setTimeout(() => {
-            setValues({
-                ...values,
-                errorNotification: "",
-                alertColour: "",
-                displayNotification: "dn",
-            })
-        }, 2000);
-    }
+    }, []);
 
     const getStoreList = () => {
         storeList().then((data) => {
+            console.log("hello");
             setList(data.result);
         });
     };
-    const getStoreById = async () => {
-        await getStoreDataById({ storeId: params.storeId }).then((data) => {
+
+    const deleteStoreDetails=element=>{
+        deleteStore(element).then((data) => {
+            console.log("---------",data);
+            getStoreList();
+        })
+    }
+
+    const getStoreById = (id) =>  () => {
+        console.log("-----",id);
+         getStoreDataById({ storeId: id }).then((data) => {
             setValues({
                 storeName: data.storeName,
                 ownerName: data.ownerName,
@@ -119,8 +90,7 @@ const AddListStore = () => {
                 userName: data.userName,
                 mobile: data.mobile,
                 password: data.password,
-                email: data.email,
-                storeId: data._id
+                email: data.email
             });
         });
     }
@@ -146,33 +116,14 @@ const AddListStore = () => {
                     alertColour: "alert-danger",
                     displayNotification: "db",
                 });
-                clearNotification();
             } else {
                 setValues({
-                    storeName: "",
-                    storeNameError: "",
-                    ownerName: "",
-                    ownerNameError: "",
-                    address: "",
-                    addressError: "",
-                    userName: "",
-                    userNameError: "",
-                    mobile: "",
-                    mobileError: "",
-                    password: "",
-                    passwordError: "",
-                    email: "",
-                    emailError: "",
+                    Initilize,
                     errorNotification: data.message,
                     alertColour: "alert-success",
                     displayNotification: "db",
                 });
                 getStoreList();
-                clearNotification();
-                if (params.storeId != 'undefined') {
-                    history.push("/admin/storemanagement")
-                }
-                // setCheckParams(true);
                 document.getElementById("myForm").reset();
             }
         });
@@ -184,16 +135,16 @@ const AddListStore = () => {
                 message={values.errorNotification}
                 alertClass={values.alertColour}
                 show={values.displayNotification}
+            // onClick ={}
             />
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <FormMainTitle title="Store Management"
                         btnName="Add Role"
-                        // btnSecond="Add Store"
+                        btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
                         btnLink="/admin/rolemanagement"
-                        // btnSecondlink = "/admin/storemanagement"
-                        btnSecondIcon="fa fa-plus-circle"
+                        btnSecondlink="/admin/storemanagement"
                     />
                     <div className="white-box">
                         <div className="row">
@@ -201,6 +152,7 @@ const AddListStore = () => {
                                 <h4 className="box-title">
                                     {!(params.storeId) ? "Add Store" : "Edit Store"}
                                 </h4>
+                                <hr />
                                 <form className="form-horizontal" id="myForm">
                                     <AddStoreContent
                                         label="Store Name"
@@ -237,15 +189,15 @@ const AddListStore = () => {
                                     <AddStoreContent
                                         label="Mobile No"
                                         placeholder="Enter Mobile No"
-                                        type="number"
+                                        type="text"
                                         value={values.mobile}
                                         onChange={handleChange("mobile")}
                                         errorSpan={values.mobileError}
                                     />
-                                    <StorePasswordInput
+                                    <AddStoreContent
                                         label="Store Password"
                                         placeholder="Enter Store Password"
-                                        type="password"
+                                        type="text"
                                         value={values.password}
                                         onChange={handleChange("password")}
                                         errorSpan={values.passwordError}
@@ -258,26 +210,67 @@ const AddListStore = () => {
                                         onChange={handleChange("email")}
                                         errorSpan={values.emailError}
                                     />
-                                    <div className="col-md-6 t-a-r">
-
-                                        <br></br>
-                                        {params.storeId != undefined ? <input type="hidden" value={values.storeId} name="storeId" /> : ""}
+                                    <div className="col-md-12 t-a-c">
+                                        {params.storeId !== undefined ? <input type="hidden" value={values.storeId} onChange={handleChange("storeId")} /> : ""}
                                         <button
                                             type="submit"
-                                            className="btn btn-rounded-min btn-primary"
+                                            className="btn  btn-outline btn-rounded  btn-info"
                                             onClick={clickSubmit}
                                         >
-                                            {!params.storeId ? "Add Store" : "Update Store"}
+                                            <i className="fa fa-plus-circle"></i>{" "}
+                                            {!params.storeId ? "Save Store" : "Update Store"}
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    {/* {list ? <StoreList tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
-                    <div className="white-box">
-                    { list != "" ? <TableComponent title=" Store List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null }
-                    </div>
+                    {list ?
+                        <div className="white-box">
+                            <h3 className="box-title">
+                                Store List
+                            </h3>
+                            <div className="table-responsive">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Store Name</th>
+                                            <th>E-mail</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            list.map((ele, key) => (
+                                                <tr key={key}>
+                                                    <td>{i++}</td>
+                                                    <td>{ele.storeName}</td>
+                                                    <td>{ele.email}</td>
+                                                    <td>
+                                                        <Switch name="checkedA"
+                                                            inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
+                                                            color='primary'
+                                                            // checked="false" 
+                                                            onClick={() => setCheck(!check)}
+                                                        />
+                                                    </td>
+                                                    <td>{getDate(ele.createdDate)}</td>
+                                                    <td>
+                                                        {/* <Link to={`/admin/storemanagement/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link> */}
+                                                        <button className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={getStoreById(ele._id)}><i className='fa fa-pencil font-15'></i></button>
+                                                        <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={deleteStoreDetails(ele._id)}><i className='fa fa-trash-o font-15'></i></button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> : null
+                    }
                 </div>
             </div>
         </>

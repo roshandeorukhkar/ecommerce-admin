@@ -73,16 +73,16 @@ const UpdateCustomer = ({ match }) => {
         <div className="">
             <form className="mb-3" onSubmit={submitCategoryForm}>
             <div className="form-group">
-                <label className="text-muted">name</label>
-                <input onChange={handleChange('name')} type="text" className="form-control" value={name} required name="name" />
+                <h6>Customer Name</h6>
+                <input onChange={handleChange('name')} type="text" placeholder='Cutomer name' className="form-control" value={name} required name="name" />
             </div>
             <div className="form-group">
-                <label className="text-muted">email</label>
+                <label className="text-muted">E-mail</label>
                 <input onChange={handleChange_des('email')} type="text" className="form-control" value={email} required email="email" />
             </div>
             <div className="form-group">
                 <label className="text-muted">Add Date</label>
-                <input type="text" className="form-control" value={createdAt} />
+                <input type="text" className="form-control" value={createdAt}  />
             </div>
             <button className="btn btn-info">Update</button>
         </form>
@@ -114,7 +114,7 @@ const UpdateCustomer = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Update Manufacturer</h2>
+                        <h2 className="font-bold"> Edit Customer</h2>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">
