@@ -41,7 +41,7 @@ const clickSubmit = event => {
                     ...values,
                     redirectToProfile:true
                 })
-            },2000)
+            },1000)
         }
     });
 };

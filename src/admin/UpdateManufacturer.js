@@ -71,7 +71,7 @@ const UpdateManufacturer = ({ match }) => {
                         ...values,
                         redirectToProfile:true
                     })
-                },2000)
+                },1000)
             }
         });
     };
@@ -79,15 +79,17 @@ const UpdateManufacturer = ({ match }) => {
     const updateCategoryForm = () => (
         <div className="">
             <form className="mb-3" onSubmit={submitCategoryForm}>
-            <div className="form-group">
+            <div className="form-group col-lg-7">
                 <h6><b><span style={{color:'red'}}>*</span> Manufacturer Nmae</b></h6>
                 <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
             </div>
-            <div className="form-group">
+            <div className="form-group col-lg-7">
                <h6><b>Description</b></h6>
                 <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
             </div>
-            <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
+            <div className='col-lg-7'>
+                <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
+            </div>
         </form>
         </div>
     );
