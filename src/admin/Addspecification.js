@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
+//import AdminHeader from "../user/AdminHeader";
+//import AdminSidebar from "../user/AdminSidebar";
 import { createspecification } from "./apiAdmin";
-import  Managespecification  from "./Managespecification";
+//import  Managespecification  from "./Managespecification";
 
 const Addspecification = () => {
     const [manufacturerName, setName] = useState("");
@@ -42,7 +42,8 @@ const Addspecification = () => {
                 setName('');
                 set_type('');
                 setDescription('');
-
+                
+                
             }
         });
     };
@@ -72,7 +73,7 @@ const Addspecification = () => {
 
     const showError = () => {
         if (error) {
-            return <h3 className="text-danger">Category should be unique</h3>;
+            return <h3 className="text-danger">specification name should be unique</h3>;
         }
     };
     return (
@@ -91,7 +92,7 @@ const Addspecification = () => {
                                 </div>
                             </div>
                         </div>
-                        <Managespecification />
+                       
                     </div>
                 </div>
             </div>

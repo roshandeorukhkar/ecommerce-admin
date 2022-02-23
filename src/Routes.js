@@ -20,10 +20,15 @@ import Addspecification from './admin/Addspecification';
 import ProductSpecification from './admin/ProductSpecification';
 import ProductManufacture from './admin/ProductManufacture';
 
+
 import Customer from './admin/Customer';
 import CustomerManagement from './admin/CustomerManagement';
 import UpdateCustomer from './admin/UpdateCustomer';
 import RoleManagement from './store/RoleManagement';
+
+import Managespecification from './admin/Managespecification';
+import Manuspecification from './admin/Manuspecification';
+import Updatespecification from './admin/Updatespecification';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -49,7 +54,11 @@ const Routes = () => {
                 <AdminRoute path="/admin/coustomer" exact component={Customer} />
                 <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />
                 <AdminRoute path="/admin/coustomers/update/:productId" exact component={UpdateCustomer} />
-            </Switch>
+                <AdminRoute path="/admin/Managespecification" exact component={Managespecification} />
+                <AdminRoute path="/admin/Manuspecification" exact component={Manuspecification} />
+                <AdminRoute path="/admin/Updatespecification/update/:productId" exact component={Updatespecification} />
+                
+</Switch>
         </BrowserRouter>
     );
 };
