@@ -26,7 +26,7 @@ const TableComponent = (props) => {
   const [filterBtn, setFilterBtn] = useState(false);
 
 
-  
+
   const [list, setList] = useState(props.tableList);
   const [check, setCheck] = useState(true);
 
@@ -63,42 +63,91 @@ const TableComponent = (props) => {
       console.log(action);
       console.dir(state);
     },
-    rowsPerPage : 5,
-    rowsPerPageOptions : [5,15,100],
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5, 15, 100],
   };
   var listData = [];
   var i = 0;
 
   const data = [];
   list.map((ele, key) => {
-  if(ele.isDelete != true){
-    console.log("ele",ele.isDelete);
-    listData[i] = [
-      ele.storeName,
-      ele.email,
-      <Switch name="checkedA"
-        inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
-        color='primary'
-        onClick={() => setCheck(!check)}
-      />,
-      getDate(ele.createdDate),
-      <div>
-        <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
-        <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
-      </div>
-    ] 
-    data.push(listData[i]);
-    i++;
-  }
+    if (ele.isDelete != true) {
+      console.log("ele", ele.isDelete);
+      listData[i] = [
+        ele.storeName,
+        ele.email,
+        <Switch name="checkedA"
+          inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
+          color='primary'
+          onClick={() => setCheck(!check)}
+        />,
+        getDate(ele.createdDate),
+        <div>
+          <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
+          <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
+        </div>
+      ]
+      data.push(listData[i]);
+      i++;
+    }
   }
   )
 
- const getMuiTheme = () => createTheme({
+  const getMuiTheme = () => createTheme({
     components: {
-      MUIDataTableBodyCell: {
-        styleOverrides:{
+      MuiTableHead : {
+        MuiTableRow : { 
+          MuiTableCell : {
+            styleOverrides : {
+              head: {
+                fontSize : "16px",
+                backgroundColor : "black"
+              }
+            }
+          }
+        }
+      }
+    },
+    components: {
+      MuiTableCell: {
+        styleOverrides: {
           root: {
-              backgroundColor: "#FF0000"
+            fontSize: "16px",
+          }
+        }
+      },
+      MuiSvgIcon : {
+        styleOverrides : {
+          root: {
+            fontSize : "20px",
+          }
+        }
+      },
+      MuiInput : {
+        styleOverrides : {
+          input  : {
+            fontSize : "16px",
+          }
+        }
+      },
+      MuiTablePagination : {
+        styleOverrides : {
+          displayedRows   : {
+            fontSize : "1.825rem" 
+          }
+        }
+      },
+      MuiButtonBase : {
+        styleOverrides : {
+          root : {
+            fontSize : "1.875rem" 
+          }
+        }
+      },
+      MuiTablePagination : {
+        styleOverrides :{
+          selectLabel  : {
+            fontSize : "1.825rem" 
           }
         }
       }
