@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
+import { Link } from "react-router-dom";
 import { deleteSpecification, Specification } from "./apiAdmin";
 
 const Managespecification = () => {
@@ -58,7 +59,7 @@ const Managespecification = () => {
                             <td>{p.description}</td>
                             <td>{p.createdAt} </td>
                             <td>
-                             
+                                <Link to={`/admin/Updatespecification/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)}><i className='fa fa-trash-o font-15'></i></button>
                             </td>     
                         

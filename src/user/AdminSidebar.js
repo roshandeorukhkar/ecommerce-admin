@@ -30,7 +30,7 @@ const AdminSidebar = () => {
                                     aria-expanded={`${productSubMenu == true ? "true" : "false"}`} onClick={() => setProductSubMenu(!productSubMenu)}><i className="icon-bag fa-fw"></i> <span className="hide-menu"> My Product</span> <span className="label label-rounded pull-right"><i className= {`${productSubMenu == true ? 'icon-arrow-down' : 'icon-arrow-right'}`}></i></span></Link>
                                 <ul aria-expanded={`${productSubMenu == true ? "true" : "false"}`} className={`${productSubMenu == true ? "collapse in" : "collapse"}`}>
                                     <li><Link to="#">Product List</Link></li>
-                                    <li><Link to="/admin/specification">Specification</Link></li>
+                                    <li><Link to="/admin/Manuspecification">Specification</Link></li>
                                     <li><Link to="#">Attribute</Link></li>
                                     <li><Link to="#">Category</Link></li>
                                     <li><Link to="/admin/manufacturers">Manufacturer</Link></li>

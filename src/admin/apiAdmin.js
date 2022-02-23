@@ -273,6 +273,30 @@ export const createspecification = async (category) => {
     }
 };
 
+export const updatespecification = (productId, category) => {
+    return fetch(`${API}/Specification/${productId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const getSpecification = productId => {
+    return fetch(`${API}/Specification/${productId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 export const Specification = () => {
     return fetch(`${API}/Specification?limit=undefined`, {
         method: 'GET'
