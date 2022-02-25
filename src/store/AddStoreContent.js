@@ -5,7 +5,6 @@ const AddStoreContent = (props) =>{
     const [value,setValue] = useState()
     
     useEffect( () =>{
-        
      !props.value ? setValue('') : setValue(props.value);
      setValue(props.value)
     },[props.value])
@@ -17,7 +16,7 @@ const AddStoreContent = (props) =>{
                 <div className="col-md-12">
                     <input type={props.type} 
                     className="form-control" 
-                    defaultValue={value}
+                    value={value}
                     placeholder={props.placeholder} 
                     onChange = {props.onChange}
                     autoComplete='off'

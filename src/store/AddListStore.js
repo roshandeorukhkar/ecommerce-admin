@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import AddStoreContent from "./AddStoreContent";
-import StoreList from "./StoreList";
 import { addStoreData } from "./ApiStore";
 import { Link, useParams, useForm, useHistory } from "react-router-dom";
 import FormMainTitle from "../common/FormMainTitle";
@@ -10,11 +9,8 @@ import { getStoreDataById } from "./ApiStore";
 import { deleteStore } from "../store/ApiStore";
 import TableComponent from "../common/TableComponent";
 import StorePasswordInput from "./StorePasswordInput";
-import { StyledEngineProvider } from "@mui/material";
-
 
 const AddListStore = () => {
-
     const [values, setValues] = useState({
         storeName: "",
         storeNameError: "",
@@ -40,8 +36,6 @@ const AddListStore = () => {
     const [checkParams, setCheckParams] = useState(false);
     const history = useHistory();
 
-
-
     let params = useParams();
     useEffect(() => {
         if (params.storeId != undefined) {
@@ -52,6 +46,7 @@ const AddListStore = () => {
 
         } else if (params.deleteStoreId != undefined) {
             deleteStoreDetails();
+            window.scrollTo(0, 0);
             clearNotification();
             setCheckParams(true);
             history.push("/admin/storemanagement");
@@ -77,7 +72,6 @@ const AddListStore = () => {
                 storeId: ""
             })
             setCheckParams(true);
-
         }
         getStoreList();
     }, [checkParams]);
@@ -95,15 +89,23 @@ const AddListStore = () => {
     }
 
     const clearNotification = () => {
-        setTimeout(() => {
-            setValues({
-                ...values,
-                errorNotification: "",
-                alertColour: "",
-                displayNotification: "dn",
-            })
-        }, 2000);
+        // setTimeout(() => {
+        //     setValues({
+        //         ...values,
+        //         errorNotification: "",
+        //         alertColour: "",
+        //         displayNotification: "dn",
+        //     })
+        // }, 2000);
     }
+    // const editStore = useCallback(
+    //     (e) =>{
+    //             console.log("hello",e)
+    //         }
+    //     ,
+    //     []
+    // )
+
 
     const getStoreList = () => {
         storeList().then((data) => {
@@ -172,19 +174,14 @@ const AddListStore = () => {
                 if (params.storeId != 'undefined') {
                     history.push("/admin/storemanagement")
                 }
-                // setCheckParams(true);
-                document.getElementById("myForm").reset();
+                setCheckParams(true);
             }
         });
     };
 
     return (
         <>
-            <FormNotification
-                message={values.errorNotification}
-                alertClass={values.alertColour}
-                show={values.displayNotification}
-            />
+
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <FormMainTitle title="Store Management"
@@ -198,6 +195,11 @@ const AddListStore = () => {
                     <div className="white-box">
                         <div className="row">
                             <div className="col-lg-12">
+                                <FormNotification
+                                    message={values.errorNotification}
+                                    alertClass={values.alertColour}
+                                    show={values.displayNotification}
+                                />
                                 <h4 className="box-title">
                                     {!(params.storeId) ? "Add Store" : "Edit Store"}
                                 </h4>
@@ -274,10 +276,8 @@ const AddListStore = () => {
                             </div>
                         </div>
                     </div>
-                    {/* {list ? <StoreList tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
-                    <div className="white-box">
-                    { list != "" ? <TableComponent title=" Store List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null }
-                    </div>
+                    {list != "" ? <TableComponent title=" Store List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null}
+                    {/* {list != "" ? <TableComponent title=" Store List" clickEditData={editStore()} tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
                 </div>
             </div>
         </>
