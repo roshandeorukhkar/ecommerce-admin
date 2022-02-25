@@ -77,18 +77,18 @@ const Updatespecification = ({ match }) => {
 
     const updateCategoryForm = () => (
         <div className="">
-            <form className="mb-3" onSubmit={submitCategoryForm}>
+            <form class="col-md-6 offset-md-2" onSubmit={submitCategoryForm}>
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text-muted">Specification Name</label>
                 <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
             </div>
             <div className="form-group">
-                <label className="text-muted"><span className="text-danger">*</span><b>Type</b></label>
+                <label className="text-muted"><span className="text-danger">*</span><b>Specification Type</b></label>
                 <input onChange={handleChange_type('specification_type')} type="text" className="form-control"  value={specification_type}  specification_type="specification_type"/>
             </div>
             <div className="form-group">
-                <label className="text-muted">Description</label>
-                <textarea onChange={handleChange_des('description')} className="form-control" value={description} description="description" required />
+                <label className="text-muted">Specification Description</label>
+                <textarea onChange={handleChange_des('description')} className="form-control" value={description} description="description"  style={{height: "203px"}}/>
             </div>
             <button className="btn btn-info">Update</button>
         </form>

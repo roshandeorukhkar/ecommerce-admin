@@ -8,6 +8,9 @@ const Addspecification = () => {
     const [manufacturerName, setName] = useState("");
     const [specification_type, set_type] = useState("");
     const [description, setDescription] = useState("");
+    
+    
+    
 
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -48,20 +51,20 @@ const Addspecification = () => {
         });
     };
     const newCategoryFom = () => (
-        <form onSubmit={clickSubmit}>
+        <form onSubmit={clickSubmit}  class="col-md-6 offset-md-2">
             <div className="form-group">
-                <label className="text-muted"><span className="text-danger">*</span><b>Name</b></label>
+                <label className="text-muted"><span className="text-danger">*</span><b>Specification Name</b></label>
                 <input type="text" className="form-control" onChange={handleChange} value={manufacturerName} autoFocus required />
             </div>
             <div className="form-group">
-                <label className="text-muted"><span className="text-danger">*</span><b>Type</b></label>
+                <label className="text-muted"><span className="text-danger">*</span><b>Specification Type</b></label>
                 <input type="text" className="form-control" onChange={handleChange_type} value={specification_type} autoFocus required />
             </div>
             <div className="form-group">
-                <label className="text-muted"><b>Description</b></label>
-                <textarea rows="2" className="form-control" onChange={handleChange_des} value={description} autoFocus></textarea>
+                <label className="text-muted"><b>Specification Description</b></label>
+                <textarea rows="2" className="form-control" onChange={handleChange_des} value={description} autoFocus style={{height: "203px"}} ></textarea>
             </div>
-            <button className="btn btn-info">Save</button>
+            <button className="btn btn-info">Submit</button>
         </form>
     );
 
