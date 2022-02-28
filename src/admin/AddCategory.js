@@ -1,89 +1,104 @@
-import React, { useState } from "react";
-import Layout from "../core/Layout";
-import { isAuthenticated } from "../auth";
-import { Link } from "react-router-dom";
+
+import React, { useState } from 'react';
+import AdminHeader from "../user/AdminHeader";
+import AdminSidebar from "../user/AdminSidebar";
 import { createCategory } from "./apiAdmin";
+import { Redirect } from 'react-router-dom';
 
-const AddCategory = () => {
-    const [name, setName] = useState("");
-    const [error, setError] = useState(false);
-    const [success, setSuccess] = useState(false);
+const AddManufacturer = () =>{
+    
+const [values, setValues] = useState({
+        name: '',
+        error: '',
+        success: false,
+        redirectToProfile: false
+    });
 
-    // destructure user and token from localstorage
-    const { user, token } = isAuthenticated();
+const { name, success, error, redirectToProfile } = values;
 
-    const handleChange = e => {
-        setError("");
-        setName(e.target.value);
-    };
-
-    const clickSubmit = e => {
-        e.preventDefault();
-        setError("");
-        setSuccess(false);
-        // make request to api to create category
-        createCategory(user._id, token, { name }).then(data => {
-            if (data.error) {
-                setError(data.error);
-            } else {
-                setError("");
-                setSuccess(true);
-            }
-        });
-    };
-
-    const newCategoryFom = () => (
-        <form onSubmit={clickSubmit}>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    onChange={handleChange}
-                    value={name}
-                    autoFocus
-                    required
-                />
-            </div>
-            <button className="btn btn-outline-primary">Create Category</button>
-        </form>
-    );
-
-    const showSuccess = () => {
-        if (success) {
-            return <h3 className="text-success">{name} is created</h3>;
-        }
-    };
-
-    const showError = () => {
-        if (error) {
-            return <h3 className="text-danger">Category should be unique</h3>;
-        }
-    };
-
-    const goBack = () => (
-        <div className="mt-5">
-            <Link to="/admin/dashboard" className="text-warning">
-                Back to Dashboard
-            </Link>
-        </div>
-    );
-
-    return (
-        <Layout
-            title="Add a new category"
-            description={`G'day ${user.name}, ready to add a new category?`}
-        >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showSuccess()}
-                    {showError()}
-                    {newCategoryFom()}
-                    {goBack()}
-                </div>
-            </div>
-        </Layout>
-    );
+const handleChange = name => event => {
+    setValues({ ...values, error: false, [name]: event.target.value });
 };
 
-export default AddCategory;
+const clickSubmit = event => {
+    event.preventDefault();
+    setValues({ ...values, error: false });
+    createCategory({ name}).then(data => {
+      // alert(data.error)
+        if (data.error) {
+            setValues({ ...values, error: data.error, success: false });
+        } else {
+            setValues({
+                ...values,
+                name: '',
+                error: '',
+                success: true,
+                redirectToProfile: false
+            });
+            setTimeout(function(){
+                setValues({
+                    ...values,
+                    redirectToProfile:true
+                })
+            },1000)
+        }
+    });
+};
+
+const showError = () => (
+    <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+        {error}
+    </div>
+);
+
+const showSuccess = () => (
+    <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+       <a class="text-center" style={{color:'white'}}> Category add successfully </a> 
+    </div>  
+);
+
+const redirectUser = () => {
+    if(redirectToProfile) {
+        return <Redirect to="/admin/Manucategory" />;
+     }  
+};
+return(
+        <>
+            <div id="wrapper">
+            <AdminHeader />
+            <AdminSidebar />
+            <div className="page-wrapper">
+                <div className="container-fluid">
+                    <h4 className="font-bold"> Add Category</h4>
+                        <div className="white-box">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <form onSubmit={clickSubmit} >
+                                        {showSuccess()}
+                                        {showError()}
+                                        {redirectUser()}
+                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                            <div className="form-group col-lg-7">
+                                                <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
+                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} required/>
+                                            </div>
+                                            <div className="col-lg-7">
+                                                <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                                            </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </>
+
+    )
+
+}
+
+
+export default AddManufacturer;
+

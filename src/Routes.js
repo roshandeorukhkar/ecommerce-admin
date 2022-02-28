@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import AdminRoute from './auth/AdminRoute';
 import AdminDashboard from './user/AdminDashboard';
-import AddCategory from './user/AddCategory';
+
 import AddProduct from './user/AddProduct';
 import Orders from './user/Orders';
 import UpdateProduct from './user/UpdateProduct';
-import UpdateCategory from './user/updateCategory';
+import UpdateCategory from './admin/updateCategory';
 import AdminSignin from './user/Signin';
 import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement'; //shubha : demo
@@ -29,6 +29,9 @@ import RoleManagement from './store/RoleManagement';
 import Managespecification from './admin/Managespecification';
 import Manuspecification from './admin/Manuspecification';
 import Updatespecification from './admin/Updatespecification';
+import Manucategory from './admin/Manucategory';
+import AddCategory from './admin/AddCategory';
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -57,6 +60,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/Managespecification" exact component={Managespecification} />
                 <AdminRoute path="/admin/Manuspecification" exact component={Manuspecification} />
                 <AdminRoute path="/admin/Updatespecification/update/:productId" exact component={Updatespecification} />
+                <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
+               
                 
 </Switch>
         </BrowserRouter>

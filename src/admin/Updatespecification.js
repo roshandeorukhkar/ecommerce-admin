@@ -13,14 +13,15 @@ const Updatespecification = ({ match }) => {
         description:'',
         specification_type:'',
         error: '',
+        success: false,
         redirectToProfile: false,
         formData: ''
     });
-
+     
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { manufacturerName,specification_type, description, error, redirectToProfile } = values;
+    const { manufacturerName,specification_type, description,success, error, redirectToProfile } = values;
 
     const init = productId => {
         getSpecification(productId).then(data => {
@@ -69,8 +70,15 @@ const Updatespecification = ({ match }) => {
                     manufacturerName: data.manufacturerName,
                     description:data.description,
                     error: false,
-                    redirectToProfile: true
+                    success: true,
+                    redirectToProfile: false
                 });
+                setTimeout(function(){
+                    setValues({
+                        ...values,
+                        redirectToProfile:true
+                    })
+                },1000)
             }
         });
     };
@@ -94,7 +102,11 @@ const Updatespecification = ({ match }) => {
         </form>
         </div>
     );
-
+    const showSuccess = () => (
+        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+           <a class="text-center" style={{color:'white'}}> Specification updated successfully </a> 
+        </div>  
+    );
     const showError = () => (
         <div className={'alert alert-danger'} role="alert" style={{ display: error ? '' : 'none' }}>
             <button type="button" className="close" data-dismiss="alert" aria-label="Close">
@@ -103,7 +115,7 @@ const Updatespecification = ({ match }) => {
             {error}
         </div>
     );
-
+ 
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
@@ -125,6 +137,7 @@ const Updatespecification = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                            {showSuccess()}
                                             {showError()}
                                             {updateCategoryForm()}
                                             {redirectUser()}

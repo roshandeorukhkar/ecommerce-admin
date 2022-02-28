@@ -1,6 +1,23 @@
 import { API } from '../config';
 
-export const createCategory = (userId, token, category) => {
+
+export const createCategory = async (category) => {
+    try {
+        const response = await fetch(`${API}/category/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(category)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+/*export const createCategory = (userId, token, category) => {
     return fetch(`${API}/category/create/${userId}`, {
         method: 'POST',
         headers: {
@@ -17,7 +34,24 @@ export const createCategory = (userId, token, category) => {
             console.log(err);
         });
 };
+*/
 
+export const updateCategory = (categoryId, category) => {
+    return fetch(`${API}/category/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+/*
 export const updateCategory = (categoryId, userId, token, category) => {
     return fetch(`${API}/category/${categoryId}/${userId}`, {
         method: 'PUT',
@@ -33,8 +67,32 @@ export const updateCategory = (categoryId, userId, token, category) => {
             return response.json();
         })
         .catch(err => console.log(err));
+}; */
+export const deletecategory = (productId) => 
+{
+    console.log(productId)
+    return fetch(`${API}/category/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
+};
+/*
+export const deleteSpecification = (productId) => {
+    return fetch(`${API}/Specification/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
 };
 
+*/
 export const createProduct = (userId, token, product) => {
     return fetch(`${API}/product/create/${userId}`, {
         method: 'POST',
@@ -255,6 +313,24 @@ export const updateProduct = (productId, userId, token, product) => {
         .catch(err => console.log(err));
 };
 
+
+export const createspecification = async (category) => {
+    try {
+        const response = await fetch(`${API}/specification/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(category)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+/*
 export const createspecification = async (category) => {
 
     try {
@@ -272,7 +348,7 @@ export const createspecification = async (category) => {
         console.log(err);
     }
 };
-
+*/
 export const updatespecification = (productId, category) => {
     return fetch(`${API}/Specification/${productId}`, {
         method: 'PUT',
