@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const FormNotification = ({
     message = "",
     alertClass = '', show = '',
 }) => {
-    
+    const [showDiv, setShowDiv] = useState(show);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setShowDiv('db'), 1000);
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [showDiv]);
+
+    const notification = () => {
+        return <div className={`alert ${alertClass} ${show} `}   >
+                {message}
+                </div>
+    }
+
     return (
-        <>
-        <div id="alerttopright" className={`myadmin-alert  myadmin-alert-top-right ${alertClass} ${show} `}   >
-                <h4>{message}</h4>
-            </div>
-        </>
+         showDiv ? notification() : null 
     )
 }
 export default FormNotification;

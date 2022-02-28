@@ -62,6 +62,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/Updatespecification/update/:productId" exact component={Updatespecification} />
                 <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
                
+                <AdminRoute path="/admin/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
+                <AdminRoute path="/admin/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
                 
 </Switch>
         </BrowserRouter>
