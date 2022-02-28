@@ -101,12 +101,12 @@ const ManageManufacturer = () => {
                         ))}
 
                     </tbody>
-                </table>
+                     </table>
                     
                     <br />
                 </div>
             </div>
-    );
+    );  
 };
 
 export default ManageManufacturer;
