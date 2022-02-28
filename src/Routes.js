@@ -29,6 +29,11 @@ import RoleManagement from './store/RoleManagement';
 import Managespecification from './admin/Managespecification';
 import Manuspecification from './admin/Manuspecification';
 import Updatespecification from './admin/Updatespecification';
+
+import userManagemnt from './userManagement/UserManagemnt';
+import UpdateUsers from './userManagement/UserEdit';
+import AddUser from './userManagement/UserAdd';
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -57,6 +62,10 @@ const Routes = () => {
                 <AdminRoute path="/admin/Managespecification" exact component={Managespecification} />
                 <AdminRoute path="/admin/Manuspecification" exact component={Manuspecification} />
                 <AdminRoute path="/admin/Updatespecification/update/:productId" exact component={Updatespecification} />
+
+                <AdminRoute path="/admin/users" exact component={userManagemnt} />
+                <AdminRoute path="/admin/users/update/:userId" exact component={UpdateUsers} />
+                <AdminRoute path="/admin/create/users" exact component={AddUser} />
                 
 </Switch>
         </BrowserRouter>
