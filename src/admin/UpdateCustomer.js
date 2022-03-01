@@ -12,6 +12,7 @@ const UpdateCustomer = ({ match }) => {
         email:'',
         description:'',
         error: '',
+        success: false,
         redirectToProfile: false,
         formData: ''
     });
@@ -19,7 +20,7 @@ const UpdateCustomer = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { name, email, error, redirectToProfile, createdAt } = values;
+    const { name, email, error, success, redirectToProfile, createdAt } = values;
 
     const init = productId => {
         getCust(productId).then(data => {
@@ -32,6 +33,7 @@ const UpdateCustomer = ({ match }) => {
                     email: data.email,
                     createdAt:data.createdAt
                 });
+                
             }
         });
     };
@@ -56,15 +58,22 @@ const UpdateCustomer = ({ match }) => {
         };
         updateCustomer(match.params.productId, category).then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error });
+                setValues({ ...values, error: data.error, success: false });
             } else {
                 setValues({
                     ...values,
                     name: data.name,
                     email:data.email,
                     error: false,
-                    redirectToProfile: true
+                    success: true,
+                    redirectToProfile: false
                 });
+                setTimeout(function(){
+                    setValues({
+                        ...values,
+                        redirectToProfile:true
+                    })
+                },1000)
             }
         });
     };
@@ -87,6 +96,12 @@ const UpdateCustomer = ({ match }) => {
             <button className="btn btn-info">Update</button>
         </form>
         </div>
+    );
+
+    const showSuccess = () => (
+        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+           <a class="text-center" style={{color:'white'}}> Customer update successfully </a> 
+        </div>  
     );
 
     const showError = () => (
@@ -119,6 +134,7 @@ const UpdateCustomer = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                            {showSuccess()}
                                             {showError()}
                                             {updateCategoryForm()}
                                             {redirectUser()}

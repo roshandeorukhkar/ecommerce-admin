@@ -46,7 +46,6 @@ const Customer = () => {
 
             <div className="row">
                 <div className="col-12">
-                   <br></br>
                     <table className="table">
                     <thead>
                             <tr id="TH">
