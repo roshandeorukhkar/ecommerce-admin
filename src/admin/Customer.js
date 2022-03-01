@@ -45,14 +45,12 @@ const Customer = () => {
     return (
 
             <div className="row">
-                {/* <h4 className="box-title">Customer {products.length}</h4><hr></hr> */}
-                {/* <h2><Link to={`create/customer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Customer</button></Link></h2> */}
                 <div className="col-12">
                    <br></br>
                     <table className="table">
                     <thead>
-                            <tr>
-                                <th><input type="checkbox"/></th>
+                            <tr id="TH">
+                                <th><input type="checkbox" id="checkboxTH"/></th>
                                 <th>Customer Name</th>
                                 <th>E-mail</th>
                                 <th>Status</th>
@@ -63,10 +61,10 @@ const Customer = () => {
                     </thead>
                     <tbody>
                         {products.map((customer, i) => (
-                       <tr  key={i}>
+                       <tr  key={i} id="tableInput">
                             {!customer.deletedAt ?(
                                <>
-                           <td><input type="checkbox"/></td>
+                           <td><input type="checkbox" id="checkboxTH" /></td>
                             <td>{customer.name}</td>
                             <td>{customer.email}</td>
                             <td> 
