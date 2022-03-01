@@ -81,19 +81,21 @@ const UpdateCustomer = ({ match }) => {
     const updateCategoryForm = () => (
         <div className="">
             <form className="mb-3" onSubmit={submitCategoryForm}>
-            <div className="form-group">
+            <div className="form-group col-lg-7">
                 <h6>Customer Name</h6>
                 <input onChange={handleChange('name')} type="text" placeholder='Cutomer name' className="form-control" value={name} required name="name" />
             </div>
-            <div className="form-group">
+            <div className="form-group col-lg-7">
                 <label className="text-muted">E-mail</label>
                 <input onChange={handleChange_des('email')} type="text" className="form-control" value={email} required email="email" />
             </div>
-            <div className="form-group">
+            <div className="form-group col-lg-7">
                 <label className="text-muted">Add Date</label>
                 <input type="text" className="form-control" value={createdAt}  />
             </div>
-            <button className="btn btn-info">Update</button>
+            <div className='col-lg-7'>
+                 <button className="btn btn-info" style={{float:'right'}}>Update</button>
+            </div>
         </form>
         </div>
     );
