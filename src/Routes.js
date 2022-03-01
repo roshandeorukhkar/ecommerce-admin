@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import AdminRoute from './auth/AdminRoute';
 import AdminDashboard from './user/AdminDashboard';
-import AddCategory from './user/AddCategory';
+
 import AddProduct from './user/AddProduct';
 import Orders from './user/Orders';
 import UpdateProduct from './user/UpdateProduct';
-import UpdateCategory from './user/updateCategory';
+import UpdateCategory from './admin/updateCategory';
 import AdminSignin from './user/Signin';
 import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement'; //shubha : demo
@@ -33,6 +33,8 @@ import Updatespecification from './admin/Updatespecification';
 import userManagemnt from './userManagement/UserManagemnt';
 import UpdateUsers from './userManagement/UserEdit';
 import AddUser from './userManagement/UserAdd';
+import Manucategory from './admin/Manucategory';
+import AddCategory from './admin/AddCategory';
 
 const Routes = () => {
     return (
@@ -66,6 +68,10 @@ const Routes = () => {
                 <AdminRoute path="/admin/users" exact component={userManagemnt} />
                 <AdminRoute path="/admin/users/update/:userId" exact component={UpdateUsers} />
                 <AdminRoute path="/admin/create/users" exact component={AddUser} />
+                <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
+               
+                <AdminRoute path="/admin/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
+                <AdminRoute path="/admin/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
                 
 </Switch>
         </BrowserRouter>

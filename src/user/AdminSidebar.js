@@ -32,7 +32,7 @@ const AdminSidebar = () => {
                                     <li><Link to="#">Product List</Link></li>
                                     <li><Link to="/admin/Manuspecification">Specification</Link></li>
                                     <li><Link to="#">Attribute</Link></li>
-                                    <li><Link to="#">Category</Link></li>
+                                    <li><Link to="Manucategory">Category</Link></li>
                                     <li><Link to="/admin/manufacturers">Manufacturer</Link></li>
                                 </ul>
                             </li>

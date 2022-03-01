@@ -1,5 +1,5 @@
 import MUIDataTable from "mui-datatables";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
@@ -83,6 +83,7 @@ const TableComponent = (props) => {
         />,
         getDate(ele.createdDate),
         <div>
+          {/* <button className="className='btn btn-outline btn-info m-5'" onClick={props.clickEditData}><i className='fa fa-pencil font-15'></i></button> */}
           <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
           <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
         </div>
@@ -285,7 +286,7 @@ const TableComponent = (props) => {
           </Select>
         </FormControl> */}
         <MUIDataTable
-          title={props.list}
+          title={props.title}
           data={data}
           columns={columns}
           options={options}
@@ -295,4 +296,4 @@ const TableComponent = (props) => {
   );
 }
 
-export default TableComponent;
+export default memo(TableComponent);

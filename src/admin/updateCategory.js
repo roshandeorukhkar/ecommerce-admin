@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
-import { Link, Redirect } from 'react-router-dom';
+import AdminHeader from "../user/AdminHeader";
+import AdminSidebar from "../user/AdminSidebar";
+import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
 // {category: ["5cd0258f2793ec6e100bc191"], price: []}
 // http://localhost:3000/admin/category/update/5cd0258f2793ec6e100bc191
@@ -40,6 +42,34 @@ const UpdateCategory = ({ match }) => {
         setValues({ ...values, error: false, [name]: event.target.value });
     };
 
+
+    const submitCategoryForm = e => {
+        e.preventDefault();
+        const category = {
+            name: name
+        };
+        updateCategory(match.params.productId, category).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    ...values,
+                    manufacturerName: data.manufacturerName,
+                    description:data.description,
+                    error: false,
+                    success: true,
+                    redirectToProfile: false
+                });
+                setTimeout(function(){
+                    setValues({
+                        ...values,
+                        redirectToProfile:true
+                    })
+                },1000)
+            }
+        });
+    };
+/*
     const submitCategoryForm = e => {
         e.preventDefault();
         // update with ? you should send category name otherwise what to update?
@@ -47,6 +77,7 @@ const UpdateCategory = ({ match }) => {
             name: name
         };
         updateCategory(match.params.categoryId, user._id, token, category).then(data => {
+
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -59,15 +90,23 @@ const UpdateCategory = ({ match }) => {
             }
         });
     };
-
+*/
     const updateCategoryForm = () => (
-        <div className="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+        <div id="wrapper">
+        <AdminHeader />
+        <AdminSidebar />
+        <div className="page-wrapper">
+            <div className="container-fluid">
+                <h4 className="font-bold"> Add Category</h4>
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
             <form className="mb-5" onSubmit={submitCategoryForm}>
-                <span className="login100-form-title p-b-32 m-b-7">Update Category Form</span>
-                <span className="txt1 p-b-11">Category Name</span>
+                <span className="">Update Category Form</span>
+                <span className="">Category Name</span>
                 <br />
                 <br />
-                <div className="wrap-input100 validate-input m-b-36">
+                <div className="">
                     <input
                         onChange={handleChange('name')}
                         value={name}
@@ -78,11 +117,16 @@ const UpdateCategory = ({ match }) => {
                     />
                 </div>
                 <div className="w-size25">
-                    <button type="submit" className="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
+                    <button type="submit" className="">
                         Save Changes
                     </button>
                 </div>
             </form>
+            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
     );
 
@@ -103,31 +147,16 @@ const UpdateCategory = ({ match }) => {
         }
     };
 
-    const goBackBTN = () => {
-        return (
-            <div className="mt-5">
-                <Link to="/admin/categories" className="text-info">
-                    Back To Admin Home
-                </Link>
-            </div>
-        );
-    };
+    
 
     return (
-        <Layout
-            title={`Hi ${user.name}`}
-            description={`This is Update Product Action Page`}
-            className="container-fluid"
-        >
             <div className="row">
-                <div className="col-md-8 offset-md-2 m-b-250 mb-5">
+                <div className="col-md-12">
                     {showError()}
                     {updateCategoryForm()}
-                    {goBackBTN()}
                     {redirectUser()}
                 </div>
             </div>
-        </Layout>
     );
 };
 
