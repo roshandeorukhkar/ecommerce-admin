@@ -14,12 +14,13 @@ const [values, setValues] = useState({
         userId:'',
         mobile:'',
         address:'',
+        storeName:'',
         error: '',
         success: false,
         redirectToProfile: false
     });
 
-const { ownerName, email, password, mobile, address, userId, success, error, redirectToProfile } = values;
+const { ownerName, email, password, mobile, address, storeName, userId, success, error, redirectToProfile } = values;
 
 const handleChange = ownerName => event => {
     setValues({ ...values, error: false, [ownerName]: event.target.value });
@@ -28,7 +29,7 @@ const handleChange = ownerName => event => {
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createUser({ ownerName, email, password, mobile, address }).then(data => {
+    createUser({ ownerName, email, password, mobile, address, storeName }).then(data => {
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
         } else {
@@ -40,6 +41,7 @@ const clickSubmit = event => {
                 password:'',
                 mobile:'',
                 address:'',
+                storeName:'',
                 error: '',
                 success: true,
                 redirectToProfile: false
@@ -109,6 +111,10 @@ return(
                                                 <input onChange={handleChange('mobile')} type="text" className="form-control" placeholder='Enter mobile' value={mobile} />
                                             </div>
                                             <div className="form-group col-lg-6">
+                                                <h6><b>Store Name</b></h6>
+                                                <input onChange={handleChange('storeName')}  type="text" className="form-control" placeholder='Address' value={storeName} />
+                                            </div>
+                                            <div className="form-group col-lg-12">
                                                 <h6><b>Address</b></h6>
                                                 <textarea onChange={handleChange('address')} rows="4" type="text" className="form-control" placeholder='Address' value={address}></textarea>
                                             </div>

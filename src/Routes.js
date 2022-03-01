@@ -36,6 +36,8 @@ import AddUser from './userManagement/UserAdd';
 import Manucategory from './admin/Manucategory';
 import AddCategory from './admin/AddCategory';
 
+import AllUser from './userManagement/AllUser';
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -72,6 +74,8 @@ const Routes = () => {
                
                 <AdminRoute path="/admin/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
+
+                <AdminRoute path="/admin/user/list" exact component={AllUser} />
                 
 </Switch>
         </BrowserRouter>
