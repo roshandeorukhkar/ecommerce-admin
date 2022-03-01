@@ -67,7 +67,7 @@ const AdminSignin = () => {
                                         {error && (<span className="text-danger"> {error} </span>)}
                                     </div>
                                     <div className='t-a-c'>
-                                        <div type="submit" onClick={handleSubmit} className="btn btn-primary">
+                                        <div type="submit" onClick={handleSubmit} className="btn btn-primary btn-block">
                                             Login
                                         </div>
                                     </div>
