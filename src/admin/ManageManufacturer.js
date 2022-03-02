@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { deleteManufacturer, getManufacturers, deleteManufacturer1 } from "./apiAdmin";
+import { deleteManufacturer, getManufacturers, deleteManufacturer1, statusManfacturer, statusChangeManfacturer } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 
@@ -48,6 +48,33 @@ const ManageManufacturer = () => {
                         redirectToProfile:true
                     })
                 },1000)
+            }
+        });
+    };
+
+    const status = productId => {
+        const category = {
+             status: 0,
+         };
+        statusManfacturer(productId, category).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadProducts();
+            }
+        });
+    };
+
+    const statusChange = productId => {
+        const category = {
+             status: 1,
+         };
+        statusChangeManfacturer(productId, category).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                //alert('Are you soure you wont delete record...............');
+                loadProducts();
             }
         });
     };
@@ -128,10 +155,10 @@ const ManageManufacturer = () => {
                                 {p.status == 1 
                                     ?(
                                     <>
-                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(p._id)} color='primary'/>
                                     </>
                                     ):
-                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} color='primary'/>
+                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(p._id)} color='primary'/>
                                     }
                                 </td>
                                 <td>

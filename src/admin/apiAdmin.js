@@ -196,6 +196,36 @@ export const updateManfacturer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
+
+export const statusManfacturer = (productId, category) => {
+    return fetch(`${API}/manufacturer/status/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const statusChangeManfacturer = (productId, category) => {
+    return fetch(`${API}/manufacturer/statusChange/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
 export const deleteManufacturer1 = (productId, category) => {
     return fetch(`${API}/manufacturer/delete/${productId}`, {
         method: 'POST',
@@ -430,6 +460,47 @@ export const updateCustomer = (productId, category) => {
 };
 export const deleteCustomer = (productId, category) => {
     return fetch(`${API}/cust/delete/${productId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const removeCustomer = (productId) => {
+    return fetch(`${API}/cust/${productId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const statusCustomer = (productId, category) => {
+    return fetch(`${API}/cust/status/${productId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const statusCheckCustomer = (productId, category) => {
+    return fetch(`${API}/cust/statusCheck/${productId}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
