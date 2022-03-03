@@ -513,3 +513,87 @@ export const statusCheckCustomer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
+
+//create Attribute API //
+export const createAttribute = async (attribute) => {
+    try {
+        const response = await fetch(`${API}/attribute/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(attribute)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getAttributes = () => {
+    return fetch(`${API}/attribute?limit=undefined`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const getAttribute = attributeId => {
+    return fetch(`${API}/attribute/${attributeId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+
+export const updateAttribute = (attributeId, attribute) => {
+    return fetch(`${API}/attribute/${attributeId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(attribute)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const deleteAttributeone = (attributeId, category) => {
+    return fetch(`${API}/attribute/delete/${attributeId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const deleteAttribute = (attributeId) => {
+    return fetch(`${API}/attribute/${attributeId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};

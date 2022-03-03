@@ -15,12 +15,13 @@ import AdminStoreMangement from './store/StoreManagement';
 import Manufacturer from './admin/Manufacturer';
 import ManageManufacturer from './admin/ManageManufacturer';
 import AddManufacturer from './admin/AddManufacturer';
+import AddAttributenew from './admin/AddAttributenew';
 import UpdateManufacturer from './admin/UpdateManufacturer';
+import UpdateAttribute from './admin/UpdateAttribute';
 import Addspecification from './admin/Addspecification';
 import ProductSpecification from './admin/ProductSpecification';
 import ProductManufacture from './admin/ProductManufacture';
-
-
+import ProductAttribute from './admin/ProductAttribute';
 import Customer from './admin/Customer';
 import CustomerManagement from './admin/CustomerManagement';
 import UpdateCustomer from './admin/UpdateCustomer';
@@ -55,10 +56,12 @@ const Routes = () => {
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
                 <AdminRoute path="/admin/specification" exact component={ProductSpecification} />
                 <AdminRoute path="/admin/manufacturers" exact component={ProductManufacture} />
+                <AdminRoute path="/admin/attribute" exact component={ProductAttribute} />
                 <AdminRoute path="/admin/manufacturer" exact component={ManageManufacturer} />
                 <AdminRoute path="/admin/create/manufacturer" exact component={AddManufacturer} />
+                <AdminRoute path="/admin/create/addAttributenew" exact component={AddAttributenew} />
                 <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
-                <AdminRoute path="/admin/storemanagement/edit/:storeId" exact component={AdminStoreMangement} />
+                <AdminRoute path="/admin/attribute/update/:attributeId" exact component={UpdateAttribute} />
                 <AdminRoute path="/admin/storemanagement/delete/:deleteStoreId" exact component={AdminStoreMangement} />
                 <AdminRoute path="/admin/coustomer" exact component={Customer} />
                 <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />

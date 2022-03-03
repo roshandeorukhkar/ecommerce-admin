@@ -31,7 +31,7 @@ const AdminSidebar = () => {
                                 <ul aria-expanded={`${productSubMenu == true ? "true" : "false"}`} className={`${productSubMenu == true ? "collapse in" : "collapse"}`}>
                                     <li><Link to="#">Product List</Link></li>
                                     <li><Link to="/admin/Manuspecification">Specification</Link></li>
-                                    <li><Link to="#">Attribute</Link></li>
+                                    <li><Link to="/admin/attribute">Attribute</Link></li>
                                     <li><Link to="Manucategory">Category</Link></li>
                                     <li><Link to="/admin/manufacturers">Manufacturer</Link></li>
                                 </ul>
