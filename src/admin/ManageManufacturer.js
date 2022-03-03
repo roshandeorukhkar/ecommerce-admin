@@ -54,7 +54,7 @@ const ManageManufacturer = () => {
 
     const status = productId => {
         const category = {
-             status: 0,
+            manufacturerName: 0,
          };
         statusManfacturer(productId, category).then(data => {
             if (data.error) {
@@ -67,7 +67,7 @@ const ManageManufacturer = () => {
 
     const statusChange = productId => {
         const category = {
-             status: 1,
+            manufacturerName: 1,
          };
         statusChangeManfacturer(productId, category).then(data => {
             if (data.error) {
