@@ -5,7 +5,7 @@ import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 
 const Customer = () => {
-
+    
     const [values, setValues] = useState({
         error: '',
        redirectToProfile: false,
