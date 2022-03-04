@@ -9,6 +9,7 @@ import { addUserRoleData } from "./ApiStore";
 import { getUserRoleListData } from "./ApiStore";
 import { getUserRoleByIdData } from "./ApiStore";
 import { deleteUserRole } from "./ApiStore";
+import FormDropdownWithCheckbox from "../common/FormDropdownWithCheckbox";
 
 const AddListRoleManagement = () => {
   let params = useParams();
@@ -28,6 +29,7 @@ const AddListRoleManagement = () => {
   const [list, setList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
   const history = useHistory();
+  const [select ,setSelect] = useState();
 
   useEffect(() => {
     console.log(params.userRoleId);
@@ -87,6 +89,11 @@ const AddListRoleManagement = () => {
         displayNotification: "db",
       })
     })
+  }
+
+  const selectedOption = (data) =>{
+    setValues({accessModuleId: JSON.stringify(data)});
+    console.log("-------",checkParams);
   }
 
 
@@ -162,8 +169,7 @@ const AddListRoleManagement = () => {
                     onChange={handleChange("roleName")}
                     errorSpan={values.errorRoleName}
                   />
-
-                  <FormDropdown
+                  {/* <FormDropdown
                     lable="Access Module"
                     itme1="Product"
                     itme2="Customer"
@@ -172,6 +178,17 @@ const AddListRoleManagement = () => {
                     value={values.accessModuleId}
                     handleChange={handleChange("accessModuleId")}
                     errorSpan={values.errorAccessModuleId}
+                  /> */}
+                  <FormDropdownWithCheckbox 
+                      label="Access Module"
+                      itme1="Product"
+                      itme2="Customer"
+                      itme3="Payment"
+                      itme4="Store"
+                      selectData = {selectedOption}
+                      // value={values.accessModuleId}
+                      handleChange={handleChange("accessModuleId")}
+                      errorSpan={values.errorAccessModuleId}
                   />
 
                   <AddStoreContent
