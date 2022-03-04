@@ -185,12 +185,12 @@ const AddListStore = () => {
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <FormMainTitle title="Store Management"
-                        btnName="Add Role"
+                        // btnName="Add Role"
                         // btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
-                        btnLink="/admin/rolemanagement"
+                        // btnLink="/admin/rolemanagement"
                         // btnSecondlink = "/admin/storemanagement"
-                        btnSecondIcon="fa fa-plus-circle"
+                        // btnSecondIcon="fa fa-plus-circle"
                     />
                     <div className="white-box">
                         <div className="row">

@@ -12,6 +12,7 @@ import { deleteUserRole } from "./ApiStore";
 
 const AddListRoleManagement = () => {
   let params = useParams();
+  var storeId = params.storeId;
   const [values, setValues] = useState({
     roleName: "",
     accessModuleId: "",
@@ -34,11 +35,11 @@ const AddListRoleManagement = () => {
       getUserRoleById();
       window.scrollTo(0, 0);
       setCheckParams(true);
-    }else if(params.deleteUserRoleId != undefined){
+    } else if (params.deleteUserRoleId != undefined) {
       deleteUserRoleDetails();
       setCheckParams(true);
       history.push("/admin/rolemanagement");
-    } 
+    }
     else {
       setValues({
         roleName: "",
@@ -79,14 +80,14 @@ const AddListRoleManagement = () => {
   const deleteUserRoleDetails = () => {
     const deleteUserRoleId = params.deleteUserRoleId;
     deleteUserRole(deleteUserRoleId).then((data) => {
-        setValues({
-            ...values,
-            errorNotification: data.message,
-            alertColour: "alert-success",
-            displayNotification: "db",
-        })
+      setValues({
+        ...values,
+        errorNotification: data.message,
+        alertColour: "alert-success",
+        displayNotification: "db",
+      })
     })
-}
+  }
 
 
   const handleChange = (name) => (event) => {
@@ -136,11 +137,9 @@ const AddListRoleManagement = () => {
       <div className="page-wrapper">
         <div className="container-fluid">
           <FormMainTitle title="Role Management"
-            btnName="Add Role"
-            btnLink="/admin/rolemanagement"
-            btnSecond="Back"
-            btnSecondlink="/admin/storemanagement"
-            btnSecondIcon="fa fa-backward"
+            btnIcon="fa fa-backward"
+            btnName="Back"
+            btnLink="/admin/storemanagement"
             onClick={() => setCheckParams(!checkParams)}
           />
           <div className="white-box">
@@ -184,6 +183,7 @@ const AddListRoleManagement = () => {
                     errorSpan={values.errorAssingTo}
                   />
                   <div className="col-md-6 t-a-r">
+                    <input type="hidden" value={params.storeId} name="storeId" />
                     <br></br>
                     {params.userRoleId != undefined ? <input type="hidden" value={values.userRoleId} name="userRoleId" /> : ""}
                     <button
@@ -191,7 +191,7 @@ const AddListRoleManagement = () => {
                       className="btn btn-rounded-min btn-primary"
                       onClick={clickSubmit}
                     >
-                      {!params.userRoleId ? "Add Store" : "Update Store"}
+                      {!params.userRoleId ? "Add Role" : "Update Role"}
                     </button>
                   </div>
                 </form>
