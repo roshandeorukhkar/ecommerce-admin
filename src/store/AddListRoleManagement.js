@@ -9,9 +9,11 @@ import { addUserRoleData } from "./ApiStore";
 import { getUserRoleListData } from "./ApiStore";
 import { getUserRoleByIdData } from "./ApiStore";
 import { deleteUserRole } from "./ApiStore";
+import FormDropdownWithCheckbox from "../common/FormDropdownWithCheckbox";
 
 const AddListRoleManagement = () => {
   let params = useParams();
+  var storeId = params.storeId;
   const [values, setValues] = useState({
     roleName: "",
     accessModuleId: "",
@@ -27,6 +29,7 @@ const AddListRoleManagement = () => {
   const [list, setList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
   const history = useHistory();
+  const [select ,setSelect] = useState();
 
   useEffect(() => {
     console.log(params.userRoleId);
@@ -34,11 +37,11 @@ const AddListRoleManagement = () => {
       getUserRoleById();
       window.scrollTo(0, 0);
       setCheckParams(true);
-    }else if(params.deleteUserRoleId != undefined){
+    } else if (params.deleteUserRoleId != undefined) {
       deleteUserRoleDetails();
       setCheckParams(true);
       history.push("/admin/rolemanagement");
-    } 
+    }
     else {
       setValues({
         roleName: "",
@@ -79,14 +82,19 @@ const AddListRoleManagement = () => {
   const deleteUserRoleDetails = () => {
     const deleteUserRoleId = params.deleteUserRoleId;
     deleteUserRole(deleteUserRoleId).then((data) => {
-        setValues({
-            ...values,
-            errorNotification: data.message,
-            alertColour: "alert-success",
-            displayNotification: "db",
-        })
+      setValues({
+        ...values,
+        errorNotification: data.message,
+        alertColour: "alert-success",
+        displayNotification: "db",
+      })
     })
-}
+  }
+
+  const selectedOption = (data) =>{
+    setValues({accessModuleId: JSON.stringify(data)});
+    console.log("-------",checkParams);
+  }
 
 
   const handleChange = (name) => (event) => {
@@ -136,11 +144,9 @@ const AddListRoleManagement = () => {
       <div className="page-wrapper">
         <div className="container-fluid">
           <FormMainTitle title="Role Management"
-            btnName="Add Role"
-            btnLink="/admin/rolemanagement"
-            btnSecond="Back"
-            btnSecondlink="/admin/storemanagement"
-            btnSecondIcon="fa fa-backward"
+            btnIcon="fa fa-backward"
+            btnName="Back"
+            btnLink="/admin/storemanagement"
             onClick={() => setCheckParams(!checkParams)}
           />
           <div className="white-box">
@@ -163,8 +169,7 @@ const AddListRoleManagement = () => {
                     onChange={handleChange("roleName")}
                     errorSpan={values.errorRoleName}
                   />
-
-                  <FormDropdown
+                  {/* <FormDropdown
                     lable="Access Module"
                     itme1="Product"
                     itme2="Customer"
@@ -173,6 +178,17 @@ const AddListRoleManagement = () => {
                     value={values.accessModuleId}
                     handleChange={handleChange("accessModuleId")}
                     errorSpan={values.errorAccessModuleId}
+                  /> */}
+                  <FormDropdownWithCheckbox 
+                      label="Access Module"
+                      itme1="Product"
+                      itme2="Customer"
+                      itme3="Payment"
+                      itme4="Store"
+                      selectData = {selectedOption}
+                      // value={values.accessModuleId}
+                      handleChange={handleChange("accessModuleId")}
+                      errorSpan={values.errorAccessModuleId}
                   />
 
                   <AddStoreContent
@@ -184,6 +200,7 @@ const AddListRoleManagement = () => {
                     errorSpan={values.errorAssingTo}
                   />
                   <div className="col-md-6 t-a-r">
+                    <input type="hidden" value={params.storeId} name="storeId" />
                     <br></br>
                     {params.userRoleId != undefined ? <input type="hidden" value={values.userRoleId} name="userRoleId" /> : ""}
                     <button
@@ -191,7 +208,7 @@ const AddListRoleManagement = () => {
                       className="btn btn-rounded-min btn-primary"
                       onClick={clickSubmit}
                     >
-                      {!params.userRoleId ? "Add Store" : "Update Store"}
+                      {!params.userRoleId ? "Add Role" : "Update Role"}
                     </button>
                   </div>
                 </form>

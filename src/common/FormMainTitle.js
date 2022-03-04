@@ -6,6 +6,7 @@ const FormMainTitle = ({
     title = "Title",
     btnName = "",
     btnSecond = "",
+    btnIcon,
     onClick,
     btnSecondlink,
     btnLink,
@@ -15,8 +16,7 @@ const FormMainTitle = ({
         return (
             <>
                 <Link to={btnLink} className="btn btn-rounded-min btn-primary fa-pull-right" onClick={onClick}>
-                    {/* <i className="fa fa-plus-circle"></i>  */}
-                    {btnName}
+                    <i className={btnIcon}></i> {btnName}
                 </Link>
             </>)
     }

@@ -81,7 +81,7 @@ const UpdateManufacturer = ({ match }) => {
             <form className="mb-3" onSubmit={submitCategoryForm}>
             <div className="form-group col-lg-7">
                 <h6><b><span style={{color:'red'}}>*</span> Manufacturer Nmae</b></h6>
-                <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
+                <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} manufacturerName="manufacturerName" />
             </div>
             <div className="form-group col-lg-7">
                <h6><b>Description</b></h6>

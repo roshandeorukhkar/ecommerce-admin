@@ -25,11 +25,11 @@ const AdminHeader = () =>{
                 </span>
             </Link>
         </div>
-        <ul className="nav navbar-top-links navbar-left hidden-xs">
+        {/* <ul className="nav navbar-top-links navbar-left hidden-xs">
             <li>
                 <Link to="#" className="sidebartoggler font-20 waves-effect waves-light"><i className="icon-arrow-left-circle"></i></Link>
             </li>
-        </ul>
+        </ul> */}
         <ul className="nav navbar-top-links navbar-right pull-right">
                 <li className={`dropdown ${showNotification == true ? "open" : ""}`}>
                 <Link to="#" className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" onClick={() => setShowNotification(!showNotification)}>

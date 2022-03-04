@@ -51,7 +51,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/orders" exact component={Orders} />
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
                 <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
-                <AdminRoute path="/admin/rolemanagement" exact component={RoleManagement} />
+                <AdminRoute path="/admin/rolemanagement/:storeId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
                 <AdminRoute path="/admin/specification" exact component={ProductSpecification} />
@@ -63,6 +63,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
                 <AdminRoute path="/admin/attribute/update/:attributeId" exact component={UpdateAttribute} />
                 <AdminRoute path="/admin/storemanagement/delete/:deleteStoreId" exact component={AdminStoreMangement} />
+                <AdminRoute path="/admin/storemanagement/edit/:storeId" exact component={AdminStoreMangement} />
                 <AdminRoute path="/admin/coustomer" exact component={Customer} />
                 <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />
                 <AdminRoute path="/admin/coustomers/update/:productId" exact component={UpdateCustomer} />
