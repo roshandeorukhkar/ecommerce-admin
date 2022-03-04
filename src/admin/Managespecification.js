@@ -3,6 +3,8 @@ import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { deleteSpecification, Specification } from "./apiAdmin";
 import { Switch } from '@mui/material';
+import DataTableComponent from "../common/DataTableComponent";
+
 const Managespecification = () => {
     const [products, setProducts] = useState([]);
 
@@ -32,19 +34,35 @@ const Managespecification = () => {
         loadProducts();
     }, []);
 
-
     const getDate = (date) => {
         const newDate = date.split('T')[0];
         const DATE = newDate.split('-');
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
+
+    const columns = [{
+        dataField: 'manufacturerName',
+        text: 'Specification Name',
+        sort: true
+      }, {
+        dataField: 'createdAt',
+        text: 'Date',
+        sort: true
+      }, {
+        dataField: 'status',
+        text: 'Status'
+      }, {
+        dataField: 'action',
+        text: 'action'
+      }];
+
     return (
 
             <div className="row">
                 <h4 className="box-title">Total List of Specification {products.length}</h4><hr></hr>
                 <div className="col-12">
-                   <br></br>
-                    <table className="table">
+                   {products != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={products}/> : null}
+                    {/*<table className="table">
                     <thead>
                             <tr>
                                 <th>Specification Name</th>
@@ -70,7 +88,7 @@ const Managespecification = () => {
                         ))}
 
                     </tbody>
-                </table>
+                        </table>*/}
                     
                     <br />
                 </div>
