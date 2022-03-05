@@ -29,9 +29,11 @@ export default function FormDropdownWithCheckbox(props) {
         'Payment',
         'Store',
     ];
+    console.log("props",props);
     const [personName, setPersonName] = React.useState([]);
-
-
+    React.useEffect(()=>{
+        setPersonName([props.value]);
+    },[props.value]);
     const handleChange = (event) => {
         const {
             target: { value },
@@ -42,7 +44,7 @@ export default function FormDropdownWithCheckbox(props) {
         );
         props.selectData(event.target.value);
     };
-
+    console.log(personName,"--------");
     return (
         <div className="form-group col-md-6">
             <FormControl sx={{ m: 1, width: "100%" }}>

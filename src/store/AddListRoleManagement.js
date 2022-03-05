@@ -65,7 +65,7 @@ const AddListRoleManagement = () => {
       console.log(data);
       setValues({
         roleName: data.roleName,
-        accessModuleId: data.accessModuleId,
+        accessModuleId: JSON.parse(data.accessModuleId),
         assingTo: data.assingTo,
         userRoleId: data._id
       })
@@ -186,7 +186,7 @@ const AddListRoleManagement = () => {
                       itme3="Payment"
                       itme4="Store"
                       selectData = {selectedOption}
-                      // value={values.accessModuleId}
+                      value={values.accessModuleId}
                       handleChange={handleChange("accessModuleId")}
                       errorSpan={values.errorAccessModuleId}
                   />
