@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { deleteSpecification, Specification ,statusSpecification ,statusChangeSpecification } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
+import DataTableComponent from "../common/DataTableComponent";
 
 const Managespecification = () => {
 
