@@ -165,69 +165,11 @@ const ManageManufacturer = () => {
 
     return (
         
-<<<<<<< HEAD
         <div className="row">
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
                 {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
-=======
-
-            <div className="row">
-                {deleteMessage()}
-                {redirectUser()}
-                <div className="col-12">
-                    <table className="table">
-                    <thead>
-                        <tr id="TH">
-                            <th><input type="checkbox" id="checkboxTH"/></th>
-                            <th>Manufacturer Name</th>
-                            <th>Descrtiption</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        {products.map((p, i) => (
-                            
-                       <tr  key={i} id="tableInput">
-                           {!p.deletedAt ?(
-                               <>
-                                <td><input type="checkbox"  id="checkboxTH" /></td>
-                                <td>{p.manufacturerName}</td>
-                                <td>{p.description}</td>
-                                <td>{getDate(p.createdAt)} </td>
-                                <td>
-                                {p.status == 1 
-                                    ?(
-                                    <>
-                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(p._id)} color='primary'/>
-                                    </>
-                                    ):
-                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(p._id)} color='primary'/>
-                                    }
-                                </td>
-                                <td>
-                                    <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                    {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
-                                </td>  
-                               </>
-                           ):null}
-                        
-                        
-                        </tr>
-                        
-                        ))}
-
-                    </tbody>
-                     </table>
-                    
-                    <br />
-                </div>
->>>>>>> 000757bfba4cb4d576adf815d8a08bb3e4380134
             </div>
         </div>
     );  
