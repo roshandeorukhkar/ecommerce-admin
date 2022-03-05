@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteStore } from "../store/ApiStore";
 
-const StoreList = (props) => {
+const StoreList1 = (props) => {
 
     const [list, setList] = useState(props.tableList);
     const [check, setCheck] = useState(true);
@@ -66,4 +66,4 @@ const StoreList = (props) => {
     )
 }
 
-export default StoreList;
+export default StoreList1;

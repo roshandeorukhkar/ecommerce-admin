@@ -10,6 +10,9 @@ import { getUserRoleListData } from "./ApiStore";
 import { getUserRoleByIdData } from "./ApiStore";
 import { deleteUserRole } from "./ApiStore";
 import FormDropdownWithCheckbox from "../common/FormDropdownWithCheckbox";
+import DataTableComponent from "../common/DataTableComponent";
+import { Switch } from '@mui/material';
+
 
 const AddListRoleManagement = () => {
   let params = useParams();
@@ -29,7 +32,7 @@ const AddListRoleManagement = () => {
   const [list, setList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
   const history = useHistory();
-  const [select ,setSelect] = useState();
+  const [select, setSelect] = useState();
 
   useEffect(() => {
     console.log(params.userRoleId);
@@ -79,9 +82,8 @@ const AddListRoleManagement = () => {
     });
   };
 
-  const deleteUserRoleDetails = () => {
-    const deleteUserRoleId = params.deleteUserRoleId;
-    deleteUserRole(deleteUserRoleId).then((data) => {
+  const deleteUserRoleDetails = (deleteId) => {
+    deleteUserRole(deleteId).then((data) => {
       setValues({
         ...values,
         errorNotification: data.message,
@@ -89,11 +91,12 @@ const AddListRoleManagement = () => {
         displayNotification: "db",
       })
     })
+    getUserRoleList();
   }
 
-  const selectedOption = (data) =>{
-    setValues({accessModuleId: JSON.stringify(data)});
-    console.log("-------",checkParams);
+  const selectedOption = (data) => {
+    setValues({ accessModuleId: JSON.stringify(data) });
+    console.log("-------", checkParams);
   }
 
 
@@ -104,7 +107,6 @@ const AddListRoleManagement = () => {
   const clickSubmit = (event) => {
     event.preventDefault();
     addUserRoleData({ ...values }).then((data) => {
-      console.log(data);
       if (data.status == false) {
         console.log(data);
         setValues({
@@ -139,6 +141,75 @@ const AddListRoleManagement = () => {
 
   }
 
+  //Store List component
+  const columns = [
+    {
+      dataField : 'id',
+      text : 'ID',
+      hidden : true
+    },
+    {
+      dataField: 'assingTo',
+      text: 'User ID',
+    },
+    {
+      dataField: 'roleName',
+      text: 'User Role',
+      sort: true
+    },
+    {
+      dataField: 'accessModuleId',
+      text: 'Access Module',
+      sort: true
+    },
+    {
+      dataField: 'createdAt',
+      text: 'Date',
+      sort: true
+    }, {
+      dataField: 'status',
+      text: 'Status'
+    }, {
+      dataField: 'action',
+      text: 'action'
+    }];
+
+  const getDate = (date) => {
+    const newDate = date.split('T')[0];
+    const DATE = newDate.split('-');
+    return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+  }
+
+  const getButtons = (userRoleId) => {
+    return (
+      <div>
+        <Link to={`/admin/rolemanagement/edit/${userRoleId}`} className='btn btn-outline btn-info m-5' onClick={() => setCheckParams(!checkParams)} aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link>
+        <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => deleteUserRoleDetails(userRoleId)}><i className='fa fa-trash-o font-15'></i></button>
+      </div>
+    )
+  };
+  const getSwitch = (storeStatus) => {
+    return (
+      <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked />
+    )
+  };
+ 
+  const userRoleArray = [];
+  list.forEach((item) => {
+    if (item.isDelete == false) {
+      item['id'] = item._id
+      item['assingTo'] = item.assingTo
+      item['roleName'] = item.roleName
+      item['accessModuleId'] = item.accessModuleId
+      item['createdAt'] = getDate(item.createdDate)
+      item['action'] = getButtons(item._id)
+      item['status'] = getSwitch(item.status)
+      userRoleArray.push(item);
+    }
+  });
+
+  console.log("userRoleArray",userRoleArray)
+
   return (
     <>
       <div className="page-wrapper">
@@ -169,17 +240,10 @@ const AddListRoleManagement = () => {
                     onChange={handleChange("roleName")}
                     errorSpan={values.errorRoleName}
                   />
-                  {/* <FormDropdown
-                    lable="Access Module"
-                    itme1="Product"
-                    itme2="Customer"
-                    itme3="Payment"
-                    itme4="Store"
-                    value={values.accessModuleId}
-                    handleChange={handleChange("accessModuleId")}
-                    errorSpan={values.errorAccessModuleId}
-                  /> */}
-                  <FormDropdownWithCheckbox 
+                  <FormDropdown
+                    label="Access Module"
+                  />
+                  {/* <FormDropdownWithCheckbox 
                       label="Access Module"
                       itme1="Product"
                       itme2="Customer"
@@ -189,7 +253,7 @@ const AddListRoleManagement = () => {
                       value={values.accessModuleId}
                       handleChange={handleChange("accessModuleId")}
                       errorSpan={values.errorAccessModuleId}
-                  />
+                  /> */}
 
                   <AddStoreContent
                     label="Assign To"
@@ -215,8 +279,15 @@ const AddListRoleManagement = () => {
               </div>
             </div>
           </div>
-          {list != "" ? <RoleList title="Role List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null}
-
+          {/* {list != "" ? <RoleList title="Role List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
+          <div className="white-box">
+            <h3 className="box-title">
+              User Role List
+            </h3>
+            <div className="col-12">
+              {userRoleArray.length != 0 ? <DataTableComponent keyField="id" title=" User Role List" tableHeading={columns} tableList={userRoleArray}  /> : "Please add user role...."}
+            </div>
+          </div>
         </div>
       </div>
     </>

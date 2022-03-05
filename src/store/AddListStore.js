@@ -7,9 +7,9 @@ import FormNotification from "../common/FormNotification";
 import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { deleteStore } from "../store/ApiStore";
-import TableComponent from "../common/TableComponent";
 import StorePasswordInput from "./StorePasswordInput";
-
+import DataTableComponent from "../common/DataTableComponent";
+import { Switch } from '@mui/material';
 const AddListStore = () => {
     const [values, setValues] = useState({
         storeName: "",
@@ -43,14 +43,7 @@ const AddListStore = () => {
             window.scrollTo(0, 0);
             setValues({ storeId: params.storeId })
             setCheckParams(true);
-
-        } else if (params.deleteStoreId != undefined) {
-            deleteStoreDetails();
-            window.scrollTo(0, 0);
-            clearNotification();
-            setCheckParams(true);
-            history.push("/admin/storemanagement");
-        } else {
+        }  else {
             setValues({
                 storeName: "",
                 storeNameError: "",
@@ -76,8 +69,8 @@ const AddListStore = () => {
         getStoreList();
     }, [checkParams]);
 
-    const deleteStoreDetails = () => {
-        const deleteStoreID = params.deleteStoreId;
+    const deleteStoreDetails = (deleteStoreId) => {
+        const deleteStoreID = deleteStoreId;
         deleteStore(deleteStoreID).then((data) => {
             setValues({
                 ...values,
@@ -85,7 +78,9 @@ const AddListStore = () => {
                 alertColour: "alert-success",
                 displayNotification: "db",
             })
-        })
+        });
+        window.scrollTo(0, 0);
+        getStoreList();
     }
 
     const clearNotification = () => {
@@ -97,14 +92,6 @@ const AddListStore = () => {
             })
         }, 2000);
     }
-    // const editStore = useCallback(
-    //     (e) =>{
-    //             console.log("hello",e)
-    //         }
-    //     ,
-    //     []
-    // )
-
 
     const getStoreList = () => {
         storeList().then((data) => {
@@ -113,7 +100,6 @@ const AddListStore = () => {
     };
     const getStoreById = async () => {
         await getStoreDataById({ storeId: params.storeId }).then((data) => {
-            console.log(data)
             setValues({
                 storeName: data.storeId.storeName,
                 ownerName: data.storeId.ownerName,
@@ -122,7 +108,7 @@ const AddListStore = () => {
                 mobile: data.storeId.mobile,
                 password: data.password,
                 email: data.email,
-                storeId: data._id
+                storeId: data.storeId._id
             });
         });
     }
@@ -179,18 +165,74 @@ const AddListStore = () => {
         });
     };
 
+    //Store List component
+    const columns = [
+        {
+            dataField: 'id',
+            text:'ID',
+            hidden : true
+        },
+        {
+            dataField: 'storeName',
+            text: 'Store Name',
+            sort: true
+        },
+        {
+            dataField: 'email',
+            text: 'E-mail',
+            sort: true
+        },
+        {
+            dataField: 'createdAt',
+            text: 'Date',
+            sort: true
+        }, {
+            dataField: 'status',
+            text: 'Status'
+        }, {
+            dataField: 'action',
+            text: 'action'
+        }];
+
+    const getDate = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
+
+    const getButtons = (storeId_) => {
+        return (
+            <div>
+                <Link to={`/admin/storemanagement/edit/${storeId_}`} className='btn btn-outline btn-info m-5' onClick={() => setCheckParams(!checkParams)} aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link>
+                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => deleteStoreDetails(storeId_)}><i className='fa fa-trash-o font-15'></i></button>
+                <Link to={`/admin/rolemanagement/${storeId_}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
+            </div>
+        )
+    };
+    const getSwitch = (storeStatus) => {
+        return (
+            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked  />
+        )
+    };
+    const storeListArray = [];
+    list.forEach((item) => {
+        if(item.storeId.isDelete == false){
+            item['id']=item.storeId._id
+            item['storeName'] = item.storeId.storeName
+            item['email'] = item.email
+            item['createdAt'] = getDate(item.storeId.createdDate)
+            item['status'] = getSwitch(item.storeId.status)
+            item['action'] = getButtons(item.storeId._id)
+            storeListArray.push(item);
+        }
+    });
+
     return (
         <>
-
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <FormMainTitle title="Store Management"
-                        // btnName="Add Role"
-                        // btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
-                        // btnLink="/admin/rolemanagement"
-                        // btnSecondlink = "/admin/storemanagement"
-                        // btnSecondIcon="fa fa-plus-circle"
                     />
                     <div className="white-box">
                         <div className="row">
@@ -228,14 +270,14 @@ const AddListStore = () => {
                                         onChange={handleChange("address")}
                                         errorSpan={values.addressError}
                                     />
-                                    <AddStoreContent
+                                    {/* <AddStoreContent
                                         label="Store Login ID"
                                         placeholder="Enter Store Login ID"
                                         type="text"
                                         value={values.userName}
                                         onChange={handleChange("userName")}
                                         errorSpan={values.userNameError}
-                                    />
+                                    /> */}
                                     <AddStoreContent
                                         label="Mobile No"
                                         placeholder="Enter Mobile No"
@@ -276,8 +318,14 @@ const AddListStore = () => {
                             </div>
                         </div>
                     </div>
-                    {list != "" ? <TableComponent title=" Store List" tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null}
-                    {/* {list != "" ? <TableComponent title=" Store List" clickEditData={editStore()} tableList={list} onClick={() => setCheckParams(!checkParams)} /> : null} */}
+                    <div className="white-box">
+                        <h3 className="box-title">
+                            Store List
+                        </h3>
+                        <div className="col-12">
+                            {list != "" ? <DataTableComponent keyField="id" title=" Store List" tableHeading={columns} tableList={storeListArray} onClick={() => setCheckParams(!checkParams)} /> : null}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

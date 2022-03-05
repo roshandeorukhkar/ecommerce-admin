@@ -33,10 +33,9 @@ const columns = [{
   */
  
 const DataTableComponent = (props) => {
-
     return (       
         <ToolkitProvider
-            keyField="id"
+            keyField={ props.keyField }
             data={ props.tableList }
             columns={ props.tableHeading }
             search                                       
