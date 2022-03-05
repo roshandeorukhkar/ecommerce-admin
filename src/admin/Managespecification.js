@@ -49,11 +49,11 @@ const Managespecification = () => {
         });
     };
 
-    const status = productId => {
+    const status = specificationId => {
         const specification = {
             manufacturerName: 0,
          };
-         statusSpecification(productId, specification).then(data => {
+         statusSpecification(specificationId, specification).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -62,7 +62,7 @@ const Managespecification = () => {
         });
     };
     
-    const statusChange = productId => {
+    const statusChange = specificationId => {
         const specification = {
             manufacturerName: 1,
          };
