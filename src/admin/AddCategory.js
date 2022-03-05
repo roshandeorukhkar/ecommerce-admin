@@ -4,7 +4,7 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createCategory } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-import Select from 'react-select';
+//import Select from 'react-select';
 
 const AddManufacturer = () =>{
     

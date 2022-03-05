@@ -2,10 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Managespecification from "./Managespecification";
 import AdminLayout from "../core/AdminLayout";
-<<<<<<< HEAD
-
-=======
->>>>>>> 000757bfba4cb4d576adf815d8a08bb3e4380134
 const Manufacturer = () => {
 
     return (
@@ -23,16 +19,6 @@ const Manufacturer = () => {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <Managespecification />
-<<<<<<< HEAD
-=======
-                                    <ul className="pagination" style={{float: 'right'}}>
-                                        <li className='page-item'><a className="page-link" href="#">Previous</a></li>
-                                        <li className="page-item active"><a className="page-link" href="#">1</a></li>
-                                        <li className="page-item "><a className="page-link" href="#">2</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                                    </ul>
->>>>>>> 000757bfba4cb4d576adf815d8a08bb3e4380134
                                 </div>
                             </div>
                         </div>
