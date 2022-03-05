@@ -63,6 +63,7 @@ const Managespecification = () => {
         });
     };
     
+    
     const statusChange = specificationId => {
         const specification = {
             manufacturerName: 1,
