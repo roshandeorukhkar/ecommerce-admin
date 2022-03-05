@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { deleteManufacturer, getManufacturers, deleteManufacturer1, statusManfacturer, statusChangeManfacturer } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
+import DataTableComponent from "../common/DataTableComponent";
 
 const ManageManufacturer = () => {
     
@@ -121,65 +122,74 @@ const ManageManufacturer = () => {
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
 
+    const columns = [
+        {
+        dataField: 'manufacturerName',
+        text: 'Manufacturer Name',
+        sort: true
+        }, 
+        {
+        dataField: 'description',
+        text: 'Description',
+        sort: true
+        }, 
+        {
+        dataField: 'createdAt',
+        text: 'Date',
+        sort: true
+        }, 
+        {
+        dataField: 'status',
+        text: 'Status'
+        }, 
+        {
+        dataField: 'action',
+        text: 'action'
+      }];
+
+      const getButtons = (product) => {
+        return (
+            <div>
+                 <Link to={`/admin/manufacturer/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+            </div>
+        )
+      };
+
+      const getSwitch = (product) => {
+        return (
+            <>
+             {product.status == 1 
+                ?(
+                <>
+                <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(product._id)} color='primary'/>
+                </>
+                ):
+                <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(product._id)} color='primary'/>
+            }
+            </>
+        )
+      };
+
+      const productsList = [];
+      products.forEach((item) => {
+        item['createdAt'] = getDate(item.createdAt);
+        item['status'] = getSwitch(item);
+        item['action'] = getButtons(item);
+        productsList.push(item);
+      });
+
+
     return (
         
-
-            <div className="row">
-                {deleteMessage()}
-                {redirectUser()}
-                <div className="col-12">
-                    <table className="table">
-                    
-                    <thead>
-                            <tr id="TH">
-                                <th><input type="checkbox" id="checkboxTH"/></th>
-                                <th>Manufacturer Name</th>
-                                <th>Descrtiption</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                    </thead>
-                    <tbody>
-                        
-                        {products.map((p, i) => (
-                            
-                       <tr  key={i} id="tableInput">
-                           {!p.deletedAt ?(
-                               <>
-                                <td><input type="checkbox"  id="checkboxTH" /></td>
-                                <td>{p.manufacturerName}</td>
-                                <td>{p.description}</td>
-                                <td>{getDate(p.createdAt)} </td>
-                                <td>
-                                {p.status == 1 
-                                    ?(
-                                    <>
-                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(p._id)} color='primary'/>
-                                    </>
-                                    ):
-                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(p._id)} color='primary'/>
-                                    }
-                                </td>
-                                <td>
-                                    <Link to={`/admin/manufacturer/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                    {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(p._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
-                                </td>  
-                               </>
-                           ):null}
-                        
-                        
-                        </tr>
-                        
-                        ))}
-
-                    </tbody>
-                     </table>
-                    
-                    <br />
-                </div>
+        <div className="row">
+            {deleteMessage()}
+            {redirectUser()}
+            <div className="col-12">
+                {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
             </div>
+        </div>
     );  
 };
 
