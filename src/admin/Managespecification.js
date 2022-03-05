@@ -78,6 +78,8 @@ const Managespecification = () => {
         item['action'] = getButtons(item);
         productsList.push(item);
       });
+
+      
       
       return (
         <div className="row">
