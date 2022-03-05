@@ -16425,5 +16425,11 @@ opacity: 1;
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
+}
+.float-left{
+    float: left;
+}
+.float-right{
+    float: right;
+}
   
