@@ -22,8 +22,8 @@ const StorePasswordInput = (props) => {
                  onClick={() => setIsRevealPwd(!isRevealPwd)}>
                     <i className="icon-eye"></i>
                 </span>
-                <span className='error text-danger'>{props.errorSpan}</span>
             </div>
+                <span className='error text-danger m-l-20'>{props.errorSpan}</span>
         </div>
     )
 }

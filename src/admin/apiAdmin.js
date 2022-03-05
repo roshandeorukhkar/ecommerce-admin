@@ -456,7 +456,6 @@ export const deleteSpecification = (productId) => {
 };
 
 export const statusSpecification = (productId, specification) => {
-    console.log("specificationId=====",productId)
     return fetch(`${API}/specification/status/${productId}`, {
         method: 'POST',
         headers: {

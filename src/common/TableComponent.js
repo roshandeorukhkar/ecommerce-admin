@@ -36,9 +36,10 @@ const TableComponent = (props) => {
   }, [props]);
 
   const getDate = (date) => {
-    const newDate = date.split('T')[0];
-    const dt = newDate.split('-');
-    return dt[2] + '-' + dt[1] + '-' + dt[0];
+    // const newDate = date.split('T')[0];
+    // const dt = newDate.split('-');
+    // return dt[2] + '-' + dt[1] + '-' + dt[0];
+    return true;
   }
 
   const columns = [
@@ -72,9 +73,9 @@ const TableComponent = (props) => {
   const data = [];
   list.map((ele, key) => {
     if (ele.isDelete != true) {
-      console.log("ele", ele.isDelete);
+      console.log("ele", ele.storeId.storeName);
       listData[i] = [
-        ele.storeName,
+        ele.storeId.storeName,
         ele.email,
         <Switch name="checkedA"
           inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }}
@@ -84,8 +85,9 @@ const TableComponent = (props) => {
         getDate(ele.createdDate),
         <div>
           {/* <button className="className='btn btn-outline btn-info m-5'" onClick={props.clickEditData}><i className='fa fa-pencil font-15'></i></button> */}
-          <Link to={`/admin/storemanagement/edit/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
-          <Link to={`/admin/storemanagement/delete/${ele._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
+          <Link to={`/admin/storemanagement/edit/${ele.storeId._id}`} className='btn btn-outline btn-info m-5' aria-label='Edit' onClick={props.onClick} ><i className='fa fa-pencil font-15'></i></Link>
+          <Link to={`/admin/storemanagement/delete/${ele.storeId._id}`} className='btn btn-outline btn-info m-5' aria-label='Delete' onClick={props.onClick}><i className='fa fa-trash-o font-15'></i></Link>
+          <Link to={`/admin/rolemanagement/${ele.storeId._id}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
         </div>
       ]
       data.push(listData[i]);

@@ -66,7 +66,7 @@ const Managespecification = () => {
         const specification = {
             manufacturerName: 1,
          };
-         statusChangeSpecification(productId, specification).then(data => {
+         statusChangeSpecification(specificationId, specification).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {

@@ -89,14 +89,13 @@ const AddListStore = () => {
     }
 
     const clearNotification = () => {
-        // setTimeout(() => {
-        //     setValues({
-        //         ...values,
-        //         errorNotification: "",
-        //         alertColour: "",
-        //         displayNotification: "dn",
-        //     })
-        // }, 2000);
+        setTimeout(() => {
+            setValues({
+                errorNotification: "",
+                alertColour: "",
+                displayNotification: "dn",
+            })
+        }, 2000);
     }
     // const editStore = useCallback(
     //     (e) =>{
@@ -114,12 +113,13 @@ const AddListStore = () => {
     };
     const getStoreById = async () => {
         await getStoreDataById({ storeId: params.storeId }).then((data) => {
+            console.log(data)
             setValues({
-                storeName: data.storeName,
-                ownerName: data.ownerName,
-                address: data.address,
-                userName: data.userName,
-                mobile: data.mobile,
+                storeName: data.storeId.storeName,
+                ownerName: data.storeId.ownerName,
+                address: data.storeId.address,
+                userName: data.storeId.userName,
+                mobile: data.storeId.mobile,
                 password: data.password,
                 email: data.email,
                 storeId: data._id
@@ -185,12 +185,12 @@ const AddListStore = () => {
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <FormMainTitle title="Store Management"
-                        btnName="Add Role"
+                        // btnName="Add Role"
                         // btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
-                        btnLink="/admin/rolemanagement"
+                        // btnLink="/admin/rolemanagement"
                         // btnSecondlink = "/admin/storemanagement"
-                        btnSecondIcon="fa fa-plus-circle"
+                        // btnSecondIcon="fa fa-plus-circle"
                     />
                     <div className="white-box">
                         <div className="row">
