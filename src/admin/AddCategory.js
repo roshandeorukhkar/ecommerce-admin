@@ -4,17 +4,19 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createCategory } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import Select from 'react-select';
 
 const AddManufacturer = () =>{
     
 const [values, setValues] = useState({
         name: '',
+        description: '',
         error: '',
         success: false,
         redirectToProfile: false
     });
 
-const { name, success, error, redirectToProfile } = values;
+const { name, success,description, error, redirectToProfile } = values;
 
 const handleChange = name => event => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -31,6 +33,7 @@ const clickSubmit = event => {
             setValues({
                 ...values,
                 name: '',
+                description: '',
                 error: '',
                 success: true,
                 redirectToProfile: false
@@ -81,6 +84,14 @@ return(
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
                                                 <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} required/>
+                                            </div>
+                                            <div className="form-group col-lg-7">
+                                                <h6><b><span style={{color:'red'}}>*</span> Main Category</b></h6>
+                                                <select placeholder='select' className="form-control" />
+                                            </div>
+                                            <div className="form-group col-lg-7">
+                                                <h6><b>Description</b></h6>
+                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
                                             <div className="col-lg-7">
                                                 <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>

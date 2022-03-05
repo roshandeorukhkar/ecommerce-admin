@@ -36,6 +36,36 @@ export const createCategory = async (category) => {
 };
 */
 
+export const statusCategory = (categoryId, category) => {
+    return fetch(`${API}/category/status/${categoryId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeCategory = (categoryId, category) => {
+    return fetch(`${API}/category/statusChange/${categoryId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
 export const updateCategory = (categoryId, category) => {
     return fetch(`${API}/category/${categoryId}`, {
         method: 'PUT',
@@ -211,6 +241,7 @@ export const statusManfacturer = (productId, category) => {
         })
         .catch(err => console.log(err));
 };
+
 export const statusChangeManfacturer = (productId, category) => {
     return fetch(`${API}/manufacturer/statusChange/${productId}`, {
         method: 'POST',
@@ -395,7 +426,7 @@ export const updatespecification = (productId, category) => {
         .catch(err => console.log(err));
 };
 export const getSpecification = productId => {
-    return fetch(`${API}/Specification/${productId}`, {
+    return fetch(`${API}/specification/${productId}`, {
         method: 'GET'
     })
         .then(response => {
@@ -404,7 +435,7 @@ export const getSpecification = productId => {
         .catch(err => console.log(err));
 };
 export const Specification = () => {
-    return fetch(`${API}/Specification?limit=undefined`, {
+    return fetch(`${API}/specification?limit=undefined`, {
         method: 'GET'
     })
         .then(response => {
@@ -412,8 +443,9 @@ export const Specification = () => {
         })
         .catch(err => console.log(err));
 };
+
 export const deleteSpecification = (productId) => {
-    return fetch(`${API}/Specification/${productId}`, {
+    return fetch(`${API}/specification/${productId}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
@@ -422,6 +454,39 @@ export const deleteSpecification = (productId) => {
         }
     })
 };
+
+export const statusSpecification = (productId, specification) => {
+    return fetch(`${API}/specification/status/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(specification)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeSpecification = (productId, specification) => {
+    return fetch(`${API}/specification/statusChange/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(specification)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+
+
 // show all user
 export const getCoustomer = () => {
     return fetch(`${API}/cust?limit=undefined`, {
@@ -591,6 +656,37 @@ export const deleteAttribute = (attributeId) => {
             'Content-Type': 'application/json',
             //Authorization: `Bearer ${token}`
         }
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+
+export const statusAttributes = (attributeId, attributes) => {
+    return fetch(`${API}/attribute/status/${attributeId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(attributes)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeAttributes = (attributeId, attributes) => {
+    return fetch(`${API}/attribute/statusChange/${attributeId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(attributes)
     })
         .then(response => {
             return response.json();
