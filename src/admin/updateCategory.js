@@ -18,7 +18,7 @@ const UpdateCategory = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { name, error, redirectToProfile } = values;
+    const { name, error, redirectToProfile ,success } = values;
 
     const init = categoryId => {
         getCategory(categoryId, token).then(data => {
@@ -101,33 +101,39 @@ const UpdateCategory = ({ match }) => {
                     <div className="white-box">
                         <div className="row">
                             <div className="col-lg-12">
-            <form className="mb-5" onSubmit={submitCategoryForm}>
-                <span className="">Update Category Form</span>
-                <span className="">Category Name</span>
-                <br />
-                <br />
-                <div className="">
-                    <input
-                        onChange={handleChange('name')}
-                        value={name}
-                        className="input100"
-                        type="text"
-                        required
-                        name="name"
-                    />
-                </div>
-                <div className="w-size25">
-                    <button type="submit" className="">
-                        Save Changes
-                    </button>
-                </div>
-            </form>
-            </div>
+                                <form className="mb-5" onSubmit={submitCategoryForm}>
+                                    <span className="">Update Category Form</span>
+                                    <span className="">Category Name</span>
+                                    <br />
+                                    <br />
+                                    <div className="">
+                                        <input
+                                            onChange={handleChange('name')}
+                                            value={name}
+                                            className="input100"
+                                            type="text"
+                                            required
+                                            name="name"
+                                        />
+                                    </div>
+                                    <div className="w-size25">
+                                        <button type="submit" className="">
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div> 
         </div>
+    );
+
+    const showSuccess = () => (
+        <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
+           <a class="text-center" style={{color:'white'}}> category update successfully </a> 
+        </div>  
     );
 
     const showError = () => (
@@ -142,7 +148,7 @@ const UpdateCategory = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/categories" />;
+                return <Redirect to="/admin/Manucategory" />;
             }
         }
     };
@@ -153,6 +159,7 @@ const UpdateCategory = ({ match }) => {
             <div className="row">
                 <div className="col-md-12">
                     {showError()}
+                    {showSuccess()}
                     {updateCategoryForm()}
                     {redirectUser()}
                 </div>

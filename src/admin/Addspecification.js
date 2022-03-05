@@ -68,34 +68,34 @@ const redirectUser = () => {
 };
 return(
         <>
-            <div id="wrapper">
+        <div id="wrapper">
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <h4 className="font-bold"> Add Specification</h4>
-                        <div className="white-box">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <form  onSubmit={clickSubmit} class="col-md-6 offset-md-2">
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <form  onSubmit={clickSubmit} class="col-md-6 offset-md-2">
                                         {showSuccess()}
                                         {showError()}
                                         {redirectUser()}
-                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                            <div className="form-group ">
-                                                <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
-                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} required/>
-                                            </div>
-               <div className="form-group">
-                <label className="text-muted"><span className="text-danger">*</span><b>Specification Type</b></label>
-                <input type="text" className="form-control" onChange={handleChange('specification_type')}  value={specification_type} autoFocus required />
-            </div>
-                                            <div className="form-group">
-                                                <h6><b>Description</b></h6>
-                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
-                                            </div>
-                                            <div className="col-lg-7">
+                                    <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                        <div className="form-group ">
+                                            <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
+                                            <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} required/>
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="text-muted"><span className="text-danger">*</span><b>Specification Value</b></label>
+                                            <input type="text" className="form-control" onChange={handleChange('specification_type')}  value={specification_type} autoFocus required />
+                                        </div>
+                                        <div className="form-group">
+                                            <h6><b>Description</b></h6>
+                                            <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
+                                        </div>
+                                        <div className="col-lg-7">
                                             <button className="btn btn-info">Submit</button>
-                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>

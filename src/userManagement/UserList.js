@@ -26,6 +26,7 @@ const UserList= () =>{
             }
         });
     };
+    
     const getDate = (date) => {
         const newDate = date.split('T')[0];
         const dt = newDate.split('-');
@@ -51,32 +52,32 @@ const UserList= () =>{
                                     <div className="col-12">
                                         <table className="table">
                                             <thead>
-                                                    <tr id="TH">
-                                                        <th><input type="checkbox" id="checkboxTH"/></th>
-                                                        <th>Store Nmae</th>
-                                                        <th>User Name</th>
-                                                        <th>User ID</th>
-                                                        <th>Address</th>
-                                                        <th>Date</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
+                                                <tr id="TH">
+                                                    <th><input type="checkbox" id="checkboxTH"/></th>
+                                                    <th>Store Nmae</th>
+                                                    <th>User Name</th>
+                                                    <th>User ID</th>
+                                                    <th>Address</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>  
                                                 {user.map((u, i) => ( 
                                                 <tr id="tableInput">
                                                     <>
-                                                        <td><input type="checkbox"  id="checkboxTH" /></td>
-                                                        <td><Link to={`/admin/user/list`}>{u.storeName}</Link></td>
-                                                        <td>{u.ownerName}</td>
-                                                        <td>{u.email}</td>
-                                                        <td>{u.address}</td>
-                                                        <td>{getDate(u.createdDate)}</td>
-                                                        <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
-                                                        <td>
-                                                            <Link to={`/admin/users/update/${u._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                                                            <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(u._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                                                        </td>  
+                                                    <td><input type="checkbox"  id="checkboxTH" /></td>
+                                                    <td><Link to={`/admin/user/list`}>{u.storeName}</Link></td>
+                                                    <td>{u.ownerName}</td>
+                                                    <td>{u.email}</td>
+                                                    <td>{u.address}</td>
+                                                    <td>{getDate(u.createdDate)}</td>
+                                                    <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
+                                                    <td>
+                                                        <Link to={`/admin/users/update/${u._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                                                        <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(u._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+                                                    </td>  
                                                     </>
                                                 </tr>
                                                  ))}

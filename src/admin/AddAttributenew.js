@@ -81,11 +81,11 @@ return(
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b><span style={{color:'red'}}>*</span> Attribute Name</b></h6>
+                                                <h6><b> Attribute Name</b><span style={{color:'red'}}>*</span></h6>
                                                 <input onChange={handleChange('attributeName')} type="text" className="form-control" placeholder='Enter Attribute' value={attributeName} />
                                             </div>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b> Dimension</b></h6>
+                                                <h6><b> Attributes Values</b><span style={{color:'red'}}>*</span></h6>
                                                 <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
                                             </div>
                                             <div className="form-group col-sm-7">

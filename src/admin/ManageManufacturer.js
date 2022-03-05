@@ -79,24 +79,6 @@ const ManageManufacturer = () => {
         });
     };
 
-    const destroy1 = productId => {
-       
-        const category = {
-           // manufacturerName: productId,
-            manufacturerName: new Date(),
-        };
-        deleteManufacturer1(productId, category).then(data => {
-            if (data.error) {
-                
-                console.log(data.error);
-            } else {
-                alert('Are you soure you wont delete record!');
-                //console.log("test abc", manufacturerName);
-                loadProducts();
-            }
-        });
-    };
-
     const deleteMessage = () => (
         <div className="alert alert-danger" style={{ display: success ? '' : 'none' }}>
            <a class="text-center" style={{color:'white'}}> Manufacturer Deleted </a> 
@@ -129,16 +111,15 @@ const ManageManufacturer = () => {
                 {redirectUser()}
                 <div className="col-12">
                     <table className="table">
-                    
                     <thead>
-                            <tr id="TH">
-                                <th><input type="checkbox" id="checkboxTH"/></th>
-                                <th>Manufacturer Name</th>
-                                <th>Descrtiption</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
+                        <tr id="TH">
+                            <th><input type="checkbox" id="checkboxTH"/></th>
+                            <th>Manufacturer Name</th>
+                            <th>Descrtiption</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
                     </thead>
                     <tbody>
                         
