@@ -100,8 +100,6 @@ const Managespecification = () => {
     }
     return (
 
-<<<<<<< HEAD
-    const columns = [{
         dataField: 'manufacturerName',
         text: 'Specification Name',
         sort: true
@@ -143,11 +141,7 @@ const Managespecification = () => {
       
       
       return (
-=======
->>>>>>> 000757bfba4cb4d576adf815d8a08bb3e4380134
         <div className="row">
-            {deleteMessage()}
-            {redirectUser()}
             <h4 className="box-title">Total List of Specification {products.length}</h4><hr></hr>
             <div className="col-12">
             <br></br>
