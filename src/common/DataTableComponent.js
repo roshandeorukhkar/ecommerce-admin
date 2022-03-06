@@ -7,6 +7,10 @@ const { SearchBar  } = Search;
 
 const { ExportCSVButton } = CSVExport;
 
+const emptyDataMessage = () => { 
+  return (<div class="text-center" style={{color:'#000',padding:'10px'}}>No Data to Display</div>);
+}
+
 /*
 export const productsGenerator = quantity => {
     const items = [];
@@ -50,6 +54,7 @@ const DataTableComponent = (props) => {
                         <SearchBar { ...props.searchProps }/>
                     </div>
                     <BootstrapTable
+                    noDataIndication={emptyDataMessage}
                     hover
                     condensed
                     bordered={ false }

@@ -214,7 +214,7 @@ const Managespecification = () => {
                     </tbody>
                 </table> */}
                 <NotificationContainer/>
-                {productsList != "" ? <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/> : null}
+                <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/>
                 <br />
             </div>
         </div>
