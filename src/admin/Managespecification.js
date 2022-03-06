@@ -5,6 +5,8 @@ import { deleteSpecification, Specification ,statusSpecification ,statusChangeSp
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Managespecification = () => {
 
@@ -40,6 +42,7 @@ const Managespecification = () => {
                     success:true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Specification has been deleted successfully!');
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -139,11 +142,9 @@ const Managespecification = () => {
         productsList.push(item);
       });
 
-      
-      
       return (
         <div className="row">
-            {deleteMessage()}
+            {/* {deleteMessage()} */}
             {redirectUser()}
             <h4 className="box-title">Total List of Specification {products.length}</h4><hr></hr>
             <div className="col-12">
@@ -212,7 +213,8 @@ const Managespecification = () => {
                         ))}
                     </tbody>
                 </table> */}
-                 {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
+                <NotificationContainer/>
+                {productsList != "" ? <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/> : null}
                 <br />
             </div>
         </div>

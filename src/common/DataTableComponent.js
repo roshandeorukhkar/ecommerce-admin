@@ -56,7 +56,7 @@ const DataTableComponent = (props) => {
                     bordered={ false }
                     pagination={ paginationFactory({ sizePerPage: 10 }) }
                     { ...props.baseProps }
-                    selectRow={ { mode: 'checkbox', clickToSelect: true } }
+                    selectRow={ { mode: 'checkbox' } }
                     />
                 </div>
                 )

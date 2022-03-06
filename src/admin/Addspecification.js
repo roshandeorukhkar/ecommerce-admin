@@ -1,9 +1,12 @@
 
 import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createspecification } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Addspecification = () =>{
     
@@ -28,6 +31,7 @@ const clickSubmit = event => {
     createspecification({ manufacturerName,specification_type, description}).then(data => {
         //alert(data.error)
         if (data.error) {
+            NotificationManager.error('Specification name already exits!');
             setValues({ ...values, error: data.error, success: false });
         } else {
             setValues({
@@ -36,10 +40,15 @@ const clickSubmit = event => {
                 specification_type:'',
                 description: '',
                 error: '',
-                success: true,
+                success: false,
                 redirectToProfile: false
             });
-            setTimeout(function(){
+            setValues({
+                ...values,
+                redirectToProfile:true
+            })
+            NotificationManager.success('Specification has been added successfully!');
+            setTimeout(function(){                
                 setValues({
                     ...values,
                     redirectToProfile:true
@@ -66,19 +75,27 @@ const redirectUser = () => {
         return <Redirect to="/admin/Manuspecification" />;
      }  
 };
+
 return(
         <>
         <div id="wrapper">
             <AdminSidebar />
+            
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <h4 className="font-bold"> Add Specification</h4>
+                    
+                    <NotificationContainer/>
+                    <div className='row'>
+                        <div className='col-md-8'><h4 className="font-bold"> Add Specification</h4></div>
+                        <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton" style={{float: 'right'}} >Back</button></Link>
+                    </div>
+                    </div>
                     <div className="white-box">
                         <div className="row">
                             <div className="col-lg-12">
                                 <form  onSubmit={clickSubmit} class="col-md-6 offset-md-2">
-                                        {showSuccess()}
-                                        {showError()}
+                                        {/* {showSuccess()} */}
+                                        {/* {showError()} */}
                                         {redirectUser()}
                                     <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                         <div className="form-group ">

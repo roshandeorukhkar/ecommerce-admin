@@ -1,5 +1,5 @@
 import React, { Component, useState }    from 'react';
-import Select from 'react-select';
+//import Select from 'react-select';
 
 const FLAVOURS = [
   { label: 'Chocolate', value: 'chocolate' },
@@ -47,61 +47,39 @@ const [state , setState] = useState( {
   console.log(state);
 
     return (
-      <div className="form-group col-md-6">
-        <label className="col-sm-12 lable">{props.label}</label>
-        <div className="col-sm-12">
-            <Select
-                  multi
-                  simpleValue
-                  disabled={state.disabled}
-                  value={state.value}
-                  placeholder="Select your favourite(s)"
-                  options={state.options}
-                  onChange={()=>handleSelectChange()}
-              />
-            <div className="checkbox-list">
-                <label className="checkbox">
-                <input
-                    type="checkbox"
-                    className="checkbox-control"
-                    checked={state.disabled}
-                    onChange={()=>toggleDisabled()}
-                />
-              </label>
-              <label className="checkbox">
-                <input
-                    type="checkbox"
-                    className="checkbox-control"
-                    checked={state.crazy}
-                    onChange={()=>toggleChocolate()}
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      
+      <div></div>
+      // <div className="form-group col-md-6">
+      //   <label className="col-sm-12 lable">{props.label}</label>
+      //   <div className="col-sm-12">
+      //       <Select
+      //             multi
+      //             simpleValue
+      //             disabled={state.disabled}
+      //             value={state.value}
+      //             placeholder="Select your favourite(s)"
+      //             options={state.options}
+      //             onChange={()=>handleSelectChange()}
+      //         />
+      //       <div className="checkbox-list">
+      //           <label className="checkbox">
+      //           <input
+      //               type="checkbox"
+      //               className="checkbox-control"
+      //               checked={state.disabled}
+      //               onChange={()=>toggleDisabled()}
+      //           />
+      //         </label>
+      //         <label className="checkbox">
+      //           <input
+      //               type="checkbox"
+      //               className="checkbox-control"
+      //               checked={state.crazy}
+      //               onChange={()=>toggleChocolate()}
+      //           />
+      //         </label>
+      //       </div>
+      //     </div>
+      //   </div>
     )
 }
 
