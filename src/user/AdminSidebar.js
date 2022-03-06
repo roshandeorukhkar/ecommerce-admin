@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 
 const AdminSidebar = () => {
 
     const [productSubMenu, setProductSubMenu] = useState(false);
 
+    const location = useLocation();
+    console.log(window.location.pathname);
+    
     return (
         <>
             <aside className="sidebar">
@@ -20,7 +23,7 @@ const AdminSidebar = () => {
                     <nav className="sidebar-nav">
                         <ul id="side-menu">
                             <li>
-                                <Link to='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></Link>
+                                <Link className="active" to='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></Link>
                             </li>
                             <li>
                                 <Link to="/admin/statistic" aria-expanded="false"><i className="icon-chart fa-fw"></i><span className="hide-menu"> Statistics</span></Link>
