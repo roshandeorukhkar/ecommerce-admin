@@ -43,14 +43,13 @@ const DataTableComponent = (props) => {
             {
                 props => (
                 <div>
-                    <div className='float-left'>
+                    <div className='float-left' style={{marginBottom:'10px'}}>
                         <ExportCSVButton { ...props.csvProps }>Export CSV</ExportCSVButton>
                     </div>
-                    <div className='float-right'>
+                    <div className='float-right' style={{marginBottom:'10px'}}>
                         <SearchBar { ...props.searchProps }/>
                     </div>
                     <BootstrapTable
-                    striped
                     hover
                     condensed
                     bordered={ false }

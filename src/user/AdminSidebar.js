@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation  } from 'react-router-dom';
 
 const AdminSidebar = () => {
 
     const [productSubMenu, setProductSubMenu] = useState(false);
 
+    const location = useLocation();
+    console.log(window.location.pathname);
+    
     return (
         <>
             <aside className="sidebar">
                 <div className="scroll-sidebar">
-                    <div className="user-profile">
+                    {/* <div className="user-profile">
                         <div className='profile-image' >
                             <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle" />
                         </div>
                         <div className="profile-name p-t-40">
                             <p className="profile-text font-16"><Link to="#"> Admin</Link></p>
                         </div>
-                    </div>
+                    </div> */}
                     <nav className="sidebar-nav">
                         <ul id="side-menu">
                             <li>
-                                <Link to='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></Link>
+                                <Link className="active" to='/admin/dashboard'><i className="icon-screen-desktop fa-fw"></i><span className='hide-menu'> Dashboard</span></Link>
                             </li>
                             <li>
                                 <Link to="/admin/statistic" aria-expanded="false"><i className="icon-chart fa-fw"></i><span className="hide-menu"> Statistics</span></Link>

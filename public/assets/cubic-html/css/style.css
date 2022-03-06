@@ -2909,7 +2909,7 @@ ul.common li a:hover {
 .table>tfoot>tr>th,
 .table>thead>tr>td,
 .table>thead>tr>th {
-    padding: 15px 8px;
+    padding: 5px 8px;
     vertical-align: middle
 }
 
