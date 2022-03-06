@@ -9,14 +9,14 @@ const AdminSidebar = () => {
         <>
             <aside className="sidebar">
                 <div className="scroll-sidebar">
-                    <div className="user-profile">
+                    {/* <div className="user-profile">
                         <div className='profile-image' >
                             <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle" />
                         </div>
                         <div className="profile-name p-t-40">
                             <p className="profile-text font-16"><Link to="#"> Admin</Link></p>
                         </div>
-                    </div>
+                    </div> */}
                     <nav className="sidebar-nav">
                         <ul id="side-menu">
                             <li>
