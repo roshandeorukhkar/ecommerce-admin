@@ -7,13 +7,13 @@ import { createspecification } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import Select from 'react-select'
+// import Select from 'react-select'
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-]
+// const options = [
+//     { value: 'chocolate', label: 'Chocolate' },
+//     { value: 'strawberry', label: 'Strawberry' },
+//     { value: 'vanilla', label: 'Vanilla' }
+// ]
 
 const Addspecification = () =>{
     
@@ -90,11 +90,11 @@ return(
             
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <Select options={options} isMulti='true'/>
+                    {/* <Select options={options} isMulti='true'/> */}
                     <NotificationContainer/>
                     <div className='row'>
                         <div className='col-md-8'><h4 className="font-bold"> Add Specification</h4></div>
-                        <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton" style={{float: 'right'}} >Back</button></Link>
+                        <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link>
                     </div>
                     </div>
                     <div className="white-box">
