@@ -38,6 +38,11 @@ const UserList= () =>{
     }
     const columns = [
         {
+            dataField: 'id',
+            text: 'ID',
+            hidden: true
+        },
+        {
             dataField: 'storeName',
             text: 'Store Name',
             sort: true
@@ -133,7 +138,7 @@ const UserList= () =>{
                                                  ))}
                                             </tbody>
                                         </table> */}
-                                         {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
+                                         {productsList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/> : null}
                                     </div>
                                 </div>  
                         </div>

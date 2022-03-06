@@ -123,6 +123,11 @@ const Customer = () => {
 
     const columns = [
         {
+            dataFiled:'id',
+            text:'ID',
+            hidden:true
+        },
+        {
             dataField: 'name',
             text: 'Customer Name',
             sort: true
@@ -177,6 +182,7 @@ const Customer = () => {
 
       const productsList = [];
       products.forEach((item) => {
+          item['id'] = item._id;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
@@ -189,7 +195,7 @@ const Customer = () => {
             <div className="col-12">
                 {deleteMessage()}
                 {redirectUser()}
-                {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
+                {productsList != "" ? <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={productsList}/> : null}
             </div>
         </div>
     );

@@ -106,6 +106,11 @@ const ManageManufacturer = () => {
 
     const columns = [
         {
+            dataField: 'id',
+            text: 'ID',
+            hidden: true
+        },
+        {
         dataField: 'manufacturerName',
         text: 'Manufacturer Name',
         sort: true
@@ -156,6 +161,7 @@ const ManageManufacturer = () => {
 
       const productsList = [];
       products.forEach((item) => {
+        item['id'] = item._id;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
@@ -169,7 +175,7 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                {productsList != "" ? <DataTableComponent title="Test" tableHeading={columns} tableList={productsList}/> : null}
+                {productsList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/> : null}
             </div>
         </div>
     );  
