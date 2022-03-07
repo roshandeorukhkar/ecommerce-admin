@@ -1,8 +1,11 @@
+
 import React, { useState } from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const AddManufacturer = () =>{
     
@@ -25,6 +28,7 @@ const clickSubmit = event => {
     setValues({ ...values, error: false });
     createManufacturer({ manufacturerName, description}).then(data => {
         if (data.error) {
+            NotificationManager.error('Manufacter name already exits!');
             setValues({ ...values, error: data.error, success: false });
         } else {
             setValues({
@@ -35,7 +39,8 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            setTimeout(function(){
+            NotificationManager.success('Manufacter has been added successfully!');
+            setTimeout(function(){                
                 setValues({
                     ...values,
                     redirectToProfile:true
@@ -72,10 +77,11 @@ return(
                     <h4 className="font-bold"> Add Manufacture</h4>
                         <div className="white-box">
                             <div className="row">
+                                 <NotificationContainer/>
                                 <div className="col-lg-12">
                                     <form>
-                                        {showSuccess()}
-                                        {showError()}
+                                        {/*{showSuccess()}
+                                        {showError()} */}
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-lg-7">
