@@ -22,8 +22,8 @@ const UpdateManufacturer = ({ match }) => {
 
     const { manufacturerName, description, error, success, redirectToProfile } = values;
 
-    const init = productId => {
-        getManufacturer(productId).then(data => {
+    const init = manufacturerId => {
+        getManufacturer(manufacturerId).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -37,7 +37,7 @@ const UpdateManufacturer = ({ match }) => {
     };
 
     useEffect(() => {
-        init(match.params.productId);
+        init(match.params.manufacturerId);
     }, []);
 
     const handleChange = manufacturerName => event => {
@@ -50,11 +50,11 @@ const UpdateManufacturer = ({ match }) => {
 
     const submitCategoryForm = e => {
         e.preventDefault();
-        const category = {
+        const manufacturs = {
             manufacturerName: manufacturerName,
             description:description
         };
-        updateManfacturer(match.params.productId, category).then(data => {
+        updateManfacturer(match.params.manufacturerId, manufacturs).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error, success: false });
             } else {

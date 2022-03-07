@@ -11,7 +11,6 @@ const Manufacturer = () => {
                     <div className="container-fluid">
                         <div className='row'>
                             <div className='col-md-8'><p id="hedingTitle"> Manufacturer Management </p></div>
-                            {/* <div className='col-md-4'><p><button type="submit" className="btn btn-info fa-pull-right" style={{height:'33px'}}><i className="fa fa-search"></i></button> <input type="text" id="search" placeholder='search' style={{float: 'right'}} /></p></div> */}
                             <div className='col-md-4'><p> <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-info fa-pull-right" id="addButton">Add Manufacturer</button></Link> <button type="submit" className="btn btn-info btn-outline " id="DeletButton">Delete <i className="fa fa-trash-o"></i></button></p></div>
                         </div>
                         <div className="white-box">
