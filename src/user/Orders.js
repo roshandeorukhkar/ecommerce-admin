@@ -8,13 +8,16 @@ import moment from "moment";
 const Orders = (props) => {
     const [orders, setOrders] = useState([]);
     const [statusValues, setStatusValues] = useState([]);
-
+    const [isValidUser, setValidUser] = useState(true);
+    const [error, setError] = useState("");
     const { user, token } = isAuthenticated();
 
     const loadOrders = () => {
         listOrders(user._id, token).then(data => {
             if (data.error) {
                 console.log(data.error);
+                setValidUser(false)
+                setError(data.error)
             } else {
                 setOrders(data);
             }
@@ -92,77 +95,89 @@ const Orders = (props) => {
     );
 
     return (
-        <AdminLayout
-            title="Orders"
-            description={`G'day ${
-                user.name
-            }, you can manage all the orders here`}
-            className="container-fluid"
+        <AdminLayout data={props}
         >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showOrdersLength()}
+            <div id="wrapper">
+                <div className="page-wrapper">
+                    <div className="container-fluid">
+                        {isValidUser?
+                            (
+                                <div className="row">
+                                    <div className="col-md-8 offset-md-2">
+                                        {showOrdersLength()}
 
-                    {orders.map((o, oIndex) => {
-                        return (
-                            <div
-                                className="mt-5"
-                                key={oIndex}
-                                style={{ borderBottom: "5px solid indigo" }}
-                            >
-                                <h2 className="mb-5">
-                                    <span className="bg-primary">
-                                        Order ID: {o._id}
-                                    </span>
-                                </h2>
+                                        {orders.map((o, oIndex) => {
+                                            return (
+                                                <div
+                                                    className="mt-5"
+                                                    key={oIndex}
+                                                    style={{ borderBottom: "5px solid indigo" }}
+                                                >
+                                                    <h2 className="mb-5">
+                                                        <span className="bg-primary">
+                                                            Order ID: {o._id}
+                                                        </span>
+                                                    </h2>
 
-                                <ul className="list-group mb-2">
-                                    <li className="list-group-item">
-                                        {showStatus(o)}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Transaction ID: {o.transaction_id}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Amount: ${o.amount}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Ordered by: {o.user.name}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Ordered on:{" "}
-                                        {moment(o.createdAt).fromNow()}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Delivery address: {o.address}
-                                    </li>
-                                </ul>
+                                                    <ul className="list-group mb-2">
+                                                        <li className="list-group-item">
+                                                            {showStatus(o)}
+                                                        </li>
+                                                        <li className="list-group-item">
+                                                            Transaction ID: {o.transaction_id}
+                                                        </li>
+                                                        <li className="list-group-item">
+                                                            Amount: ${o.amount}
+                                                        </li>
+                                                        <li className="list-group-item">
+                                                            Ordered by: {o.user.name}
+                                                        </li>
+                                                        <li className="list-group-item">
+                                                            Ordered on:{" "}
+                                                            {moment(o.createdAt).fromNow()}
+                                                        </li>
+                                                        <li className="list-group-item">
+                                                            Delivery address: {o.address}
+                                                        </li>
+                                                    </ul>
 
-                                <h3 className="mt-4 mb-4 font-italic">
-                                    Total products in the order:{" "}
-                                    {o.products.length}
-                                </h3>
+                                                    <h3 className="mt-4 mb-4 font-italic">
+                                                        Total products in the order:{" "}
+                                                        {o.products.length}
+                                                    </h3>
 
-                                {o.products.map((p, pIndex) => (
-                                    <div
-                                        className="mb-4"
-                                        key={pIndex}
-                                        style={{
-                                            padding: "20px",
-                                            border: "1px solid indigo"
-                                        }}
-                                    >
-                                        {showInput("Product name", p.name)}
-                                        {showInput("Product price", p.price)}
-                                        {showInput("Product total", p.count)}
-                                        {showInput("Product Id", p._id)}
+                                                    {o.products.map((p, pIndex) => (
+                                                        <div
+                                                            className="mb-4"
+                                                            key={pIndex}
+                                                            style={{
+                                                                padding: "20px",
+                                                                border: "1px solid indigo"
+                                                            }}
+                                                        >
+                                                            {showInput("Product name", p.name)}
+                                                            {showInput("Product price", p.price)}
+                                                            {showInput("Product total", p.count)}
+                                                            {showInput("Product Id", p._id)}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                ))}
-                            </div>
-                        );
-                    })}
+                                </div>
+                            ): 
+                            (
+                                <div className='row'>
+                                    <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
+                                        {error}
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
+                </div>
         </AdminLayout>
     );
 };

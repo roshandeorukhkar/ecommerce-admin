@@ -1,7 +1,7 @@
 import { API } from '../config';
 
 export const adminsignin = admin => {
-    return fetch(`${API}/user/signin`, {
+    return fetch(`${API}/users/signin`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

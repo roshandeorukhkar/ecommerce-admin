@@ -5,7 +5,7 @@ import AdminNotification from './AdminNotification';
 
 const AdminHeader = (props) =>{
     console.log(props)
-    const { user } = props
+    const { user, history } = props
 
     const [showNotification ,setShowNotification] = useState(false);
     const [showLogin , setShowLogin] = useState(false);
@@ -54,7 +54,9 @@ const AdminHeader = (props) =>{
                         <div className="drop-title">
                            <center> 
                                <button className='btn btn-primary btn-outline' onClick={() =>
-                            signout()
+                            signout(() => {
+                                history.push("/");
+                            })
                         }>Sign Out</button></center>
                         </div>
                     </li>

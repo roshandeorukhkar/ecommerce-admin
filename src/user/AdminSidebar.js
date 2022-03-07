@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 const AdminSidebar = (props) => {
     const { user, modules } = props
-    const moduleList = (modules.accessModuleId != "" && modules.accessModuleId != "All")?  modules.accessModuleId.split(",") : [];
+    const moduleList = modules.map(module => module.name)
+    console.log(moduleList)
     const [productSubMenu, setProductSubMenu] = useState(false);
 
     return (
@@ -56,12 +57,13 @@ const AdminSidebar = (props) => {
                                 <li>
                                     <Link to="/storemanagement" aria-expanded="false">
                                         <i className="icon-grid fa-fw"></i>
-                                        <span className="hide-menu"> Store Management</span></Link>
+                                        <span className="hide-menu"> Store Management</span>
+                                    </Link>
                                 </li>
                             }
                             {moduleList.includes("orders") &&
                                 <li>
-                                    <Link to="#" aria-expanded="false">
+                                    <Link to="/orders" aria-expanded="false">
                                         <i className="icon-grid fa-fw"></i>
                                         <span className="hide-menu"> Orders Management</span>
                                     </Link>
@@ -69,32 +71,36 @@ const AdminSidebar = (props) => {
                             }
                             {moduleList.includes("transactions") &&
                                 <li>
-                                    <Link to="#" aria-expanded="false">
+                                    <Link to="/transactions" aria-expanded="false">
                                         <i className="icon-credit-card fa-fw"></i>
-                                        <span className="hide-menu"> Transactions</span></Link>
+                                        <span className="hide-menu"> Transactions</span>
+                                    </Link>
                                 </li>
                             }
                             <li>
-                                <Link to="#" aria-expanded="false">
+                                <Link to="/feedback" aria-expanded="false">
                                     <i className="icon-note fa-fw"></i>
-                                    <span className="hide-menu"> Feedback</span></Link>
+                                    <span className="hide-menu"> Feedback</span>
+                                </Link>
                             </li>
                             <li>
-                                <Link to="#" aria-expanded="false">
+                                <Link to="/reviews" aria-expanded="false">
                                     <i className="icon-grid fa-fw"></i>
-                                    <span className="hide-menu"> Reviews</span></Link>
+                                    <span className="hide-menu"> Reviews</span>
+                                </Link>
                             </li>
                             {moduleList.includes("reports") &&
                             <li>
-                                <Link to="#" aria-expanded="false">
+                                <Link to="/reports" aria-expanded="false">
                                     <i className="icon-docs fa-fw"></i>
                                     <span className="hide-menu"> Reports</span></Link>
                             </li>
                             }
                             <li>
-                                <Link to="#" aria-expanded="false">
+                                <Link to="/settings" aria-expanded="false">
                                     <i className="icon-settings fa-fw"></i>
-                                    <span className="hide-menu"> settings</span></Link>
+                                    <span className="hide-menu"> settings</span>
+                                </Link>
                             </li>
                         </ul>
                     </nav>

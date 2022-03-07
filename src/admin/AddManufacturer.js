@@ -59,7 +59,7 @@ const showSuccess = () => (
 
 const redirectUser = () => {
     if(redirectToProfile) {
-        return <Redirect to="/admin/manufacturers" />;
+        return <Redirect to="/manufacturers" />;
      }  
 };
 return(

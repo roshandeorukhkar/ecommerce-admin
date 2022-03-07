@@ -42,12 +42,10 @@ export const authenticate = (data, next) => {
 };
 
 export const signout = next => {
-    console.log("i m in 1")
     if (typeof window !== 'undefined') {
-        console.log("i m in 2")
         localStorage.removeItem('jwt');
-        //next();
-        return fetch(`${API}/user/signout`, {
+        next();
+        return fetch(`${API}/users/signout`, {
             method: 'GET'
         }).then(response => {
             console.log('signout', response);

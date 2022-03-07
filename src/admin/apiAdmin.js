@@ -293,14 +293,19 @@ export const updateOrderStatus = (userId, token, orderId, status) => {
  * delete single product
  */
 
-export const getProducts = (limit) => {
+export const getProducts = (limit, token) => {
     return fetch(`${API}/products?limit=${limit}`, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        }
     })
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => console.log(err));
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => console.log(err));
 };
 
 export const deleteProduct = (productId, userId, token) => {
@@ -425,7 +430,7 @@ export const deleteSpecification = (productId) => {
 };
 // show all user
 export const getCoustomer = () => {
-    return fetch(`${API}/cust?limit=undefined`, {
+    return fetch(`${API}/customer?limit=undefined`, {
         method: 'GET'
     })
         .then(response => {
@@ -435,7 +440,7 @@ export const getCoustomer = () => {
 };
 
 export const getCust = productId => {
-    return fetch(`${API}/cust/${productId}`, {
+    return fetch(`${API}/customer/${productId}`, {
         method: 'GET'
     })
         .then(response => {
@@ -445,7 +450,7 @@ export const getCust = productId => {
 };
 
 export const updateCustomer = (productId, category) => {
-    return fetch(`${API}/cust/${productId}`, {
+    return fetch(`${API}/customer/${productId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -460,7 +465,7 @@ export const updateCustomer = (productId, category) => {
         .catch(err => console.log(err));
 };
 export const deleteCustomer = (productId, category) => {
-    return fetch(`${API}/cust/delete/${productId}`, {
+    return fetch(`${API}/customer/delete/${productId}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -474,7 +479,7 @@ export const deleteCustomer = (productId, category) => {
         .catch(err => console.log(err));
 };
 export const removeCustomer = (productId) => {
-    return fetch(`${API}/cust/${productId}`, {
+    return fetch(`${API}/customer/${productId}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
@@ -487,7 +492,7 @@ export const removeCustomer = (productId) => {
         .catch(err => console.log(err));
 };
 export const statusCustomer = (productId, category) => {
-    return fetch(`${API}/cust/status/${productId}`, {
+    return fetch(`${API}/customer/status/${productId}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -501,7 +506,7 @@ export const statusCustomer = (productId, category) => {
         .catch(err => console.log(err));
 };
 export const statusCheckCustomer = (productId, category) => {
-    return fetch(`${API}/cust/statusCheck/${productId}`, {
+    return fetch(`${API}/customer/statusCheck/${productId}`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

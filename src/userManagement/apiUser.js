@@ -2,8 +2,12 @@ import { API } from '../config';
 
 /*get user */
 export const getUser = () => {
-    return fetch(`${API}/user`, {
-        method: 'GET'
+    return fetch(`${API}/users`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
     })
         .then(response => {
             return response.json();
@@ -12,7 +16,7 @@ export const getUser = () => {
 };
 // delete user
 export const deleteUser = (userId) => {
-    return fetch(`${API}/user/${userId}`, {
+    return fetch(`${API}/users/${userId}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
@@ -26,7 +30,7 @@ export const deleteUser = (userId) => {
 };
 
 export const getUsers = userId => {
-    return fetch(`${API}/user/${userId}`, {
+    return fetch(`${API}/users/${userId}`, {
         method: 'GET'
     })
         .then(response => {
@@ -37,7 +41,7 @@ export const getUsers = userId => {
 
 export const createUser = async (users) => {
     try {
-        const response = await fetch(`${API}/user/signup`, {
+        const response = await fetch(`${API}/users/signup`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -52,7 +56,7 @@ export const createUser = async (users) => {
     }
 };
 export const updateUser = (userId, users) => {
-    return fetch(`${API}/user/${userId}`, {
+    return fetch(`${API}/users/${userId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
