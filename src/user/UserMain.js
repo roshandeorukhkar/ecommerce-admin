@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Redirect } from "react-router-dom";
-const AdminMain = () => {
-    console.log("i am in")
+import { isAuthenticated } from "../auth/index";
+const AdminMain = (props) => {
     return (
-        <Route
-            render={props =>
-                1 == 1 ? (
-                    <Redirect
-                        to={{
-                            pathname: "/admin/dashboard",
-                            state: { from: props.location }
-                        }}
-                    />
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/admin/signin",
-                            state: { from: props.location }
-                        }}
-                    />
-                )
-            }
-        />
+        isAuthenticated() ? (
+            <Redirect
+                to={{
+                    pathname: "/dashboard",
+                    state: { from: props.location }
+                }}
+            />
+        ) : (
+            <Redirect
+                to={{
+                    pathname: "/signin",
+                    state: { from: props.location }
+                }}
+            />
+        )
     )
 };
 

@@ -63,7 +63,7 @@ const AddCategory = () => {
 
     const goBack = () => (
         <div className="mt-5">
-            <Link to="/admin/dashboard" className="text-warning">
+            <Link to="/dashboard" className="text-warning">
                 Back to Dashboard
             </Link>
         </div>

@@ -92,7 +92,7 @@ const ManageAttribute = () => {
                                 <td>{getDate(A.createdAt)} </td>
                                 <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
                                 <td>
-                                 <Link to={`/admin/attribute/update/${A._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                                 <Link to={`/attribute/update/${A._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
                                     <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(A._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
                                     <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(A._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> 
                                 </td>  

@@ -5,9 +5,11 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAttribute, updateAttribute } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import AdminLayout from '../core/AdminLayout';
 
 
-const UpdateAttribute = ({ match }) => {
+const UpdateAttribute = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
@@ -128,10 +130,8 @@ const UpdateAttribute = ({ match }) => {
    
 
     return (
-            <div className="row">
-                 <AdminHeader />
-                 <AdminSidebar />
-                 <div className="page-wrapper">
+        <AdminLayout data={props}>
+            <div className="page-wrapper">
                     <div className="container-fluid">
                         <h2 className="font-bold"> Edit Attribute</h2>
                             <div className="white-box">
@@ -147,9 +147,9 @@ const UpdateAttribute = ({ match }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            );
-    };
+            </div>
+        </AdminLayout>
+    );
+};
 
 export default UpdateAttribute;

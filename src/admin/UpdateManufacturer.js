@@ -3,11 +3,10 @@ import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getManufacturer, updateManfacturer } from './apiAdmin';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
+import AdminLayout from "../core/AdminLayout";
 
-
-const UpdateManufacturer = ({ match }) => {
+const UpdateManufacturer = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
@@ -112,7 +111,7 @@ const UpdateManufacturer = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/manufacturers" />;
+                return <Redirect to="/manufacturers" />;
             }
         }
     };
@@ -120,11 +119,9 @@ const UpdateManufacturer = ({ match }) => {
    
 
     return (
-            <div className="row">
-                 <AdminHeader />
-                 <AdminSidebar />
-                 <div className="page-wrapper">
-                    <div className="container-fluid">
+                <AdminLayout data={props} >
+                    <div className="page-wrapper">
+                        <div className="container-fluid">
                         <h2 className="font-bold"> Edit Manufacturer</h2>
                             <div className="white-box">
                                 <div className="row">
@@ -140,7 +137,7 @@ const UpdateManufacturer = ({ match }) => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </AdminLayout>
             );
     };
 

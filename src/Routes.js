@@ -1,11 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AdminRoute from './auth/AdminRoute';
 import AdminDashboard from './user/AdminDashboard';
 
-import AddProduct from './user/AddProduct';
+import AdminSetup from "./admin/Setup";
 import Orders from './user/Orders';
-import UpdateProduct from './user/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
 import AdminSignin from './user/Signin';
 import AdminMain from './user/UserMain';
@@ -31,7 +30,7 @@ import Managespecification from './admin/Managespecification';
 import Manuspecification from './admin/Manuspecification';
 import Updatespecification from './admin/Updatespecification';
 
-import userManagemnt from './userManagement/UserManagemnt';
+import UserManagemnt from './userManagement/UserManagemnt';
 import UpdateUsers from './userManagement/UserEdit';
 import AddUser from './userManagement/UserAdd';
 import Manucategory from './admin/Manucategory';
@@ -39,49 +38,56 @@ import AddCategory from './admin/AddCategory';
 
 import AllUser from './userManagement/AllUser';
 
+import ManageProducts from "./products/ManageProducts";
+import AddProduct from './products/AddProduct';
+import UpdateProduct from './products/UpdateProduct';
+
 const Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
-                <AdminRoute path="/admin" exact component={AdminMain} />
-                <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
-                <AdminRoute path="/" exact component={AdminSignin} />
-                <AdminRoute path="/admin/create/category" exact component={AddCategory} />
-                <AdminRoute path="/admin/create/product" exact component={AddProduct} />
-                <AdminRoute path="/admin/orders" exact component={Orders} />
-                <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
-                <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
-                <AdminRoute path="/admin/rolemanagement/:storeId" exact component={RoleManagement} />
-                <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
-                <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />
-                <AdminRoute path="/admin/specification" exact component={ProductSpecification} />
-                <AdminRoute path="/admin/manufacturers" exact component={ProductManufacture} />
-                <AdminRoute path="/admin/attribute" exact component={ProductAttribute} />
-                <AdminRoute path="/admin/manufacturer" exact component={ManageManufacturer} />
-                <AdminRoute path="/admin/create/manufacturer" exact component={AddManufacturer} />
-                <AdminRoute path="/admin/create/addAttributenew" exact component={AddAttributenew} />
-                <AdminRoute path="/admin/manufacturer/update/:productId" exact component={UpdateManufacturer} />
-                <AdminRoute path="/admin/attribute/update/:attributeId" exact component={UpdateAttribute} />
-                <AdminRoute path="/admin/storemanagement/delete/:deleteStoreId" exact component={AdminStoreMangement} />
-                <AdminRoute path="/admin/storemanagement/edit/:storeId" exact component={AdminStoreMangement} />
-                <AdminRoute path="/admin/coustomer" exact component={Customer} />
-                <AdminRoute path="/admin/coustomers" exact component={CustomerManagement} />
-                <AdminRoute path="/admin/coustomers/update/:productId" exact component={UpdateCustomer} />
-                <AdminRoute path="/admin/Managespecification" exact component={Managespecification} />
-                <AdminRoute path="/admin/Manuspecification" exact component={Manuspecification} />
-                <AdminRoute path="/admin/Updatespecification/update/:productId" exact component={Updatespecification} />
+                <AdminRoute path="/" exact component={AdminMain} />
+                <Route path="/setup" exact component={AdminSetup} />
+                <Route path="/signin" exact component={AdminSignin} />
+                <AdminRoute path="/dashboard" exact component={AdminDashboard} />
+                <AdminRoute path="/create/category" exact component={AddCategory} />
+                <AdminRoute path="/create/product" exact component={AddProduct} />
+                <AdminRoute path="/orders" exact component={Orders} />
+                <AdminRoute path="/product/update/:productId" exact component={UpdateProduct} />
+                <AdminRoute path="/category/update/:categoryId" exact component={UpdateCategory} />
+                <AdminRoute path="/rolemanagement/:storeId" exact component={RoleManagement} />
+                <AdminRoute path="/statistic" exact component={AdminStatistics} />
+                <AdminRoute path="/storemanagement" exact component={AdminStoreMangement} />
+                <AdminRoute path="/specification" exact component={ProductSpecification} />
+                <AdminRoute path="/manufacturers" exact component={ProductManufacture} />
+                <AdminRoute path="/attribute" exact component={ProductAttribute} />
+                <AdminRoute path="/manufacturer" exact component={ManageManufacturer} />
+                <AdminRoute path="/create/manufacturer" exact component={AddManufacturer} />
+                <AdminRoute path="/create/addAttributenew" exact component={AddAttributenew} />
+                <AdminRoute path="/manufacturer/update/:productId" exact component={UpdateManufacturer} />
+                <AdminRoute path="/attribute/update/:attributeId" exact component={UpdateAttribute} />
+                <AdminRoute path="/storemanagement/delete/:deleteStoreId" exact component={AdminStoreMangement} />
+                <AdminRoute path="/storemanagement/edit/:storeId" exact component={AdminStoreMangement} />
+                <AdminRoute path="/customers" exact component={Customer} />
+                <AdminRoute path="/customers/update/:productId" exact component={UpdateCustomer} />
+                <AdminRoute path="/Managespecification" exact component={Managespecification} />
+                <AdminRoute path="/Manuspecification" exact component={Manuspecification} />
+                <AdminRoute path="/Updatespecification/update/:productId" exact component={Updatespecification} />
 
-                <AdminRoute path="/admin/users" exact component={userManagemnt} />
-                <AdminRoute path="/admin/users/update/:userId" exact component={UpdateUsers} />
-                <AdminRoute path="/admin/create/users" exact component={AddUser} />
-                <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
+                <AdminRoute path="/users" exact component={UserManagemnt} />
+                <AdminRoute path="/users/update/:userId" exact component={UpdateUsers} />
+                <AdminRoute path="/create/users" exact component={AddUser} />
+                <AdminRoute path="/Manucategory" exact component={Manucategory} />
                
-                <AdminRoute path="/admin/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
-                <AdminRoute path="/admin/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
+                <AdminRoute path="/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
+                <AdminRoute path="/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
 
-                <AdminRoute path="/admin/user/list" exact component={AllUser} />
-                
-</Switch>
+                <AdminRoute path="/user/list" exact component={AllUser} />
+
+                <AdminRoute path="/products" exact component={ManageProducts} />
+                <AdminRoute path="/product/create" exact component={AddProduct} />
+                <AdminRoute path="/product/update/:productId" exact component={UpdateProduct} />
+            </Switch>
         </BrowserRouter>
     );
 };

@@ -4,9 +4,11 @@ import { Redirect } from 'react-router-dom';
 import { getUsers, updateUser } from './apiUser';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import AdminLayout from '../core/AdminLayout';
 
 
-const UpdateUsers = ({ match }) => {
+const UpdateUsers = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         ownerName: '',
         email:'',
@@ -30,10 +32,9 @@ const UpdateUsers = ({ match }) => {
             } else {
                 setValues({
                     ...values,
-                    ownerName: data.ownerName,
+                    ownerName: data.name,
                     email:data.email,
-                    address:data.address,
-                    createdDate:data.createdDate
+                    createdDate:data.date_added
                 });
             }
         });
@@ -133,7 +134,7 @@ const UpdateUsers = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/users" />;
+                return <Redirect to="/users" />;
             }
         }
     };
@@ -141,10 +142,8 @@ const UpdateUsers = ({ match }) => {
    
 
     return (
-            <div className="row">
-                 <AdminHeader />
-                 <AdminSidebar />
-                 <div className="page-wrapper">
+            <AdminLayout data={props}>
+                <div className="page-wrapper">
                     <div className="container-fluid">
                         <h2 className="font-bold"> Edit Users</h2>
                             <div className="white-box">
@@ -160,9 +159,9 @@ const UpdateUsers = ({ match }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-            );
-    };
+            </AdminLayout>
+    );
+};
 
 export default UpdateUsers;

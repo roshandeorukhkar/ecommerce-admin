@@ -2,7 +2,7 @@ import React from 'react';
 import ManageAttribute from "./ManageAttribute";
 import { Link } from "react-router-dom";
 
-const Attribute = () => {
+const Attribute = (props) => {
 
     return (
         <>

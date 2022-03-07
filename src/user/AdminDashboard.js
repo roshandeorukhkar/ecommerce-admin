@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 
 import AdminDashboardContent from './AdminDashboardContent';
 
-const AdminDashboard = () => {
+const AdminDashboard = (props) => {
     return(
-        <AdminLayout>
-            <AdminDashboardContent />
+        <AdminLayout data={props}>
+            <AdminDashboardContent {...props} />
         </AdminLayout>            
     )
 };

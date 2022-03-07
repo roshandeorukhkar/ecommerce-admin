@@ -6,8 +6,9 @@ import AdminSidebar from "../user/AdminSidebar";
 import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
 // {category: ["5cd0258f2793ec6e100bc191"], price: []}
-// http://localhost:3000/admin/category/update/5cd0258f2793ec6e100bc191
-const UpdateCategory = ({ match }) => {
+// http://localhost:3000/category/update/5cd0258f2793ec6e100bc191
+const UpdateCategory = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         name: '',
         error: '',
@@ -142,7 +143,7 @@ const UpdateCategory = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/categories" />;
+                return <Redirect to="/categories" />;
             }
         }
     };

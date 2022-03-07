@@ -31,10 +31,10 @@ const columns = [{
   }];
 */}
 
-const Manufacturer = () => {
+const Manufacturer = (props) => {
 
     return (
-        <AdminLayout>
+        <AdminLayout data={props}>
             <div id="wrapper">
                 <div className="page-wrapper">
                     <div className="container-fluid">
@@ -51,7 +51,7 @@ const Manufacturer = () => {
                     </div>
                 </div>
             </div>
-            </AdminLayout>
+        </AdminLayout>
     )
 
 }

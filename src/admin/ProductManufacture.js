@@ -2,10 +2,10 @@ import React from "react";
 import AdminLayout from "../core/AdminLayout";
 import Manufacturer from "./Manufacturer";
 
-const ProductManufacture = () =>{
+const ProductManufacture = (props) =>{
     return(
-        <AdminLayout>
-                <Manufacturer/>
+        <AdminLayout data={props}>
+                <Manufacturer {...props}/>
         </AdminLayout>
     )
 

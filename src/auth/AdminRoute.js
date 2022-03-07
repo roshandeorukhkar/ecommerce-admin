@@ -1,18 +1,24 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isAuthenticated } from "./Cutomer";
+import { isAuthenticated } from "./index";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
+    const { user, token, modules } = isAuthenticated();
     return (
         <Route
             {...rest}
             render={props =>
-                1 === 1 ? (
-                    <Component {...props} />
+                isAuthenticated() ? (
+                    <Component 
+                    {...props} 
+                    user={user}
+                    modules={modules}
+                    token={token}
+                    />
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/admin/signin",
+                            pathname: "/signin",
                             state: { from: props.location }
                         }}
                     />

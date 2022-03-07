@@ -6,11 +6,12 @@ import { authenticate, isAuthenticated } from '../common/utils';
 import { useHistory } from "react-router-dom";
 
 const AdminSignin = () => {
-    const [values, setValues] = useState({})
+    const [values, setValues] = useState({
+        redirectToReferrer: false,
+        admin:[]
+    })
     const [error, setError] = useState('');
-    const { email, password } = values;
-    //const { admin } = isAuthenticated();
-    let history = useHistory();
+    const { email, password, redirectToReferrer, admin } = values;
 
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value });
@@ -18,13 +19,17 @@ const AdminSignin = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // setValues({ ...values, error : false ,loading: true });
         const res = await adminsignin({ email, password })
-        const data = res.json();
-        if (res.status === 400 || !data) {
+        if (res.error) {
             setError('Please enter valid Email and Password!');
         } else {
-            history.push("/admin/dashboard");
+            authenticate(res, () => {
+                setValues({
+                    ...values,
+                    redirectToReferrer: true,
+                    admin:isAuthenticated()
+                });
+            });
         }
 
     };
@@ -86,11 +91,11 @@ const AdminSignin = () => {
         </div>
     );
 
-    // const redirectUser = () => {
-    //     if (isAuthenticated()) {
-    //         return <Redirect to="/admin/dashboard" />;
-    //     }
-    // };
+    const redirectUser = () => {
+        if (redirectToReferrer && admin && isAuthenticated()) {
+            return <Redirect to="/dashboard" />;
+        }
+    };
 
     const AdminFooter = () => (
         <footer className='admin_footer'>
@@ -102,6 +107,7 @@ const AdminSignin = () => {
     return (
         <>
             {signUpForm()}
+            {redirectUser()}
             {/* {AdminFooter()} */}
             {/* {redirectUser()} */}
         </>

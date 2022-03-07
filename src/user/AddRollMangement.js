@@ -28,7 +28,7 @@ const AddRollManagement = () =>{
             setValues('');
             setList(res.list);
             console.log(res.list,"hhh");
-            // history.push("/admin/addRollManagement");
+            // history.push("/addRollManagement");
         }
     }
 

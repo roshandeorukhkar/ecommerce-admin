@@ -2,13 +2,13 @@ import React from 'react';
 import AddListStore from "./AddListStore";
 import AdminLayout from '../core/AdminLayout';
 
-const StoreManagement = () => {
+const StoreManagement = (props) => {
 
     return (
         <>
             <div id="wrapper">
-                <AdminLayout>
-                    <AddListStore />
+                <AdminLayout data={props}>
+                    <AddListStore {...props}/>
                 </AdminLayout>
             </div>
         </>

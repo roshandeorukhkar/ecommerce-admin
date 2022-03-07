@@ -5,7 +5,7 @@ import AdminSidebar from "../user/AdminSidebar";
 import { createspecification } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 
-const Addspecification = () =>{
+const Addspecification = (props) =>{
     
 const [values, setValues] = useState({
         manufacturerName: '',
@@ -67,9 +67,6 @@ const redirectUser = () => {
      }  
 };
 return(
-        <>
-            <div id="wrapper">
-            <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <h4 className="font-bold"> Add Specification</h4>
@@ -103,9 +100,6 @@ return(
                     </div>
                 </div>
             </div> 
-        </div>
-    </>
-
     )
 
 }

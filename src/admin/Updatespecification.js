@@ -3,11 +3,11 @@ import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getSpecification, updatespecification } from './apiAdmin';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
+import AdminLayout from "../core/AdminLayout";
 
 
-const Updatespecification = ({ match }) => {
+const Updatespecification = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
@@ -119,7 +119,7 @@ const Updatespecification = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/Manuspecification" />;
+                return <Redirect to="/Manuspecification" />;
             }
         }
     };
@@ -127,10 +127,8 @@ const Updatespecification = ({ match }) => {
    
 
     return (
-            <div className="row">
-                 <AdminHeader />
-                 <AdminSidebar />
-                 <div className="page-wrapper">
+        <AdminLayout data={props}>
+                <div className="page-wrapper">
                     <div className="container-fluid">
                         <h2 className="font-bold"> Update Specification</h2>
                             <div className="white-box">
@@ -146,9 +144,9 @@ const Updatespecification = ({ match }) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-            );
-    };
+        </AdminLayout>
+    );
+};
 
 export default Updatespecification;

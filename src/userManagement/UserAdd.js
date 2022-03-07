@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
 import { createUser } from "./apiUser";
 import { Redirect } from 'react-router-dom';
+import AdminLayout from '../core/AdminLayout';
 
-const AddUser = () =>{
+const AddUser = (props) =>{
     
 const [values, setValues] = useState({
         ownerName: '',
@@ -70,14 +69,11 @@ const showSuccess = () => (
 
 const redirectUser = () => {
     if(redirectToProfile) {
-        return <Redirect to="/admin/users" />;
+        return <Redirect to="/users" />;
      }  
 };
 return(
-        <>
-            <div id="wrapper">
-            <AdminHeader />
-            <AdminSidebar />
+        <AdminLayout data={props}>
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <h4 className="font-bold"> Add Users</h4>
@@ -128,8 +124,7 @@ return(
                     </div>
                 </div>
             </div> 
-        </div>
-    </>
+        </AdminLayout>
 
     )
 

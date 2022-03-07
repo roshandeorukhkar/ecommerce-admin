@@ -2,10 +2,10 @@ import React from "react";
 import AdminLayout from '../core/AdminLayout';
 import { Link } from "react-router-dom";
 
-const AllUser = () =>{
+const AllUser = (props) =>{
     return(
         <>
-          <AdminLayout>
+          <AdminLayout data={props}>
           <div id="wrapper">
                 <div className="page-wrapper">
                     <div className="container-fluid">

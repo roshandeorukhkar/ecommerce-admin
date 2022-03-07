@@ -5,7 +5,7 @@ import { deleteSpecification, Specification } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import DataTableComponent from "../common/DataTableComponent";
 
-const Managespecification = () => {
+const Managespecification = (props) => {
     const [products, setProducts] = useState([]);
 
     const { user, token } = isAuthenticated();
@@ -79,7 +79,7 @@ const Managespecification = () => {
                             <td><Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/></td>
                             
                             <td>
-                                <Link to={`/admin/Updatespecification/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
+                                <Link to={`/Updatespecification/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)}><i className='fa fa-trash-o font-15'></i></button>
                             </td>     
                         

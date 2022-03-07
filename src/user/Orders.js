@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../core/Layout";
+import AdminLayout from "../core/AdminLayout";
 import { isAuthenticated } from "../common/utils";
 import { Link } from "react-router-dom";
 import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
 import moment from "moment";
 
-const Orders = () => {
+const Orders = (props) => {
     const [orders, setOrders] = useState([]);
     const [statusValues, setStatusValues] = useState([]);
 
@@ -92,7 +92,7 @@ const Orders = () => {
     );
 
     return (
-        <Layout
+        <AdminLayout
             title="Orders"
             description={`G'day ${
                 user.name
@@ -163,7 +163,7 @@ const Orders = () => {
                     })}
                 </div>
             </div>
-        </Layout>
+        </AdminLayout>
     );
 };
 

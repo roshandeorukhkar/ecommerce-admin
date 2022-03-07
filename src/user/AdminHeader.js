@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { signout } from '../auth';
 import AdminNotification from './AdminNotification';
 
-const AdminHeader = () =>{
+const AdminHeader = (props) =>{
+    console.log(props)
+    const { user } = props
 
     const [showNotification ,setShowNotification] = useState(false);
     const [showLogin , setShowLogin] = useState(false);
-
     return(
     <>
     <nav className="navbar navbar-default navbar-static-top m-b-0">
@@ -42,16 +44,18 @@ const AdminHeader = () =>{
                 <Link to="#" className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
                     <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  />
                     <p className='p-t-5'> 
-                        <span className='font-bold text-dark'> Admin</span>
-                        <span className='font-12'>KeaSofttech@gmail.com</span>
+                        <span className='font-bold text-dark'>{user.name}</span>
+                        <span className='font-12'>{user.email}</span>
                     </p>
                     <i className="icon-arrow-down m-t-15" ></i>
                 </Link>
                 <ul className="dropdown-menu mailbox animated bounceInDown">
                     <li>
                         <div className="drop-title">
-                            <p></p>
-                           <center> <Link to='/' className='btn btn-primary btn-outline'>Sign Out</Link></center>
+                           <center> 
+                               <button className='btn btn-primary btn-outline' onClick={() =>
+                            signout()
+                        }>Sign Out</button></center>
                         </div>
                     </li>
                 </ul>

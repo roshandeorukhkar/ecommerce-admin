@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import Managecategory from "./Managecategory";
 import AdminLayout from "../core/AdminLayout";
-const Manufacturer = () => {
+const Manufacturer = (props) => {
 
     return (
-        <AdminLayout>
+        <AdminLayout data={props}>
             <div id="wrapper">
                 <div className="page-wrapper">
                     <div className="container-fluid">
@@ -15,7 +15,7 @@ const Manufacturer = () => {
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <Managecategory />
+                                    <Managecategory {...props} />
                                 </div>
                             </div>
                         </div>

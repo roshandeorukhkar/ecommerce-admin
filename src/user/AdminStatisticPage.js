@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 ;
 
 
-const AdminStatisticPage = () =>{
+const AdminStatisticPage = (props) =>{
     return(
         <>
         <div className="page-wrapper">

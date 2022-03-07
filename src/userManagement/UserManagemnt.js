@@ -2,13 +2,13 @@ import React from "react";
 import AdminLayout from '../core/AdminLayout';
 import UserList from "./UserList";
 
-const userManagemnt = () =>{
+const UserManagemnt = (props) =>{
     return(
         <>
-          <AdminLayout>
-              <UserList/>
+          <AdminLayout data={props}>
+              <UserList {...props}/>
          </AdminLayout>
         </>
     );
 }
-export default userManagemnt;
+export default UserManagemnt;

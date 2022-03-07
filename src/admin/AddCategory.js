@@ -5,7 +5,7 @@ import AdminSidebar from "../user/AdminSidebar";
 import { createCategory } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 
-const AddManufacturer = () =>{
+const AddManufacturer = (props) =>{
     
 const [values, setValues] = useState({
         name: '',
@@ -65,8 +65,8 @@ const redirectUser = () => {
 return(
         <>
             <div id="wrapper">
-            <AdminHeader />
-            <AdminSidebar />
+            <AdminHeader {...props} />
+            <AdminSidebar {...props}/>
             <div className="page-wrapper">
                 <div className="container-fluid">
                     <h4 className="font-bold"> Add Category</h4>

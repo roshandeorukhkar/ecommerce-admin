@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { deleteCustomer, getCoustomer, statusCustomer, statusCheckCustomer, removeCustomer } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
+import AdminLayout from "../core/AdminLayout";
 
-const Customer = () => {
+const Customer = (props) => {
     
     const [values, setValues] = useState({
         error: '',
@@ -104,7 +105,7 @@ const Customer = () => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/coustomers" />;
+                return <Redirect to="/coustomers" />;
             }
         }
     };
@@ -121,7 +122,12 @@ const Customer = () => {
     }
     return (
 
-            <div className="row">
+            <AdminLayout data={props}>
+                <div className="page-wrapper">
+                    <div className="container-fluid">
+                        <h4 className="font-bold"> Customer</h4>
+                        <div className="white-box">
+                            <div className="row">
                 <div className="col-12">
                 {deleteMessage()}
                 {redirectUser()}
@@ -139,22 +145,22 @@ const Customer = () => {
                     </thead>
                     <tbody>
                         {products.map((customer, i) => (
-                       <tr  key={i} id="tableInput">
+                        <tr  key={i} id="tableInput">
                             {!customer.deletedAt ?(
-                               <>
-                           <td><input type="checkbox" id="checkboxTH" /></td>
+                                <>
+                            <td><input type="checkbox" id="checkboxTH" /></td>
                             <td>{customer.name}</td>
                             <td>{customer.email}</td>
                             <td> 
                                 {customer.status == 1 
                                     ?(
                                     <>
-                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(customer._id)} color='primary'/>
+                                        <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(customer._id)} color='primary'/>
                                     </>
                                     ):
-                                     <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusCheck(customer._id)} color='primary'/>
+                                        <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusCheck(customer._id)} color='primary'/>
                                     }
-                               
+                                
                             </td>
                             <td>2233343434</td>
                             
@@ -165,7 +171,7 @@ const Customer = () => {
                                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => remove(customer._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
                             </td>     
                             </>
-                           ):null}
+                            ):null}
                         </tr>
                         
                         ))}
@@ -175,7 +181,11 @@ const Customer = () => {
                     
                     <br />
                 </div>
-            </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+            </AdminLayout>
     );
 };
 

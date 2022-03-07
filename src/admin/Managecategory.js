@@ -3,7 +3,7 @@ import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
 import { deletecategory, getCategories } from "./apiAdmin";
 import { Switch } from '@mui/material';
-const Managecategory = () => {
+const Managecategory = (props) => {
     const [products, setProducts] = useState([]);
 
     const { user, token } = isAuthenticated();

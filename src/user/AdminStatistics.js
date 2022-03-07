@@ -1,21 +1,14 @@
 import React from 'react';
-import AdminHeader from "./AdminHeader";
-import AdminSidebar from "./AdminSidebar";
 import AdminStatisticPage from './AdminStatisticPage';
+import AdminLayout from "../core/AdminLayout";
 
-
-const AdminStatistics = () =>{
+const AdminStatistics = (props) =>{
    
 
     return(
-        <> 
-            <div id="wrapper">
-
-                <AdminHeader />
-                <AdminSidebar />
-                <AdminStatisticPage />
-            </div>
-        </>
+        <AdminLayout data={props}>
+            <AdminStatisticPage {...props} />
+        </AdminLayout>
     )
 
 }

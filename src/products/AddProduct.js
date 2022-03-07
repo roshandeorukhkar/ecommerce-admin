@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { isAuthenticated } from '../common/utils';
-import { Link, Redirect } from 'react-router-dom';
-import { getProduct, getCategories, updateProduct } from './apiAdmin';
+import { isAuthenticated } from '../auth';
+import { Link } from 'react-router-dom';
+import { createProduct, getCategories } from '../admin/apiAdmin';
 import AdminLayout from '../core/AdminLayout';
 
-const UpdateProduct = (props) => {
-    const { match } = props
+const AddProduct = (props) => {
     const [values, setValues] = useState({
         name: '',
         description: '',
@@ -16,19 +15,18 @@ const UpdateProduct = (props) => {
         quantity: '',
         photo: '',
         loading: false,
-        error: false,
+        error: '',
         createdProduct: '',
         redirectToProfile: false,
         formData: ''
     });
-    const [categories, setCategories] = useState([]);
 
     const { user, token } = isAuthenticated();
     const {
         name,
         description,
         price,
-        // categories,
+        categories,
         category,
         shipping,
         quantity,
@@ -39,41 +37,23 @@ const UpdateProduct = (props) => {
         formData
     } = values;
 
-    const init = productId => {
-        getProduct(productId).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
-                // populate the state
-                setValues({
-                    ...values,
-                    name: data.name,
-                    description: data.description,
-                    price: data.price,
-                    category: data.category._id,
-                    shipping: data.shipping,
-                    quantity: data.quantity,
-                    formData: new FormData()
-                });
-                // load categories
-                initCategories();
-            }
-        });
-    };
-
     // load categories and set form data
-    const initCategories = () => {
+    const init = () => {
         getCategories().then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
-                setCategories(data);
+                setValues({
+                    ...values,
+                    categories: data,
+                    formData: new FormData()
+                });
             }
         });
     };
 
     useEffect(() => {
-        init(match.params.productId);
+        init();
     }, []);
 
     const handleChange = name => event => {
@@ -86,7 +66,7 @@ const UpdateProduct = (props) => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
 
-        updateProduct(match.params.productId, user._id, token, formData).then(data => {
+        createProduct(user._id, token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -98,8 +78,6 @@ const UpdateProduct = (props) => {
                     price: '',
                     quantity: '',
                     loading: false,
-                    error: false,
-                    redirectToProfile: true,
                     createdProduct: data.name
                 });
             }
@@ -108,30 +86,28 @@ const UpdateProduct = (props) => {
 
     const newPostForm = () => (
         <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
             <div className="form-group">
-                <label className="btn btn-secondary">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
-                </label>
+                <h6><span style={{color:'red'}}>*</span>Upload photo</h6>
+                <input className="btn btn-secondary" onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Name</h6>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Description</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Description</h6>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Price</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Price</h6>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Category</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Category</h6>
                 <select onChange={handleChange('category')} className="form-control">
                     <option>Please select</option>
                     {categories &&
@@ -144,7 +120,7 @@ const UpdateProduct = (props) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Shipping</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Shipping</h6>
                 <select onChange={handleChange('shipping')} className="form-control">
                     <option>Please select</option>
                     <option value="0">No</option>
@@ -153,11 +129,11 @@ const UpdateProduct = (props) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Quantity</label>
+                <h6 className="text-muted"><span style={{color:'red'}}>*</span>Quantity</h6>
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
 
-            <button className="btn btn-outline-primary">Update Product</button>
+            <button className="btn btn-outline-primary">Create Product</button>
         </form>
     );
 
@@ -169,7 +145,7 @@ const UpdateProduct = (props) => {
 
     const showSuccess = () => (
         <div className="alert alert-info" style={{ display: createdProduct ? '' : 'none' }}>
-            <h2>{`${createdProduct}`} is updated!</h2>
+            <h2>{`${createdProduct}`} is created!</h2>
         </div>
     );
 
@@ -180,27 +156,27 @@ const UpdateProduct = (props) => {
             </div>
         );
 
-    const redirectUser = () => {
-        if (redirectToProfile) {
-            if (!error) {
-                return <Redirect to="/" />;
-            }
-        }
-    };
-
     return (
-        <AdminLayout title="Add a new product" description={`G'day ${user.name}, ready to add a new product?`}>
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
-                    {newPostForm()}
-                    {redirectUser()}
+        <AdminLayout data={props}>
+            <div className="page-wrapper">
+                <div className="container-fluid">
+                    <div className='row'>
+                            <div className='col-md-4'><p id="hedingTitle"> Add a product </p></div>
+                        </div>
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                {showLoading()}
+                                {showSuccess()}
+                                {showError()}
+                                {newPostForm()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </div> 
         </AdminLayout>
     );
 };
 
-export default UpdateProduct;
+export default AddProduct;

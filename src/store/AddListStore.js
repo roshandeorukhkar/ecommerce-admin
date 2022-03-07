@@ -10,7 +10,7 @@ import { deleteStore } from "../store/ApiStore";
 import TableComponent from "../common/TableComponent";
 import StorePasswordInput from "./StorePasswordInput";
 
-const AddListStore = () => {
+const AddListStore = (props) => {
     const [values, setValues] = useState({
         storeName: "",
         storeNameError: "",
@@ -49,7 +49,7 @@ const AddListStore = () => {
             window.scrollTo(0, 0);
             clearNotification();
             setCheckParams(true);
-            history.push("/admin/storemanagement");
+            history.push("/storemanagement");
         } else {
             setValues({
                 storeName: "",
@@ -172,7 +172,7 @@ const AddListStore = () => {
                 getStoreList();
                 clearNotification();
                 if (params.storeId != 'undefined') {
-                    history.push("/admin/storemanagement")
+                    history.push("/storemanagement")
                 }
                 setCheckParams(true);
             }
@@ -188,8 +188,8 @@ const AddListStore = () => {
                         // btnName="Add Role"
                         // btnSecond="Add Store"
                         onClick={() => setCheckParams(!checkParams)}
-                        // btnLink="/admin/rolemanagement"
-                        // btnSecondlink = "/admin/storemanagement"
+                        // btnLink="/rolemanagement"
+                        // btnSecondlink = "/storemanagement"
                         // btnSecondIcon="fa fa-plus-circle"
                     />
                     <div className="white-box">

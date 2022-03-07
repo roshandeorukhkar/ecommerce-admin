@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import { Redirect } from 'react-router-dom';
 import { getCust, updateCustomer } from './apiAdmin';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
+import AdminLayout from '../core/AdminLayout';
 
 
-const UpdateCustomer = ({ match }) => {
+const UpdateCustomer = (props) => {
+    const { match } = props
     const [values, setValues] = useState({
         name: '',
         email:'',
@@ -118,7 +118,7 @@ const UpdateCustomer = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/coustomers" />;
+                return <Redirect to="/coustomers" />;
             }
         }
     };
@@ -126,28 +126,26 @@ const UpdateCustomer = ({ match }) => {
    
 
     return (
-            <div className="row">
-                 <AdminHeader />
-                 <AdminSidebar />
-                 <div className="page-wrapper">
-                    <div className="container-fluid">
-                        <h2 className="font-bold"> Edit Customer</h2>
-                            <div className="white-box">
-                                <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            {showSuccess()}
-                                            {showError()}
-                                            {updateCategoryForm()}
-                                            {redirectUser()}
-                                        </div>
+        <AdminLayout data={props}>
+            <div className="page-wrapper">
+                <div className="container-fluid">
+                    <h2 className="font-bold"> Edit Customer</h2>
+                        <div className="white-box">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                        {showSuccess()}
+                                        {showError()}
+                                        {updateCategoryForm()}
+                                        {redirectUser()}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            );
-    };
+            </div>
+        </AdminLayout>
+    );
+};
 
 export default UpdateCustomer;

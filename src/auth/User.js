@@ -1,7 +1,7 @@
 import { API } from '../config';
 
 export const adminsignin = admin => {
-    return fetch(`${API}/usersignin`, {
+    return fetch(`${API}/user/signin`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -9,12 +9,12 @@ export const adminsignin = admin => {
         },
         body: JSON.stringify(admin)
     })
-        // .then(response => {
-        //     return response.json();
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // });
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    });
         
 }
 

@@ -3,11 +3,11 @@ import AdminLayout from "../core/AdminLayout";
 import AddListRoleManagement from "./AddListRoleManagement";
 
 
-const RoleManagement = () =>{
+const RoleManagement = (props) =>{
     return(
         <>
-        <AdminLayout>
-            <AddListRoleManagement />
+        <AdminLayout data={props}>
+            <AddListRoleManagement {...props} />
         </AdminLayout>  
         </>
     )

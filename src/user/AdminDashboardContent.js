@@ -2,8 +2,7 @@ import React from 'react';
 import AdminFooter from './AdminFooter';
 import { Link } from 'react-router-dom';
 
-
-const AdminDashboardContent = () => {
+const AdminDashboardContent = (props) => {
     return (
         <>
             <div className="page-wrapper">

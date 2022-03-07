@@ -5,15 +5,17 @@ import { Link } from "react-router-dom"
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 const AdminLayout = ({
-    className="",
+    data,
     children,
     title
-}) => (
-    <div id="wrapper">
-        <AdminHeader />
-        <AdminSidebar />
-        {children}
-    </div>
-);
+}) => {
+    return (
+        <div id="wrapper">
+            <AdminHeader {...data}/>
+            <AdminSidebar {...data}/>
+            {children}
+        </div>
+    );
+}
 
 export default AdminLayout;

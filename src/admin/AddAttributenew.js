@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
 import { createAttribute } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import AdminLayout from "../core/AdminLayout";
 
-const AddAttributenew = () =>{
+const AddAttributenew = (props) =>{
     
 const [values, setValues] = useState({
         attributeName: '',
@@ -65,46 +64,42 @@ const redirectUser = () => {
      }  
 };
 return(
-        <>
-            <div id="wrapper">
-            <AdminHeader />
-            <AdminSidebar />
-            <div className="page-wrapper">
-                <div className="container-fluid">
-                    <h2 className="font-bold"> Add Attribute </h2>
-                        <div className="white-box">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <form>
-                                        {showSuccess()}
-                                        {showError()}
-                                        {redirectUser()}
-                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                            <div className="form-group col-sm-7"> 
-                                                <h6><b><span style={{color:'red'}}>*</span> Attribute Name</b></h6>
-                                                <input onChange={handleChange('attributeName')} type="text" className="form-control" placeholder='Enter Attribute' value={attributeName} />
-                                            </div>
-                                            <div className="form-group col-sm-7"> 
-                                                <h6><b> Dimension</b></h6>
-                                                <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
-                                            </div>
-                                            <div className="form-group col-sm-7">
-                                                <h6><b> Attribute Description</b></h6>
-                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
-                                            </div>
-                                            <div className="form-group col-md-7">
-                                            <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right'}}> Submit </button>
-                                            </div>
-                                            
-                                    </div>
-                                </form>
-                            </div>
+    <AdminLayout data={props}>
+        <div className="page-wrapper">
+            <div className="container-fluid">
+                <h2 className="font-bold"> Add Attribute </h2>
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <form>
+                                    {showSuccess()}
+                                    {showError()}
+                                    {redirectUser()}
+                                    <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                        <div className="form-group col-sm-7"> 
+                                            <h6><b><span style={{color:'red'}}>*</span> Attribute Name</b></h6>
+                                            <input onChange={handleChange('attributeName')} type="text" className="form-control" placeholder='Enter Attribute' value={attributeName} />
+                                        </div>
+                                        <div className="form-group col-sm-7"> 
+                                            <h6><b> Dimension</b></h6>
+                                            <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
+                                        </div>
+                                        <div className="form-group col-sm-7">
+                                            <h6><b> Attribute Description</b></h6>
+                                            <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
+                                        </div>
+                                        <div className="form-group col-md-7">
+                                        <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right'}}> Submit </button>
+                                        </div>
+                                        
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div>
-    </>
+            </div>
+        </div> 
+    </AdminLayout>
 
     )
 

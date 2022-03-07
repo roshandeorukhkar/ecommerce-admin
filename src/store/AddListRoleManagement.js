@@ -11,7 +11,7 @@ import { getUserRoleByIdData } from "./ApiStore";
 import { deleteUserRole } from "./ApiStore";
 import FormDropdownWithCheckbox from "../common/FormDropdownWithCheckbox";
 
-const AddListRoleManagement = () => {
+const AddListRoleManagement = (props) => {
   let params = useParams();
   var storeId = params.storeId;
   const [values, setValues] = useState({
@@ -40,7 +40,7 @@ const AddListRoleManagement = () => {
     } else if (params.deleteUserRoleId != undefined) {
       deleteUserRoleDetails();
       setCheckParams(true);
-      history.push("/admin/rolemanagement");
+      history.push("/rolemanagement");
     }
     else {
       setValues({
@@ -132,7 +132,7 @@ const AddListRoleManagement = () => {
         setCheckParams(true);
         getUserRoleList();
         if (params.userRoleId != undefined) {
-          history.push("/admin/rolemanagement");
+          history.push("/rolemanagement");
         }
       }//else end
     })
@@ -146,7 +146,7 @@ const AddListRoleManagement = () => {
           <FormMainTitle title="Role Management"
             btnIcon="fa fa-backward"
             btnName="Back"
-            btnLink="/admin/storemanagement"
+            btnLink="/storemanagement"
             onClick={() => setCheckParams(!checkParams)}
           />
           <div className="white-box">

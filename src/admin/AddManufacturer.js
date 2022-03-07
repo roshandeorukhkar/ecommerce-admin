@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
-import AdminHeader from "../user/AdminHeader";
-import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import AdminLayout from "../core/AdminLayout";
 
-const AddManufacturer = () =>{
+const AddManufacturer = (props) =>{
     
 const [values, setValues] = useState({
         manufacturerName: '',
@@ -64,41 +63,37 @@ const redirectUser = () => {
      }  
 };
 return(
-        <>
-            <div id="wrapper">
-            <AdminHeader />
-            <AdminSidebar />
-            <div className="page-wrapper">
-                <div className="container-fluid">
-                    <h4 className="font-bold"> Add Manufacture</h4>
-                        <div className="white-box">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <form>
-                                        {showSuccess()}
-                                        {showError()}
-                                        {redirectUser()}
-                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                            <div className="form-group col-lg-7">
-                                                <h6><b><span style={{color:'red'}}>*</span> Manufacturer Name</b></h6>
-                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
-                                            </div>
-                                            <div className="form-group col-lg-7">
-                                                <h6><b>Description</b></h6>
-                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
-                                            </div>
-                                            <div className="col-lg-7">
-                                                <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
-                                            </div>
-                                    </div>
-                                </form>
-                            </div>
+    <AdminLayout data={props}>
+        <div className="page-wrapper">
+            <div className="container-fluid">
+                <h4 className="font-bold"> Add Manufacture</h4>
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <form>
+                                    {showSuccess()}
+                                    {showError()}
+                                    {redirectUser()}
+                                    <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                        <div className="form-group col-lg-7">
+                                            <h6><b><span style={{color:'red'}}>*</span> Manufacturer Name</b></h6>
+                                            <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
+                                        </div>
+                                        <div className="form-group col-lg-7">
+                                            <h6><b>Description</b></h6>
+                                            <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
+                                        </div>
+                                        <div className="col-lg-7">
+                                            <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                                        </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div>
-    </>
+            </div>
+        </div> 
+    </AdminLayout>
 
     )
 

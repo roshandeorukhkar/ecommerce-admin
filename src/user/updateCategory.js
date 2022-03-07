@@ -98,7 +98,7 @@ const UpdateCategory = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/categories" />;
+                return <Redirect to="/categories" />;
             }
         }
     };
@@ -106,7 +106,7 @@ const UpdateCategory = ({ match }) => {
     const goBackBTN = () => {
         return (
             <div className="mt-5">
-                <Link to="/admin/categories" className="text-info">
+                <Link to="/categories" className="text-info">
                     Back To Admin Home
                 </Link>
             </div>
