@@ -15,7 +15,7 @@ const ManageManufacturer = () => {
     });
     const { error, success, redirectToProfile } = values;
     
-    const [products, setProducts] = useState([]);
+    const [manufacture, setManufacture] = useState([]);
 
     const { user, token } = isAuthenticated();
 
@@ -27,13 +27,13 @@ const ManageManufacturer = () => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                setProducts(data);
+                setManufacture(data);
             }
         });
     };
 
-    const destroy = productId => {
-        deleteManufacturer(productId).then(data => {
+    const destroy = manufacturerId => {
+        deleteManufacturer(manufacturerId).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -53,11 +53,11 @@ const ManageManufacturer = () => {
         });
     };
 
-    const status = productId => {
-        const category = {
+    const status = manufacturerId => {
+        const manufactures = {
             manufacturerName: 0,
          };
-        statusManfacturer(productId, category).then(data => {
+        statusManfacturer(manufacturerId, manufactures).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -66,15 +66,14 @@ const ManageManufacturer = () => {
         });
     };
 
-    const statusChange = productId => {
-        const category = {
+    const statusChange = manufacturerId => {
+        const manufacturers = {
             manufacturerName: 1,
          };
-        statusChangeManfacturer(productId, category).then(data => {
+        statusChangeManfacturer(manufacturerId, manufacturers).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                //alert('Are you soure you wont delete record...............');
                 loadProducts();
             }
         });
@@ -134,38 +133,38 @@ const ManageManufacturer = () => {
         text: 'action'
       }];
 
-      const getButtons = (product) => {
+      const getButtons = (manufacture) => {
         return (
             <div>
-                 <Link to={`/admin/manufacturer/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+                 <Link to={`/admin/manufacturer/update/${manufacture._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(manufacture._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(manufacture._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
             </div>
         )
       };
 
-      const getSwitch = (product) => {
+      const getSwitch = (manufacture) => {
         return (
             <>
-             {product.status == 1 
+             {manufacture.status == 1 
                 ?(
                 <>
-                <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(product._id)} color='primary'/>
+                <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(manufacture._id)} color='primary'/>
                 </>
                 ):
-                <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(product._id)} color='primary'/>
+                <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(manufacture._id)} color='primary'/>
             }
             </>
         )
       };
 
-      const productsList = [];
-      products.forEach((item) => {
+      const manufactureList = [];
+      manufacture.forEach((item) => {
         item['id'] = item._id;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
-        productsList.push(item);
+        manufactureList.push(item);
       });
 
 
@@ -175,7 +174,7 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                {productsList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/> : null}
+                {manufactureList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList}/> : null}
             </div>
         </div>
     );  

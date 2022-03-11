@@ -176,7 +176,7 @@ export const listOrders = (userId, token) => {
 
 
 
-export const createManufacturer = async (category) => {
+export const createManufacturer = async (manufacture) => {
     try {
         const response = await fetch(`${API}/manufacturer/create`, {
             method: 'POST',
@@ -185,15 +185,15 @@ export const createManufacturer = async (category) => {
                 'Content-Type': 'application/json',
               //  Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify(category)
+            body: JSON.stringify(manufacture)
         });
         return await response.json();
     } catch (err) {
         console.log(err);
     }
 };
-export const getManufacturer = productId => {
-    return fetch(`${API}/manufacturer/${productId}`, {
+export const getManufacturer = manufacturerId => {
+    return fetch(`${API}/manufacturer/${manufacturerId}`, {
         method: 'GET'
     })
         .then(response => {
@@ -202,7 +202,7 @@ export const getManufacturer = productId => {
         .catch(err => console.log(err));
 };
 export const getManufacturers = () => {
-    return fetch(`${API}/manufacturer?limit=undefined`, {
+    return fetch(`${API}/manufacturer`, {
         method: 'GET'
     })
         .then(response => {
@@ -211,15 +211,15 @@ export const getManufacturers = () => {
         .catch(err => console.log(err));
 };
 
-export const updateManfacturer = (productId, category) => {
-    return fetch(`${API}/manufacturer/${productId}`, {
+export const updateManfacturer = (manufacturerId, manufacturs) => {
+    return fetch(`${API}/manufacturer/${manufacturerId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
            // Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(manufacturs)
     })
         .then(response => {
             return response.json();
@@ -227,14 +227,14 @@ export const updateManfacturer = (productId, category) => {
         .catch(err => console.log(err));
 };
 
-export const statusManfacturer = (productId, category) => {
-    return fetch(`${API}/manufacturer/status/${productId}`, {
+export const statusManfacturer = (manufacturerId, manufactures) => {
+    return fetch(`${API}/manufacturer/status/${manufacturerId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(manufactures)
     })
         .then(response => {
             return response.json();
@@ -242,14 +242,14 @@ export const statusManfacturer = (productId, category) => {
         .catch(err => console.log(err));
 };
 
-export const statusChangeManfacturer = (productId, category) => {
-    return fetch(`${API}/manufacturer/statusChange/${productId}`, {
+export const statusChangeManfacturer = (manufacturerId, manufacturers) => {
+    return fetch(`${API}/manufacturer/statusChange/${manufacturerId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(manufacturers)
     })
         .then(response => {
             return response.json();
@@ -272,8 +272,8 @@ export const deleteManufacturer1 = (productId, category) => {
         .catch(err => console.log(err));
 };
 
-export const deleteManufacturer = (productId) => {
-    return fetch(`${API}/manufacturer/${productId}`, {
+export const deleteManufacturer = (manufacturerId) => {
+    return fetch(`${API}/manufacturer/${manufacturerId}`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',

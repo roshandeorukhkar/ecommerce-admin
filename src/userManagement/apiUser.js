@@ -42,7 +42,6 @@ export const createUser = async (users) => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-              //  Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(users)
         });
