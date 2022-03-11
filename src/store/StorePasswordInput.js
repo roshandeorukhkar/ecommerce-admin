@@ -16,7 +16,7 @@ const StorePasswordInput = (props) => {
                     className="form-control"
                     placeholder={props.placeholder}
                     onChange={props.onChange}
-                    autoComplete="off"
+                    autoComplete="new-password"
                 />
                 <span className="input-group-addon"
                  onClick={() => setIsRevealPwd(!isRevealPwd)}>

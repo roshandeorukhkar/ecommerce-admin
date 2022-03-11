@@ -76,9 +76,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/create/users" exact component={AddUser} />
                 <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
                
-                <AdminRoute path="/admin/rolemanagement/edit/:userRoleId" exact component={RoleManagement} />
-                <AdminRoute path="/admin/rolemanagement/delete/:deleteUserRoleId" exact component={RoleManagement} />
-
+                <AdminRoute path="/admin/rolemanagement/edit/:storeId/:userRoleId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/user/list" exact component={AllUser} />
                 
 </Switch>
