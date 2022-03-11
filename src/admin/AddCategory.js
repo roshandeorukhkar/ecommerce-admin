@@ -1,8 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createCategory } from "./apiAdmin";
+import { createCategory, getCategories } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 //import Select from 'react-select';
 
@@ -11,12 +11,14 @@ const AddManufacturer = () =>{
 const [values, setValues] = useState({
         name: '',
         description: '',
+        category: '',
+        categories: [],
         error: '',
         success: false,
         redirectToProfile: false
     });
 
-const { name, success,description, error, redirectToProfile } = values;
+const { name, success,description, categories, category, error, redirectToProfile } = values;
 
 const handleChange = name => event => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -25,7 +27,7 @@ const handleChange = name => event => {
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createCategory({ name}).then(data => {
+    createCategory({ name, category, description}).then(data => {
       // alert(data.error)
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
@@ -33,6 +35,7 @@ const clickSubmit = event => {
             setValues({
                 ...values,
                 name: '',
+                category:'',
                 description: '',
                 error: '',
                 success: true,
@@ -65,6 +68,25 @@ const redirectUser = () => {
         return <Redirect to="/admin/Manucategory" />;
      }  
 };
+
+const init = () => {
+    getCategories().then(data => {
+        if (data.error) {
+            setValues({ ...values, error: data.error });
+        } else {
+            setValues({
+                ...values,
+                categories: data,
+                formData: new FormData()
+            });
+        }
+    });
+};
+
+useEffect(() => {
+    init();
+}, []);
+
 return(
         <>
             <div id="wrapper">
@@ -85,9 +107,21 @@ return(
                                                 <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
                                                 <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} required/>
                                             </div>
-                                            <div className="form-group col-lg-7">
+                                            {/* <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Main Category</b></h6>
                                                 <select placeholder='select' className="form-control" />
+                                            </div> */}
+                                            <div className="form-group col-lg-7">
+                                                <h6><b> Main Category</b></h6>
+                                                <select onChange={handleChange('category')} className="form-control">
+                                                    <option>Please select</option>
+                                                    {categories &&
+                                                        categories.map((c, i) => (
+                                                            <option key={i} value={c._id}>
+                                                                {c.name}
+                                                            </option>
+                                                        ))}
+                                                </select>
                                             </div>
                                             <div className="form-group col-lg-7">
                                                 <h6><b>Description</b></h6>
