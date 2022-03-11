@@ -89,10 +89,9 @@ const AddListStore = () => {
         await getStoreDataById({ storeId: params.storeId }).then((data) => {
             setValues({
                 storeName: data.storeId.storeName,
-                ownerName: data.storeId.ownerName,
-                address: data.storeId.address,
-                userName: data.storeId.userName,
-                mobile: data.storeId.mobile,
+                ownerName: data.name,
+                address: data.address,
+                mobile: data.mobile,
                 password: data.password,
                 email: data.email,
                 storeId: data.storeId._id

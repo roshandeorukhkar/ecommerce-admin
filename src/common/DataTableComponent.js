@@ -8,7 +8,7 @@ const { SearchBar  } = Search;
 const { ExportCSVButton } = CSVExport;
 
 const emptyDataMessage = () => { 
-  return (<div class="text-center" style={{color:'#000',padding:'10px'}}>No Data to Display</div>);
+  return (<div className="text-center" style={{color:'#000',padding:'10px'}}>No Data to Display</div>);
 }
 
 /*
