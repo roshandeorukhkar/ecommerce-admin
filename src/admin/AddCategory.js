@@ -27,7 +27,7 @@ const handleChange = name => event => {
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createCategory({ name, description, category}).then(data => {
+    createCategory({ name, description}).then(data => {
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
         } else {
