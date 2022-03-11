@@ -1,47 +1,61 @@
-
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createUser } from "./apiUser";
+import { createUser ,getUser } from "./apiUser";
 import { Redirect } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 
 const AddUser = () =>{
-    
+
+const [user, setUser] = useState([]);
+const params = useParams();
+
+
 const [values, setValues] = useState({
-        ownerName: '',
         email:'',
         password:'',
         userId:'',
+        name:'',
         mobile:'',
         address:'',
-        storeName:'',
+        storeId:'',
         error: '',
         success: false,
         redirectToProfile: false
     });
 
-const { ownerName, email, password, mobile, address, storeName, userId, success, error, redirectToProfile } = values;
-
-const handleChange = ownerName => event => {
-    setValues({ ...values, error: false, [ownerName]: event.target.value });
+const { email, password, mobile, address, userId, storeId, name, success, error, redirectToProfile } = values;
+var role = 5;
+const loadUser = () => {
+    getUser().then(data => {
+        if (data.error) {
+        } else {
+            setValues({userId : data[0]._id, storeId :params.storeId, role:role});
+        }
+    });
+};
+ 
+const handleChange = email => event => {
+    setValues({ ...values, error: false, [email]: event.target.value });
 };
 
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createUser({ ownerName, email, password, mobile, address, storeName }).then(data => {
+    createUser({ email, password, mobile, address, userId, storeId, name, role }).then(data => {
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
         } else {
             setValues({
                 ...values,
-                ownerName: '',
                 email:'',
                 userId:'',
+                storeId:'',
+                name:'',
+                role:'',
                 password:'',
                 mobile:'',
                 address:'',
-                storeName:'',
                 error: '',
                 success: true,
                 redirectToProfile: false
@@ -70,9 +84,14 @@ const showSuccess = () => (
 
 const redirectUser = () => {
     if(redirectToProfile) {
-        return <Redirect to="/admin/users" />;
+     //   return <Redirect to="/admin/users" />;
+        return <Redirect to={`/admin/user/list/${storeId}`} />;
      }  
 };
+
+useEffect(() => {
+    loadUser();
+}, []);
 return(
         <>
             <div id="wrapper">
@@ -88,37 +107,39 @@ return(
                                         {showSuccess()}
                                         {showError()}
                                         {redirectUser()}
+
+                                            <input hidden  value={values.userId}  />
+                                            <input hidden value={values.storeId} />
+                                            <input hidden value={values.role} />
+                                            
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                            <div className="form-group col-lg-6">
-                                                <h6><b><span style={{color:'red'}}>*</span> User Name</b></h6>
-                                                <input onChange={handleChange('ownerName')} type="text" className="form-control" placeholder='Enter name' value={ownerName} />
+
+                                            <div className="form-group col-lg-7">
+                                                <h6><b><span style={{color:'red'}}>*</span> name </b></h6>
+                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' />
                                             </div>
-                                            <div className="form-group col-lg-6">
-                                                <h6><b><span style={{color:'red'}}>*</span> User Id</b></h6>
-                                                <input onChange={handleChange('userId')} type="text" className="form-control" placeholder='Enter email' value={userId} />
+
+                                            <div className="form-group col-lg-7">
+                                                <h6><b><span style={{color:'red'}}>*</span> Mobile </b></h6>
+                                                <input onChange={handleChange('mobile')} type="text" className="form-control" placeholder='Enter mobile' />
                                             </div>
-                                            <div className="form-group col-lg-6">
+                                          
+                                            <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Email </b></h6>
-                                                <input onChange={handleChange('email')} type="text" className="form-control" placeholder='Enter name' value={email} />
+                                                <input onChange={handleChange('email')} type="text" className="form-control" placeholder='Enter name' />
                                             </div>
                                             
-                                            <div className="form-group col-lg-6">
+                                            <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> password </b></h6>
-                                                <input onChange={handleChange('password')} type="password" className="form-control" placeholder='Enter password' value={password} />
+                                                <input onChange={handleChange('password')} type="password" className="form-control" placeholder='Enter password'/>
                                             </div>
-                                            <div className="form-group col-lg-6">
-                                                <h6><b><span style={{color:'red'}}>*</span> Mobile </b></h6>
-                                                <input onChange={handleChange('mobile')} type="text" className="form-control" placeholder='Enter mobile' value={mobile} />
-                                            </div>
-                                            <div className="form-group col-lg-6">
-                                                <h6><b>Store Name</b></h6>
-                                                <input onChange={handleChange('storeName')}  type="text" className="form-control" placeholder='Address' value={storeName} />
-                                            </div>
-                                            <div className="form-group col-lg-12">
+
+                                    
+                                            <div className="form-group col-lg-7">
                                                 <h6><b>Address</b></h6>
-                                                <textarea onChange={handleChange('address')} rows="4" type="text" className="form-control" placeholder='Address' value={address}></textarea>
+                                                <textarea onChange={handleChange('address')} rows="4" type="text" className="form-control" placeholder='Address'></textarea>
                                             </div>
-                                            <div className="col-lg-12">
+                                            <div className="col-lg-7">
                                                 <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
                                             </div>
                                     </div>

@@ -11,8 +11,8 @@ const AddManufacturer = () =>{
 const [values, setValues] = useState({
         name: '',
         description: '',
-        category: '',
-        categories: [],
+        categories:[],
+        category:'',
         error: '',
         success: false,
         redirectToProfile: false
@@ -27,8 +27,7 @@ const handleChange = name => event => {
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createCategory({ name, category, description}).then(data => {
-      // alert(data.error)
+    createCategory({ name, description, category}).then(data => {
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
         } else {
@@ -68,7 +67,6 @@ const redirectUser = () => {
         return <Redirect to="/admin/Manucategory" />;
      }  
 };
-
 const init = () => {
     getCategories().then(data => {
         if (data.error) {
@@ -77,7 +75,7 @@ const init = () => {
             setValues({
                 ...values,
                 categories: data,
-                formData: new FormData()
+                //formData: new FormData()
             });
         }
     });
@@ -86,7 +84,6 @@ const init = () => {
 useEffect(() => {
     init();
 }, []);
-
 return(
         <>
             <div id="wrapper">
@@ -112,7 +109,7 @@ return(
                                                 <select placeholder='select' className="form-control" />
                                             </div> */}
                                             <div className="form-group col-lg-7">
-                                                <h6><b> Main Category</b></h6>
+                                                <label className="text-muted">Category</label>
                                                 <select onChange={handleChange('category')} className="form-control">
                                                     <option>Please select</option>
                                                     {categories &&

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
+
 import { Redirect } from 'react-router-dom';
 import { getUsers, updateUser } from './apiUser';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import { useParams } from "react-router-dom";
 
 
 const UpdateUsers = ({ match }) => {
+    
+    const params = useParams();
+
     const [values, setValues] = useState({
-        ownerName: '',
+        name: '',
         email:'',
         address:'',
+        storeId:'',
         createdDate:'',
         error: '',
         success: false,
@@ -18,22 +24,23 @@ const UpdateUsers = ({ match }) => {
         formData: ''
     });
 
-    // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { ownerName, email, address, createdDate, error, success, redirectToProfile } = values;
+    const { name, email, address, storeId, createdDate, error, success, redirectToProfile } = values;
 
     const init = userId => {
         getUsers(userId).then(data => {
+          //  console.log("hello",data.storeId._id)
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
-                    ownerName: data.ownerName,
+                    name: data.name,
                     email:data.email,
                     address:data.address,
-                    createdDate:data.createdDate
+                    storeId:data.storeId._id,
+                    createdDate:data.storeId.createdDate
                 });
             }
         });
@@ -43,16 +50,13 @@ const UpdateUsers = ({ match }) => {
         init(match.params.userId);
     }, []);
 
-    const handleChange = ownerName => event => {
-        setValues({ ...values, error: false, [ownerName]: event.target.value });
+    const handleChange = name => event => {
+        console.log(event);
+        setValues({ ...values, error: false, [name]: event.target.value });
     };
 
     const handleChange_email = email => event => {
         setValues({ ...values, error: false, [email]: event.target.value });
-    };
-
-    const handleChange_date = createdDate => event => {
-        setValues({ ...values, error: false, [createdDate]: event.target.value });
     };
 
     const handleChange_address = address => event => {
@@ -62,7 +66,7 @@ const UpdateUsers = ({ match }) => {
     const submitUserForm = e => {
         e.preventDefault();
         const users = {
-            ownerName: ownerName,
+            name: name,
             email:email,
             address:address
         };
@@ -72,7 +76,7 @@ const UpdateUsers = ({ match }) => {
             } else {
                 setValues({
                     ...values,
-                    ownerName: data.ownerName,
+                    name: data.name,
                     email: data.email,
                     address:data.address,
                     error: false,
@@ -94,15 +98,11 @@ const UpdateUsers = ({ match }) => {
             <form className="mb-3" onSubmit={submitUserForm}>
             <div className="form-group col-lg-7">
                 <h6><b><span style={{color:'red'}}>*</span> User Nmae</b></h6>
-                <input onChange={handleChange('ownerName')} type="text" placeholder='Enter name' className="form-control" value={ownerName} required ownerName="ownerName" />
+                <input onChange={handleChange('name')} type="text" placeholder='Enter name' className="form-control" value={name} required name="name" />
             </div>
             <div className="form-group col-lg-7">
                 <h6><b><span style={{color:'red'}}>*</span> User Id</b></h6>
                 <input onChange={handleChange_email('email')} type="text" placeholder='Enter user id' className="form-control" value={email} required email="email" />
-            </div>
-            <div className="form-group col-lg-7">
-                <h6><b><span style={{color:'red'}}>*</span>Date</b></h6>
-                <input onChange={handleChange_date('createdDate')} type="text" className="form-control" value={createdDate} required createdDate="createdDate" />
             </div>
             <div className="form-group col-lg-7">
                <h6><b>Address</b></h6>
@@ -133,7 +133,7 @@ const UpdateUsers = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/users" />;
+                return <Redirect to={`/admin/user/list/${storeId}`} />;
             }
         }
     };
