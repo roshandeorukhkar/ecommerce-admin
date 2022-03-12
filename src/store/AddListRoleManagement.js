@@ -253,12 +253,20 @@ const AddListRoleManagement = (props) => {
     )
   };
 
+  const accessModuleListTable = (item) =>{
+    return(
+      <ul>
+         {item.map(element => <li>{element.label}</li>)}
+      </ul>
+    )
+  }
+
   const userRoleArray = [];
   list.forEach((item) => {
     item['id'] = item._id
     item['assingTo'] = item.user.name
     item['userRoleName'] = item.roleName
-    item['accessModuleId'] = item.accessModuleId
+    item['accessModuleId'] = accessModuleListTable(item.accessModule)
     item['createdAt'] = getDate(item.createdDate)
     item['action'] = getButtons(item._id)
     item['status'] = getSwitch(item.status)
