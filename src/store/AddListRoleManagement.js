@@ -165,7 +165,8 @@ const AddListRoleManagement = (props) => {
           errorAssingTo: "",
           errorNotification: data.message,
           errorAccessModuleId: "",
-          userRoleId: ""
+          userRoleId: "",
+          storeId: storeId
         });
         NotificationManager.success(data.message);
         setCheckParams(true);
