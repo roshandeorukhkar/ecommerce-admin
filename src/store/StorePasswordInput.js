@@ -12,7 +12,7 @@ const StorePasswordInput = (props) => {
             <div className="input-group col-md-12 p-r-10 p-l-15">
                 <input
                     type={isRevealPwd ? "text" : "password"}
-                    defaultValue={props.value}
+                    value={props.value}
                     className="form-control"
                     placeholder={props.placeholder}
                     onChange={props.onChange}
