@@ -19,7 +19,7 @@ const AddStoreContent = (props) =>{
                     value={value}
                     placeholder={props.placeholder} 
                     onChange = {props.onChange}
-                    autoComplete='off'
+                    autoComplete='false'
                     />
                    <span className='error text-danger'>{props.errorSpan}</span> 
                 </div>

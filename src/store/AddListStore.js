@@ -3,13 +3,15 @@ import AddStoreContent from "./AddStoreContent";
 import { addStoreData } from "./ApiStore";
 import { Link, useParams, useForm, useHistory } from "react-router-dom";
 import FormMainTitle from "../common/FormMainTitle";
-import FormNotification from "../common/FormNotification";
 import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { deleteStore } from "../store/ApiStore";
 import StorePasswordInput from "./StorePasswordInput";
 import DataTableComponent from "../common/DataTableComponent";
 import { Switch } from '@mui/material';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 const AddListStore = () => {
     const [values, setValues] = useState({
         storeName: "",
@@ -43,7 +45,7 @@ const AddListStore = () => {
             window.scrollTo(0, 0);
             setValues({ storeId: params.storeId })
             setCheckParams(true);
-        }  else {
+        } else {
             setValues({
                 storeName: "",
                 storeNameError: "",
@@ -72,25 +74,10 @@ const AddListStore = () => {
     const deleteStoreDetails = (deleteStoreId) => {
         const deleteStoreID = deleteStoreId;
         deleteStore(deleteStoreID).then((data) => {
-            setValues({
-                ...values,
-                errorNotification: data.message,
-                alertColour: "alert-success",
-                displayNotification: "db",
-            })
+            NotificationManager.success(data.message);
         });
-        window.scrollTo(0, 0);
+        
         getStoreList();
-    }
-
-    const clearNotification = () => {
-        setTimeout(() => {
-            setValues({
-                errorNotification: "",
-                alertColour: "",
-                displayNotification: "dn",
-            })
-        }, 2000);
     }
 
     const getStoreList = () => {
@@ -102,10 +89,9 @@ const AddListStore = () => {
         await getStoreDataById({ storeId: params.storeId }).then((data) => {
             setValues({
                 storeName: data.storeId.storeName,
-                ownerName: data.storeId.ownerName,
-                address: data.storeId.address,
-                userName: data.storeId.userName,
-                mobile: data.storeId.mobile,
+                ownerName: data.name,
+                address: data.address,
+                mobile: data.mobile,
                 password: data.password,
                 email: data.email,
                 storeId: data.storeId._id
@@ -130,11 +116,8 @@ const AddListStore = () => {
                     mobileError: data.errors.mobile,
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
-                    errorNotification: data.message,
-                    alertColour: "alert-danger",
-                    displayNotification: "db",
                 });
-                clearNotification();
+                NotificationManager.error(data.message);
             } else {
                 setValues({
                     storeName: "",
@@ -151,12 +134,9 @@ const AddListStore = () => {
                     passwordError: "",
                     email: "",
                     emailError: "",
-                    errorNotification: data.message,
-                    alertColour: "alert-success",
-                    displayNotification: "db",
                 });
+                NotificationManager.success(data.message);
                 getStoreList();
-                clearNotification();
                 if (params.storeId != 'undefined') {
                     history.push("/admin/storemanagement")
                 }
@@ -169,8 +149,8 @@ const AddListStore = () => {
     const columns = [
         {
             dataField: 'id',
-            text:'ID',
-            hidden : true
+            text: 'ID',
+            hidden: true
         },
         {
             dataField: 'storeName',
@@ -211,13 +191,13 @@ const AddListStore = () => {
     };
     const getSwitch = (storeStatus) => {
         return (
-            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked  />
+            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked />
         )
     };
     const storeListArray = [];
     list.forEach((item) => {
-        if(item.storeId.isDelete == false){
-            item['id']=item.storeId._id
+        if (item.storeId.isDelete == false) {
+            item['id'] = item.storeId._id
             item['storeName'] = item.storeId.storeName
             item['email'] = item.email
             item['createdAt'] = getDate(item.storeId.createdDate)
@@ -231,21 +211,17 @@ const AddListStore = () => {
         <>
             <div className="page-wrapper">
                 <div className="container-fluid">
+                    <NotificationContainer />
                     <FormMainTitle title="Store Management"
                         onClick={() => setCheckParams(!checkParams)}
                     />
                     <div className="white-box">
                         <div className="row">
                             <div className="col-lg-12">
-                                <FormNotification
-                                    message={values.errorNotification}
-                                    alertClass={values.alertColour}
-                                    show={values.displayNotification}
-                                />
                                 <h4 className="box-title">
                                     {!(params.storeId) ? "Add Store" : "Edit Store"}
                                 </h4>
-                                <form className="form-horizontal" id="myForm">
+                                <form className="form-horizontal" id="myForm" autoComplete="false">
                                     <AddStoreContent
                                         label="Store Name"
                                         placeholder="Enter store name"

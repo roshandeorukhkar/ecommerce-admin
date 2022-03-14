@@ -71,7 +71,7 @@ export const addUserRoleData = data => {
 }
 
 export const getUserRoleListData = data => {
-    return fetch(`${API}/getUserRoleListData`,{
+    return fetch(`${API}/getUserRoleListData/${data}`,{
         headers : {
             accept : "application/json",
             "content-type" : "application/json"
@@ -106,4 +106,28 @@ export const deleteUserRole = data =>{
     }).catch(error =>
             console.log("error",error)
         );
+}
+
+export const accessModuleList = () =>{
+    return fetch(`${API}/accessModuleList`,{
+        headers : {
+            accept : "application/json",
+            "content-type" : "application/json"
+        }
+    }).then(responce => {
+        return responce.json();
+    }).catch(error => 
+        console.log("Error is : " ,error))
+}
+
+export const storeUserList = (storeId) => {
+    return fetch(`${API}/storeUserList/${storeId}`,{
+        headers : {
+            accept : "application/json",
+            "content-type" : "application/json"
+        }
+    }).then(responce => {
+        return responce.json();
+    }).catch(error =>
+        console.log("Errors : " , error))
 }
