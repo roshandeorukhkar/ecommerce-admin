@@ -31,6 +31,23 @@ const ManageManufacturer = () => {
             }
         });
     };
+    const destroy1 = productId => {
+       
+        const category = {
+           // manufacturerName: productId,
+            manufacturerName: new Date(),
+        };
+        deleteManufacturer1(productId, category).then(data => {
+            if (data.error) {
+                
+                console.log(data.error);
+            } else {
+                alert('Are you soure you wont delete record!');
+                //console.log("test abc", manufacturerName);
+                loadProducts();
+            }
+        });
+    };
 
     const destroy = manufacturerId => {
         deleteManufacturer(manufacturerId).then(data => {
@@ -137,8 +154,8 @@ const ManageManufacturer = () => {
         return (
             <div>
                  <Link to={`/admin/manufacturer/update/${manufacture._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(manufacture._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(manufacture._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+                 {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(manufacture._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button> */}
+                 <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(manufacture._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
             </div>
         )
       };
@@ -160,11 +177,16 @@ const ManageManufacturer = () => {
 
       const manufactureList = [];
       manufacture.forEach((item) => {
+        if(!item.deletedAt){
         item['id'] = item._id;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
         manufactureList.push(item);
+        }
+        else{
+            console.log("error");
+        }
       });
 
 

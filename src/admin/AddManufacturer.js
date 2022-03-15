@@ -6,6 +6,7 @@ import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import { Link } from "react-router-dom";
 
 const AddManufacturer = () =>{
     
@@ -74,7 +75,10 @@ return(
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <h4 className="font-bold"> Add Manufacture</h4>
+                    <div className='row'>
+                        <div className='col-md-8'><h4 className="font-bold"> Add Manufacture</h4></div>
+                        <div className='col-md-4'><Link to={`/admin/manufacturers`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                    </div>
                         <div className="white-box">
                             <div className="row">
                                  <NotificationContainer/>
@@ -89,7 +93,7 @@ return(
                                                 <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
                                             </div>
                                             <div className="form-group col-lg-7">
-                                                <h6><b>Description</b></h6>
+                                                <h6><b> Manufacturer Description</b></h6>
                                                 <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
                                             <div className="col-lg-7">

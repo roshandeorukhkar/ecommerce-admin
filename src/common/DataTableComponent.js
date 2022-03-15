@@ -50,6 +50,7 @@ const DataTableComponent = (props) => {
                     <div className='float-left' style={{marginBottom:'10px'}}>
                         <ExportCSVButton { ...props.csvProps }>Export CSV</ExportCSVButton>
                     </div>
+                    {/* <button className='btn btn-info' style={{float:'right', borderRadius:'8px'}}><i className='fa fa-search'></i></button> */}
                     <div className='float-right' style={{marginBottom:'10px'}}>
                         <SearchBar { ...props.searchProps }/>
                     </div>

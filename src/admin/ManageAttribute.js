@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { deleteAttribute, getAttributes, deleteAttributeone ,statusAttributes ,statusChangeAttributes} from "./apiAdmin";
 import { Switch } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
+import DataTableComponent from "../common/DataTableComponent";
 
 const ManageAttribute = () => {
     const [values, setValues] = useState({
@@ -101,67 +102,80 @@ const ManageAttribute = () => {
             }
         });
     };
+// Table 
+const columns = [
+    {
+        dataField: 'id',
+        text: 'ID',
+        hidden: true
+    },
+    {
+        dataField: 'attributeName',
+        text: 'Attribute Name',
+        sort: true
+    }, 
+    {
+        dataField: 'description',
+        text: 'Attribute Description',
+        sort: true
+    }, 
+    {
+        dataField: 'createdAt',
+        text: 'Date'
+    }, 
+    {
+        dataField: 'status',
+        text: 'Status'
+    }, 
+    {
+        dataField: 'action',
+        text: 'action'
+  }];
 
-
+  const getButtons = (attribute) => {
     return (
+        <div>
+            <Link to={`/admin/attribute/update/${attribute._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+            <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(attribute._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> 
+        </div>
+    )
+  };
 
+  const getSwitch = (attribute) => {
+    return (
+        <>
+         {attribute.status == 1 
+            ?(
+            <>
+            <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(attribute._id)} color='primary'/>
+            </>
+            ):
+            <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(attribute._id)} color='primary'/>
+        }
+        </>
+    )
+  };
+
+  const attributeList = [];
+  AttributeList.forEach((item) => {
+    if(!item.deletedAt){
+    item['id'] = item._id;
+    item['createdAt'] = getDate(item.createdAt);
+    item['status'] = getSwitch(item);
+    item['action'] = getButtons(item);
+    attributeList.push(item);
+    }
+    else{
+        console.log("error");
+    }
+  });
+// end table
+    return (
             <div className="row">
                 {deleteMessage()}
                 {redirectUser()}
-                <h2 className="font-bold"> 
-                {/* List of Manufacturer {products.length} */}
-                    {/* <Link to={`create/manufacturer`}><button type="submit" className="btn  btn-outline btn-rounded  btn-info fa-pull-right"><i className="fa fa-plus-circle"></i> Add Manufacturer</button></Link> */}
-                </h2>
-                <div className="col-12">
-                   <br></br>
-                    <table className="table">
-                    <thead>
-                            <tr>
-                                <th><input type="checkbox" /></th>
-                                <th>Attribute Name</th>
-                                <th>Attribute Descrtiption</th>
-                                <th>Added Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                    </thead>
-                    <tbody>
-                        
-                        {AttributeList.map((A, i) => (
-                            
-                       <tr  key={i}>
-                           {!A.deletedAt ?(
-                               <>
-                                <td><input type="checkbox" /></td>
-                                <td>{A.attributeName}</td>
-                                <td>{A.description}</td>
-                                <td>{getDate(A.createdAt)} </td>
-                                <td>
-                                {A.status == 1 
-                                    ?(
-                                    <>
-                                      <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(A._id)} color='primary'/>
-                                    </>
-                                    ):
-                                    <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(A._id)} color='primary'/>
-                                }
-                                </td>
-                                <td>
-                                 <Link to={`/admin/attribute/update/${A._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                                    <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(A._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> 
-                                </td>  
-                               </>
-                           ):null}
-                        
-                        
-                        </tr>
-                        
-                        ))}
-
-                    </tbody>
-                </table>
-                    
-                    <br />
+                <div className="col-md-12">
+                    {attributeList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> : null}
                 </div>
             </div>
     );

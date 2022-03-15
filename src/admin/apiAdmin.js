@@ -110,6 +110,18 @@ export const deletecategory = (productId) =>
         }
     })
 };
+export const deletecategorytest = (categoryId) => 
+{
+   // console.log(productId)
+    return fetch(`${API}/categorys/${categoryId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            //Authorization: `Bearer ${token}`
+        }
+    })
+};
 /*
 export const deleteSpecification = (productId) => {
     return fetch(`${API}/Specification/${productId}`, {

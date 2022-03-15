@@ -5,11 +5,12 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
-// {category: ["5cd0258f2793ec6e100bc191"], price: []}
-// http://localhost:3000/admin/category/update/5cd0258f2793ec6e100bc191
+import { Link } from "react-router-dom";
+
 const UpdateCategory = ({ match }) => {
     const [values, setValues] = useState({
         name: '',
+        description:'',
         error: '',
         redirectToProfile: false,
         formData: ''
@@ -18,17 +19,18 @@ const UpdateCategory = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { name, error, redirectToProfile ,success } = values;
+    const { name, description, error, redirectToProfile ,success } = values;
 
     const init = categoryId => {
-        getCategory(categoryId, token).then(data => {
+        getCategory(categoryId).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 // populate the state
                 setValues({
                     ...values,
-                    name: data.name
+                    name: data.name,
+                    description:data.description
                 });
             }
         });
@@ -46,16 +48,16 @@ const UpdateCategory = ({ match }) => {
     const submitCategoryForm = e => {
         e.preventDefault();
         const category = {
-            name: name
+            name: name,
+            description:description,
         };
-        updateCategory(match.params.productId, category).then(data => {
+        updateCategory(match.params.categoryId, category).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 setValues({
                     ...values,
-                    manufacturerName: data.manufacturerName,
-                    description:data.description,
+                    name: data.name,
                     error: false,
                     success: true,
                     redirectToProfile: false
@@ -69,65 +71,27 @@ const UpdateCategory = ({ match }) => {
             }
         });
     };
-/*
-    const submitCategoryForm = e => {
-        e.preventDefault();
-        // update with ? you should send category name otherwise what to update?
-        const category = {
-            name: name
-        };
-        updateCategory(match.params.categoryId, user._id, token, category).then(data => {
-
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
-                setValues({
-                    ...values,
-                    name: data.name,
-                    error: false,
-                    redirectToProfile: true
-                });
-            }
-        });
-    };
-*/
     const updateCategoryForm = () => (
-        <div id="wrapper">
-        <AdminHeader />
-        <AdminSidebar />
-        <div className="page-wrapper">
-            <div className="container-fluid">
-                <h4 className="font-bold"> Add Category</h4>
-                    <div className="white-box">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <form className="mb-5" onSubmit={submitCategoryForm}>
-                                    <span className="">Update Category Form</span>
-                                    <span className="">Category Name</span>
-                                    <br />
-                                    <br />
-                                    <div className="">
-                                        <input
-                                            onChange={handleChange('name')}
-                                            value={name}
-                                            className="input100"
-                                            type="text"
-                                            required
-                                            name="name"
-                                        />
+        <div className="">
+         <form onSubmit={submitCategoryForm} >
+                                        {showSuccess()}
+                                        {showError()}
+                                        {redirectUser()}
+                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                            <div className="form-group col-lg-7">
+                                                <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
+                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} name= "name"/>
+                                            </div>
+                                            <div className="form-group col-lg-7">
+                                                <h6><b>Category Description</b></h6>
+                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description'  value={description}></textarea>
+                                            </div>
+                                            <div className="col-lg-7">
+                                                <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                                            </div>
                                     </div>
-                                    <div className="w-size25">
-                                        <button type="submit" className="">
-                                            Save Changes
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
+                                    </form>
+    </div>
     );
 
     const showSuccess = () => (
@@ -156,14 +120,30 @@ const UpdateCategory = ({ match }) => {
     
 
     return (
-            <div className="row">
-                <div className="col-md-12">
-                    {showError()}
-                    {showSuccess()}
-                    {updateCategoryForm()}
-                    {redirectUser()}
-                </div>
-            </div>
+        <div className="row">
+        <AdminHeader />
+        <AdminSidebar />
+        <div className="page-wrapper">
+           <div className="container-fluid">
+               <div className='row'>
+                   <div className='col-md-8'><h4 className="font-bold"> Edit Manufacture</h4></div>
+                   <div className='col-md-4'><Link to={`/admin/manufacturers`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+               </div>
+                   <div className="white-box">
+                       <div className="row">
+                           <div className="col-lg-12">
+                               <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                   {showSuccess()}
+                                   {showError()}
+                                   {updateCategoryForm()}
+                                   {redirectUser()}
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+   </div>
     );
 };
 

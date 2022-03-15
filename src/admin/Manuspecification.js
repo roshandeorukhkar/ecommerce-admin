@@ -11,10 +11,8 @@ const Manufacturer = () => {
                     <div className="container-fluid">
                         <div className='row'>
                             <div className='col-md-8'><p id="hedingTitle"> Specification Management </p></div>
-                            {/* <div className='col-md-4'><p><button type="submit" className="btn btn-info fa-pull-right" style={{height:'33px'}}><i className="fa fa-search"></i></button> <input type="text" id="search" placeholder='search' style={{float: 'right'}} /></p></div> */}
-                            <div className='col-md-4'><p> <Link to={`specification`}><button type="submit" className="btn  btn-outline btn-info fa-pull-right" id="addButton" style={{float: 'right'}} >Add Specification</button></Link> </p></div>
+                            <div className='col-md-4'><Link to={`specification`}><button type="submit" className="btn  btn-outline btn-info fa-pull-right" id="addButton" style={{float: 'right'}} >Add Specification</button></Link></div>
                         </div>
-                    
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-lg-12">

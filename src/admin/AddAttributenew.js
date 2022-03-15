@@ -3,6 +3,7 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createAttribute } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const AddAttributenew = () =>{
     
@@ -71,7 +72,10 @@ return(
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <h2 className="font-bold"> Add Attribute </h2>
+                <div className='row'>
+                        <div className='col-md-8'><h3 className="font-bold"> Add Attribute</h3></div>
+                        <div className='col-md-4'><Link to={`/admin/attribute`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                    </div>
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-lg-12">

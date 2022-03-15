@@ -99,7 +99,10 @@ return(
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <h4 className="font-bold"> Add Users</h4>
+                <div className='row'>
+                        <div className='col-md-8'><h4 className="font-bold"> Add Users</h4></div>
+                        <div className='col-md-4'><Link to={`/admin/user/list/${storeId}`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                    </div>
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-lg-12">

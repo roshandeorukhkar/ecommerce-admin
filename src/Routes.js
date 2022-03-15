@@ -7,6 +7,7 @@ import AddProduct from './user/AddProduct';
 import Orders from './user/Orders';
 import UpdateProduct from './user/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
+import SubCategory from './admin/subCategory';
 import AdminSignin from './user/Signin';
 import AdminMain from './user/UserMain';
 import AddRollManagement from './user/AddRollMangement'; //shubha : demo
@@ -51,6 +52,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/orders" exact component={Orders} />
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
                 <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
+                <AdminRoute path="/admin/category/subupdate/:categoryId" exact component={SubCategory} />
                 <AdminRoute path="/admin/rolemanagement/:storeId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/statistic" exact component={AdminStatistics} />
                 <AdminRoute path="/admin/storemanagement" exact component={AdminStoreMangement} />

@@ -4,7 +4,7 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createCategory, getCategories } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-//import Select from 'react-select';
+import { Link } from "react-router-dom";
 
 const AddManufacturer = () =>{
     
@@ -12,13 +12,13 @@ const [values, setValues] = useState({
         name: '',
         description: '',
         categories:[],
-        category:'',
+        subcategory:'',
         error: '',
         success: false,
         redirectToProfile: false
     });
 
-const { name, success,description, categories, category, error, redirectToProfile } = values;
+const { name, success,description, categories, subcategory, error, redirectToProfile } = values;
 
 const handleChange = name => event => {
     setValues({ ...values, error: false, [name]: event.target.value });
@@ -27,15 +27,15 @@ const handleChange = name => event => {
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
-    createCategory({ name, description}).then(data => {
+    createCategory({ name, description, subcategory}).then(data => {
         if (data.error) {
             setValues({ ...values, error: data.error, success: false });
         } else {
             setValues({
                 ...values,
                 name: '',
-                category:'',
                 description: '',
+                category:'',
                 error: '',
                 success: true,
                 redirectToProfile: false
@@ -75,7 +75,6 @@ const init = () => {
             setValues({
                 ...values,
                 categories: data,
-                //formData: new FormData()
             });
         }
     });
@@ -91,7 +90,10 @@ return(
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <h4 className="font-bold"> Add Category</h4>
+                <div className='row'>
+                        <div className='col-md-8'><h4 className="font-bold"> Add Category</h4></div>
+                        <div className='col-md-4'><Link to={`/admin/Manucategory`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                    </div>
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -104,38 +106,39 @@ return(
                                                 <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
                                                 <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} required/>
                                             </div>
-                                            {/* <div className="form-group col-lg-7">
-                                                <h6><b><span style={{color:'red'}}>*</span> Main Category</b></h6>
-                                                <select placeholder='select' className="form-control" />
-                                            </div> */}
                                             <div className="form-group col-lg-7">
-                                                <label className="text-muted">Category</label>
-                                                <select onChange={handleChange('category')} className="form-control">
+                                                 <h6><b>Select Category </b></h6>
+                                                <select onChange={handleChange('subcategory')} className="form-control">
                                                     <option>Please select</option>
                                                     {categories &&
                                                         categories.map((c, i) => (
-                                                            <option key={i} value={c._id}>
+                                                            <>
+                                                            {c.subcategory == '' ?(
+                                                                <option key={i} value={c._id}>
                                                                 {c.name}
                                                             </option>
-                                                        ))}
+                                                            ):null}
+                                                           </>
+                                                        ))
+                                                       }
                                                 </select>
                                             </div>
                                             <div className="form-group col-lg-7">
-                                                <h6><b>Description</b></h6>
+                                                <h6><b>Category Description</b></h6>
                                                 <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
                                             <div className="col-lg-7">
                                                 <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
                                             </div>
                                     </div>
-                                </form>
+                                    </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> 
-        </div>
-    </>
+            </div>
+         </>
 
     )
 
