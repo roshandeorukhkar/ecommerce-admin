@@ -17,7 +17,6 @@ const UpdateManufacturer = ({ match }) => {
         formData: ''
     });
 
-    // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
     const { manufacturerName, description, error, success, redirectToProfile } = values;
@@ -84,7 +83,7 @@ const UpdateManufacturer = ({ match }) => {
                 <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} manufacturerName="manufacturerName" />
             </div>
             <div className="form-group col-lg-7">
-               <h6><b>Description</b></h6>
+               <h6><b> Manufacturer Description</b></h6>
                 <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
             </div>
             <div className='col-lg-7'>
@@ -125,7 +124,10 @@ const UpdateManufacturer = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Edit Manufacturer</h2>
+                        <div className='row'>
+                            <div className='col-md-8'><h4 className="font-bold"> Edit Manufacture</h4></div>
+                            <div className='col-md-4'><Link to={`/admin/manufacturers`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                        </div>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">
@@ -140,7 +142,7 @@ const UpdateManufacturer = ({ match }) => {
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
             );
     };
 

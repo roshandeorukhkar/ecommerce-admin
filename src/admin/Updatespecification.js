@@ -85,20 +85,23 @@ const Updatespecification = ({ match }) => {
 
     const updateCategoryForm = () => (
         <div className="">
-            <form class="col-md-6 offset-md-2" onSubmit={submitCategoryForm}>
+            <form className="col-lg-6 offset-md-4" onSubmit={submitCategoryForm}>
             <div className="form-group">
-                <label className="text-muted">Specification Name</label>
+            <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
                 <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
             </div>
             <div className="form-group">
-                <label className="text-muted"><span className="text-danger">*</span><b>Specification Type</b></label>
+                <h6><b><span style={{color:'red'}}>*</span> Specification Value</b></h6>
                 <input onChange={handleChange_type('specification_type')} type="text" className="form-control"  value={specification_type}  specification_type="specification_type"/>
             </div>
             <div className="form-group">
-                <label className="text-muted">Specification Description</label>
-                <textarea onChange={handleChange_des('description')} className="form-control" value={description} description="description"  style={{height: "203px"}}/>
+                <h6><b>Description</b></h6>
+                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" value={description} description="description" />
             </div>
-            <button className="btn btn-info">Update</button>
+            <div className="form-group" style={{float:'right'}}>
+                <button className="btn btn-info btn-md">Update</button>
+            </div>
+           
         </form>
         </div>
     );
@@ -132,7 +135,10 @@ const Updatespecification = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Update Specification</h2>
+                        <div className='row'>
+                            <div className='col-md-8'><h3 className="font-bold"> Update Specification</h3></div>
+                            <div className='col-md-4'><Link to={`/admin/Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                        </div>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">

@@ -73,7 +73,7 @@ const showError = () => (
 
 const showSuccess = () => (
     <div className="alert alert-success" style={{ display: success ? '' : 'none' }}>
-       <a class="text-center" style={{color:'white'}}> Specification add successfully </a> 
+       <a className='text-center' style={{color:'white'}}> Specification add successfully </a> 
     </div>  
 );
 
@@ -93,32 +93,31 @@ return(
                     {/* <Select options={options} isMulti='true'/> */}
                     <NotificationContainer/>
                     <div className='row'>
-                        <div className='col-md-8'><h4 className="font-bold"> Add Specification</h4></div>
-                        <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link>
-                    </div>
+                        <div className='col-md-8'><h3 className="font-bold"> Add Specification</h3></div>
+                        <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                     </div>
                     <div className="white-box">
                         <div className="row">
                             <div className="col-lg-12">
-                                <form  onSubmit={clickSubmit} class="col-md-6 offset-md-2">
-                                        {/* {showSuccess()} */}
-                                        {/* {showError()} */}
+                            {showError()}
+                                <form  onSubmit={clickSubmit} className="col-lg-6 offset-md-4">
+                                    {/* {showSuccess()} */}
                                         {redirectUser()}
-                                    <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                                    <div className="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                         <div className="form-group ">
                                             <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
-                                            <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} required/>
+                                            <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name'/>
                                         </div>
                                         <div className="form-group">
-                                            <label className="text-muted"><span className="text-danger">*</span><b>Specification Value</b></label>
-                                            <input type="text" className="form-control" onChange={handleChange('specification_type')}  value={specification_type} autoFocus required />
+                                            <h6><b><span style={{color:'red'}}>*</span> Specification Value</b></h6>
+                                            <input type="text" className="form-control" onChange={handleChange('specification_type')} placeholder="Enter values" value={specification_type} />
                                         </div>
                                         <div className="form-group">
-                                            <h6><b>Description</b></h6>
+                                            <h6><b>Specification Description</b></h6>
                                             <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                         </div>
-                                        <div className="col-lg-7">
-                                            <button className="btn btn-info">Submit</button>
+                                        <div className="form-group" style={{float:'right'}}>
+                                            <button className="btn btn-info btn-md">Submit</button>
                                         </div>
                                     </div>
                                 </form>

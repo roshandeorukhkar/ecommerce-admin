@@ -88,11 +88,11 @@ const UpdateAttribute = ({ match }) => {
                 <input onChange={handleChange('attributeName')} type="text" placeholder='Enter Attribute' className="form-control" value={attributeName} required attributeName="attributeName" />
             </div>
             <div className="form-group col-sm-7">
-                <h6><b> Dimension</b></h6>
-                <input onChange={handleChange('dimension')} type="text" placeholder='Enter Dimension' className="form-control" value={dimension} required dimension="dimension" />
+                <h6><b> Attribute value</b></h6>
+                <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} required dimension="dimension" />
             </div>
             <div className="form-group col-sm-7">
-               <h6><b>Description</b></h6>
+               <h6><b>Attribute Description</b></h6>
                 <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
             </div>
             <div className="form-group col-md-7">
@@ -133,7 +133,10 @@ const UpdateAttribute = ({ match }) => {
                  <AdminSidebar />
                  <div className="page-wrapper">
                     <div className="container-fluid">
-                        <h2 className="font-bold"> Edit Attribute</h2>
+                        <div className='row'>
+                            <div className='col-md-8'><h3 className="font-bold"> Add Attribute</h3></div>
+                            <div className='col-md-4'><Link to={`/admin/attribute`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                        </div>
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">

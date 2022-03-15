@@ -102,7 +102,6 @@ const Managespecification = () => {
         const DATE = newDate.split('-');
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
-
     const columns = [{
         dataField: 'manufacturerName',
         text: 'Specification Name',
@@ -130,7 +129,16 @@ const Managespecification = () => {
 
       const getSwitch = (product) => {
         return (
-            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/>
+            <>
+                 {product.status == 1 
+                    ?(
+                    <>
+                        <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(product._id)} color='primary'/>
+                    </>
+                     ):
+                        <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(product._id)} color='primary'/>
+                }
+            </>
         )
       };
 
@@ -146,76 +154,14 @@ const Managespecification = () => {
         <div className="row">
             {/* {deleteMessage()} */}
             {redirectUser()}
-            <h4 className="box-title">Total List of Specification {products.length}</h4><hr></hr>
+            <div className='row'>
+                {/* <div className='col-md-8'><h4 className="box-title">Total List of Specification {products.length}</h4></div> */}
+                <div className='col-md-12'><button type="submit" className="btn  btn-outline btn-danger fa-pull-right" title="Remove all data"><i className="fa fa-trash-o"></i> ALL </button></div>
+            </div>
+            <hr></hr>
             <div className="col-12">
-                
-            <br></br>
-                {/* <table className="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="checkboxTH"/></th>
-                            <th>Specification Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((p, i) => (
-                            <tr  key={i}>
-                                <td><input type="checkbox"  id="checkboxTH" /></td>
-                                <td>{p.manufacturerName}</td>
-                                <td>{getDate(p.createdAt)} </td>
-                                <td>
-                                    {p.status == 1 
-                                        ?(
-                                        <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(p._id)} color='primary'/>
-                                        ):
-                                        <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(p._id)} color='primary'/>
-                                    }
-                                </td>
-                                <td>
-                                    <Link to={`/admin/Updatespecification/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
-                                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)}><i className='fa fa-trash-o font-15'></i></button>
-                                </td>     
-                            </tr>
-                        ))}
-                    </tbody>
-                </table> {/* <table className="table">
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="checkboxTH"/></th>
-                            <th>Specification Name</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((p, i) => (
-                            <tr  key={i}>
-                                <td><input type="checkbox"  id="checkboxTH" /></td>
-                                <td>{p.manufacturerName}</td>
-                                <td>{getDate(p.createdAt)} </td>
-                                <td>
-                                    {p.status == 1 
-                                        ?(
-                                        <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(p._id)} color='primary'/>
-                                        ):
-                                        <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(p._id)} color='primary'/>
-                                    }
-                                </td>
-                                <td>
-                                    <Link to={`/admin/Updatespecification/update/${p._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
-                                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(p._id)}><i className='fa fa-trash-o font-15'></i></button>
-                                </td>     
-                            </tr>
-                        ))}
-                    </tbody>
-                </table> */}
                 <NotificationContainer/>
                 <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/>
-                <br />
             </div>
         </div>
     );
