@@ -4,11 +4,14 @@ import AdminSidebar from "../user/AdminSidebar";
 import { createAttribute } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const AddAttributenew = () =>{
     
 const [values, setValues] = useState({
         attributeName: '',
+        errorsAttributeName:'',
+        errorsAttributeValue:'',
         dimension:'',
         description: '',
         error: '',
@@ -26,18 +29,30 @@ const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
     createAttribute({ attributeName,dimension, description}).then(data => {
-        if (data.error) {
-            setValues({ ...values, error: data.error, success: false });
-        } else {
+        // if (data.error) {
+        //     setValues({ ...values, error: data.error, success: false });
+        // } 
+        if (data.status == false) {
+            setValues({
+              ...values,
+              errorsAttributeName: data.errors.attributeName,
+              errorsAttributeValue:data.errors.dimension,
+            });
+            NotificationManager.error(data.message);
+          } 
+        else {
             setValues({
                 ...values,
                 attributeName: '',
+                errorsAttributeName:'',
+                errorsAttributeValue:'',
                 dimension:'',
                 description: '',
                 error: '',
                 success: true,
                 redirectToProfile: false
             });
+            NotificationManager.success('Attribute has been created successfully!');
             setTimeout(function(){
                 setValues({
                     ...values,
@@ -80,17 +95,20 @@ return(
                             <div className="row">
                                 <div className="col-lg-12">
                                     <form>
-                                        {showSuccess()}
+                                        <NotificationContainer/>
+                                        {/* {showSuccess()} */}
                                         {showError()}
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-sm-7"> 
                                                 <h6><b> Attribute Name</b><span style={{color:'red'}}>*</span></h6>
                                                 <input onChange={handleChange('attributeName')} type="text" className="form-control" placeholder='Enter Attribute' value={attributeName} />
+                                                <span className='error text-danger'>{values.errorsAttributeName}</span>
                                             </div>
                                             <div className="form-group col-sm-7"> 
                                                 <h6><b> Attributes Values</b><span style={{color:'red'}}>*</span></h6>
                                                 <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
+                                                <span className='error text-danger'>{values.errorsAttributeValue}</span>
                                             </div>
                                             <div className="form-group col-sm-7">
                                                 <h6><b> Attribute Description</b></h6>

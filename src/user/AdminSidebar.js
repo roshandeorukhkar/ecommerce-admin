@@ -102,7 +102,7 @@ const AdminSidebar = () => {
                                     <li><Link to="/admin/productlist">Product List</Link></li>
                                     <li><Link className={specificationMenu == '1' ? 'active' : ''} to="/admin/Manuspecification">Specification</Link></li>
                                     <li><Link className={attributeMenu == '1' ? 'active' : ''} to="/admin/attribute">Attribute</Link></li>
-                                    <li><Link className={categoryMenu == '1' ? 'active' : ''} to="Manucategory">Category</Link></li>
+                                    <li><Link className={categoryMenu == '1' ? 'active' : ''} to="/admin/Manucategory">Category</Link></li>
                                     <li><Link className={manufacturersMenu == '1' ? 'active' : ''} to="/admin/manufacturers">Manufacturer</Link></li>
                                 </ul>
                             </li>

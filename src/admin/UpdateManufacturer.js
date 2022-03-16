@@ -3,6 +3,7 @@ import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getManufacturer, updateManfacturer } from './apiAdmin';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 
@@ -11,6 +12,7 @@ const UpdateManufacturer = ({ match }) => {
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
+        errormanufacturerName: '',
         error: '',
         success: false,
         redirectToProfile: false,
@@ -54,17 +56,27 @@ const UpdateManufacturer = ({ match }) => {
             description:description
         };
         updateManfacturer(match.params.manufacturerId, manufacturs).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error, success: false });
-            } else {
+            // if (data.error) {
+            //     setValues({ ...values, error: data.error, success: false });
+            // } 
+            if (data.status == false) {
+                setValues({
+                  ...values,
+                  errormanufacturerName: data.errors.manufacturerName,
+                });
+                NotificationManager.error(data.message);
+              } 
+            else {
                 setValues({
                     ...values,
                     manufacturerName: data.manufacturerName,
                     description:data.description,
+                    errormanufacturerName: '',
                     error: false,
                     success: true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Manufacter has been Updated successfully!');
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -81,6 +93,7 @@ const UpdateManufacturer = ({ match }) => {
             <div className="form-group col-lg-7">
                 <h6><b><span style={{color:'red'}}>*</span> Manufacturer Nmae</b></h6>
                 <input onChange={handleChange('manufacturerName')} type="text" placeholder='Enter name' className="form-control" value={manufacturerName} manufacturerName="manufacturerName" />
+                <span className='error text-danger'>{values.errormanufacturerName}</span>
             </div>
             <div className="form-group col-lg-7">
                <h6><b> Manufacturer Description</b></h6>
@@ -132,7 +145,8 @@ const UpdateManufacturer = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            {showSuccess()}
+                                         <NotificationContainer/>
+                                            {/* {showSuccess()} */}
                                             {showError()}
                                             {updateCategoryForm()}
                                             {redirectUser()}

@@ -6,11 +6,13 @@ import AdminSidebar from "../user/AdminSidebar";
 import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
 import { Link } from "react-router-dom";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const UpdateCategory = ({ match }) => {
     const [values, setValues] = useState({
         name: '',
         description:'',
+        errorsCategories:'',
         error: '',
         redirectToProfile: false,
         formData: ''
@@ -52,9 +54,17 @@ const UpdateCategory = ({ match }) => {
             description:description,
         };
         updateCategory(match.params.categoryId, category).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
+            // if (data.error) {
+            //     setValues({ ...values, error: data.error });
+            // } 
+            if (data.status == false) {
+                setValues({
+                  ...values,
+                  errorsCategories: data.errors.name,
+                });
+                NotificationManager.error(data.message);
+              } 
+            else {
                 setValues({
                     ...values,
                     name: data.name,
@@ -62,6 +72,7 @@ const UpdateCategory = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Category has been Updated successfully!');
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -74,23 +85,24 @@ const UpdateCategory = ({ match }) => {
     const updateCategoryForm = () => (
         <div className="">
          <form onSubmit={submitCategoryForm} >
-                                        {showSuccess()}
-                                        {showError()}
-                                        {redirectUser()}
-                                        <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-                                            <div className="form-group col-lg-7">
-                                                <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
-                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} name= "name"/>
-                                            </div>
-                                            <div className="form-group col-lg-7">
-                                                <h6><b>Category Description</b></h6>
-                                                <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description'  value={description}></textarea>
-                                            </div>
-                                            <div className="col-lg-7">
-                                                <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
-                                            </div>
-                                    </div>
-                                    </form>
+            {showSuccess()}
+            {showError()}
+            {redirectUser()}
+            <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
+                <div className="form-group col-lg-7">
+                    <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
+                    <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} name= "name"/>
+                    <span className='error text-danger'>{values.errorsCategories}</span>
+                </div>
+                <div className="form-group col-lg-7">
+                    <h6><b>Category Description</b></h6>
+                    <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description'  value={description}></textarea>
+                </div>
+                <div className="col-lg-7">
+                    <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                </div>
+            </div>
+        </form>
     </div>
     );
 
@@ -133,6 +145,7 @@ const UpdateCategory = ({ match }) => {
                        <div className="row">
                            <div className="col-lg-12">
                                <div className="col-md-12 offset-md-2 m-b-250 mb-5">
+                                   <NotificationContainer/>
                                    {showSuccess()}
                                    {showError()}
                                    {updateCategoryForm()}

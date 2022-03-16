@@ -155,7 +155,8 @@ const AddListRoleManagement = (props) => {
           errorAccessModuleId: data.errors.accessModuleId,
         });
         NotificationManager.error(data.message);
-      } else {
+      } 
+      else {
         setValues({
           roleName: "",
           accessModuleId: "",
@@ -318,11 +319,7 @@ const AddListRoleManagement = (props) => {
                     <input type="hidden" value={values.storeId} name="storeId" />
                     <br></br>
                     {params.userRoleId != undefined ? <input type="hidden" value={values.userRoleId} name="userRoleId" /> : ""}
-                    <button
-                      type="submit"
-                      className="btn btn-rounded-min btn-primary"
-                      onClick={clickSubmit}
-                    >
+                    <button type="submit" className="btn btn-rounded-min btn-primary" onClick={clickSubmit}>
                       {!params.userRoleId ? "Add Role" : "Update Role"}
                     </button>
                   </div>

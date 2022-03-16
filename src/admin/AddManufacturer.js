@@ -12,6 +12,7 @@ const AddManufacturer = () =>{
     
 const [values, setValues] = useState({
         manufacturerName: '',
+        errormanufacturerName: '',
         description: '',
         error: '',
         success: false,
@@ -28,13 +29,24 @@ const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
     createManufacturer({ manufacturerName, description}).then(data => {
-        if (data.error) {
-            NotificationManager.error('Manufacter name already exits!');
-            setValues({ ...values, error: data.error, success: false });
-        } else {
+        //console.log("-----",data)
+        // if (data.error) {
+        //     errormanufacturerName: data.errors.manufacturerName,
+        //     NotificationManager.error('Manufacter name already exits!');
+        //     setValues({ ...values, error: data.error, success: false });
+        // } 
+        if (data.status == false) {
+            setValues({
+              ...values,
+              errormanufacturerName: data.errors.manufacturerName,
+            });
+            NotificationManager.error(data.message);
+          } 
+        else {
             setValues({
                 ...values,
                 manufacturerName: '',
+                errormanufacturerName: '',
                 description: '',
                 error: '',
                 success: true,
@@ -90,7 +102,8 @@ return(
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Manufacturer Name</b></h6>
-                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
+                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" plaerceholder='Enter name' value={manufacturerName} />
+                                                <span className='error text-danger'>{values.errormanufacturerName}</span>
                                             </div>
                                             <div className="form-group col-lg-7">
                                                 <h6><b> Manufacturer Description</b></h6>

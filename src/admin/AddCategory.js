@@ -11,6 +11,7 @@ const AddManufacturer = () =>{
 const [values, setValues] = useState({
         name: '',
         description: '',
+        errorsCategories:'',
         categories:[],
         subcategory:'',
         error: '',
@@ -28,12 +29,21 @@ const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
     createCategory({ name, description, subcategory}).then(data => {
-        if (data.error) {
-            setValues({ ...values, error: data.error, success: false });
-        } else {
+        // if (data.error) {
+        //     setValues({ ...values, error: data.error, success: false, errorsCategories: data.errors.name });
+        // } 
+        if (data.status == false) {
+            setValues({
+              ...values,
+              errorsCategories: data.errors.name,
+            });
+            //NotificationManager.error(data.message);
+          } 
+        else {
             setValues({
                 ...values,
                 name: '',
+                errorsCategories:'',
                 description: '',
                 category:'',
                 error: '',
@@ -104,7 +114,8 @@ return(
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Category Name</b></h6>
-                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} required/>
+                                                <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} />
+                                                <span className='error text-danger'>{values.errorsCategories}</span>
                                             </div>
                                             <div className="form-group col-lg-7">
                                                  <h6><b>Select Category </b></h6>

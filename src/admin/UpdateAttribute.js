@@ -5,13 +5,15 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAttribute, updateAttribute } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const UpdateAttribute = ({ match }) => {
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
         dimension:'',
+        errorsAttributeName:'',
+        errorsAttributeValue:'',
         error: '',
         success: false,
         redirectToProfile: false,
@@ -58,18 +60,27 @@ const UpdateAttribute = ({ match }) => {
             description:description
         };
         updateAttribute(match.params.attributeId,attribute).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error, success: false });
-            } else {
+            if (data.status == false) {
+                setValues({
+                  ...values,
+                  errorsAttributeName: data.errors.attributeName,
+                  errorsAttributeValue:data.errors.dimension,
+                });
+                NotificationManager.error(data.message);
+              } 
+            else {
                 setValues({
                     ...values,
                     attributeName: data.attributeName,
                     dimension:data.dimension,
                     description:data.description,
+                    errorsAttributeName:'',
+                    errorsAttributeValue:'',
                     error: false,
                     success: true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Attribute has been updated successfully!');
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -85,11 +96,13 @@ const UpdateAttribute = ({ match }) => {
             <form className="mb-3" onSubmit={submitAttributeForm}>
             <div className="form-group col-sm-7">
                 <h6><b><span style={{color:'red'}}>*</span> Attribute Name</b></h6>
-                <input onChange={handleChange('attributeName')} type="text" placeholder='Enter Attribute' className="form-control" value={attributeName} required attributeName="attributeName" />
+                <input onChange={handleChange('attributeName')} type="text" placeholder='Enter Attribute' className="form-control" value={attributeName} attributeName="attributeName" />
+                <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
             <div className="form-group col-sm-7">
-                <h6><b> Attribute value</b></h6>
-                <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} required dimension="dimension" />
+                <h6><b><span style={{color:'red'}}>*</span> Attribute value</b></h6>
+                <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} dimension="dimension" />
+                <span className='error text-danger'>{values.errorsAttributeValue}</span>
             </div>
             <div className="form-group col-sm-7">
                <h6><b>Attribute Description</b></h6>
@@ -141,7 +154,8 @@ const UpdateAttribute = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            {showSuccess()}
+                                            <NotificationContainer/>
+                                            {/* {showSuccess()} */}
                                             {showError()}
                                             {updateAttributeForm()}
                                             {redirectUser()}
