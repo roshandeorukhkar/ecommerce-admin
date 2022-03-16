@@ -5,11 +5,15 @@ import { Link, Redirect } from 'react-router-dom';
 import { getSpecification, updatespecification } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 
 
 const Updatespecification = ({ match }) => {
     const [values, setValues] = useState({
         manufacturerName: '',
+        errorsSpecificationName:'',
+        errorsSpecificationValue:'',
         description:'',
         specification_type:'',
         error: '',
@@ -62,17 +66,26 @@ const Updatespecification = ({ match }) => {
             description:description
         };
         updatespecification(match.params.productId, category).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
+            if (data.status == false) {
+                setValues({
+                  ...values,
+                  errorsSpecificationName: data.errors.manufacturerName,
+                  errorsSpecificationValue:data.errors.specification_type,
+                });
+                NotificationManager.error(data.message);
+              } 
+            else {
                 setValues({
                     ...values,
                     manufacturerName: data.manufacturerName,
                     description:data.description,
+                    errorsSpecificationName:'',
+                    errorsSpecificationValue:'',
                     error: false,
                     success: true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Specification has been updated successfully!');
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -88,11 +101,13 @@ const Updatespecification = ({ match }) => {
             <form className="col-lg-6 offset-md-4" onSubmit={submitCategoryForm}>
             <div className="form-group">
             <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
-                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} required manufacturerName="manufacturerName" />
+                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" value={manufacturerName} manufacturerName="manufacturerName" />
+                <span className='error text-danger'>{values.errorsSpecificationName}</span>
             </div>
             <div className="form-group">
                 <h6><b><span style={{color:'red'}}>*</span> Specification Value</b></h6>
                 <input onChange={handleChange_type('specification_type')} type="text" className="form-control"  value={specification_type}  specification_type="specification_type"/>
+                <span className='error text-danger'>{values.errorsSpecificationValue}</span>
             </div>
             <div className="form-group">
                 <h6><b>Description</b></h6>
@@ -143,7 +158,8 @@ const Updatespecification = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            {showSuccess()}
+                                            <NotificationContainer/>
+                                            {/* {showSuccess()} */}
                                             {showError()}
                                             {updateCategoryForm()}
                                             {redirectUser()}

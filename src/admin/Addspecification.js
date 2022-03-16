@@ -7,18 +7,13 @@ import { createspecification } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-// import Select from 'react-select'
-
-// const options = [
-//     { value: 'chocolate', label: 'Chocolate' },
-//     { value: 'strawberry', label: 'Strawberry' },
-//     { value: 'vanilla', label: 'Vanilla' }
-// ]
 
 const Addspecification = () =>{
     
 const [values, setValues] = useState({
         manufacturerName: '',
+        errorsSpecificationName:'',
+        errorsSpecificationValue:'',
         specification_type:'',
         description: '',
         error: '',
@@ -37,14 +32,21 @@ const clickSubmit = event => {
     setValues({ ...values, error: false });
     createspecification({ manufacturerName,specification_type, description}).then(data => {
         //alert(data.error)
-        if (data.error) {
-            NotificationManager.error('Specification name already exits!');
-            setValues({ ...values, error: data.error, success: false });
-        } else {
+        if (data.status == false) {
+            setValues({
+              ...values,
+              errorsSpecificationName: data.errors.manufacturerName,
+              errorsSpecificationValue:data.errors.specification_type,
+            });
+            NotificationManager.error(data.message);
+          } 
+        else {
             setValues({
                 ...values,
                 manufacturerName: '',
                 specification_type:'',
+                errorsSpecificationName:'',
+                errorsSpecificationValue:'',
                 description: '',
                 error: '',
                 success: false,
@@ -107,10 +109,12 @@ return(
                                         <div className="form-group ">
                                             <h6><b><span style={{color:'red'}}>*</span> Specification Name</b></h6>
                                             <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name'/>
+                                            <span className='error text-danger'>{values.errorsSpecificationName}</span>
                                         </div>
                                         <div className="form-group">
                                             <h6><b><span style={{color:'red'}}>*</span> Specification Value</b></h6>
                                             <input type="text" className="form-control" onChange={handleChange('specification_type')} placeholder="Enter values" value={specification_type} />
+                                            <span className='error text-danger'>{values.errorsSpecificationValue}</span>
                                         </div>
                                         <div className="form-group">
                                             <h6><b>Specification Description</b></h6>
