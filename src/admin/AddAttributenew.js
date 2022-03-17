@@ -115,7 +115,7 @@ return(
                                                 <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
                                             <div className="form-group col-md-7">
-                                            <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right'}}> Submit </button>
+                                            <button onClick={clickSubmit} className="btn btn-info btn-md"  style={{float: 'right', borderRadius:'7px'}}> Submit </button>
                                             </div>
                                             
                                     </div>
