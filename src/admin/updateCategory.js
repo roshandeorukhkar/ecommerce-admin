@@ -99,7 +99,7 @@ const UpdateCategory = ({ match }) => {
                     <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description'  value={description}></textarea>
                 </div>
                 <div className="col-lg-7">
-                    <button className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                    <button className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Update </button>
                 </div>
             </div>
         </form>

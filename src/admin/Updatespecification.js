@@ -113,8 +113,8 @@ const Updatespecification = ({ match }) => {
                 <h6><b>Description</b></h6>
                 <textarea onChange={handleChange_des('description')} rows="4" className="form-control" value={description} description="description" />
             </div>
-            <div className="form-group" style={{float:'right'}}>
-                <button className="btn btn-info btn-md">Update</button>
+            <div className="form-group">
+                <button className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}>Update</button>
             </div>
            
         </form>

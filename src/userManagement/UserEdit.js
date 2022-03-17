@@ -109,7 +109,7 @@ const UpdateUsers = ({ match }) => {
                 <textarea onChange={handleChange_address('address')} rows="3" className="form-control" placeholder='Description' value={address} address="address"  />
             </div>
             <div className='col-lg-7'>
-                <button className="btn btn-info btn-md"style={{float:'right'}}>Update</button>
+                <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
             </div>
         </form>
         </div>
