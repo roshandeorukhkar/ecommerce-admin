@@ -102,7 +102,7 @@ return(
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Manufacturer Name</b></h6>
-                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" plaerceholder='Enter name' value={manufacturerName} />
+                                                <input onChange={handleChange('manufacturerName')} type="text" className="form-control" placeholder='Enter name' value={manufacturerName} />
                                                 <span className='error text-danger'>{values.errormanufacturerName}</span>
                                             </div>
                                             <div className="form-group col-lg-7">
@@ -110,7 +110,7 @@ return(
                                                 <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
                                             </div>
                                             <div className="col-lg-7">
-                                                <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float:'right'}}> Submit </button>
+                                                <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
                                             </div>
                                     </div>
                                 </form>
