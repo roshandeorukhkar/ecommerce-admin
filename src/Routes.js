@@ -3,9 +3,10 @@ import { BrowserRouter, Switch } from 'react-router-dom';
 import AdminRoute from './auth/AdminRoute';
 import AdminDashboard from './user/AdminDashboard';
 
-import AddProduct from './user/AddProduct';
+import AddProduct from './admin/AddProduct';
+import ListProduct from './admin/ProductList';
 import Orders from './user/Orders';
-import UpdateProduct from './user/UpdateProduct';
+import UpdateProduct from './admin/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
 import SubCategory from './admin/subCategory';
 import AdminSignin from './user/Signin';
@@ -78,6 +79,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
                 <AdminRoute path="/admin/rolemanagement/edit/:storeId/:userRoleId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/user/list/:storeid" exact component={AllUser} />
+
+                <AdminRoute path="/admin/productlist" exact component={ListProduct} />
 
             </Switch>
         </BrowserRouter>
