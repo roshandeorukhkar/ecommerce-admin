@@ -115,7 +115,7 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name</label>
+                <label className="text-muted">Name......</label>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
 

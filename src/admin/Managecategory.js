@@ -150,7 +150,7 @@ const columns = [
             <Link to={`/admin/category/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
             {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(category._id)}><i className='fa fa-trash-o font-15'></i></button> */}
             <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroys(category._id)}><i className='fa fa-trash-o font-15'></i></button>
-            <Link to={`/admin/category/subupdate/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'> subcategory</i></button></Link>
+            <Link to={`/admin/category/subupdate/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-eye' title="view subcategory"></i></button></Link>
         </div>
     )
   };

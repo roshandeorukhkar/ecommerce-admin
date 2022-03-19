@@ -135,12 +135,12 @@ export const deleteSpecification = (productId) => {
 };
 
 */
-export const createProduct = (userId, token, product) => {
-    return fetch(`${API}/product/create/${userId}`, {
+export const createProduct = (token, product) => {
+    return fetch(`${API}/product/create/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            Authorization: `Bearer ${token}`
+           // Authorization: `Bearer ${token}`
         },
         body: product
     })

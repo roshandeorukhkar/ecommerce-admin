@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
-import { Link } from 'react-router-dom';
+import AdminHeader from "../user/AdminHeader";
+import AdminSidebar from "../user/AdminSidebar";
 import { createProduct, getCategories } from './apiAdmin';
 
 const AddProduct = () => {
@@ -22,20 +22,8 @@ const AddProduct = () => {
     });
 
     const { user, token } = isAuthenticated();
-    const {
-        name,
-        description,
-        price,
-        categories,
-        category,
-        shipping,
-        quantity,
-        loading,
-        error,
-        createdProduct,
-        redirectToProfile,
-        formData
-    } = values;
+    console.log(user._id, "login id")
+    const { name, description, price, categories, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 
     // load categories and set form data
     const init = () => {
@@ -66,7 +54,7 @@ const AddProduct = () => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
 
-        createProduct(user._id, token, formData).then(data => {
+        createProduct(token, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -85,31 +73,27 @@ const AddProduct = () => {
     };
 
     const newPostForm = () => (
-        <form className="mb-3" onSubmit={clickSubmit}>
-            <h4>Post Photo</h4>
+        <div className="col-lg-12">
+        <form>
+            <h6><b> Photo</b></h6>
             <div className="form-group">
                 <label className="btn btn-secondary">
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
                 </label>
             </div>
 
-            <div className="form-group">
-                <label className="text-muted">Name</label>
+            <div className="form-group ">
+                <h6><b> Name</b></h6>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Description</label>
-                <textarea onChange={handleChange('description')} className="form-control" value={description} />
-            </div>
-
-            <div className="form-group">
-                <label className="text-muted">Price</label>
+                <h6><b> Price</b></h6>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Category</label>
+                <h6><b> Category</b></h6>
                 <select onChange={handleChange('category')} className="form-control">
                     <option>Please select</option>
                     {categories &&
@@ -122,7 +106,7 @@ const AddProduct = () => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Shipping</label>
+                <h6><b> Shipping</b></h6>
                 <select onChange={handleChange('shipping')} className="form-control">
                     <option>Please select</option>
                     <option value="0">No</option>
@@ -131,12 +115,29 @@ const AddProduct = () => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Quantity</label>
+                <h6><b> specification</b></h6>
+                <select onChange={handleChange('specification')} className="form-control">
+                    <option>Please select</option>
+                    <option value="0">8 Gb</option>
+                    <option value="1">Color</option>
+                </select>
+            </div>
+
+            <div className="form-group">
+                <h6><b> Quantity</b></h6>
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
 
-            <button className="btn btn-outline-primary">Create Product</button>
+            <div className="form-group">
+                <h6><b> Description</b></h6>
+                <textarea onChange={handleChange('description')} className="form-control" value={description} />
+            </div>
+            <div className="form-group">
+                <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
+            </div>
         </form>
+        
+        </div>
     );
 
     const showError = () => (
@@ -159,16 +160,24 @@ const AddProduct = () => {
         );
 
     return (
-        <Layout title="Add a new product" description={`G'day ${user.name}, ready to add a new product?`}>
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
-                    {newPostForm()}
+        <div id="wrapper">
+        <AdminHeader />
+        <AdminSidebar />
+        <div className="page-wrapper">
+            <div className="container-fluid">
+                    <div className="white-box">
+                        <div className="row">
+                                <div className="col-md-7 offset-md-2">
+                                    {showLoading()}
+                                    {showSuccess()}
+                                    {showError()}
+                                    {newPostForm()}
+                                </div>
+                         </div>
+                     </div>
                 </div>
             </div>
-        </Layout>
+        </div>
     );
 };
 
