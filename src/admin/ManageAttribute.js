@@ -175,7 +175,7 @@ const columns = [
                 {deleteMessage()}
                 {redirectUser()}
                 <div className="col-md-12">
-                    {attributeList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> : null}
+                    <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> 
                 </div>
             </div>
     );

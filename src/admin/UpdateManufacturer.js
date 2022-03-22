@@ -64,7 +64,7 @@ const UpdateManufacturer = ({ match }) => {
                   ...values,
                   errormanufacturerName: data.errors.manufacturerName,
                 });
-                NotificationManager.error(data.message);
+               // NotificationManager.error(data.message);
               } 
             else {
                 setValues({

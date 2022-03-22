@@ -146,7 +146,7 @@ const UpdateCategory = ({ match }) => {
                            <div className="col-lg-12">
                                <div className="col-md-12 offset-md-2 m-b-250 mb-5">
                                    <NotificationContainer/>
-                                   {showSuccess()}
+                                   {/* {showSuccess()} */}
                                    {showError()}
                                    {updateCategoryForm()}
                                    {redirectUser()}

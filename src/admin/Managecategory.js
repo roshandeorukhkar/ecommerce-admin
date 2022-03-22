@@ -189,9 +189,8 @@ const columns = [
         <div className="row">
             {deleteMessage()}
             {redirectUser()}
-            <h4 className="box-title">Total List of Category {products.length}</h4><hr></hr>
             <div className="col-12">
-                {categoryList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/> : null}
+                <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/>
             </div>
         </div>
     );

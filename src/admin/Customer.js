@@ -195,7 +195,7 @@ const Customer = () => {
             <div className="col-12">
                 {deleteMessage()}
                 {redirectUser()}
-                {productsList != "" ? <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={productsList}/> : null}
+                <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={productsList}/> 
             </div>
         </div>
     );

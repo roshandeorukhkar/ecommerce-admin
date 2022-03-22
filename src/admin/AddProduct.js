@@ -13,6 +13,9 @@ const AddProduct = () => {
         category: '',
         shipping: '',
         quantity: '',
+        height:'',
+        width:'',
+        leanth:'',
         photo: '',
         loading: false,
         error: '',
@@ -23,7 +26,7 @@ const AddProduct = () => {
 
     const { user, token } = isAuthenticated();
     //console.log(user._id, "login id")
-    const { name, description, price, categories, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
+    const { name, description, price, categories, height, width, leanth, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 
     // load categories and set form data
     const init = () => {
@@ -78,7 +81,7 @@ const AddProduct = () => {
             <h6><b> Photo</b></h6>
             <div className="form-group">
                 <label className="btn btn-secondary">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
+                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple />
                 </label>
             </div>
 
@@ -124,6 +127,16 @@ const AddProduct = () => {
             </div>
 
             <div className="form-group">
+                <h6><b> product type</b></h6>
+                <select onChange={handleChange('type')} className="form-control">
+                    <option>Please select</option>
+                    <option value="1">New Arrivale</option>
+                    <option value="2">Normal </option>
+                    <option value="3">Comming soon </option>
+                </select>
+            </div>
+
+            <div className="form-group">
                 <h6><b> Quantity</b></h6>
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
@@ -132,9 +145,28 @@ const AddProduct = () => {
                 <h6><b> Description</b></h6>
                 <textarea onChange={handleChange('description')} className="form-control" value={description} />
             </div>
+
+            <hr></hr>
+            <h6>Other options</h6>
+            <hr></hr>
+
+            <div className="form-group ">
+                <h6><b> product Heighit</b></h6>
+                <input onChange={handleChange('height')} type="text" className="form-control" value={height} />
+            </div>
+            <div className="form-group ">
+                <h6><b> product width</b></h6>
+                <input onChange={handleChange('width')} type="text" className="form-control" value={width} />
+            </div>
+            <div className="form-group ">
+                <h6><b> product leanth</b></h6>
+                <input onChange={handleChange('leanth')} type="text" className="form-control" value={leanth} />
+            </div>
+
             <div className="form-group">
                 <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
             </div>
+          
         </form>
         
         </div>
