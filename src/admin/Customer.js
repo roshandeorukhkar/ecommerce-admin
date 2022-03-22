@@ -182,7 +182,6 @@ const Customer = () => {
 
       const productsList = [];
       products.forEach((item) => {
-          console.log(item, "customer list");
         item['id'] = item._id;
         item['name'] =item.firstName + item.lastName;
         item['mobile'] =item.mobile;
