@@ -182,7 +182,8 @@ const Customer = () => {
 
       const productsList = [];
       products.forEach((item) => {
-          item['id'] = item._id;
+          console.log(item, "customer list");
+        item['id'] = item._id;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
