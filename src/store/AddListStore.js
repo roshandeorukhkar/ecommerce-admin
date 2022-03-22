@@ -117,7 +117,7 @@ const AddListStore = () => {
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
                 });
-                NotificationManager.error(data.message);
+                //NotificationManager.error(data.message);
             } else {
                 setValues({
                     storeName: "",
@@ -299,7 +299,7 @@ const AddListStore = () => {
                             Store List
                         </h3>
                         <div className="col-12">
-                            {list != "" ? <DataTableComponent keyField="id" title=" Store List" tableHeading={columns} tableList={storeListArray} onClick={() => setCheckParams(!checkParams)} /> : null}
+                          <DataTableComponent keyField="id" title=" Store List" tableHeading={columns} tableList={storeListArray} onClick={() => setCheckParams(!checkParams)} /> 
                         </div>
                     </div>
                 </div>

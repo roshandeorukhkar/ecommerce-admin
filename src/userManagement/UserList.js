@@ -64,7 +64,7 @@ const UserList= () =>{
       const productsList = [];
       user.forEach((item) => {
        // console.log(item.role);
-        if(item.role == 3 && item.isDelete == 1){
+        if(item.role == 3){
             item['storeName']= getuserLink(item.storeId.storeName,item.storeId._id);
             item['createdDate'] = getDate(item.createdAt);
             productsList.push(item);
@@ -85,11 +85,9 @@ const UserList= () =>{
                         <div className="white-box">
                             <div className="row">
                                 <div className="col-12">
-                                    {productsList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/> : null}
-                                    
+                                    <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/>                             
                                 </div>
                             </div>  
-                           
                         </div>
                     </div>
                 </div>
