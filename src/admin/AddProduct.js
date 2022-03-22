@@ -22,7 +22,7 @@ const AddProduct = () => {
     });
 
     const { user, token } = isAuthenticated();
-    console.log(user._id, "login id")
+    // console.log(user._id, "login id")
     const { name, description, price, categories, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 
     // load categories and set form data
