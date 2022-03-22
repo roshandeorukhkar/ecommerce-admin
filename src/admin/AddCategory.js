@@ -5,6 +5,7 @@ import AdminSidebar from "../user/AdminSidebar";
 import { createCategory, getCategories } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const AddManufacturer = () =>{
     
@@ -50,6 +51,7 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
+            NotificationManager.success('Category has been add successfully!');
             setTimeout(function(){
                 setValues({
                     ...values,
@@ -108,7 +110,8 @@ return(
                             <div className="row">
                                 <div className="col-lg-12">
                                     <form onSubmit={clickSubmit} >
-                                        {showSuccess()}
+                                    <NotificationContainer/>
+                                        {/* {showSuccess()} */}
                                         {showError()}
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>

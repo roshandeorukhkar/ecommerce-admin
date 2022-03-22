@@ -40,7 +40,7 @@ const clickSubmit = event => {
               ...values,
               errormanufacturerName: data.errors.manufacturerName,
             });
-            NotificationManager.error(data.message);
+           // NotificationManager.error(data.message);
           } 
         else {
             setValues({
@@ -49,7 +49,7 @@ const clickSubmit = event => {
                 errormanufacturerName: '',
                 description: '',
                 error: '',
-                success: true,
+               // success: true,
                 redirectToProfile: false
             });
             NotificationManager.success('Manufacter has been added successfully!');
@@ -57,7 +57,9 @@ const clickSubmit = event => {
                 setValues({
                     ...values,
                     redirectToProfile:true
+                    
                 })
+               
             },1000)
         }
     });

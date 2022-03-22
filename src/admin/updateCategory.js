@@ -85,7 +85,7 @@ const UpdateCategory = ({ match }) => {
     const updateCategoryForm = () => (
         <div className="">
          <form onSubmit={submitCategoryForm} >
-            {showSuccess()}
+            {/* {showSuccess()} */}
             {showError()}
             {redirectUser()}
             <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
@@ -138,7 +138,7 @@ const UpdateCategory = ({ match }) => {
         <div className="page-wrapper">
            <div className="container-fluid">
                <div className='row'>
-                   <div className='col-md-8'><h4 className="font-bold"> Edit Manufacture</h4></div>
+                   <div className='col-md-8'><h4 className="font-bold"> Edit Category</h4></div>
                    <div className='col-md-4'><Link to={`/admin/manufacturers`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                </div>
                    <div className="white-box">
@@ -146,7 +146,7 @@ const UpdateCategory = ({ match }) => {
                            <div className="col-lg-12">
                                <div className="col-md-12 offset-md-2 m-b-250 mb-5">
                                    <NotificationContainer/>
-                                   {showSuccess()}
+                                   {/* {showSuccess()} */}
                                    {showError()}
                                    {updateCategoryForm()}
                                    {redirectUser()}

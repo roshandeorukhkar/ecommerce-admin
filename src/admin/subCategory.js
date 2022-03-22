@@ -175,7 +175,7 @@ const SubCategory = ({ match }) => {
                             {deleteMessage()}
                             {redirectUser()}
                             <div className="col-12">
-                                {categoryList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/> : null}
+                                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/> 
                             </div>
                         </div>
                     </div>

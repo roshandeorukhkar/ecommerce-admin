@@ -79,7 +79,6 @@ const Routes = () => {
                 <AdminRoute path="/admin/Manucategory" exact component={Manucategory} />
                 <AdminRoute path="/admin/rolemanagement/edit/:storeId/:userRoleId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/user/list/:storeid" exact component={AllUser} />
-
                 <AdminRoute path="/admin/productlist" exact component={ListProduct} />
 
             </Switch>

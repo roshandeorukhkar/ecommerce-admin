@@ -120,7 +120,7 @@ const AllUser = () =>{
                         </div>
                         <div className="white-box">
                             <div className="row">
-                                {productsList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/> : null}
+                                <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/>
                             </div>
                         </div>
                     </div>

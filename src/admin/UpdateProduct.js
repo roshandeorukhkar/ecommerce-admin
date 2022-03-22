@@ -3,6 +3,8 @@ import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getProduct, getCategories, updateProduct } from './apiAdmin';
+import AdminHeader from "../user/AdminHeader";
+import AdminSidebar from "../user/AdminSidebar";
 
 const UpdateProduct = ({ match }) => {
     const [values, setValues] = useState({
@@ -23,20 +25,7 @@ const UpdateProduct = ({ match }) => {
     const [categories, setCategories] = useState([]);
 
     const { user, token } = isAuthenticated();
-    const {
-        name,
-        description,
-        price,
-        // categories,
-        category,
-        shipping,
-        quantity,
-        loading,
-        error,
-        createdProduct,
-        redirectToProfile,
-        formData
-    } = values;
+    const { name, description, price, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 
     const init = productId => {
         getProduct(productId).then(data => {
@@ -85,7 +74,7 @@ const UpdateProduct = ({ match }) => {
         event.preventDefault();
         setValues({ ...values, error: '', loading: true });
 
-        updateProduct(match.params.productId, user._id, token, formData).then(data => {
+        updateProduct(match.params.productId, formData).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
@@ -115,7 +104,7 @@ const UpdateProduct = ({ match }) => {
             </div>
 
             <div className="form-group">
-                <label className="text-muted">Name......</label>
+                <label className="text-muted">Name</label>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
             </div>
 
@@ -182,23 +171,33 @@ const UpdateProduct = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/" />;
+                return <Redirect to="/admin/productlist" />;
             }
         }
     };
 
     return (
-        <Layout title="Add a new product" description={`G'day ${user.name}, ready to add a new product?`}>
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showLoading()}
-                    {showSuccess()}
-                    {showError()}
-                    {newPostForm()}
-                    {redirectUser()}
+        <div id="wrapper">
+        <AdminHeader />
+        <AdminSidebar />
+        <div className="page-wrapper">
+            <div className="container-fluid">
+                    <div className="white-box">
+                        <div className="row">
+                            <div className="col-md-8 offset-md-2">
+                                {showLoading()}
+                                {showSuccess()}
+                                {showError()}
+                                {newPostForm()}
+                                {redirectUser()}
+                            </div>
+                        </div>      
+
+                    </div>
                 </div>
             </div>
-        </Layout>
+        </div>
+            
     );
 };
 
