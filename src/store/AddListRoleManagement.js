@@ -141,7 +141,11 @@ const AddListRoleManagement = (props) => {
   }
 
   const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value ,
+      errorRoleName: "",
+          errorAssingTo: "",
+          errorAccessModuleId: ""
+    });
   };
 
   const clickSubmit = (event) => {
@@ -154,7 +158,7 @@ const AddListRoleManagement = (props) => {
           errorAssingTo: data.errors.assingTo,
           errorAccessModuleId: data.errors.accessModuleId,
         });
-        NotificationManager.error(data.message);
+        // NotificationManager.error(data.message);
       } 
       else {
         setValues({

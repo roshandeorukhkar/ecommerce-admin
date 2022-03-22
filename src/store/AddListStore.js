@@ -100,7 +100,14 @@ const AddListStore = () => {
     }
 
     const handleChange = (name) => (event) => {
-        setValues({ ...values, [name]: event.target.value });
+        setValues({ ...values, [name]: event.target.value,
+            storeNameError: "",
+            ownerNameError: "",
+            addressError: "",
+            userNameError: "",
+            mobileError: "",
+            passwordError: "",
+            emailError: "" });
     };
 
     const clickSubmit = (event) => {
@@ -171,7 +178,7 @@ const AddListStore = () => {
             text: 'Status'
         }, {
             dataField: 'action',
-            text: 'action'
+            text: 'Action'
         }];
 
     const getDate = (date) => {
