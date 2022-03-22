@@ -196,7 +196,7 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                {manufactureList != "" ? <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList}/> : null}
+                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList}/>
             </div>
         </div>
     );  
