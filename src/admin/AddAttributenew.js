@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const AddAttributenew = () =>{
+
+const [inputList, setInputList] = useState([{ specification: "" }]);
     
 const [values, setValues] = useState({
         attributeName: '',
@@ -20,6 +22,33 @@ const [values, setValues] = useState({
     });
 
 const { attributeName,dimension, description, success, error, redirectToProfile } = values;
+
+ //add multiple
+    // handle input change
+    const handleInputChange = (e, index) => {
+        const { name, value } = e.target;
+        //console.log("value",value);
+        //console.log("value",index);
+        const list = [...inputList];
+        const sList = [];
+        list[index] = value;
+        sList.push(list);
+        setInputList(list);
+        setValues({ ...values, dimension: sList });
+    };
+
+    // handle click event of the Remove button
+    const handleRemoveClick = index => {
+        const list = [...inputList];
+        list.splice(index, 1);
+        setInputList(list);
+    };
+
+    // handle click event of the Add button
+    const handleAddClick = () => {
+        setInputList([...inputList, { specification: "" }]);
+    };
+    //end multiple
 
 const handleChange = attributeName => event => {
     setValues({ ...values, error: false, [attributeName]: event.target.value });
@@ -107,9 +136,22 @@ return(
                                             </div>
                                             <div className="form-group col-sm-7"> 
                                                 <h6><b> Attributes Values</b><span style={{color:'red'}}>*</span></h6>
-                                                <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
-                                                <span className='error text-danger'>{values.errorsAttributeValue}</span>
+                                                {/* <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
+                                                <span className='error text-danger'>{values.errorsAttributeValue}</span> */}
                                             </div>
+                                            {inputList.map((x, i) => {
+                                                return (
+                                                    <div className="form-group">
+                                                            <div className='col-lg-7'>
+                                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={x.dimension} onChange={e => handleInputChange(e, i)} />
+                                                            </div>
+                                                            <div className='form-group col-lg-1'>
+                                                                {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
+                                                                {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
+                                                            </div>
+                                                        </div>
+                                                );
+                                            })}
                                             <div className="form-group col-sm-7">
                                                 <h6><b> Attribute Description</b></h6>
                                                 <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description' value={description}></textarea>
