@@ -67,7 +67,7 @@ const clickSubmit = event => {
               errorsAttributeName: data.errors.attributeName,
               errorsAttributeValue:data.errors.dimension,
             });
-            NotificationManager.error(data.message);
+           // NotificationManager.error(data.message);
           } 
         else {
             setValues({
