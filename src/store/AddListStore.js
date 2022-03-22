@@ -186,6 +186,7 @@ const AddListStore = () => {
                 <Link to={`/admin/storemanagement/edit/${storeId_}`} className='btn btn-outline btn-info m-5' onClick={() => setCheckParams(!checkParams)} aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link>
                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => deleteStoreDetails(storeId_)}><i className='fa fa-trash-o font-15'></i></button>
                 <Link to={`/admin/rolemanagement/${storeId_}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
+                <Link to={`/admin/user/list/${storeId_}`} className="btn btn-outline btn-info m-5">Add User</Link>
             </div>
         )
     };
