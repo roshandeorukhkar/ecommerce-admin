@@ -182,8 +182,6 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
         }
     };
 
-   
-
     return (
             <div className="row">
                  <AdminHeader />
