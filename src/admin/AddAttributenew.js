@@ -30,11 +30,11 @@ const { attributeName,dimension, description, success, error, redirectToProfile 
         //console.log("value",value);
         //console.log("value",index);
         const list = [...inputList];
-        const sList = [];
+       // const sList = [];
         list[index] = value;
-        sList.push(list);
+        //sList.push(list);
         setInputList(list);
-        setValues({ ...values, dimension: sList });
+        setValues({ ...values, dimension: list });
     };
 
     // handle click event of the Remove button
