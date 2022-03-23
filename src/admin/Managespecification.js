@@ -115,7 +115,8 @@ const Managespecification = () => {
         text: 'Status'
       }, {
         dataField: 'action',
-        text: 'action'
+        text: 'Action'
+
       }];
 
       const getButtons = (product) => {
@@ -146,7 +147,7 @@ const Managespecification = () => {
       products.forEach((item) => {
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
-        item['action'] = getButtons(item);
+        item['Action'] = getButtons(item);
         productsList.push(item);
       });
 
