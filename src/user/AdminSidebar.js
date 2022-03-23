@@ -110,9 +110,9 @@ const AdminSidebar = () => {
                             <li>
                                 <Link to="/admin/coustomers" aria-expanded="false"><i className="icon-people fa-fw"></i><span className="hide-menu"> Customers</span></Link>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link className={userMenu == '1' ? 'active' : ''} to="/admin/users" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></Link>
-                            </li>
+                            </li> */}
                             <li>
                                 <Link className={storeMenu == '1' ? 'active' : ''} to="/admin/storemanagement" aria-expanded="false">
                                     <i className="icon-grid fa-fw"></i>

@@ -29,6 +29,7 @@ const AddProduct = () => {
     });
 
     const { user, token } = isAuthenticated();
+
     //console.log(user._id, "login id")
     const { name, description, price, categories, specifications, attribute, height, width, leanth, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 

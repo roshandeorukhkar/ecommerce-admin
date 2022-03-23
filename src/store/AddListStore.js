@@ -100,7 +100,14 @@ const AddListStore = () => {
     }
 
     const handleChange = (name) => (event) => {
-        setValues({ ...values, [name]: event.target.value });
+        setValues({ ...values, [name]: event.target.value,
+            storeNameError: "",
+            ownerNameError: "",
+            addressError: "",
+            userNameError: "",
+            mobileError: "",
+            passwordError: "",
+            emailError: "" });
     };
 
     const clickSubmit = (event) => {
@@ -171,7 +178,7 @@ const AddListStore = () => {
             text: 'Status'
         }, {
             dataField: 'action',
-            text: 'action'
+            text: 'Action'
         }];
 
     const getDate = (date) => {
@@ -186,6 +193,7 @@ const AddListStore = () => {
                 <Link to={`/admin/storemanagement/edit/${storeId_}`} className='btn btn-outline btn-info m-5' onClick={() => setCheckParams(!checkParams)} aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link>
                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => deleteStoreDetails(storeId_)}><i className='fa fa-trash-o font-15'></i></button>
                 <Link to={`/admin/rolemanagement/${storeId_}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
+                <Link to={`/admin/user/list/${storeId_}`} className="btn btn-outline btn-info m-5">Add User</Link>
             </div>
         )
     };

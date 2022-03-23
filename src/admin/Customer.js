@@ -133,8 +133,8 @@ const Customer = () => {
             sort: true
         }, 
         {
-            dataField: 'email',
-            text: 'E-mail',
+            dataField: 'mobile',
+            text: 'Mobile No',
             sort: true
         }, 
         {
@@ -182,8 +182,9 @@ const Customer = () => {
 
       const productsList = [];
       products.forEach((item) => {
-          console.log(item, "customer list");
         item['id'] = item._id;
+        item['name'] =item.firstName + item.lastName;
+        item['mobile'] =item.mobile;
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
