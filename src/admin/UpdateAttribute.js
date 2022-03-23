@@ -38,6 +38,7 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                     dimension:data.dimension,
                     description: data.description
                 });
+                setInputList(data.dimension);
             }
         });
     };
@@ -49,11 +50,11 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
         //console.log("value",value);
         //console.log("value",index);
         const list = [...inputList];
-        const sList = [];
+        //const sList = [];
         list[index] = value;
-        sList.push(list);
+        //sList.push(list);
         setInputList(list);
-        setValues({ ...values, dimension: sList });
+        setValues({ ...values, dimension: list });
     };
 
     // handle click event of the Remove button
@@ -137,7 +138,7 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                                 return (
                                     <div className="form-group">
                                             <div className='col-lg-7'>
-                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={x.dimension} onChange={e => handleInputChange(e, i)}  />
+                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={dimension} onChange={e => handleInputChange(e, i)}  />
                                             </div>
                                             <div className='form-group col-lg-1'>
                                                 {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}

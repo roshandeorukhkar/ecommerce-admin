@@ -611,7 +611,7 @@ export const createAttribute = async (attribute) => {
 };
 
 export const getAttributes = () => {
-    return fetch(`${API}/attribute?limit=undefined`, {
+    return fetch(`${API}/attribute`, {
         method: 'GET'
     })
         .then(response => {

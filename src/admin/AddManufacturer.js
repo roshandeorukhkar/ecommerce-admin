@@ -39,8 +39,10 @@ const clickSubmit = event => {
             setValues({
               ...values,
               errormanufacturerName: data.errors.manufacturerName,
+              
             });
            // NotificationManager.error(data.message);
+           
           } 
         else {
             setValues({
@@ -56,6 +58,7 @@ const clickSubmit = event => {
             setTimeout(function(){                
                 setValues({
                     ...values,
+                    NotificationManager:true, 
                     redirectToProfile:true
                     
                 })
