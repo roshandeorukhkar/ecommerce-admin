@@ -8,6 +8,8 @@ import AdminSidebar from "../user/AdminSidebar";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const UpdateAttribute = ({ match }) => {
+const [inputList, setInputList] = useState([{ specification: "" }]);
+
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
@@ -39,6 +41,33 @@ const UpdateAttribute = ({ match }) => {
             }
         });
     };
+
+    //add multiple
+    // handle input change
+    const handleInputChange = (e, index) => {
+        const { name, value } = e.target;
+        //console.log("value",value);
+        //console.log("value",index);
+        const list = [...inputList];
+        const sList = [];
+        list[index] = value;
+        sList.push(list);
+        setInputList(list);
+        setValues({ ...values, dimension: sList });
+    };
+
+    // handle click event of the Remove button
+    const handleRemoveClick = index => {
+        const list = [...inputList];
+        list.splice(index, 1);
+        setInputList(list);
+    };
+
+    // handle click event of the Add button
+    const handleAddClick = () => {
+        setInputList([...inputList, { dimension: "" }]);
+    };
+    //end multiple
 
     useEffect(() => {
         init(match.params.attributeId);
@@ -99,18 +128,32 @@ const UpdateAttribute = ({ match }) => {
                 <input onChange={handleChange('attributeName')} type="text" placeholder='Enter Attribute' className="form-control" value={attributeName} attributeName="attributeName" />
                 <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
-            <div className="form-group col-sm-7">
+            {/* <div className="form-group col-sm-7">
                 <h6><b><span style={{color:'red'}}>*</span> Attribute value</b></h6>
                 <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} dimension="dimension" />
                 <span className='error text-danger'>{values.errorsAttributeValue}</span>
-            </div>
-            <div className="form-group col-sm-7">
-               <h6><b>Attribute Description</b></h6>
-                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
-            </div>
-            <div className="form-group col-md-7">
-            <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
-            </div>
+            </div> */}
+                         {inputList.map((x, i) => {
+                                return (
+                                    <div className="form-group">
+                                            <div className='col-lg-7'>
+                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={x.dimension} onChange={e => handleInputChange(e, i)}  />
+                                            </div>
+                                            <div className='form-group col-lg-1'>
+                                                {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
+                                                {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
+                                            </div>
+                                        </div>
+                                    );
+                            })}
+
+                            <div className="form-group col-sm-7">
+                                <h6><b>Attribute Description</b></h6>
+                                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
+                            </div>
+                        <div className="form-group col-md-7">
+                             <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
+                        </div>
         </form>
         </div>
     );

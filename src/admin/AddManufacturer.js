@@ -59,7 +59,7 @@ const clickSubmit = event => {
                     redirectToProfile:true
                     
                 })
-               
+               // NotificationManager.success('Manufacter has been added successfully!');
             },1000)
         }
     });

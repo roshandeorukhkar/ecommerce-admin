@@ -135,7 +135,7 @@ return(
                                                 <span className='error text-danger'>{values.errorsAttributeName}</span>
                                             </div>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b> Attributes Values</b><span style={{color:'red'}}>*</span></h6>
+                                                <h6><b> Attributes Values</b></h6>
                                                 {/* <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
                                                 <span className='error text-danger'>{values.errorsAttributeValue}</span> */}
                                             </div>

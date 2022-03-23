@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createProduct, getCategories } from './apiAdmin';
+import { createProduct, getCategories, Specification, getAttributes } from './apiAdmin';
 
 const AddProduct = () => {
     const [values, setValues] = useState({
         name: '',
+        errorname: '',
         description: '',
+        attribute:'',
         price: '',
+        errorprice:'',
         categories: [],
         category: '',
+        specifications:'',
         shipping: '',
         quantity: '',
         height:'',
@@ -26,7 +30,7 @@ const AddProduct = () => {
 
     const { user, token } = isAuthenticated();
     //console.log(user._id, "login id")
-    const { name, description, price, categories, height, width, leanth, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
+    const { name, description, price, categories, specifications, attribute, height, width, leanth, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
 
     // load categories and set form data
     const init = () => {
@@ -43,8 +47,38 @@ const AddProduct = () => {
         });
     };
 
+    const getSpecification = () => {
+        Specification().then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } else {
+                setValues({
+                    ...values,
+                    categories: data,
+                    formData: new FormData()
+                });
+            }
+        });
+    };
+
+    const attributess = () => {
+        getAttributes().then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                setValues({
+                    ...values,
+                    categories: data,
+                    formData: new FormData()
+                });
+            }
+        });
+    };
+
     useEffect(() => {
+        getSpecification();
         init();
+        attributess();
     }, []);
 
     const handleChange = name => event => {
@@ -55,18 +89,26 @@ const AddProduct = () => {
 
     const clickSubmit = event => {
         event.preventDefault();
-        setValues({ ...values, error: '', loading: true });
+       // setValues({ ...values, error: '', loading: true });
+        setValues({ ...values, error: false });
 
         createProduct(token, formData).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
+            if (data.status == false) {
+                setValues({
+                  ...values,
+                  errorname: data.errors.name,
+                  errorprice: data.errors.price,
+                });
+               // NotificationManager.error(data.message);
+              } 
+            else {
                 setValues({
                     ...values,
                     name: '',
                     description: '',
                     photo: '',
                     price: '',
+                    attribute:'',
                     quantity: '',
                     loading: false,
                     createdProduct: data.name
@@ -86,13 +128,15 @@ const AddProduct = () => {
             </div>
 
             <div className="form-group ">
-                <h6><b> Name</b></h6>
+                <h6><b> Name <span style={{color:'red'}}>*</span></b></h6>
                 <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
+                <span className='error text-danger'>{values.errorname}</span>
             </div>
 
             <div className="form-group">
-                <h6><b> Price</b></h6>
+                <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
+                <span className='error text-danger'>{values.errorprice}</span>
             </div>
 
             <div className="form-group">
@@ -102,7 +146,20 @@ const AddProduct = () => {
                     {categories &&
                         categories.map((c, i) => (
                             <option key={i} value={c._id}>
-                                {c.name}
+                                {c.name }
+                            </option>
+                        ))}
+                </select>
+            </div>
+
+            <div className="form-group">
+                <h6><b> Attribute</b></h6>
+                <select onChange={handleChange('attribute')} className="form-control">
+                    <option>Please select</option>
+                    {categories &&
+                        categories.map((a, i) => (
+                            <option key={i} value={a._id}>
+                                {a.attributeName }
                             </option>
                         ))}
                 </select>
@@ -114,6 +171,12 @@ const AddProduct = () => {
                     <option>Please select</option>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
+                    {specifications &&
+                        specifications.map((s, i) => (
+                            <option key={i} value={s._id}>
+                                {s.manufacturerName}
+                            </option>
+                    ))}
                 </select>
             </div>
 
@@ -151,7 +214,7 @@ const AddProduct = () => {
             <hr></hr>
 
             <div className="form-group ">
-                <h6><b> product Heighit</b></h6>
+                <h6><b> product height </b></h6>
                 <input onChange={handleChange('height')} type="text" className="form-control" value={height} />
             </div>
             <div className="form-group ">
@@ -159,7 +222,7 @@ const AddProduct = () => {
                 <input onChange={handleChange('width')} type="text" className="form-control" value={width} />
             </div>
             <div className="form-group ">
-                <h6><b> product leanth</b></h6>
+                <h6><b> product length </b></h6>
                 <input onChange={handleChange('leanth')} type="text" className="form-control" value={leanth} />
             </div>
 
@@ -201,7 +264,7 @@ const AddProduct = () => {
                         <div className="row">
                                 <div className="col-md-7 offset-md-2">
                                     {showLoading()}
-                                    {showSuccess()}
+                                    {/* {showSuccess()} */}
                                     {showError()}
                                     {newPostForm()}
                                 </div>
