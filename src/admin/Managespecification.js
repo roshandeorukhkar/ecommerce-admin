@@ -147,7 +147,7 @@ const Managespecification = () => {
       products.forEach((item) => {
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
-        item['Action'] = getButtons(item);
+        item['action'] = getButtons(item);
         productsList.push(item);
       });
 
@@ -156,7 +156,6 @@ const Managespecification = () => {
             {/* {deleteMessage()} */}
             {redirectUser()}
             <div className='row'>
-                {/* <div className='col-md-8'><h4 className="box-title">Total List of Specification {products.length}</h4></div> */}
                 <div className='col-md-12'><button type="submit" className="btn  btn-outline btn-danger fa-pull-right" title="Remove all data"><i className="fa fa-trash-o"></i> ALL </button></div>
             </div>
             <hr></hr>

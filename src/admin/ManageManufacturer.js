@@ -219,8 +219,7 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                 {/* <button className="btn btn-danger" onClick={() => destroyAll(manufacture._id)}> All delete </button> */}
-                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList}/>
+                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList} />
             </div>
         </div>
     );  

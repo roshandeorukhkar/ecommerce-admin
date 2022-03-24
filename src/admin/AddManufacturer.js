@@ -29,12 +29,7 @@ const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
     createManufacturer({ manufacturerName, description}).then(data => {
-        //console.log("-----",data)
-        // if (data.error) {
-        //     errormanufacturerName: data.errors.manufacturerName,
-        //     NotificationManager.error('Manufacter name already exits!');
-        //     setValues({ ...values, error: data.error, success: false });
-        // } 
+       
         if (data.status == false) {
             setValues({
               ...values,
@@ -52,13 +47,14 @@ const clickSubmit = event => {
                 description: '',
                 error: '',
                // success: true,
+               NotificationManager:false,
                 redirectToProfile: false
             });
-            NotificationManager.success('Manufacter has been added successfully!');
+            NotificationManager.success('');
+            NotificationManager.success('Manufacter has been added successfully!.....................1');
             setTimeout(function(){                
                 setValues({
                     ...values,
-                    NotificationManager:true, 
                     redirectToProfile:true
                     
                 })

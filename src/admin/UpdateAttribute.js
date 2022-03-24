@@ -105,7 +105,6 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                     dimension:data.dimension,
                     description:data.description,
                     errorsAttributeName:'',
-                    errorsAttributeValue:'',
                     error: false,
                     success: true,
                     redirectToProfile: false
@@ -129,22 +128,24 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                 <input onChange={handleChange('attributeName')} type="text" placeholder='Enter Attribute' className="form-control" value={attributeName} attributeName="attributeName" />
                 <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
-            {/* <div className="form-group col-sm-7">
+            <div className="form-group col-sm-7">
                 <h6><b><span style={{color:'red'}}>*</span> Attribute value</b></h6>
-                <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} dimension="dimension" />
-                <span className='error text-danger'>{values.errorsAttributeValue}</span>
-            </div> */}
+    
+            </div>
                          {inputList.map((x, i) => {
                                 return (
-                                    <div className="form-group">
+                                    <>
+                                       <div className="form-group"> 
                                             <div className='col-lg-7'>
-                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={dimension} onChange={e => handleInputChange(e, i)}  />
+                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={dimension[i]} onChange={e => handleInputChange(e, i)} dimension="dimension" />
                                             </div>
                                             <div className='form-group col-lg-1'>
                                                 {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
                                                 {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
                                             </div>
                                         </div>
+                                    </>
+                                 
                                     );
                             })}
 
