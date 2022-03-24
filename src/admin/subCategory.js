@@ -129,7 +129,7 @@ const SubCategory = ({ match }) => {
    const getButtons = (category) => {
      return (
          <div>
-             <Link to={`/admin/category/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
+             <Link to={`/admin/subcategory/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
              <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(category._id)}><i className='fa fa-trash-o font-15'></i></button>
          </div>
      )
