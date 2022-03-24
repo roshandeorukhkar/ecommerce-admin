@@ -75,7 +75,7 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
     }, []);
 
     const handleChange = attributeName => event => {
-        setValues({ ...values, error: false, [attributeName]: event.target.value });
+        setValues({ ...values, error: false, [attributeName]: event.target.value, errorsAttributeName:''});
     };
 
     const handleChange_des = description => event => {
@@ -129,7 +129,7 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                 <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
             <div className="form-group col-sm-7">
-                <h6><b><span style={{color:'red'}}>*</span> Attribute value</b></h6>
+                <h6><b> Attribute value</b></h6>
     
             </div>
                          {inputList.map((x, i) => {

@@ -51,7 +51,7 @@ const { attributeName,dimension, description, success, error, redirectToProfile 
     //end multiple
 
 const handleChange = attributeName => event => {
-    setValues({ ...values, error: false, [attributeName]: event.target.value });
+    setValues({ ...values, error: false, [attributeName]: event.target.value, errorsAttributeName:'' });
 };
 
 const clickSubmit = event => {

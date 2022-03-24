@@ -42,7 +42,7 @@ const UpdateManufacturer = ({ match }) => {
     }, []);
 
     const handleChange = manufacturerName => event => {
-        setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+        setValues({ ...values, error: false, [manufacturerName]: event.target.value, errormanufacturerName:'' });
     };
 
     const handleChange_des = description => event => {

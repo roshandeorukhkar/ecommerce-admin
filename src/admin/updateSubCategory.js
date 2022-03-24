@@ -48,7 +48,7 @@ const UpdateSubCategory = ({ match }) => {
     }, []);
 
     const handleChange = name => event => {
-        setValues({ ...values, error: false, [name]: event.target.value });
+        setValues({ ...values, error: false, [name]: event.target.value, errorsCategories:'' });
     };
 
 
@@ -67,7 +67,7 @@ const UpdateSubCategory = ({ match }) => {
                   ...values,
                   errorsCategories: data.errors.name,
                 });
-                NotificationManager.error(data.message);
+               // NotificationManager.error(data.message);
               } 
             else {
                 setValues({
@@ -145,7 +145,7 @@ const UpdateSubCategory = ({ match }) => {
            <div className="container-fluid">
                <div className='row'>
                    <div className='col-md-8'><h4 className="font-bold"> Edit Category</h4></div>
-                   <div className='col-md-4'><Link to={`/admin/Manucategory`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                   <div className='col-md-4'><Link to={`/admin/category/subupdate/${subcategory}`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                </div>
                    <div className="white-box">
                        <div className="row">

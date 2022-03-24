@@ -22,7 +22,7 @@ const [values, setValues] = useState({
 const { manufacturerName, description, success, error, redirectToProfile } = values;
 
 const handleChange = manufacturerName => event => {
-    setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+    setValues({ ...values, error: false, [manufacturerName]: event.target.value, errormanufacturerName:'' });
 };
 
 const clickSubmit = event => {
@@ -50,8 +50,8 @@ const clickSubmit = event => {
                NotificationManager:false,
                 redirectToProfile: false
             });
-            NotificationManager.success('');
-            NotificationManager.success('Manufacter has been added successfully!.....................1');
+           // NotificationManager.success('');
+            NotificationManager.success('Manufacter has been added successfully!');
             setTimeout(function(){                
                 setValues({
                     ...values,

@@ -43,7 +43,7 @@ const UpdateCategory = ({ match }) => {
     }, []);
 
     const handleChange = name => event => {
-        setValues({ ...values, error: false, [name]: event.target.value });
+        setValues({ ...values, error: false, [name]: event.target.value, errorsCategories:'' });
     };
 
 
@@ -62,7 +62,7 @@ const UpdateCategory = ({ match }) => {
                   ...values,
                   errorsCategories: data.errors.name,
                 });
-                NotificationManager.error(data.message);
+               // NotificationManager.error(data.message);
               } 
             else {
                 setValues({
