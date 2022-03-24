@@ -139,7 +139,7 @@ const UpdateCategory = ({ match }) => {
            <div className="container-fluid">
                <div className='row'>
                    <div className='col-md-8'><h4 className="font-bold"> Edit Category</h4></div>
-                   <div className='col-md-4'><Link to={`/admin/manufacturers`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                   <div className='col-md-4'><Link to={`/admin/Manucategory`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                </div>
                    <div className="white-box">
                        <div className="row">
