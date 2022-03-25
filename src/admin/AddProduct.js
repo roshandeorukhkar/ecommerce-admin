@@ -2,95 +2,86 @@ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createProduct, getCategories, Specification, getAttributes } from './apiAdmin';
+import { createProduct, getCategories, getAttributes, Specification } from './apiAdmin';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { Redirect } from 'react-router-dom';
 
-const AddProduct = () => {
+    const AddProduct = () => {
     const [values, setValues] = useState({
         name: '',
         errorname: '',
         description: '',
         attribute:'',
+        categoryval:'',
+        attributeval:'',
         price: '',
         errorprice:'',
-        categories: [],
         category: '',
-        specifications:'',
         shipping: '',
         quantity: '',
         height:'',
         width:'',
         leanth:'',
         photo: '',
-        loading: false,
         error: '',
         createdProduct: '',
         redirectToProfile: false,
-        formData: ''
+        formData:new FormData()
     });
-
+    
+    const [attributess , setAttributess] = useState([]);
+    const [categories , setCategories] = useState([]);
+    const [specifications , setSpecification] = useState([]);
     const { user, token } = isAuthenticated();
 
-    //console.log(user._id, "login id")
-    const { name, description, price, categories, specifications, attribute, height, width, leanth, category, shipping, quantity, loading, error, createdProduct, redirectToProfile, formData } = values;
+    const { name, description, price, attribute, height, width, leanth, category, quantity, error, createdProduct, redirectToProfile, formData } = values;
 
     // load categories and set form data
     const init = () => {
         getCategories().then(data => {
             if (data.error) {
-                setValues({ ...values, error: data.error });
+                setValues( data.error);
             } else {
-                setValues({
-                    ...values,
-                    categories: data,
-                    formData: new FormData()
-                });
+                setCategories(data);
             }
         });
     };
 
-    const getSpecification = () => {
-        Specification().then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } else {
-                setValues({
-                    ...values,
-                    categories: data,
-                    formData: new FormData()
-                });
-            }
-        });
-    };
-
-    const attributess = () => {
+    const listOfAttributes = () => {
         getAttributes().then(data => {
             if (data.error) {
-                console.log(data.error);
+                console.log({ ...values, error: data.error });
             } else {
-                setValues({
-                    ...values,
-                    categories: data,
-                    formData: new FormData()
-                });
+                setAttributess(data);
+            }
+        });
+    };
+
+    const listOfSpecification = () => {
+        Specification().then(data => {
+            if (data.error) {
+                console.log({ ...values, error: data.error });
+            } else {
+                setSpecification(data);
             }
         });
     };
 
     useEffect(() => {
-        getSpecification();
         init();
-        attributess();
+        listOfAttributes();
+        listOfSpecification();
     }, []);
 
     const handleChange = name => event => {
+    console.log(name, "name");
         const value = name === 'photo' ? event.target.files[0] : event.target.value;
-        formData.set(name, value);
+       formData.set(name, value);
         setValues({ ...values, [name]: value });
     };
 
     const clickSubmit = event => {
         event.preventDefault();
-       // setValues({ ...values, error: '', loading: true });
         setValues({ ...values, error: false });
 
         createProduct(token, formData).then(data => {
@@ -98,22 +89,28 @@ const AddProduct = () => {
                 setValues({
                   ...values,
                   errorname: data.errors.name,
-                  errorprice: data.errors.price,
                 });
-               // NotificationManager.error(data.message);
               } 
             else {
                 setValues({
                     ...values,
                     name: '',
+                    errorname:'',
                     description: '',
                     photo: '',
                     price: '',
                     attribute:'',
                     quantity: '',
-                    loading: false,
+                    redirectToProfile: false,
                     createdProduct: data.name
                 });
+                NotificationManager.success('Product has been added successfully!');
+                setTimeout(function(){                
+                    setValues({
+                        ...values,
+                        redirectToProfile:true  
+                    })
+                },1000)
             }
         });
     };
@@ -137,12 +134,11 @@ const AddProduct = () => {
             <div className="form-group">
                 <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
                 <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
-                <span className='error text-danger'>{values.errorprice}</span>
             </div>
 
             <div className="form-group">
                 <h6><b> Category</b></h6>
-                <select onChange={handleChange('category')} className="form-control">
+                <select onChange={handleChange('category')} className="form-control" value={category}>
                     <option>Please select</option>
                     {categories &&
                         categories.map((c, i) => (
@@ -155,10 +151,10 @@ const AddProduct = () => {
 
             <div className="form-group">
                 <h6><b> Attribute</b></h6>
-                <select onChange={handleChange('attribute')} className="form-control">
+                <select onChange={handleChange('attribute')} className="form-control" value={attribute}>
                     <option>Please select</option>
-                    {categories &&
-                        categories.map((a, i) => (
+                    {attributess &&
+                        attributess.map((a, i) => (
                             <option key={i} value={a._id}>
                                 {a.attributeName }
                             </option>
@@ -172,12 +168,6 @@ const AddProduct = () => {
                     <option>Please select</option>
                     <option value="0">No</option>
                     <option value="1">Yes</option>
-                    {specifications &&
-                        specifications.map((s, i) => (
-                            <option key={i} value={s._id}>
-                                {s.manufacturerName}
-                            </option>
-                    ))}
                 </select>
             </div>
 
@@ -185,8 +175,12 @@ const AddProduct = () => {
                 <h6><b> specification</b></h6>
                 <select onChange={handleChange('specification')} className="form-control">
                     <option>Please select</option>
-                    <option value="0">8 Gb</option>
-                    <option value="1">Color</option>
+                    {specifications &&
+                        specifications.map((s, i) => (
+                            <option key={i} value={s._id}>
+                                {s.manufacturerName }
+                            </option>
+                        ))}
                 </select>
             </div>
 
@@ -236,24 +230,11 @@ const AddProduct = () => {
         </div>
     );
 
-    const showError = () => (
-        <div className="alert alert-danger" style={{ display: error ? '' : 'none' }}>
-            {error}
-        </div>
-    );
-
-    const showSuccess = () => (
-        <div className="alert alert-info" style={{ display: createdProduct ? '' : 'none' }}>
-            <h2>{`${createdProduct}`} is created!</h2>
-        </div>
-    );
-
-    const showLoading = () =>
-        loading && (
-            <div className="alert alert-success">
-                <h2>Loading...</h2>
-            </div>
-        );
+    const redirectUser = () => {
+        if(redirectToProfile) {
+            return <Redirect to="/admin/productlist" />;
+         }  
+    };
 
     return (
         <div id="wrapper">
@@ -264,9 +245,9 @@ const AddProduct = () => {
                     <div className="white-box">
                         <div className="row">
                                 <div className="col-md-7 offset-md-2">
-                                    {showLoading()}
-                                    {/* {showSuccess()} */}
-                                    {showError()}
+
+                                    <NotificationContainer/>
+                                    {redirectUser()}
                                     {newPostForm()}
                                 </div>
                          </div>
