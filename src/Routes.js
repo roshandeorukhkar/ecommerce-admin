@@ -40,6 +40,8 @@ import Manucategory from './admin/Manucategory';
 import AddCategory from './admin/AddCategory';
 
 import AllUser from './userManagement/AllUser';
+import SliderManagement from './setting/SliderManagement';
+import AddEditSlider from './setting/AddEditSlider';
 
 const Routes = () => {
     return (
@@ -80,6 +82,8 @@ const Routes = () => {
                 <AdminRoute path="/admin/rolemanagement/edit/:storeId/:userRoleId" exact component={RoleManagement} />
                 <AdminRoute path="/admin/user/list/:storeid" exact component={AllUser} />
                 <AdminRoute path="/admin/productlist" exact component={ListProduct} />
+                <AdminRoute path="/admin/slider" exact component={SliderManagement} />
+                <AdminRoute path="/admin/create/slider" exact component={AddEditSlider} />
 
             </Switch>
         </BrowserRouter>

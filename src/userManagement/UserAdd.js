@@ -41,7 +41,11 @@ const loadUser = () => {
 };
  
 const handleChange = email => event => {
-    setValues({ ...values, error: false, [email]: event.target.value });
+    setValues({ ...values, error: false, [email]: event.target.value,
+        nameError: '',
+        mobileError:'',
+        emailError:'',
+        passwordError:'' });
 };
 
 const clickSubmit = event => {

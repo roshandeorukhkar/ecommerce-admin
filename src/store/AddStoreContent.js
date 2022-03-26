@@ -10,7 +10,6 @@ const AddStoreContent = (props) =>{
     },[props.value])
 
     return(
-        <>
             <div className={`form-group col-md-6 ${props.name}`} id={`${props.name}`} >
                 <label className="col-md-12 lable">{props.label}<span className='text-danger'>*</span></label>
                 <div className="col-md-12">
@@ -24,7 +23,6 @@ const AddStoreContent = (props) =>{
                    <span className='error text-danger'>{props.errorSpan}</span> 
                 </div>
             </div>
-        </>
     )
 }   
 
