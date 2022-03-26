@@ -5,12 +5,15 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
-import { Link } from "react-router-dom";
+import { Link , useParams} from "react-router-dom";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
-const UpdateCategory = ({ match }) => {
+const UpdateSubCategory = ({ match }) => {
+    const params = useParams();
+    console.log(params.categoryId,"aidsfsdf")
     const [values, setValues] = useState({
         name: '',
+        subcategory:'',
         description:'',
         errorsCategories:'',
         error: '',
@@ -21,7 +24,7 @@ const UpdateCategory = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { name, description, error, redirectToProfile ,success } = values;
+    const { name, description, subcategory, error, redirectToProfile ,success } = values;
 
     const init = categoryId => {
         getCategory(categoryId).then(data => {
@@ -32,7 +35,9 @@ const UpdateCategory = ({ match }) => {
                 setValues({
                     ...values,
                     name: data.name,
-                    description:data.description
+                    description:data.description,
+                    subcategory:data.subcategory
+
                 });
             }
         });
@@ -123,8 +128,9 @@ const UpdateCategory = ({ match }) => {
 
     const redirectUser = () => {
         if (redirectToProfile) {
-            if (!error) {
-                return <Redirect to="/admin/Manucategory" />;
+            if (!error) { 
+              //  return <Redirect to='admin/category/subupdate/${storeId}' />;
+                return <Redirect to={`/admin/category/subupdate/${subcategory}`} />;
             }
         }
     };
@@ -139,7 +145,7 @@ const UpdateCategory = ({ match }) => {
            <div className="container-fluid">
                <div className='row'>
                    <div className='col-md-8'><h4 className="font-bold"> Edit Category</h4></div>
-                   <div className='col-md-4'><Link to={`/admin/Manucategory`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                   <div className='col-md-4'><Link to={`/admin/category/subupdate/${subcategory}`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                </div>
                    <div className="white-box">
                        <div className="row">
@@ -160,4 +166,4 @@ const UpdateCategory = ({ match }) => {
     );
 };
 
-export default UpdateCategory;
+export default UpdateSubCategory;

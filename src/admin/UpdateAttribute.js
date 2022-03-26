@@ -8,6 +8,8 @@ import AdminSidebar from "../user/AdminSidebar";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const UpdateAttribute = ({ match }) => {
+const [inputList, setInputList] = useState([{ specification: "" }]);
+
     const [values, setValues] = useState({
         manufacturerName: '',
         description:'',
@@ -36,16 +38,44 @@ const UpdateAttribute = ({ match }) => {
                     dimension:data.dimension,
                     description: data.description
                 });
+                setInputList(data.dimension);
             }
         });
     };
+
+    //add multiple
+    // handle input change
+    const handleInputChange = (e, index) => {
+        const { name, value } = e.target;
+        //console.log("value",value);
+        //console.log("value",index);
+        const list = [...inputList];
+        //const sList = [];
+        list[index] = value;
+        //sList.push(list);
+        setInputList(list);
+        setValues({ ...values, dimension: list });
+    };
+
+    // handle click event of the Remove button
+    const handleRemoveClick = index => {
+        const list = [...inputList];
+        list.splice(index, 1);
+        setInputList(list);
+    };
+
+    // handle click event of the Add button
+    const handleAddClick = () => {
+        setInputList([...inputList, { dimension: "" }]);
+    };
+    //end multiple
 
     useEffect(() => {
         init(match.params.attributeId);
     }, []);
 
     const handleChange = attributeName => event => {
-        setValues({ ...values, error: false, [attributeName]: event.target.value });
+        setValues({ ...values, error: false, [attributeName]: event.target.value, errorsAttributeName:''});
     };
 
     const handleChange_des = description => event => {
@@ -75,7 +105,6 @@ const UpdateAttribute = ({ match }) => {
                     dimension:data.dimension,
                     description:data.description,
                     errorsAttributeName:'',
-                    errorsAttributeValue:'',
                     error: false,
                     success: true,
                     redirectToProfile: false
@@ -100,17 +129,33 @@ const UpdateAttribute = ({ match }) => {
                 <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
             <div className="form-group col-sm-7">
-                <h6><b><span style={{color:'red'}}>*</span> Attribute value</b></h6>
-                <input onChange={handleChange('dimension')} type="text" placeholder='Enter value' className="form-control" value={dimension} dimension="dimension" />
-                <span className='error text-danger'>{values.errorsAttributeValue}</span>
+                <h6><b> Attribute value</b></h6>
+    
             </div>
-            <div className="form-group col-sm-7">
-               <h6><b>Attribute Description</b></h6>
-                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
-            </div>
-            <div className="form-group col-md-7">
-            <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
-            </div>
+                         {inputList.map((x, i) => {
+                                return (
+                                    <>
+                                       <div className="form-group"> 
+                                            <div className='col-lg-7'>
+                                                <input name="dimension" className="form-control" placeholder="Enter Values" value={dimension[i]} onChange={e => handleInputChange(e, i)} dimension="dimension" />
+                                            </div>
+                                            <div className='form-group col-lg-1'>
+                                                {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
+                                                {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
+                                            </div>
+                                        </div>
+                                    </>
+                                 
+                                    );
+                            })}
+
+                            <div className="form-group col-sm-7">
+                                <h6><b>Attribute Description</b></h6>
+                                <textarea onChange={handleChange_des('description')} rows="4" className="form-control" placeholder='Description' value={description} description="description"  />
+                            </div>
+                        <div className="form-group col-md-7">
+                             <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
+                        </div>
         </form>
         </div>
     );
@@ -138,8 +183,6 @@ const UpdateAttribute = ({ match }) => {
         }
     };
 
-   
-
     return (
             <div className="row">
                  <AdminHeader />
@@ -147,7 +190,7 @@ const UpdateAttribute = ({ match }) => {
                  <div className="page-wrapper">
                     <div className="container-fluid">
                         <div className='row'>
-                            <div className='col-md-8'><h3 className="font-bold"> Add Attribute</h3></div>
+                            <div className='col-md-8'><h3 className="font-bold"> Edit Attribute</h3></div>
                             <div className='col-md-4'><Link to={`/admin/attribute`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                         </div>
                             <div className="white-box">

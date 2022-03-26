@@ -129,7 +129,7 @@ const SubCategory = ({ match }) => {
    const getButtons = (category) => {
      return (
          <div>
-             <Link to={`/admin/category/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
+             <Link to={`/admin/subcategory/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
              <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(category._id)}><i className='fa fa-trash-o font-15'></i></button>
          </div>
      )
@@ -170,11 +170,18 @@ const SubCategory = ({ match }) => {
             <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
+                <div className='row'>
+                        <div className='col-md-8'><p id="hedingTitle"> SubCategory List </p></div>
+                        <div className='col-md-4'><Link to={`/admin/Manucategory`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                     </div>
                    <div className="white-box">
+                  
                        <div className="row">
+                           
                             {deleteMessage()}
                             {redirectUser()}
                             <div className="col-12">
+                                
                                  <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/> 
                             </div>
                         </div>

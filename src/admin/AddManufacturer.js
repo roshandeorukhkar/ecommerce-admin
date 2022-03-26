@@ -22,25 +22,22 @@ const [values, setValues] = useState({
 const { manufacturerName, description, success, error, redirectToProfile } = values;
 
 const handleChange = manufacturerName => event => {
-    setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+    setValues({ ...values, error: false, [manufacturerName]: event.target.value, errormanufacturerName:'' });
 };
 
 const clickSubmit = event => {
     event.preventDefault();
     setValues({ ...values, error: false });
     createManufacturer({ manufacturerName, description}).then(data => {
-        //console.log("-----",data)
-        // if (data.error) {
-        //     errormanufacturerName: data.errors.manufacturerName,
-        //     NotificationManager.error('Manufacter name already exits!');
-        //     setValues({ ...values, error: data.error, success: false });
-        // } 
+       
         if (data.status == false) {
             setValues({
               ...values,
               errormanufacturerName: data.errors.manufacturerName,
+              
             });
            // NotificationManager.error(data.message);
+           
           } 
         else {
             setValues({
@@ -50,8 +47,10 @@ const clickSubmit = event => {
                 description: '',
                 error: '',
                // success: true,
+               NotificationManager:false,
                 redirectToProfile: false
             });
+           // NotificationManager.success('');
             NotificationManager.success('Manufacter has been added successfully!');
             setTimeout(function(){                
                 setValues({
@@ -59,7 +58,7 @@ const clickSubmit = event => {
                     redirectToProfile:true
                     
                 })
-               
+               // NotificationManager.success('Manufacter has been added successfully!');
             },1000)
         }
     });

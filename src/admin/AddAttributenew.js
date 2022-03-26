@@ -30,11 +30,11 @@ const { attributeName,dimension, description, success, error, redirectToProfile 
         //console.log("value",value);
         //console.log("value",index);
         const list = [...inputList];
-        const sList = [];
+       // const sList = [];
         list[index] = value;
-        sList.push(list);
+        //sList.push(list);
         setInputList(list);
-        setValues({ ...values, dimension: sList });
+        setValues({ ...values, dimension: list });
     };
 
     // handle click event of the Remove button
@@ -51,7 +51,7 @@ const { attributeName,dimension, description, success, error, redirectToProfile 
     //end multiple
 
 const handleChange = attributeName => event => {
-    setValues({ ...values, error: false, [attributeName]: event.target.value });
+    setValues({ ...values, error: false, [attributeName]: event.target.value, errorsAttributeName:'' });
 };
 
 const clickSubmit = event => {
@@ -135,7 +135,7 @@ return(
                                                 <span className='error text-danger'>{values.errorsAttributeName}</span>
                                             </div>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b> Attributes Values</b><span style={{color:'red'}}>*</span></h6>
+                                                <h6><b> Attributes Values</b></h6>
                                                 {/* <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
                                                 <span className='error text-danger'>{values.errorsAttributeValue}</span> */}
                                             </div>

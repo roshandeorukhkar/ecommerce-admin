@@ -23,6 +23,7 @@ const ManageProducts = () => {
         });
     };
 
+
     const destroy = productId => {
         deleteProduct(productId).then(data => {
             if (data.error) {

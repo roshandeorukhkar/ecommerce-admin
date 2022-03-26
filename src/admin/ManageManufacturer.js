@@ -70,6 +70,29 @@ const ManageManufacturer = () => {
         });
     };
 
+    const destroyAll = manufacturerId => {
+
+        
+        deleteManufacturer(manufacturerId).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadProducts();
+                setValues({
+                    ...values,
+                    success:true,
+                    redirectToProfile: false
+                });
+                setTimeout(function(){
+                    setValues({
+                        ...values,
+                        redirectToProfile:true
+                    })
+                },1000)
+            }
+        });
+    };
+
     const status = manufacturerId => {
         const manufactures = {
             manufacturerName: 0,
@@ -127,27 +150,27 @@ const ManageManufacturer = () => {
             hidden: true
         },
         {
-        dataField: 'manufacturerName',
-        text: 'Manufacturer Name',
-        sort: true
+           dataField: 'manufacturerName',
+            text: 'Manufacturer Name',
+            sort: true
         }, 
         {
-        dataField: 'description',
-        text: 'Description',
-        sort: true
+            dataField: 'description',
+            text: 'Description',
+            sort: true
         }, 
         {
-        dataField: 'createdAt',
-        text: 'Date',
-        sort: true
+            dataField: 'createdAt',
+            text: 'Date',
+            sort: true
         }, 
         {
-        dataField: 'status',
-        text: 'Status'
+            dataField: 'status',
+            text: 'Status'
         }, 
         {
-        dataField: 'action',
-        text: 'action'
+            dataField: 'action',
+            text: 'action'
       }];
 
       const getButtons = (manufacture) => {
@@ -196,7 +219,7 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList}/>
+                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList} />
             </div>
         </div>
     );  

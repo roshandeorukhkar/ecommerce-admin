@@ -23,7 +23,7 @@ const [values, setValues] = useState({
 const { name, success,description, categories, subcategory, error, redirectToProfile } = values;
 
 const handleChange = name => event => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+    setValues({ ...values, error: false, [name]: event.target.value, errorsCategories:'' });
 };
 
 const clickSubmit = event => {

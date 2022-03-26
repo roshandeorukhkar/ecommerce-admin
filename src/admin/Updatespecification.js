@@ -47,11 +47,11 @@ const Updatespecification = ({ match }) => {
     }, []);
 
     const handleChange = manufacturerName => event => {
-        setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+        setValues({ ...values, error: false, [manufacturerName]: event.target.value, errorsSpecificationName:'' });
     };
 
     const handleChange_type = specification_type => event => {
-        setValues({ ...values, error: false, [specification_type]: event.target.value });
+        setValues({ ...values, error: false, [specification_type]: event.target.value, errorsSpecificationValue:'' });
     };
 
     const handleChange_des = description => event => {
@@ -72,7 +72,7 @@ const Updatespecification = ({ match }) => {
                   errorsSpecificationName: data.errors.manufacturerName,
                   errorsSpecificationValue:data.errors.specification_type,
                 });
-                NotificationManager.error(data.message);
+               // NotificationManager.error(data.message);
               } 
             else {
                 setValues({

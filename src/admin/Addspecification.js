@@ -25,7 +25,7 @@ const Addspecification = () => {
     const { manufacturerName, specification_type, description, success, error, redirectToProfile } = values;
 
     const handleChange = manufacturerName => event => {
-        setValues({ ...values, error: false, [manufacturerName]: event.target.value });
+        setValues({ ...values, error: false, [manufacturerName]: event.target.value, errorsSpecificationName:'', errorsSpecificationValue:''  });
     };
 
     const clickSubmit = event => {
