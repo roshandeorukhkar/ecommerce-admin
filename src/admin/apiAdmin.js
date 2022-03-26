@@ -347,14 +347,13 @@ export const getProducts = () => {
 };
 
 export const deleteProduct = (productId) => {
-    return fetch(`${API}/products/${productId}`, {
+    return fetch(`${API}/product/${productId}/`, {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            //Authorization: `Bearer ${token}`
+           // Authorization: `Bearer ${token}`
         }
-        
     })
         .then(response => {
             return response.json();

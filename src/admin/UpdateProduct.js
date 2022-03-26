@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getProduct, getCategories, updateProduct } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const UpdateProduct = ({ match }) => {
     const [values, setValues] = useState({
@@ -16,7 +17,6 @@ const UpdateProduct = ({ match }) => {
         shipping: '',
         quantity: '',
         photo: '',
-        loading: false,
         error: false,
         createdProduct: '',
         redirectToProfile: false,
@@ -85,11 +85,17 @@ const UpdateProduct = ({ match }) => {
                     photo: '',
                     price: '',
                     quantity: '',
-                    loading: false,
                     error: false,
-                    redirectToProfile: true,
+                    redirectToProfile: false,
                     createdProduct: data.name
                 });
+                NotificationManager.success('Product has been Update successfully!');
+                setTimeout(function(){                
+                    setValues({
+                        ...values,
+                        redirectToProfile:true  
+                    })
+                },1000)
             }
         });
     };
@@ -145,7 +151,8 @@ const UpdateProduct = ({ match }) => {
                 <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
             </div>
 
-            <button className="btn btn-outline-primary">Update Product</button>
+            <button className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Update </button>
+        
         </form>
     );
 
@@ -186,7 +193,9 @@ const UpdateProduct = ({ match }) => {
                         <div className="row">
                             <div className="col-md-8 offset-md-2">
                                 {showLoading()}
-                                {showSuccess()}
+                                {/* {showSuccess()} */}
+                                <NotificationContainer/>
+
                                 {showError()}
                                 {newPostForm()}
                                 {redirectUser()}
