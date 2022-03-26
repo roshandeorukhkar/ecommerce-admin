@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createProduct, getCategories, getAttributes, Specification } from './apiAdmin';
+import { createProduct, getCategories, getAttributes, Specification, getManufacturers } from './apiAdmin';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 
@@ -32,6 +32,7 @@ import { Redirect } from 'react-router-dom';
     const [attributess , setAttributess] = useState([]);
     const [categories , setCategories] = useState([]);
     const [specifications , setSpecification] = useState([]);
+    const [manufactures , setManufactures] = useState([]);
     const { user, token } = isAuthenticated();
 
     const { name, description, price, attribute, height, width, leanth, category, quantity, error, createdProduct, redirectToProfile, formData } = values;
@@ -67,10 +68,21 @@ import { Redirect } from 'react-router-dom';
         });
     };
 
+    const listOfManufacter = () => {
+        getManufacturers().then(data => {
+            if (data.error) {
+                console.log({ ...values, error: data.error });
+            } else {
+                setManufactures(data);
+            }
+        });
+    };
+
     useEffect(() => {
         init();
         listOfAttributes();
         listOfSpecification();
+        listOfManufacter();
     }, []);
 
     const handleChange = name => event => {
@@ -177,6 +189,19 @@ import { Redirect } from 'react-router-dom';
                     <option>Please select</option>
                     {specifications &&
                         specifications.map((s, i) => (
+                            <option key={i} value={s._id}>
+                                {s.manufacturerName }
+                            </option>
+                        ))}
+                </select>
+            </div>
+
+            <div className="form-group">
+                <h6><b> Manufacturer </b></h6>
+                <select onChange={handleChange('manufactures')} className="form-control">
+                    <option>Please select</option>
+                    {manufactures &&
+                        manufactures.map((s, i) => (
                             <option key={i} value={s._id}>
                                 {s.manufacturerName }
                             </option>
