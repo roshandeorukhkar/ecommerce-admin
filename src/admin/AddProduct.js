@@ -128,12 +128,12 @@ import { Redirect } from 'react-router-dom';
     };
 
     const newPostForm = () => (
-        <div className="col-lg-12">
-        <form>
-            <h6><b> Photo</b></h6>
+     <div className="col-lg-12">
+        <form> 
             <div className="form-group">
+                    <h6><b> Photo</b></h6>
                 <label className="btn btn-secondary">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple />
+                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple  />
                 </label>
             </div>
 
