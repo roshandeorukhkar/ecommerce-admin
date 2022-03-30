@@ -119,7 +119,7 @@ const AllUser = () =>{
                         <div className='row'>
                             <div className='col-md-8'><p id="hedingTitle"> User Management </p></div>
                             <div className='col-md-4'><p> 
-                            <Link to={`/admin/create/users/${params.storeid}`} className="btn btn-outline btn-info fa-pull-right addButton"> add User </Link>
+                            <Link to={`/admin/create/users/${params.storeid}`} className="btn btn-outline btn-info fa-pull-right addButton"> Add User </Link>
                             <Link to="/admin/storemanagement" className="btn  btn-outline btn-info fa-pull-right m-r-5 addButton"> <i className="fa fa-backward"></i> Back</Link>
                              </p></div>
                         </div>
