@@ -127,7 +127,7 @@ return(
                                                     {categories &&
                                                         categories.map((c, i) => (
                                                             <>
-                                                            {c.subcategory == '' ?(
+                                                            {c.subcategory == '' && !c.deletedAt ?(
                                                                 <option key={i} value={c._id}>
                                                                 {c.name}
                                                             </option>
