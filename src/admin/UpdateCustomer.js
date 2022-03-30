@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { getCust, updateCustomer } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const UpdateCustomer = ({ match }) => {
     const [values, setValues] = useState({
@@ -68,12 +69,13 @@ const UpdateCustomer = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
+                NotificationManager.success('Category has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
     };
@@ -135,6 +137,7 @@ const UpdateCustomer = ({ match }) => {
                             <div className="white-box">
                                 <div className="row">
                                     <div className="col-lg-12">
+                                        <NotificationContainer/>
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
                                             {showSuccess()}
                                             {showError()}

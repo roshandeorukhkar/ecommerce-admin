@@ -72,13 +72,13 @@ const UpdateCategory = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Category has been Updated successfully!');
+                NotificationManager.success('Category has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
     };

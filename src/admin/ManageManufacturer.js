@@ -5,6 +5,8 @@ import { deleteManufacturer, getManufacturers, deleteManufacturer1, statusManfac
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const ManageManufacturer = () => {
     
@@ -32,21 +34,22 @@ const ManageManufacturer = () => {
         });
     };
     const destroy1 = productId => {
-       
-        const category = {
-           // manufacturerName: productId,
-            manufacturerName: new Date(),
-        };
-        deleteManufacturer1(productId, category).then(data => {
-            if (data.error) {
-                
-                console.log(data.error);
-            } else {
-                alert('Are you soure you wont delete record!');
-                //console.log("test abc", manufacturerName);
-                loadProducts();
-            }
-        });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const category = {
+            // manufacturerName: productId,
+                manufacturerName: new Date(),
+            };
+            deleteManufacturer1(productId, category).then(data => {
+                if (data.error) {
+                    
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Manufacturer has been deleted successfully!','',2000);
+                    loadProducts();
+                }
+            });
+        }
     };
 
     const destroy = manufacturerId => {
@@ -219,7 +222,8 @@ const ManageManufacturer = () => {
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
-                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList} />
+                <NotificationContainer/>
+                <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={manufactureList} />
             </div>
         </div>
     );  

@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const SubCategory = ({ match }) => {
     const params = useParams();
@@ -32,24 +33,28 @@ const SubCategory = ({ match }) => {
      };
  
      const destroy = categoryId => {
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
          deletecategory(categoryId).then(data => {
              if (data.error) {
                  console.log(data.error);
              } else {
+                NotificationManager.success('Sub category has been deleted successfully!','',2000);
                  loadProducts();
-                 setValues({
+                 /*setValues({
                      ...values,
                      success:true,
                      redirectToProfile: false
-                 });
+                 });*/
                  setTimeout(function(){
                      setValues({
                          ...values,
                          redirectToProfile:true
                      })
-                 },1000)
+                 },2000)
              }
          });
+        }
      };
  
      useEffect(() => {
@@ -168,6 +173,7 @@ const SubCategory = ({ match }) => {
         <div className="row">
             <AdminHeader />
             <AdminSidebar />
+            <NotificationContainer/>
             <div className="page-wrapper">
                 <div className="container-fluid">
                 <div className='row'>

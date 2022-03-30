@@ -4,6 +4,8 @@ import { deleteCustomer, getCoustomer, statusCustomer, statusCheckCustomer, remo
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Customer = () => {
     
@@ -45,24 +47,28 @@ const Customer = () => {
     };
 
     const remove = productId => {
-        removeCustomer(productId).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadProducts();
-                setValues({
-                    ...values,
-                    success:true,
-                    redirectToProfile: false
-                });
-                setTimeout(function(){
-                    setValues({
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            removeCustomer(productId).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Customer has been deleted successfully!','',2000);
+                    loadProducts();
+                    /*setValues({
                         ...values,
-                        redirectToProfile:true
-                    })
-                },1000)
-            }
-        });
+                        success:true,
+                        redirectToProfile: false
+                    });*/
+                    setTimeout(function(){
+                        setValues({
+                            ...values,
+                            redirectToProfile:true
+                        })
+                    },2000)
+                }
+            });
+        }
     };
 
     const status = productId => {
@@ -197,6 +203,7 @@ const Customer = () => {
             <div className="col-12">
                 {deleteMessage()}
                 {redirectUser()}
+                <NotificationContainer/>
                 <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={productsList}/> 
             </div>
         </div>
