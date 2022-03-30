@@ -4,6 +4,8 @@ import AdminLayout from '../core/AdminLayout';
 import { Link, useParams } from "react-router-dom";
 import { Switch } from '@mui/material';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const AllUser = () =>{
 
@@ -22,16 +24,18 @@ const AllUser = () =>{
     };
 
     const destroy = userId => {
-
-        console.log(userId, "user id")
-
-        deleteUser(userId).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadUser();
-            }
-        });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            //console.log(userId, "user id")
+            deleteUser(userId).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('User has been deleted successfully!','',2000);
+                    loadUser();
+                }
+            });
+        }
     };
 
     useEffect(() => {
@@ -115,12 +119,13 @@ const AllUser = () =>{
                         <div className='row'>
                             <div className='col-md-8'><p id="hedingTitle"> User Management </p></div>
                             <div className='col-md-4'><p> 
-                            <Link to={`/admin/create/users/${params.storeid}`} className="btn btn-outline btn-info fa-pull-right addButton"> add User </Link>
+                            <Link to={`/admin/create/users/${params.storeid}`} className="btn btn-outline btn-info fa-pull-right addButton"> Add User </Link>
                             <Link to="/admin/storemanagement" className="btn  btn-outline btn-info fa-pull-right m-r-5 addButton"> <i className="fa fa-backward"></i> Back</Link>
                              </p></div>
                         </div>
                         <div className="white-box">
                             <div className="row">
+                                <NotificationContainer/>
                                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/>
                             </div>
                         </div>

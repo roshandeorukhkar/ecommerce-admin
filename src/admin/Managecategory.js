@@ -5,6 +5,8 @@ import { deletecategory, getCategories ,statusCategory, statusChangeCategory, de
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Managecategory = () => {
     const [values, setValues] = useState({
@@ -47,19 +49,21 @@ const Managecategory = () => {
         //         },1000)
         //     }
         // });
-
-        const category = {
-            manufacturerName: new Date(),
-        };
-        deletecategory(categoryId, category).then(data => {
-            if (data.error) {
-                
-                console.log(data.error);
-            } else {
-                alert('Are you soure you wont delete record!');
-                loadProducts();
-            }
-        });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const category = {
+                manufacturerName: new Date(),
+            };
+            deletecategory(categoryId, category).then(data => {
+                if (data.error) {
+                    
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Category has been deleted successfully!','',2000);
+                    loadProducts();
+                }
+            });
+        }
     };
 
     const destroys = categoryId => {
@@ -203,6 +207,7 @@ const columns = [
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
+                <NotificationContainer/>
                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/>
             </div>
         </div>

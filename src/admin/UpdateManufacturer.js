@@ -76,13 +76,13 @@ const UpdateManufacturer = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Manufacter has been Updated successfully!');
+                NotificationManager.success('Manufacter has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
     };

@@ -42,31 +42,33 @@ const Managespecification = () => {
                     success:true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Specification has been deleted successfully!');
+                NotificationManager.success('Specification has been deleted successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
     };
 
     const destroySoft = productId => {
-       
-        const category = {
-            manufacturerName: new Date(),
-        };
-        deleteSpecificationSoft(productId, category).then(data => {
-            if (data.error) {
-                
-                console.log(data.error);
-            } else {
-                alert('Are you soure you wont delete record!');
-                loadProducts();
-            }
-        });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const category = {
+                manufacturerName: new Date(),
+            };
+            deleteSpecificationSoft(productId, category).then(data => {
+                if (data.error) {
+                    
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Specification has been deleted successfully!','',2000);
+                    loadProducts();
+                }
+            });
+        }
     };
 
     const status = specificationId => {

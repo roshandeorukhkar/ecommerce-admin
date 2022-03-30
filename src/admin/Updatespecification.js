@@ -85,13 +85,13 @@ const Updatespecification = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Specification has been updated successfully!');
+                NotificationManager.success('Specification has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
     };

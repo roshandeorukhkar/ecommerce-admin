@@ -101,26 +101,29 @@ const AddListRoleManagement = (props) => {
   }
 
   const deleteUserRoleDetails = (deleteId) => {
-    deleteUserRole(deleteId).then((data) => {
-      NotificationManager.error(data.message);
-      getUserRoleList();
+    if(window.confirm('Are you sure you want to delete this record?'))
+    {
+        deleteUserRole(deleteId).then((data) => {
+        NotificationManager.error(data.message,'',2000);
+        getUserRoleList();
 
-      if (params.userRoleId != undefined){
-        history.push(`/admin/rolemanagement/${values.storeId}`);
-        setValues({
-          roleName: '',
-          accessModuleId: '',
-          assingTo: '',
-          errorNotification: '',
-          errorRoleName: '',
-          errorAssingTo: '',
-          errorAccessModuleId: '',
-          userRoleId: '',
-          storeId: storeId,
-          accessModuleLabel: null
-        })
-      }
-    })
+        if (params.userRoleId != undefined){
+          history.push(`/admin/rolemanagement/${values.storeId}`);
+          setValues({
+            roleName: '',
+            accessModuleId: '',
+            assingTo: '',
+            errorNotification: '',
+            errorRoleName: '',
+            errorAssingTo: '',
+            errorAccessModuleId: '',
+            userRoleId: '',
+            storeId: storeId,
+            accessModuleLabel: null
+          })
+        }
+      })
+    }
   }
 
   const selectedOption = (event) => {
@@ -158,7 +161,7 @@ const AddListRoleManagement = (props) => {
           errorAssingTo: data.errors.assingTo,
           errorAccessModuleId: data.errors.accessModuleId,
         });
-        // NotificationManager.error(data.message);
+        NotificationManager.error(data.message,'',2000);
       } 
       else {
         setValues({
@@ -173,7 +176,7 @@ const AddListRoleManagement = (props) => {
           userRoleId: "",
           storeId: storeId
         });
-        NotificationManager.success(data.message);
+        NotificationManager.success(data.message,'',2000);
         setCheckParams(true);
         getUserRoleList();
         if (params.userRoleId != undefined) {

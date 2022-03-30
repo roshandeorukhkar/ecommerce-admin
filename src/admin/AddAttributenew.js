@@ -81,13 +81,13 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            NotificationManager.success('Attribute has been created successfully!');
+            NotificationManager.success('Attribute has been added successfully!','',2000);
             setTimeout(function(){
                 setValues({
                     ...values,
                     redirectToProfile:true
                 })
-            },3000)
+            },2000)
         }
     });
 };

@@ -51,13 +51,13 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            NotificationManager.success('Category has been add successfully!');
+            NotificationManager.success('Category has been add successfully!','',2000);
             setTimeout(function(){
                 setValues({
                     ...values,
                     redirectToProfile:true
                 })
-            },1000)
+            },2000)
         }
     });
 };
