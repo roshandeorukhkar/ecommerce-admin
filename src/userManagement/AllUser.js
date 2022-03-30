@@ -4,6 +4,8 @@ import AdminLayout from '../core/AdminLayout';
 import { Link, useParams } from "react-router-dom";
 import { Switch } from '@mui/material';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const AllUser = () =>{
 
@@ -22,16 +24,18 @@ const AllUser = () =>{
     };
 
     const destroy = userId => {
-
-        console.log(userId, "user id")
-
-        deleteUser(userId).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadUser();
-            }
-        });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            //console.log(userId, "user id")
+            deleteUser(userId).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('User has been deleted successfully!','',2000);
+                    loadUser();
+                }
+            });
+        }
     };
 
     useEffect(() => {
@@ -121,6 +125,7 @@ const AllUser = () =>{
                         </div>
                         <div className="white-box">
                             <div className="row">
+                                <NotificationContainer/>
                                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={productsList}/>
                             </div>
                         </div>

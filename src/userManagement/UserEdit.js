@@ -103,14 +103,14 @@ const UpdateUsers = ({ match }) => {
           success: true,
           redirectToProfile: false,
         });
-        NotificationManager.success("Users update successfully");
+        NotificationManager.success("User has been updated successfully", '', 2000);
 
         setTimeout(function () {
           setValues({
             ...values,
             redirectToProfile: true,
           });
-        }, 1000);
+        }, 2000);
       }
     });
   };

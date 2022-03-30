@@ -72,12 +72,14 @@ const AddListStore = () => {
     }, [checkParams]);
 
     const deleteStoreDetails = (deleteStoreId) => {
-        const deleteStoreID = deleteStoreId;
-        deleteStore(deleteStoreID).then((data) => {
-            NotificationManager.success(data.message);
-        });
-        
-        getStoreList();
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const deleteStoreID = deleteStoreId;
+            deleteStore(deleteStoreID).then((data) => {
+                NotificationManager.success(data.message,'',2000);
+            });        
+            getStoreList();
+        }
     }
 
     const getStoreList = () => {
@@ -124,7 +126,8 @@ const AddListStore = () => {
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
                 });
-                //NotificationManager.error(data.message);
+                //NotificationManager.error(data.message,'',2000);
+                NotificationManager.error('Email already exist...','',2000);
             } else {
                 setValues({
                     storeName: "",
@@ -142,7 +145,7 @@ const AddListStore = () => {
                     email: "",
                     emailError: "",
                 });
-                NotificationManager.success(data.message);
+                NotificationManager.success(data.message,'',2000);
                 getStoreList();
                 if (params.storeId != 'undefined') {
                     history.push("/admin/storemanagement")

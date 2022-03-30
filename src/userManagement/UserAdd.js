@@ -79,13 +79,13 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            NotificationManager.success("Users add successfully");
+            NotificationManager.success("User has been added successfully",'',2000);
             setTimeout(function(){
                 setValues({
                     ...values,
                     redirectToProfile:true
                 })
-            },1000)
+            },2000)
         }
     });
 };
