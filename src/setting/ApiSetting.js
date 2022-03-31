@@ -23,3 +23,16 @@ export const sliderList = data => {
         console.log("error",error)
     );
 }
+
+export const deleteSlider = id => {
+    return fetch(`${API}/deleteSlider/${id}` , {
+        "headers" : {
+            "accept" : "application/json",
+            "content-type" : "application/json"
+        },
+    }).then(response => {
+        return response.json();
+    }).catch(error =>
+            console.log("error",error)
+        );
+}

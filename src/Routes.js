@@ -86,6 +86,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/productlist" exact component={ListProduct} />
                 <AdminRoute path="/admin/slider" exact component={SliderManagement} />
                 <AdminRoute path="/admin/create/slider" exact component={AddEditSlider} />
+                <AdminRoute path="/admin/update/slider/:sliderId" exact component={AddEditSlider} />
 
             </Switch>
         </BrowserRouter>
