@@ -234,7 +234,7 @@ const AdminSidebar = () => {
                   <span className="hide-menu"> Reports</span>
                 </Link>
               </li>
-              <li>
+              {/*<li>
                 <Link
                   className="waves-effect"
                   to="#"
@@ -280,7 +280,7 @@ const AdminSidebar = () => {
                     <Link to="/admin/setting">Partner Setting</Link>{" "}
                   </li>
                 </ul>
-              </li>
+              </li>*/}
             </ul>
           </nav>
         </div>

@@ -179,10 +179,10 @@ const Managespecification = () => {
         <div className="row">
             {/* {deleteMessage()} */}
             {redirectUser()}
-            <div className='row'>
+            {/*<div className='row'>
                 <div className='col-md-12'><button type="submit" className="btn  btn-outline btn-danger fa-pull-right" title="Remove all data"><i className="fa fa-trash-o"></i> ALL </button></div>
             </div>
-            <hr></hr>
+            <hr></hr>*/}
             <div className="col-12">
                 <NotificationContainer/>
                 <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/>
