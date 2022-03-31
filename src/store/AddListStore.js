@@ -124,7 +124,6 @@ const AddListStore = () => {
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
                 });
-                //NotificationManager.error(data.message);
             } else {
                 setValues({
                     storeName: "",

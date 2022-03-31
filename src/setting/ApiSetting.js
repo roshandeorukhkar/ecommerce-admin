@@ -13,3 +13,13 @@ export const saveSlider = data => {
         console.log("error",error)
     );
 }
+
+export const sliderList = data => {
+    return fetch(`${API}/sliderList`,{
+        method: 'GET',
+    }).then(response => {
+        return response.json();
+    }).catch(error =>
+        console.log("error",error)
+    );
+}
