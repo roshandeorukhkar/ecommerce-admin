@@ -128,7 +128,6 @@ const AddListStore = () => {
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
                 });
-                //NotificationManager.error(data.message,'',2000);
                 NotificationManager.error('Email already exist...','',2000);
             } else {
                 setValues({

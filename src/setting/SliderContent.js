@@ -1,6 +1,9 @@
 import React, { useState ,useEffect } from "react";
 import FormMainTitle from "../common/FormMainTitle";
 import { saveSlider } from "./ApiSetting"; 
+import { Redirect } from 'react-router-dom';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 const SliderContent = () => {
   const [previewImg , setPreviewImg] = useState(null);
@@ -54,15 +57,45 @@ const SliderContent = () => {
 
   const handleClick = (e) =>{
     e.preventDefault();
-    console.log("hello")
     saveSlider(formData).then((data) => {
+      if(data.status == false){
+        setValues({
+          ...values,
+          imageError : data.errors.sliderError
+        })
+      }else{
+        setValues({
+          ...values,
+          title : '',
+          link : '',
+          sequence : '',
+          image:'',
+          description:'',
+          imageError:'',
+          redirect:false,
+        })
+        NotificationManager.success(data.message);
+        setTimeout(function(){
+          setValues({
+              ...values,
+              redirect:true
+          })
+      },3000)
+      }
       console.log(data);
     })
   }
 
+  const redirectUser = () => {
+    if(redirect) {
+        return <Redirect to="/admin/slider" />;
+     }  
+};
+
   return (
     <div className="page-wrapper">
       <div className="container-fluid">
+      <NotificationContainer />
         <FormMainTitle
           title="Add Slider"
           btnName="Back"
@@ -72,6 +105,7 @@ const SliderContent = () => {
           <div className="row">
             <div className="col-lg-12">
               <form  className="form-horizontal"  id="myForm"  autoComplete="false">
+              {redirectUser()}
               <div className="form-group col-md-4 slider-preview-img">
                   <img className="img-fluid" 
                     src = { previewImg ? previewImg : "../assets/images/preview_Image.jpg" }
@@ -81,7 +115,7 @@ const SliderContent = () => {
                 <label className="col-md-12 lable">Image<span className='text-danger'>*</span></label>
                     <div className="col-md-12">
                     <input type="file" name="sliderImg" className="form-control" accept="image/*" onChange={handleChange("sliderImg")} />
-                    <span className='error text-danger'></span> 
+                    <span className='error text-danger'>{imageError}</span> 
                     </div>
                 </div>
                 <div className="form-group col-md-6" >
