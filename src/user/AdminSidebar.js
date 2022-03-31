@@ -12,7 +12,6 @@ const AdminSidebar = () => {
   const { pathname } = location;
 
   var myProductMenu = "0";
-  var settingMenu = "0";
   if (
     pathname.startsWith("/admin/productlist") ||
     pathname.startsWith("/admin/Manuspecification") ||
@@ -66,6 +65,20 @@ const AdminSidebar = () => {
       pathname.startsWith("/admin/manufacturer/update/")
     ) {
       manufacturersMenu = "1";
+    }
+  }
+
+  var settingMenu = "0";
+  if (
+    pathname.startsWith("/admin/slider")
+  ) {
+    settingMenu = "1";
+
+    var sliderMenu = "0";
+    if (
+      pathname.startsWith("/admin/slider") 
+    ) {
+      sliderMenu = "1";
     }
   }
 
@@ -234,12 +247,12 @@ const AdminSidebar = () => {
                   <span className="hide-menu"> Reports</span>
                 </Link>
               </li>
-              {/*<li>
-                <Link
+              <li>
+                <a
                   className="waves-effect"
                   to="#"
                   aria-expanded={
-                    settingSubMenu == true
+                    settingMenu == "1" || settingSubMenu == true
                       ? "true"
                       : "false"
                   }
@@ -250,37 +263,34 @@ const AdminSidebar = () => {
                   <span className="label label-rounded pull-right">
                     <i
                       className={
-                        settingSubMenu == true
+                        settingMenu == "1" || settingSubMenu == true
                           ? "icon-arrow-down"
                           : "icon-arrow-right"
                       }
                     ></i>
                   </span>
-                </Link>
+                </a>
                 <ul  aria-expanded={
-                     settingSubMenu == true
+                     settingMenu == "1" || settingSubMenu == true
                       ? "true"
                       : "false"
                   }
                   className={
-                     settingSubMenu == true
+                    settingMenu == "1" || settingSubMenu == true
                       ? "collapse in"
                       : "collapse"
                   } >
                   <li>
-                    {" "}
-                    <Link to="/admin/slider">Slider Setting</Link>{" "}
+                    <Link to="/admin/slider" className={sliderMenu == "1" ? "active" : ""} >Slider Setting</Link>
                   </li>
                   <li>
-                    {" "}
-                    <Link to="/admin/setting">Advertising Setting</Link>{" "}
+                    <Link to="/admin/setting">Advertising Setting</Link>
                   </li>
                   <li>
-                    {" "}
-                    <Link to="/admin/setting">Partner Setting</Link>{" "}
+                    <Link to="/admin/setting">Partner Setting</Link>
                   </li>
                 </ul>
-              </li>*/}
+              </li>
             </ul>
           </nav>
         </div>
