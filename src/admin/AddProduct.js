@@ -142,7 +142,7 @@ import { Redirect } from 'react-router-dom';
                     redirectToProfile: false,
                     createdProduct: data.name
                 });
-                NotificationManager.success('Product has been added successfully!...');
+                NotificationManager.success('Product has been added successfully!');
                 setTimeout(function(){                
                     setValues({
                         ...values,
