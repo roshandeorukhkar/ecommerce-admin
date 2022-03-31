@@ -5,6 +5,8 @@ import { deleteAttribute, getAttributes, deleteAttributeone ,statusAttributes ,s
 import { Switch } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const ManageAttribute = () => {
     const [values, setValues] = useState({
@@ -31,27 +33,31 @@ const ManageAttribute = () => {
     };
 
     const destroy1 = attributeId => {
-        const attribute = {
-            attributeName: new Date(),
-        };
-        deleteAttributeone(attributeId, attribute).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadProducts();
-                setValues({
-                    ...values,
-                    success:true,
-                    redirectToProfile: false
-                });
-                setTimeout(function(){
-                    setValues({
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const attribute = {
+                attributeName: new Date(),
+            };
+            deleteAttributeone(attributeId, attribute).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    loadProducts();
+                    /*setValues({
                         ...values,
-                        redirectToProfile:true
-                    })
-                },1000)
-            }
-        });
+                        success:true,
+                        redirectToProfile: false
+                    });*/
+                    NotificationManager.success('Attribute has been deleted successfully!','',2000);
+                    setTimeout(function(){
+                        setValues({
+                            ...values,
+                            redirectToProfile:true
+                        })
+                    },2000)
+                }
+            });
+        }
     };
 
     const deleteMessage = () => (
@@ -175,6 +181,7 @@ const columns = [
                 {deleteMessage()}
                 {redirectUser()}
                 <div className="col-md-12">
+                    <NotificationContainer/>
                     <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> 
                 </div>
             </div>

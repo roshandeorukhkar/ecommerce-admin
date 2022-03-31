@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { Search, CSVExport } from 'react-bootstrap-table2-toolkit';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+//https://www.npmjs.com/package/react-notifications
 
 const { SearchBar  } = Search;
 
@@ -47,9 +48,9 @@ const DataTableComponent = (props) => {
             {
                 props => (
                 <div>
-                    <div className='float-left' style={{marginBottom:'10px'}}>
+                    {/*<div className='float-left' style={{marginBottom:'10px'}}>
                         <ExportCSVButton { ...props.csvProps }>Export CSV</ExportCSVButton>
-                    </div>
+                    </div>*/}
                     {/* <button className='btn btn-info' style={{float:'right', borderRadius:'8px'}}><i className='fa fa-search'></i></button> */}
                     <div className='float-right' style={{marginBottom:'10px'}}>
                         <SearchBar { ...props.searchProps }/>

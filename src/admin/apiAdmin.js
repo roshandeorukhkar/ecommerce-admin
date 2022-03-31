@@ -98,7 +98,7 @@ export const updateCategory = (categoryId, userId, token, category) => {
         })
         .catch(err => console.log(err));
 }; */
-export const deletecategory = (productId) => 
+export const deletecategory1 = (productId) => 
 {
     console.log(productId)
     return fetch(`${API}/category/${productId}`, {
@@ -109,6 +109,21 @@ export const deletecategory = (productId) =>
             //Authorization: `Bearer ${token}`
         }
     })
+};
+
+export const deletecategory = (categoryId, category) => {
+    return fetch(`${API}/categorys/delete/${categoryId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };
 export const deletecategorytest = (categoryId) => 
 {
@@ -465,6 +480,21 @@ export const deleteSpecification = (productId) => {
             //Authorization: `Bearer ${token}`
         }
     })
+};
+
+export const deleteSpecificationSoft = (productId, category) => {
+    return fetch(`${API}/specification/delete/${productId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
 };
 
 export const statusSpecification = (productId, specification) => {

@@ -109,7 +109,7 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Attribute has been updated successfully!');
+                NotificationManager.success('Attribute has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,

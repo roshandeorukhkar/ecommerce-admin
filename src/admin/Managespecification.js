@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { deleteSpecification, Specification ,statusSpecification ,statusChangeSpecification } from "./apiAdmin";
+import { deleteSpecification, Specification ,statusSpecification ,statusChangeSpecification, deleteSpecificationSoft } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
@@ -42,15 +42,33 @@ const Managespecification = () => {
                     success:true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Specification has been deleted successfully!');
+                NotificationManager.success('Specification has been deleted successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
                         redirectToProfile:true
                     })
-                },1000)
+                },2000)
             }
         });
+    };
+
+    const destroySoft = productId => {
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const category = {
+                manufacturerName: new Date(),
+            };
+            deleteSpecificationSoft(productId, category).then(data => {
+                if (data.error) {
+                    
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Specification has been deleted successfully!','',2000);
+                    loadProducts();
+                }
+            });
+        }
     };
 
     const status = specificationId => {
@@ -123,7 +141,8 @@ const Managespecification = () => {
         return (
             <div>
                 <Link to={`/admin/Updatespecification/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
-                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(product._id)}><i className='fa fa-trash-o font-15'></i></button>
+                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroySoft(product._id)}><i className='fa fa-trash-o font-15'></i></button>
+                {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(product._id)}><i className='fa fa-trash-o font-15'></i></button> */}
             </div>
         )
       };
@@ -145,10 +164,15 @@ const Managespecification = () => {
 
       const productsList = [];
       products.forEach((item) => {
+        if(!item.deletedAt){
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
         productsList.push(item);
+        }
+        else{
+            console.log("error");
+        }
       });
 
       return (

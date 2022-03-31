@@ -57,13 +57,13 @@ const Addspecification = () => {
                     ...values,
                     redirectToProfile: true
                 })
-                NotificationManager.success('Specification has been added successfully!');
+                NotificationManager.success('Specification has been added successfully!','',2000);
                 setTimeout(function () {
                     setValues({
                         ...values,
                         redirectToProfile: true
                     })
-                }, 1000)
+                }, 2000)
             }
         });
     };

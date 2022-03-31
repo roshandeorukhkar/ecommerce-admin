@@ -5,6 +5,8 @@ import { deletecategory, getCategories ,statusCategory, statusChangeCategory, de
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Managecategory = () => {
     const [values, setValues] = useState({
@@ -29,24 +31,39 @@ const Managecategory = () => {
     };
 
     const destroy = categoryId => {
-        deletecategory(categoryId).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadProducts();
-                setValues({
-                    ...values,
-                    success:true,
-                    redirectToProfile: false
-                });
-                setTimeout(function(){
-                    setValues({
-                        ...values,
-                        redirectToProfile:true
-                    })
-                },1000)
-            }
-        });
+        // deletecategory(categoryId).then(data => {
+        //     if (data.error) {
+        //         console.log(data.error);
+        //     } else {
+        //         loadProducts();
+        //         setValues({
+        //             ...values,
+        //             success:true,
+        //             redirectToProfile: false
+        //         });
+        //         setTimeout(function(){
+        //             setValues({
+        //                 ...values,
+        //                 redirectToProfile:true
+        //             })
+        //         },1000)
+        //     }
+        // });
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            const category = {
+                manufacturerName: new Date(),
+            };
+            deletecategory(categoryId, category).then(data => {
+                if (data.error) {
+                    
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Category has been deleted successfully!','',2000);
+                    loadProducts();
+                }
+            });
+        }
     };
 
     const destroys = categoryId => {
@@ -148,8 +165,8 @@ const columns = [
     return (
         <div>
             <Link to={`/admin/category/update/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-pencil font-15'></i></button></Link>
-            {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(category._id)}><i className='fa fa-trash-o font-15'></i></button> */}
-            <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroys(category._id)}><i className='fa fa-trash-o font-15'></i></button>
+            <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(category._id)}><i className='fa fa-trash-o font-15'></i></button>
+            {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroys(category._id)}><i className='fa fa-trash-o font-15'></i></button> */}
             <Link to={`/admin/category/subupdate/${category._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit'><i className='fa fa-eye' title="view subcategory"></i></button></Link>
         </div>
     )
@@ -172,7 +189,7 @@ const columns = [
 
   const categoryList = [];
   products.forEach((item) => {
-    if(!item.deletedAt , !item.subcategory){
+    if(!item.deletedAt && !item.subcategory){
     item['id'] = item._id;
     item['createdAt'] = getDate(item.createdAt);
     item['status'] = getSwitch(item);
@@ -190,6 +207,7 @@ const columns = [
             {deleteMessage()}
             {redirectUser()}
             <div className="col-12">
+                <NotificationContainer/>
                 <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={categoryList}/>
             </div>
         </div>

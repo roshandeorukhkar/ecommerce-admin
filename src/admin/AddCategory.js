@@ -51,13 +51,13 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            NotificationManager.success('Category has been add successfully!');
+            NotificationManager.success('Category has been add successfully!','',2000);
             setTimeout(function(){
                 setValues({
                     ...values,
                     redirectToProfile:true
                 })
-            },1000)
+            },2000)
         }
     });
 };
@@ -127,7 +127,7 @@ return(
                                                     {categories &&
                                                         categories.map((c, i) => (
                                                             <>
-                                                            {c.subcategory == '' ?(
+                                                            {c.subcategory == '' && !c.deletedAt ?(
                                                                 <option key={i} value={c._id}>
                                                                 {c.name}
                                                             </option>

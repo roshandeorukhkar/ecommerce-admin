@@ -7,10 +7,13 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 
     const AddProduct = () => {
+    const [inputList, setInputList] = useState([{ dimension: "" }]);
     const [values, setValues] = useState({
         name: '',
+        brand:'',
         errorname: '',
         description: '',
+        dimension:'',
         attribute:'',
         categoryval:'',
         attributeval:'',
@@ -35,8 +38,27 @@ import { Redirect } from 'react-router-dom';
     const [manufactures , setManufactures] = useState([]);
     const { user, token } = isAuthenticated();
 
-    const { name, description, price, attribute, height, width, leanth, category, quantity, error, createdProduct, redirectToProfile, formData } = values;
+    const { name, description, price, attribute, height, width, leanth, dimension, category, quantity, brand, error, createdProduct, redirectToProfile, formData } = values;
 
+    //add multiple
+    const handleInputChange = (e, index) => {
+        const { name, value } = e.target;
+        const list = [...inputList];
+        list[index] = value;
+        setInputList(list);
+        //console.log("test", e, value, list)
+        setValues({ ...values, dimension: list });
+    };
+    const handleRemoveClick = index => {
+        const list = [...inputList];
+        list.splice(index, 1);
+        setInputList(list);
+    };
+    const handleAddClick = () => {
+        setInputList([...inputList, { dimension: "" }]);
+    };
+    //end multiple
+    
     // load categories and set form data
     const init = () => {
         getCategories().then(data => {
@@ -89,13 +111,18 @@ import { Redirect } from 'react-router-dom';
     console.log(name, "name");
         const value = name === 'photo' ? event.target.files[0] : event.target.value;
        formData.set(name, value);
-        setValues({ ...values, [name]: value });
+        setValues({ ...values, [name]: value , errorname:''});
     };
 
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: false });
-
+         console.log(formData, values);
+         for ( var key in values ) {
+            formData.append(key, values[key]);
+        }
+       // console.log(dimension);
+        //return false; 
         createProduct(token, formData).then(data => {
             if (data.status == false) {
                 setValues({
@@ -107,7 +134,6 @@ import { Redirect } from 'react-router-dom';
                 setValues({
                     ...values,
                     name: '',
-                    errorname:'',
                     description: '',
                     photo: '',
                     price: '',
@@ -128,131 +154,205 @@ import { Redirect } from 'react-router-dom';
     };
 
     const newPostForm = () => (
-        <div className="col-lg-12">
-        <form>
-            <h6><b> Photo</b></h6>
-            <div className="form-group">
-                <label className="btn btn-secondary">
-                    <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple />
-                </label>
+    <>
+        <form > 
+         <div className="white-box">
+            <div className="row">
+                <h3>Product Information</h3><hr></hr>
+                <div className="col-lg-12">
+                    <div className="form-group col-lg-6">
+                        <h6><b>Product Name <span style={{color:'red'}}>*</span></b></h6>
+                        <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter product name' value={name}  required/>
+                        <span className='error text-danger'>{values.errorname}</span>
+                    </div>
+                    <div className="form-group col-lg-6">
+                        <h6><b> Manufacturer </b></h6>
+                        <select onChange={handleChange('manufactures')} className="form-control" placeholder='select manufactures'>
+                            <option>Please select</option>
+                            {manufactures &&
+                                manufactures.map((s, i) => (
+                                    <>
+                                    {!s.deletedAt && s.status == 1 ?(
+                                        <option key={i} value={s._id}>
+                                            {s.manufacturerName }
+                                        </option>
+                                    ):null}
+                                </>
+                                ))}
+                        </select>
+                    </div> 
+                    <div className="form-group col-lg-6">
+                            <h6><b> Category</b></h6>
+                            <select onChange={handleChange('category')} className="form-control" value={category}>
+                                <option>Please select</option>
+                                {categories &&
+                                    categories.map((c, i) => (
+                                        <>
+                                             {!c.deletedAt && !c.subcategory && c.status == 1 ?(
+                                            <option key={i} value={c._id}>
+                                                {c.name }
+                                            </option>
+                                             ):null}
+                                        </>
+                                      
+                                    ))}
+                            </select>
+                    </div> 
+                    {/* <div className="form-group col-lg-6">
+                            <h6><b>Sub Category</b></h6>
+                            <select onChange={handleChange('subcategory')} className="form-control" value={category}>
+                                <option>Please select</option>
+                                {categories &&
+                                    categories.map((c, i) => (
+                                        <option key={i} value={c._id}>
+                                            {c.name }
+                                        </option>
+                                    ))}
+                            </select>
+                    </div> */}
+                    <div className="form-group col-lg-6">
+                        <h6><b>Brand Name</b></h6>
+                        <input onChange={handleChange('brand')} type="text" className="form-control" placeholder='Enter brand name' value={brand} />
+                    </div> 
+                </div>
             </div>
-
-            <div className="form-group ">
-                <h6><b> Name <span style={{color:'red'}}>*</span></b></h6>
-                <input onChange={handleChange('name')} type="text" className="form-control" value={name} />
-                <span className='error text-danger'>{values.errorname}</span>
-            </div>
-
-            <div className="form-group">
-                <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
-                <input onChange={handleChange('price')} type="number" className="form-control" value={price} />
-            </div>
-
-            <div className="form-group">
-                <h6><b> Category</b></h6>
-                <select onChange={handleChange('category')} className="form-control" value={category}>
-                    <option>Please select</option>
-                    {categories &&
-                        categories.map((c, i) => (
-                            <option key={i} value={c._id}>
-                                {c.name }
-                            </option>
-                        ))}
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> Attribute</b></h6>
-                <select onChange={handleChange('attribute')} className="form-control" value={attribute}>
-                    <option>Please select</option>
-                    {attributess &&
-                        attributess.map((a, i) => (
-                            <option key={i} value={a._id}>
-                                {a.attributeName }
-                            </option>
-                        ))}
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> Shipping</b></h6>
-                <select onChange={handleChange('shipping')} className="form-control">
-                    <option>Please select</option>
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> specification</b></h6>
-                <select onChange={handleChange('specification')} className="form-control">
-                    <option>Please select</option>
-                    {specifications &&
-                        specifications.map((s, i) => (
-                            <option key={i} value={s._id}>
-                                {s.manufacturerName }
-                            </option>
-                        ))}
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> Manufacturer </b></h6>
-                <select onChange={handleChange('manufactures')} className="form-control">
-                    <option>Please select</option>
-                    {manufactures &&
-                        manufactures.map((s, i) => (
-                            <option key={i} value={s._id}>
-                                {s.manufacturerName }
-                            </option>
-                        ))}
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> product type</b></h6>
-                <select onChange={handleChange('type')} className="form-control">
-                    <option>Please select</option>
-                    <option value="1">New Arrivale</option>
-                    <option value="2">Normal </option>
-                    <option value="3">Comming soon </option>
-                </select>
-            </div>
-
-            <div className="form-group">
-                <h6><b> Quantity</b></h6>
-                <input onChange={handleChange('quantity')} type="number" className="form-control" value={quantity} />
-            </div>
-
-            <div className="form-group">
-                <h6><b> Description</b></h6>
-                <textarea onChange={handleChange('description')} className="form-control" value={description} />
-            </div>
-
-            <hr></hr>
-            <h6>Other options</h6>
-            <hr></hr>
-
-            <div className="form-group ">
-                <h6><b> product height </b></h6>
-                <input onChange={handleChange('height')} type="text" className="form-control" value={height} />
-            </div>
-            <div className="form-group ">
-                <h6><b> product width</b></h6>
-                <input onChange={handleChange('width')} type="text" className="form-control" value={width} />
-            </div>
-            <div className="form-group ">
-                <h6><b> product length </b></h6>
-                <input onChange={handleChange('leanth')} type="text" className="form-control" value={leanth} />
-            </div>
-
-            <div className="form-group">
-                <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
-            </div>
-          
-        </form>
-        
         </div>
+        <div className="white-box">
+            <div className="row">
+                <h3>Product Details</h3><hr></hr>
+                <div className="col-lg-12">
+                        <div className="form-group col-lg-6">
+                            <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
+                            <input onChange={handleChange('price')} type="number" placeholder='Enter price ' className="form-control" value={price} />
+                        </div>
+                        <div className="form-group col-lg-6">
+                            <h6><b> Shipping</b></h6>
+                            <select onChange={handleChange('shipping')} className="form-control">
+                                <option>Please select</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-lg-6">
+                            <h6><b> product type</b></h6>
+                            <select onChange={handleChange('type')} className="form-control">
+                                <option>Please select</option>
+                                <option value="1">New Arrivale</option>
+                                <option value="2">Normal </option>
+                                <option value="3">Comming soon </option>
+                            </select>
+                        </div>
+                        <div className="form-group col-lg-6">
+                            <h6><b> Quantity</b></h6>
+                            <input onChange={handleChange('quantity')} type="number" placeholder='Enter quantity' className="form-control" value={quantity} />
+                        </div> 
+                </div>
+            </div>
+        </div>
+        <div className="white-box">
+            <div className="row">
+                <div className="col-lg-12">
+                    <h3>Prodect Attribute</h3><hr></hr>
+                        <div className="form-group col-lg-6">
+                            <h6><b> Attribute</b></h6>
+                            <select onChange={handleChange('attribute')} className="form-control" value={attribute}>
+                                <option>Please select</option>
+                                {attributess &&
+                                    attributess.map((a, i) => (
+                                        <>
+                                        {!a.deletedAt ?(
+                                            <option key={i} value={a._id}>
+                                            {a.attributeName }
+                                            </option>
+                                        
+                                            ):null}
+                                        </>
+                                    ))}
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div className="white-box">
+            <div className="row">
+                <div className="col-lg-12">
+                    <h3>Prodect Specification</h3><hr></hr>
+                        <div className="form-group col-lg-6">
+                            <h6><b> specification</b></h6>
+                            <select onChange={handleChange('specification')} className="form-control">
+                                <option>Please select</option>
+                                {specifications &&
+                                    specifications.map((s, i) => (
+                                        <option key={i} value={s._id}>
+                                            {s.manufacturerName }
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div className="white-box">
+            <div className="row">
+                <h3>Product Other</h3><hr></hr>
+                <div className="col-lg-12">
+                        <div className="form-group  col-lg-7">
+                            <h6><b> product height </b></h6>
+                            <input onChange={handleChange('height')} type="text" className="form-control" value={height} />
+                        </div>
+                        <div className="form-group col-lg-7">
+                            <h6><b> product width</b></h6>
+                            <input onChange={handleChange('width')} type="text" className="form-control" value={width} />
+                        </div>
+                        <div className="form-group col-lg-7">
+                            <h6><b> product length </b></h6>
+                            <input onChange={handleChange('leanth')} type="text" className="form-control" value={leanth} />
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div className="white-box">
+            <div className="row">
+                <div className="col-lg-12">
+                    <h3>Prodect images</h3><hr></hr>
+                    {inputList.map((x, i) => {
+                        return (
+                            <div className="form-group"  key={i}>
+                                    <div className='col-lg-7'>
+                                        <input name="dimension" className="form-control" placeholder="Enter Values" value={x.dimension} onChange={e => handleInputChange(e, i)} />
+                                    </div>
+                                    <div className='form-group col-lg-1'>
+                                        {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
+                                        {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
+                                    </div>
+                                </div>
+                        );
+                    })}
+
+                </div>
+            </div>
+        </div>
+        <div className="white-box">
+            <div className="row">
+                <h3>Product Description</h3>
+                    <div className="form-group col-lg-6">
+                        <h6><b> Description</b></h6>
+                        <textarea onChange={handleChange('description')} rows="4" className="form-control" value={description} />
+                    </div>
+                    <div className="form-group col-lg-6 ">
+                        <h6><b> Photo</b></h6>
+                        <label className="btn btn-secondary">
+                            <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple  />
+                        </label>
+                    </div>
+                    <div className="form-group col-lg-9">
+                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} onClick={clickSubmit}> Submit </button>
+                    </div>
+            </div>
+        </div>
+        </form>
+    </>
+   
     );
 
     const redirectUser = () => {
@@ -263,22 +363,15 @@ import { Redirect } from 'react-router-dom';
 
     return (
         <div id="wrapper">
-        <AdminHeader />
-        <AdminSidebar />
-        <div className="page-wrapper">
-            <div className="container-fluid">
-                    <div className="white-box">
-                        <div className="row">
-                                <div className="col-md-7 offset-md-2">
-
-                                    <NotificationContainer/>
-                                    {redirectUser()}
-                                    {newPostForm()}
-                                </div>
-                         </div>
-                     </div>
+            <AdminHeader />
+            <AdminSidebar />
+                <div className="page-wrapper">
+                    <div className="container-fluid">
+                        <NotificationContainer/>
+                        {redirectUser()}
+                        {newPostForm()}   
+                    </div>
                 </div>
-            </div>
         </div>
     );
 };

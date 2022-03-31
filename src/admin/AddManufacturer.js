@@ -51,7 +51,7 @@ const clickSubmit = event => {
                 redirectToProfile: false
             });
            // NotificationManager.success('');
-            NotificationManager.success('Manufacter has been added successfully!');
+            NotificationManager.success('Manufacter has been added successfully!','',2000);
             setTimeout(function(){                
                 setValues({
                     ...values,
@@ -59,7 +59,7 @@ const clickSubmit = event => {
                     
                 })
                // NotificationManager.success('Manufacter has been added successfully!');
-            },1000)
+            },2000)
         }
     });
 };
