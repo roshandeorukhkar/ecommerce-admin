@@ -46,6 +46,7 @@ import { Redirect } from 'react-router-dom';
         const list = [...inputList];
         list[index] = value;
         setInputList(list);
+        //console.log("test", e, value, list)
         setValues({ ...values, dimension: list });
     };
     const handleRemoveClick = index => {
@@ -110,13 +111,16 @@ import { Redirect } from 'react-router-dom';
     console.log(name, "name");
         const value = name === 'photo' ? event.target.files[0] : event.target.value;
        formData.set(name, value);
-        setValues({ ...values, [name]: value });
+        setValues({ ...values, [name]: value , errorname:''});
     };
 
     const clickSubmit = event => {
         event.preventDefault();
         setValues({ ...values, error: false });
-         console.log(formData.dimension);
+         console.log(formData, values);
+         for ( var key in values ) {
+            formData.append(key, values[key]);
+        }
        // console.log(dimension);
         //return false; 
         createProduct(token, formData).then(data => {
@@ -130,7 +134,6 @@ import { Redirect } from 'react-router-dom';
                 setValues({
                     ...values,
                     name: '',
-                    errorname:'',
                     description: '',
                     photo: '',
                     price: '',
@@ -152,14 +155,14 @@ import { Redirect } from 'react-router-dom';
 
     const newPostForm = () => (
     <>
-        <form> 
+        <form > 
          <div className="white-box">
             <div className="row">
                 <h3>Product Information</h3><hr></hr>
                 <div className="col-lg-12">
                     <div className="form-group col-lg-6">
                         <h6><b>Product Name <span style={{color:'red'}}>*</span></b></h6>
-                        <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter product name' value={name} />
+                        <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter product name' value={name}  required/>
                         <span className='error text-danger'>{values.errorname}</span>
                     </div>
                     <div className="form-group col-lg-6">
@@ -169,7 +172,7 @@ import { Redirect } from 'react-router-dom';
                             {manufactures &&
                                 manufactures.map((s, i) => (
                                     <>
-                                    {!s.deletedAt ?(
+                                    {!s.deletedAt && s.status == 1 ?(
                                         <option key={i} value={s._id}>
                                             {s.manufacturerName }
                                         </option>
@@ -184,13 +187,18 @@ import { Redirect } from 'react-router-dom';
                                 <option>Please select</option>
                                 {categories &&
                                     categories.map((c, i) => (
-                                        <option key={i} value={c._id}>
-                                            {c.name }
-                                        </option>
+                                        <>
+                                             {!c.deletedAt && !c.subcategory && c.status == 1 ?(
+                                            <option key={i} value={c._id}>
+                                                {c.name }
+                                            </option>
+                                             ):null}
+                                        </>
+                                      
                                     ))}
                             </select>
                     </div> 
-                    <div className="form-group col-lg-6">
+                    {/* <div className="form-group col-lg-6">
                             <h6><b>Sub Category</b></h6>
                             <select onChange={handleChange('subcategory')} className="form-control" value={category}>
                                 <option>Please select</option>
@@ -201,11 +209,10 @@ import { Redirect } from 'react-router-dom';
                                         </option>
                                     ))}
                             </select>
-                    </div>
+                    </div> */}
                     <div className="form-group col-lg-6">
                         <h6><b>Brand Name</b></h6>
                         <input onChange={handleChange('brand')} type="text" className="form-control" placeholder='Enter brand name' value={brand} />
-                        <span className='error text-danger'>{values.errorname}</span>
                     </div> 
                 </div>
             </div>
@@ -308,8 +315,6 @@ import { Redirect } from 'react-router-dom';
             <div className="row">
                 <div className="col-lg-12">
                     <h3>Prodect images</h3><hr></hr>
-                    {/* <input onChange={handleChange('dimension')} type="text" className="form-control" placeholder='Enter Dimension' value={dimension} />
-                                                <span className='error text-danger'>{values.errorsAttributeValue}</span> */}
                     {inputList.map((x, i) => {
                         return (
                             <div className="form-group"  key={i}>
@@ -341,7 +346,7 @@ import { Redirect } from 'react-router-dom';
                         </label>
                     </div>
                     <div className="form-group col-lg-9">
-                        <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
+                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} onClick={clickSubmit}> Submit </button>
                     </div>
             </div>
         </div>
