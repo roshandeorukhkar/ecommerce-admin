@@ -6,6 +6,8 @@ import FormMainTitle from "../common/FormMainTitle";
 import { storeList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { deleteStore } from "../store/ApiStore";
+import { statusStore } from "../store/ApiStore";
+import { statusChangeStore } from "../store/ApiStore";
 import StorePasswordInput from "./StorePasswordInput";
 import DataTableComponent from "../common/DataTableComponent";
 import { Switch } from '@mui/material';
@@ -189,6 +191,31 @@ const AddListStore = () => {
         const DATE = newDate.split('-');
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
+    const statusStores = storeId => {
+        const store = {
+            manufacturerName: 0,
+         };
+        statusStore(storeId, store).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                getStoreList();
+            }
+        });
+    };
+
+    const statusChange = storeId => {
+        const store = {
+            manufacturerName: 1,
+         };
+        statusChangeStore(storeId, store).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                getStoreList();
+            }
+        });
+    };
 
     const getButtons = (storeId_) => {
         return (
@@ -202,8 +229,16 @@ const AddListStore = () => {
     };
     const getSwitch = (storeStatus) => {
         return (
-            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked />
-        )
+            <>
+            {storeStatus.status == true 
+               ?(
+               <>
+               <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusStores(storeStatus._id)} color='primary'/>
+               </>
+               ):
+               <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(storeStatus._id)} color='primary'/>
+           }
+           </>        )
     };
     const storeListArray = [];
     list.forEach((item) => {
@@ -212,7 +247,7 @@ const AddListStore = () => {
             item['storeName'] = item.storeId.storeName
             item['email'] = item.email
             item['createdAt'] = getDate(item.storeId.createdDate)
-            item['status'] = getSwitch(item.storeId.status)
+            item['status'] = getSwitch(item)
             item['action'] = getButtons(item.storeId._id)
             storeListArray.push(item);
         }
