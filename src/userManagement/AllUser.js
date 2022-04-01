@@ -125,7 +125,8 @@ const AllUser = () =>{
                ):
                <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(user._id)} color='primary'/>
            }
-           </> )
+           </> 
+           )
       };
 
       const productsList = [];
