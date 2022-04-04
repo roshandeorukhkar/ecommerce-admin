@@ -274,14 +274,8 @@ const AddListRoleManagement = (props) => {
   }
 
   const getSwitch = (storeStatus) => {
-
     return (
-      <FormControlLabel
-        control ={
-        <Switch checked={statusOnOff} onChange={handleStatusChange} inputProps={{ 'aria-label': 'controlled' }} />
-        }
-        label="Gilad Gray"
-      />
+      <Switch checked={statusOnOff} onChange={handleStatusChange} inputProps={{ 'aria-label': 'controlled' }} />
     )
   };
 
