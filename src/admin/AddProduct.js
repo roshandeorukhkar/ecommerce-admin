@@ -260,7 +260,7 @@ import { Redirect } from 'react-router-dom';
                                 {attributess &&
                                     attributess.map((a, i) => (
                                         <>
-                                        {!a.deletedAt ?(
+                                        {!a.deletedAt && a.status == 1 ?(
                                             <option key={i} value={a._id}>
                                             {a.attributeName }
                                             </option>
@@ -283,9 +283,13 @@ import { Redirect } from 'react-router-dom';
                                 <option>Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
+                                        <>
+                                        {!s.deletedAt && s.status ==1 ?(
                                         <option key={i} value={s._id}>
                                             {s.manufacturerName }
                                         </option>
+                                         ):null}
+                                         </>
                                     ))}
                             </select>
                         </div>
