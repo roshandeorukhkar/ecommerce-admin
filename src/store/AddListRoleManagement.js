@@ -15,6 +15,7 @@ import './AccessModuleOption';
 import { accessModuleList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { storeUserList } from "./ApiStore";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const AddListRoleManagement = (props) => {
   const history = useHistory();
@@ -37,6 +38,7 @@ const AddListRoleManagement = (props) => {
   const [userList, setUserList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
   const [accessModules, setAccessModules] = useState([]);
+  const [statusOnOff ,setStatusOnOff] = useState(false);
 
   useEffect(() => {
     if (params.userRoleId != undefined) {
@@ -144,8 +146,6 @@ const AddListRoleManagement = (props) => {
     setValues({
       ...values, accessModuleId: data, accessModuleLabel:event.value
     });
-    console.log(data)
-    console.log(values.accessModuleLabel)
   }
 
   const selectedUserOption = (data) => {
@@ -267,9 +267,21 @@ const AddListRoleManagement = (props) => {
       </div>
     )
   };
+
+  const handleStatusChange =  (event)  =>{
+    // console.log("---",event.target.checked);
+    setStatusOnOff(event.target.checked);
+  }
+
   const getSwitch = (storeStatus) => {
+
     return (
-      <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked />
+      <FormControlLabel
+        control ={
+        <Switch checked={statusOnOff} onChange={handleStatusChange} inputProps={{ 'aria-label': 'controlled' }} />
+        }
+        label="Gilad Gray"
+      />
     )
   };
 

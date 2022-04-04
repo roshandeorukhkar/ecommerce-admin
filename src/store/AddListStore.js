@@ -77,35 +77,6 @@ const AddListStore = () => {
     getStoreList();
   }, [checkParams]);
 
-  const deleteStoreDetails = (deleteStoreId) => {
-    if (window.confirm("Are you sure you want to delete this record?")) {
-      const deleteStoreID = deleteStoreId;
-      deleteStore(deleteStoreID).then((data) => {
-        NotificationManager.success(data.message, "", 2000);
-      });
-      getStoreList();
-    }
-  };
-
-  const getStoreList = () => {
-    storeList().then((data) => {
-      setList(data.result);
-    });
-  };
-  const getStoreById = async () => {
-    await getStoreDataById({ storeId: params.storeId }).then((data) => {
-      setValues({
-        storeName: data.storeId.storeName,
-        ownerName: data.name,
-        address: data.address,
-        mobile: data.mobile,
-        password: data.password,
-        email: data.email,
-        storeId: data.storeId._id,
-      });
-    });
-  };
-
   const handleChange = (name) => (event) => {
     setValues({
       ...values,
@@ -119,47 +90,6 @@ const AddListStore = () => {
       emailError: "",
     });
   };
-
-  const clickSubmit = (event) => {
-    event.preventDefault();
-    addStoreData({ ...values }).then((data) => {
-      if (data.status == false) {
-        setValues({
-          ...values,
-          storeNameError: data.errors.storeName,
-          ownerNameError: data.errors.ownerName,
-          addressError: data.errors.address,
-          userNameError: data.errors.userName,
-          mobileError: data.errors.mobile,
-          passwordError: data.errors.password,
-          emailError: data.errors.email,
-        });
-        NotificationManager.error("Email already exist...", "", 2000);
-      } else {
-        setValues({
-          storeName: "",
-          storeNameError: "",
-          ownerName: "",
-          ownerNameError: "",
-          address: "",
-          addressError: "",
-          userName: "",
-          userNameError: "",
-          mobile: "",
-          mobileError: "",
-          password: "",
-          passwordError: "",
-          email: "",
-          emailError: "",
-        });
-        NotificationManager.success(data.message, "", 2000);
-        getStoreList();
-        if (params.storeId != "undefined") {
-          history.push("/admin/storemanagement");
-        }
-    }
-    }, [checkParams]);
-
     const deleteStoreDetails = (deleteStoreId) => {
         if(window.confirm('Are you sure you want to delete this record?'))
         {
@@ -189,17 +119,6 @@ const AddListStore = () => {
             });
         });
     }
-
-    const handleChange = (name) => (event) => {
-        setValues({ ...values, [name]: event.target.value,
-            storeNameError: "",
-            ownerNameError: "",
-            addressError: "",
-            userNameError: "",
-            mobileError: "",
-            passwordError: "",
-            emailError: "" });
-    };
 
     const clickSubmit = (event) => {
         event.preventDefault();
@@ -304,8 +223,8 @@ const AddListStore = () => {
             <div>
                 <Link to={`/admin/storemanagement/edit/${storeId_}`} className='btn btn-outline btn-info m-5' onClick={() => setCheckParams(!checkParams)} aria-label='Edit' ><i className='fa fa-pencil font-15'></i></Link>
                 <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => deleteStoreDetails(storeId_)}><i className='fa fa-trash-o font-15'></i></button>
-                <Link to={`/admin/rolemanagement/${storeId_}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
                 <Link to={`/admin/user/list/${storeId_}`} className="btn btn-outline btn-info m-5">Add User</Link>
+                <Link to={`/admin/rolemanagement/${storeId_}`} className="btn btn-outline btn-info m-5" aria-label="Add role">Add Role</Link>
             </div>
         )
     };
@@ -333,109 +252,8 @@ const AddListStore = () => {
             item['action'] = getButtons(item.storeId._id)
             storeListArray.push(item);
         }
-        setCheckParams(true);
-      }
-    );
-  };
-
-  //Store List component
-  const columns = [
-    {
-      dataField: "id",
-      text: "ID",
-      hidden: true,
-    },
-    {
-      dataField: "storeName",
-      text: "Store Name",
-      sort: true,
-    },
-    {
-      dataField: "email",
-      text: "E-mail",
-      sort: true,
-    },
-    {
-      dataField: "createdAt",
-      text: "Date",
-      sort: true,
-    },
-    {
-      dataField: "status",
-      text: "Status",
-    },
-    {
-      dataField: "action",
-      text: "Action",
-    },
-  ];
-
-  const getDate = (date) => {
-    const newDate = date.split("T")[0];
-    const DATE = newDate.split("-");
-    return DATE[2] + "-" + DATE[1] + "-" + DATE[0];
-  };
-
-  const getButtons = (storeId_) => {
-    return (
-      <div>
-        <Link
-          to={`/admin/storemanagement/edit/${storeId_}`}
-          className="btn btn-outline btn-info m-5"
-          onClick={() => setCheckParams(!checkParams)}
-          aria-label="Edit"
-        >
-          <i className="fa fa-pencil font-15"></i>
-        </Link>
-        <button
-          className="btn btn-outline btn-danger"
-          aria-label="Delete"
-          onClick={() => deleteStoreDetails(storeId_)}
-        >
-          <i className="fa fa-trash-o font-15"></i>
-        </button>
-        <Link
-          to={`/admin/user/list/${storeId_}`}
-          className="btn btn-outline btn-info m-5"
-        >
-          Add User
-        </Link>
-        <Link
-          to={`/admin/rolemanagement/${storeId_}`}
-          className="btn btn-outline btn-info m-5"
-          aria-label="Add role"
-        >
-          Add Role
-        </Link>
-      </div>
-    );
-  };
-  const getSwitch = (storeStatus) => {
-    return (
-      <Switch
-        name="checkedA"
-        inputProps={{
-          "aria-label": "secondary checkbox",
-          size: "medium",
-          color: "primary",
-        }}
-        color="primary"
-        checked
-      />
-    );
-  };
-  const storeListArray = [];
-  list.forEach((item) => {
-    if (item.storeId.isDelete == false) {
-      item["id"] = item.storeId._id;
-      item["storeName"] = item.storeId.storeName;
-      item["email"] = item.email;
-      item["createdAt"] = getDate(item.storeId.createdDate);
-      item["status"] = getSwitch(item.storeId.status);
-      item["action"] = getButtons(item.storeId._id);
-      storeListArray.push(item);
-    }
   });
+
 
   return (
     <>
