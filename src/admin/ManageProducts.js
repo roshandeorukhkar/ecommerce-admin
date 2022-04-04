@@ -79,28 +79,38 @@ const ManageProducts = () => {
             hidden: true
         },
         {
-        dataField: 'name',
-        text: 'Product Name',
-        sort: true
+            dataField: "image",
+            text: "Image",
+        },
+        {
+            dataField: 'name',
+            text: 'Product Name',
+            sort: true
         }, 
         {
-        dataField: 'description',
-        text: 'Description',
-        sort: true
+            dataField: 'description',
+            text: 'Description',
+            sort: true
         }, 
         {
-        dataField: 'createdAt',
-        text: 'Date',
-        sort: true
+            dataField: 'createdAt',
+            text: 'Date',
+            sort: true
         }, 
         {
-        dataField: 'status',
-        text: 'Status'
+            dataField: 'status',
+            text: 'Status'
         }, 
         {
-        dataField: 'action',
-        text: 'action'
+            dataField: 'action',
+            text: 'action'
       }];
+
+      const getImage = (path) =>{
+        return(
+          <img src={`../product-images/msg.png`} alt="footer-logo" width="100" height="70"></img>
+        )
+      }
 
       const getButtons = (product) => {
         return (
@@ -129,6 +139,7 @@ const ManageProducts = () => {
       products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
+        item['image'] = getImage(item.image)
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);

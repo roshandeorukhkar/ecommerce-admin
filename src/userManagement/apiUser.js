@@ -65,6 +65,34 @@ export const updateUser = (userId, users) => {
         .catch(err => console.log(err));
 };
 
+export const statusUser = (userId, users) => {
+    return fetch(`${API}/userManagement/status/${userId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(users)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+export const statusChangeUser = (userId, users) => {
+    return fetch(`${API}/userManagement/statusChange/${userId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(users)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
 
 
 

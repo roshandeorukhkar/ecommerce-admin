@@ -149,13 +149,31 @@ export const deleteSpecification = (productId) => {
     })
 };
 
-*/
+*/ // new product that use in useform 
+// export const createProduct = (token, product) => {
+//   //  console.log(product);
+//     return fetch(`${API}/product/create/`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             Accept: 'application/json',
+//         },
+//         body: JSON.stringify(product)
+//     })
+//         .then(response => {
+//             return response.json();
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         });
+// };
+
 export const createProduct = (token, product) => {
     return fetch(`${API}/product/create/`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-           // Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         },
         body: product
     })
