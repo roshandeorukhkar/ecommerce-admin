@@ -273,7 +273,7 @@ const AdminSidebar = () => {
                   </li>
                   <li>
                     {" "}
-                    <Link to="/admin/setting">Advertising Setting</Link>{" "}
+                    <Link to="/admin/advertis">Advertising Setting</Link>{" "}
                   </li>
                   <li>
                     {" "}
