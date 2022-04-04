@@ -66,10 +66,19 @@ const AddListRoleManagement = (props) => {
 
   const getUserRoleById = () => {
     getUserRoleByIdData({ roleId: params.userRoleId }).then((data) => {
+     const assignToArray = {
+       value : data.user[0]._id,
+       label : data.user[0].name,
+     }
+     const accessModuleArray = [];
+      data.module.forEach((res) => {
+        accessModuleArray.push({ label : res.label ,value : res.name})
+      })
       setValues({
         roleName: data.roleName,
         accessModuleId: data.accessModuleId,
-        assingTo: data.user_id,
+        accessModuleLabel : accessModuleArray,
+        assingTo: assignToArray,
         userRoleId: data._id,
         storeId: storeId
       })
@@ -135,6 +144,8 @@ const AddListRoleManagement = (props) => {
     setValues({
       ...values, accessModuleId: data, accessModuleLabel:event.value
     });
+    console.log(data)
+    console.log(values.accessModuleLabel)
   }
 
   const selectedUserOption = (data) => {
