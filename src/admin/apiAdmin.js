@@ -151,13 +151,14 @@ export const deleteSpecification = (productId) => {
 
 */
 export const createProduct = (token, product) => {
+  //  console.log(product);
     return fetch(`${API}/product/create/`, {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             Accept: 'application/json',
-           // Authorization: `Bearer ${token}`
         },
-        body: product
+        body: JSON.stringify(product)
     })
         .then(response => {
             return response.json();

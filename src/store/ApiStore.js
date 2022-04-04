@@ -133,14 +133,12 @@ export const storeUserList = (storeId) => {
 }
 // changes on status
 
-export const statusStore = (storeId, store) => {
-    return fetch(`${API}/manufacturer/status/${storeId}`, {
-        method: 'POST',
+export const statusStore = (storeId) => {
+    return fetch(`${API}/store/status/${storeId}`, {
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(store)
     })
         .then(response => {
             return response.json();
@@ -148,14 +146,12 @@ export const statusStore = (storeId, store) => {
         .catch(err => console.log(err));
 };
 
-export const statusChangeStore = (storeId, store) => {
-    return fetch(`${API}/manufacturer/statusChange/${storeId}`, {
-        method: 'POST',
+export const statusChangeStore = (storeId) => {
+    return fetch(`${API}/store/statusChange/${storeId}`, {
         headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(store)
     })
         .then(response => {
             return response.json();

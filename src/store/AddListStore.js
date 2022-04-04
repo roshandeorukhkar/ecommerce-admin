@@ -191,10 +191,8 @@ const AddListStore = () => {
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
     const statusStores = storeId => {
-        const store = {
-            manufacturerName: 0,
-         };
-        statusStore(storeId, store).then(data => {
+        console.log("hello",storeId)
+        statusStore(storeId).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -204,10 +202,8 @@ const AddListStore = () => {
     };
 
     const statusChange = storeId => {
-        const store = {
-            manufacturerName: 1,
-         };
-        statusChangeStore(storeId, store).then(data => {
+       
+        statusChangeStore(storeId).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -226,16 +222,16 @@ const AddListStore = () => {
             </div>
         )
     };
-    const getSwitch = (storeStatus) => {
+    const getSwitch = (storeStatus, status) => {
         return (
             <>
-            {storeStatus.status == true 
+            {status == true 
                ?(
                <>
-               <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusStores(storeStatus._id)} color='primary'/>
+               <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusStores(storeStatus)} color='primary'/>
                </>
                ):
-               <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(storeStatus._id)} color='primary'/>
+               <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(storeStatus)} color='primary'/>
            }
            </>        )
     };
@@ -246,7 +242,7 @@ const AddListStore = () => {
             item['storeName'] = item.storeId.storeName
             item['email'] = item.email
             item['createdAt'] = getDate(item.storeId.createdDate)
-            item['status'] = getSwitch(item)
+            item['status'] = getSwitch(item.storeId._id,item.storeId.status)
             item['action'] = getButtons(item.storeId._id)
             storeListArray.push(item);
         }
