@@ -3,38 +3,38 @@ import { Link } from "react-router-dom";
 import { Switch } from "@mui/material";
 import FormMainTitle from "../common/FormMainTitle";
 import DataTableComponent from "../common/DataTableComponent";
-import { sliderList } from "./ApiSetting";
-import { deleteSlider } from "./ApiSetting";
+import { partnerImgListApi } from "./ApiSetting";
+import { deletePartnerImage } from "./ApiSetting";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
 
-const SliderList = () => {
-  const [sliderArray, setSliderArray] = useState([]);
+const PartnerList = () => {
+  const [list, setList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
+  const [disable , setDisable] = useState(false)
 
-  const list = () => {
-    sliderList().then((data) => {
-      setSliderArray(data.result);
+  const imagelist = () => {
+    partnerImgListApi().then((data) => {
+      setList(data.data.res_);
     });
   };
 
   useEffect(() => {
-    list();
+    imagelist();
   }, []);
 
-  const sliderDelete = (id) => {
+  const partnerImgDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this record?")) {
-      deleteSlider(id).then((data) => {
-        console.log(data);
-        NotificationManager.success(data.message);
-        list();
+      deletePartnerImage(id).then((data) => {
+        NotificationManager.success(data.data.message);
+        imagelist();
       });
     }
   };
 
-  //Store List component
+  //Partner image List component
   const columns = [
     {
       dataField: "id",
@@ -43,7 +43,7 @@ const SliderList = () => {
     },
     {
       dataField: "image",
-      text: "Slider Image",
+      text: "Image",
     },
     {
       dataField: "createdAt",
@@ -70,7 +70,7 @@ const SliderList = () => {
     return (
       <div>
         <Link
-          to={`/admin/update/slider/${imgId}`}
+          to={`/admin/update/partnerImage/${imgId}`}
           className="btn btn-outline btn-info m-5"
           onClick={() => setCheckParams(!checkParams)}
           aria-label="Edit"
@@ -80,14 +80,14 @@ const SliderList = () => {
         <button
           className="btn btn-outline btn-danger"
           aria-label="Delete"
-          onClick={() => sliderDelete(imgId)}
+          onClick={() => partnerImgDelete(imgId)}
         >
           <i className="fa fa-trash-o font-15"></i>
         </button>
       </div>
     );
   };
-  const getSwitch = (storeStatus) => {
+  const getSwitch = (status) => {
     return (
       <Switch
         name="checkedA"
@@ -113,14 +113,14 @@ const SliderList = () => {
     );
   };
 
-  const SlidersLists = [];
-  sliderArray.forEach((item) => {
+  const partnerImageList = [];
+  list.forEach((item) => {
     item["id"] = item._id;
     item["image"] = getImage(item.image);
     item["createdAt"] = getDate(item.createdAt);
     item["status"] = getSwitch(item.status);
     item["action"] = getButtons(item._id);
-    SlidersLists.push(item);
+    partnerImageList.push(item);
   });
 
   return (
@@ -128,18 +128,18 @@ const SliderList = () => {
       <div className="container-fluid">
         <NotificationContainer />
         <FormMainTitle
-          title="Slider Management"
-          btnName="Add Slider"
-          btnLink="/admin/create/slider"
+          title="Partner Images Management"
+          btnName="Add Partner Image"
+          btnLink="/admin/create/partnerImage"
         />
 
         <div className="white-box">
           <div className="col-12">
             <DataTableComponent
               keyField="id"
-              title="Slider List"
+              title="Partner Image List"
               tableHeading={columns}
-              tableList={SlidersLists}
+              tableList={partnerImageList}
               onClick=""
             />
           </div>
@@ -149,4 +149,4 @@ const SliderList = () => {
   );
 };
 
-export default SliderList;
+export default PartnerList;

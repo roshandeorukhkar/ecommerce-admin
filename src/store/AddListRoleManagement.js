@@ -326,14 +326,14 @@ const AddListRoleManagement = (props) => {
                     errorSpan={values.errorRoleName}
                   />
                   <div className="form-group col-md-6">
-                    <label className="col-sm-12 lable">Access Module</label>
+                    <label className="col-sm-12 lable">Access Module<span className='text-danger'>*</span></label>
                     <div className="col-sm-12">
                       <Select options={option} isMulti='true' value={values.accessModuleLabel} onChange={selectedOption}  />
                       <span className='error text-danger'>{values.errorAccessModuleId}</span>
                     </div>
                   </div>
                   <div className="form-group col-md-6">
-                    <label className="col-sm-12 lable">Assign To</label>
+                    <label className="col-sm-12 lable">Assign To<span className='text-danger'>*</span></label>
                     <div className="col-sm-12">
                       <Select options={userOption} value={values.assingTo} onChange={selectedUserOption}  />
                       <span className='error text-danger'>{values.errorAssingTo}</span>

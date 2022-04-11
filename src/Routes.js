@@ -44,6 +44,13 @@ import AllUser from './userManagement/AllUser';
 import SliderManagement from './setting/SliderManagement';
 import AddEditSlider from './setting/AddEditSlider';
 
+import AdvertisingManagement from './setting/AdvertisingManagement';
+import AddEditAdvertisImg from './setting/AddEditAdvertisImg';
+
+import PartnerManagement from './setting/PartnerManagement';
+import AddEditPartner from './setting/AddEditPartner';
+
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -87,7 +94,13 @@ const Routes = () => {
                 <AdminRoute path="/admin/slider" exact component={SliderManagement} />
                 <AdminRoute path="/admin/create/slider" exact component={AddEditSlider} />
                 <AdminRoute path="/admin/update/slider/:sliderId" exact component={AddEditSlider} />
-
+                <AdminRoute path="/admin/advertis" exact component={AdvertisingManagement} />
+                <AdminRoute path="/admin/create/advertis" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/update/advertis/:advertisId" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/partnerImage" exact component={PartnerManagement} />
+                <AdminRoute path="/admin/create/partnerImage" exact component={AddEditPartner} />
+                <AdminRoute path="/admin/update/partnerImage/:partnerId" exact component={AddEditPartner} />
+                
             </Switch>
         </BrowserRouter>
     );
