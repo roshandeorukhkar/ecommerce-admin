@@ -1,10 +1,9 @@
 import React from 'react';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import CustomerList from "./Customer";
+import OrderList from "./Orders";
 
-const CustomerManagement = () =>{
-
+const OrderManagement = () =>{
     return(
             <>
               <AdminHeader />
@@ -13,12 +12,12 @@ const CustomerManagement = () =>{
                     <div className="page-wrapper">
                         <div className="container-fluid">
                                 <div className='row'>
-                                    <div className='col-md-8'><p id="hedingTitle"> Customer List </p></div>
+                                    <div className='col-md-8'><p id="hedingTitle"> Order Management </p></div>
                                 </div>
                                 <div className="white-box">
                                     <div className="row">
                                         <div className="col-lg-12">
-                                             <CustomerList />
+                                             <OrderList />
                                         </div>
                                     </div>
                                 </div>
@@ -31,4 +30,4 @@ const CustomerManagement = () =>{
 }
 
 
-export default CustomerManagement;
+export default OrderManagement;
