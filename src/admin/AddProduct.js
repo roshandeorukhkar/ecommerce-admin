@@ -26,7 +26,6 @@ import Select from 'react-select'
         control,
         name: "attribute"
       });
-     // console.log("fields",fields)
     const [values, setValues] = useState({
         error: '',
         redirectToProfile: false,
@@ -90,14 +89,12 @@ import Select from 'react-select'
     };
 
     const handleAttributes = (e) => {
-      //  console.log(e.target.value);
         getDimanstions(e.target.value).then(data =>{
             if (data.error) {
                 console.log({ ...values, error: data.error });
             } else {
                
                 setDimanstions(generateSelectOptions(data.dimension));
-                //console.log(data, "a");   
             }
 
         });
@@ -126,7 +123,6 @@ import Select from 'react-select'
         let result = []
         data.map((v, i)=>{
             result.push({value: v, label: v})
-            console.log(result, "chek data ......")
         })
         return result;
     }
@@ -289,37 +285,6 @@ import Select from 'react-select'
         </div>
           <div className="white-box">
             <div className="row">
-                <div className="col-lg-12">
-                    {/* <h3>Attribute Add multiple</h3><hr></hr> */}
-                            {/* <div className="form-group">
-                                    <div className='col-lg-4'>
-                                        <select className="form-control" {...register("attribute", { required: false })}  onChange={handleAttributes} >
-                                        <option>Please select</option>
-                                        {attributess &&
-                                            attributess.map((a, i) => (
-                                                <>
-                                                {!a.deletedAt ?(
-                                                    <option key={i} value={a._id} >
-                                                        {a.attributeName }
-                                                    </option>
-                                                    ):null}
-                                                </>
-                                            ))}
-                                    </select>
-                                    </div>
-                                    <div className='col-lg-4'>
-                                    {dimanstions && dimanstions.length > 0? (
-                                         <Controller
-                                         name="dimanstions"
-                                         control={control}
-                                         render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
-                                       />
-                                    ): null}
-                                        {errors.dimension && "dimension is required"}
-                                    </div>
-                            </div> */}
-                   
-                </div>
                     <div className='col-lg-12'>
                         <h3>Attribute Add multiple</h3><hr></hr>
                         {fields.map((item, index) => {
@@ -342,17 +307,10 @@ import Select from 'react-select'
                                 </div>
                                 <div className='col-lg-5'>
                                     <Controller
-                                            name={`attribute.${index}.Values`}
-                                            control={control}
-                                            render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
-                                        />
-                                    {/* old  {dimanstions && dimanstions.length > 0? (
-                                            <Controller
-                                            name={`attribute.${index}.Values`}
-                                            control={control}
-                                            render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
-                                        />
-                                    ): null} */}
+                                        name={`attribute.${index}.Values`}
+                                        control={control}
+                                        render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
+                                    />
                                 </div>
                                 <div className='col-lg-2'>
                                     <button type="button" className="btn btn-info" onClick={() => { append(); }}> + </button>
