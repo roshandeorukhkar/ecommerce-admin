@@ -1,4 +1,4 @@
-import { uploadBytesResumable } from "firebase/storage";
+import { uploadBytesResumable ,getDownloadURL } from "firebase/storage";
 import React, { useState } from "react";
 import { ref } from '@firebase/storage';
 import { render } from "react-dom";
@@ -12,14 +12,23 @@ const FirebaseImage = () => {
             setImage(e.target.files[0]);
         }
     }
-    const handleUpload = () => {
+    const handleUpload = (e) => {
+      e.preventDefault();
+      console.log("image,image",image)
         if(!image)  return;
-        const storageRef = ref( storage, `/images/${image.name}` )
+        const storageRef = ref( storage , `/slider-image/${image.name}` )
         const uploadTask = uploadBytesResumable(storageRef ,image );
 
-        // uploadTask.on('state_changed', (snapshot) => {
-
-        // })
+        uploadTask.on('state_changed', (snapshot) => {
+          console.log(snapshot);
+        },
+          (err) => console.log('Error', err),
+          () =>{
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+              console.log("url:",url);
+            })
+          }
+        )  
     }
 
   return (

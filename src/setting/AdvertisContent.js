@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import FormMainTitle from "../common/FormMainTitle";
-import { saveSlider, getDataOfSlider } from "./ApiSetting";
-import { Redirect, useParams } from "react-router-dom";
+import { saveSlider } from "./ApiSetting";
+import { saveAdvertise } from "./ApiSetting";
+import { Redirect } from "react-router-dom";
 import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
 
-const SliderContent = () => {
+const AdvertisContent = () => {
   const [previewImg, setPreviewImg] = useState(null);
-  let params = useParams();
-  console.log("params",params);
+  
   const [values, setValues] = useState({
     title: "",
     link: "",
@@ -20,7 +20,6 @@ const SliderContent = () => {
     imageError: "",
     titleError: "",
     sequenceError: "",
-    sliderId : "",
     redirect: false,
     formData: "",
   });
@@ -35,47 +34,25 @@ const SliderContent = () => {
     sequenceError,
     redirect,
     formData,
-    sliderId
   } = values;
 
   const imgTypes = ["image/png", "image/jpeg"];
 
-  const getDataById = () =>{
-    const id = params.sliderId;
-    getDataOfSlider(id).then((data)=>{
-      console.log("-----",data.data);
-      
-      setValues({
-        ...values,
-        title: data.data.title,
-        link: data.data.link,
-        sequence: data.data.sequence,
-        image: data.data.image,
-        description: data.data.description,
-        redirect: false,
-        sliderId: id,
-      });
-      setPreviewImg(data.data.image)
-    })
-  }
-
-
   useEffect(() => {
-    // getDataById();
     setValues({
-      ...values,
       formData: new FormData(),
     });
   }, []);
 
   const handleChange = (name) => (event) => {
     const value =
-      name === "sliderImg" ? event.target.files[0] : event.target.value;
+      name === "advertiseImg" ? event.target.files[0] : event.target.value;
     formData.set(name, value);
     setValues({ ...values, [name]: event.target.value });
 
     //Privew image
-    if (name === "sliderImg") {
+
+    if (name === "advertiseImg") {
       const selectedFile = event.target.files[0];
       if (selectedFile) {
         if (selectedFile && imgTypes.includes(selectedFile.type)) {
@@ -92,16 +69,15 @@ const SliderContent = () => {
         console.log("Select your file");
       }
     }
-
   };
 
   const handleClick = (e) => {
     e.preventDefault();
-    saveSlider(formData).then((data) => {
-      if (data.status == false) {
+    saveAdvertise(formData).then((data) => {
+      if (data.data.status == false) {
         setValues({
           ...values,
-          imageError: data.errors.sliderError,
+          imageError: data.data.errors.error,
         });
       } else {
         setValues({
@@ -114,7 +90,7 @@ const SliderContent = () => {
           imageError: "",
           redirect: false,
         });
-        NotificationManager.success(data.message);
+        NotificationManager.success(data.data.message);
         setTimeout(function () {
           setValues({
             ...values,
@@ -127,7 +103,7 @@ const SliderContent = () => {
 
   const redirectUser = () => {
     if (redirect) {
-      return <Redirect to="/admin/slider" />;
+      return <Redirect to="/admin/advertis" />;
     }
   };
 
@@ -136,9 +112,9 @@ const SliderContent = () => {
       <div className="container-fluid">
         <NotificationContainer />
         <FormMainTitle
-          title="Add Slider"
+          title="Add Advertise Image"
           btnName="Back"
-          btnLink="/admin/slider"
+          btnLink="/admin/Advertis"
         />
         <div className="white-box">
           <div className="row">
@@ -149,7 +125,7 @@ const SliderContent = () => {
                 autoComplete="false"
               >
                 {redirectUser()}
-                <div className="form-group col-md-6 slider-preview-img">
+                <div className="form-group col-md-6 Advertise-preview-img">
                   <img
                     className="img-fluid"
                     src={
@@ -157,7 +133,9 @@ const SliderContent = () => {
                         ? previewImg
                         : "../assets/images/preview_Image.jpg"
                     }
-                    alt="footer-logo" height={400} width={450}
+                    alt="footer-logo"
+                    height={400}
+                    width={450}
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -167,23 +145,23 @@ const SliderContent = () => {
                   <div className="col-md-12">
                     <input
                       type="file"
-                      name="sliderImg"
+                      name="advertiseImg"
                       className="form-control"
                       accept="image/*"
-                      onChange={handleChange("sliderImg")}
+                      onChange={handleChange("advertiseImg")}
                     />
                     <span className="error text-danger">{imageError}</span>
                   </div>
                 </div>
                 <div className="form-group col-md-6">
                   <label className="col-md-12 lable">
-                    Title<span className="text-danger">*</span>
+                    Title
                   </label>
                   <div className="col-md-12">
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter title of slider"
+                      placeholder="Enter title of advertise Image"
                       value={title}
                       onChange={handleChange("title")}
                     />
@@ -196,7 +174,7 @@ const SliderContent = () => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter link of slider"
+                      placeholder="Enter link of advertise image"
                       value={link}
                       onChange={handleChange("link")}
                     />
@@ -205,13 +183,13 @@ const SliderContent = () => {
                 </div>
                 <div className="form-group col-md-6">
                   <label className="col-md-12 lable">
-                    Sequence<span className="text-danger">*</span>
+                    Sequence
                   </label>
                   <div className="col-md-12">
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter sequence of slider"
+                      placeholder="Enter sequence of advertise image"
                       value={sequence}
                       onChange={handleChange("sequence")}
                     />
@@ -220,28 +198,27 @@ const SliderContent = () => {
                 </div>
                 <div className="form-group col-md-6">
                   <label className="col-md-12 lable">
-                    Description<span className="text-danger">*</span>
+                    Description
                   </label>
                   <div className="col-md-12">
                     <textarea
                       rows="4"
                       type="text"
                       className="form-control"
-                      placeholder="Description of slider"
+                      placeholder="Description of advertise image"
                       value={description}
                       onChange={handleChange("description")}
                     ></textarea>
                     <span className="error text-danger"></span>
                   </div>
                 </div>
-                <div className="col-md-12 t-a-r">
-                {/* <input type="text" name="_id" value={sliderId}  /> */}
+                <div className="col-md-12 t-a-c">
                   <button
                     type="submit"
                     className="btn btn-rounded-min btn-primary"
                     onClick={handleClick}
                   >
-                    Add Slider
+                    Add Advertise
                   </button>
                 </div>
               </form>
@@ -252,4 +229,5 @@ const SliderContent = () => {
     </div>
   );
 };
-export default SliderContent;
+
+export default AdvertisContent;

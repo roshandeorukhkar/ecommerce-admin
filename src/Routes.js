@@ -49,6 +49,13 @@ import Discount from './discountManagement/discount';
 import AddDiscount from './discountManagement/discountAdd';
 
 import TestDemo from './discountManagement/test';
+import AdvertisingManagement from './setting/AdvertisingManagement';
+import AddEditAdvertisImg from './setting/AddEditAdvertisImg';
+
+import PartnerManagement from './setting/PartnerManagement';
+import AddEditPartner from './setting/AddEditPartner';
+
+
 
 const Routes = () => {
     return (
@@ -94,12 +101,13 @@ const Routes = () => {
                 <AdminRoute path="/admin/slider" exact component={SliderManagement} />
                 <AdminRoute path="/admin/create/slider" exact component={AddEditSlider} />
                 <AdminRoute path="/admin/update/slider/:sliderId" exact component={AddEditSlider} />
-
-                <AdminRoute path="/admin/discount" exact component={Discount} />
-                <AdminRoute path="/admin/create/discount" exact component={AddDiscount} />
-            
-                <AdminRoute path="/admin/test" exact component={TestDemo} />
-
+            <AdminRoute path="/admin/advertis" exact component={AdvertisingManagement} />
+                <AdminRoute path="/admin/create/advertis" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/update/advertis/:advertisId" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/partnerImage" exact component={PartnerManagement} />
+                <AdminRoute path="/admin/create/partnerImage" exact component={AddEditPartner} />
+                <AdminRoute path="/admin/update/partnerImage/:partnerId" exact component={AddEditPartner} />
+                
             </Switch>
         </BrowserRouter>
     );
