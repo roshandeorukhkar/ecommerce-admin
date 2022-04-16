@@ -8,24 +8,35 @@ import { Redirect } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
 
-
     const AddProduct = () => {
     // use for  validition
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             dimanstions: {},
-            attribute: [{ Ids: "", Values: "" }]
+            attribute: [{ Ids: "", Values: "" }],
+            specification: [{ Id: "" }],
+            image: [{ colors: "", pic: "" }]
         }
       });
 
       const {
-        fields,
-        append,
-        remove
-      } = useFieldArray({
-        control,
-        name: "attribute"
-      });
+        fields: attributeFields,  // it use attribute 
+        append: attributeAppend,
+        remove: attributeRemove
+      } = useFieldArray({ control, name: "attribute" });
+
+      const {
+        fields: specificationFields, // specification
+        append: specificationAppend,
+        remove: specificationRemove
+      } = useFieldArray({ control, name: "specification" });
+
+      const {
+        fields: imageFields, // image
+        append: imageAppend,
+        remove: imageRemove
+      } = useFieldArray({ control, name: "image" });
+
     const [values, setValues] = useState({
         error: '',
         redirectToProfile: false,
@@ -266,11 +277,14 @@ import Select from 'react-select'
         </div>
         <div className="white-box">
             <div className="row">
-                <div className="col-lg-12">
-                    <h3>Prodect Specification</h3><hr></hr>
-                        <div className="form-group col-lg-6">
-                            <h6><b> specification</b></h6>
-                            <select  className="form-control" {...register("specification", { required: false })}>
+                <div className="row">
+                    <div className='col-lg-12'>
+                        <h3> Add Specification </h3><hr></hr>
+                        {specificationFields.map((item, index) => {
+                            return (
+                            <div key={item.id}>
+                                <div className='col-lg-7'>
+                                <select  className="form-control" {...register(`specification.${index}.Id`, { required: false })}>
                                 <option>Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
@@ -279,18 +293,27 @@ import Select from 'react-select'
                                         </option>
                                     ))}
                             </select>
-                        </div>
-                </div>
+                                </div>
+                                <div className='col-lg-2'>
+                                    <button type="button" className="btn btn-info" onClick={() => { specificationAppend(); }}> + </button>
+                                    <button type="button" className="btn btn-danger" onClick={() => specificationRemove(index)}> - </button>
+                                </div>
+                            </div>
+                            );
+                        })}
+                    </div>
+            </div>
             </div>
         </div>
-          <div className="white-box">
+        <div className="white-box">
             <div className="row">
                     <div className='col-lg-12'>
-                        <h3>Attribute Add multiple</h3><hr></hr>
-                        {fields.map((item, index) => {
+                        <h3> Add Attribute </h3><hr></hr>
+                        {attributeFields.map((item, index) => {
                             return (
                             <div key={item.id}>
                                 <div className='col-lg-5'>
+                                    <h6>Attribute name</h6>
                                     <select className="form-control" {...register(`attribute.${index}.Ids`, { required: false })}  onChange={handleAttributes} >
                                             <option>Please select</option>
                                                 {attributess &&
@@ -306,6 +329,7 @@ import Select from 'react-select'
                                     </select>
                                 </div>
                                 <div className='col-lg-5'>
+                                <h6>Attribute value</h6>
                                     <Controller
                                         name={`attribute.${index}.Values`}
                                         control={control}
@@ -313,8 +337,37 @@ import Select from 'react-select'
                                     />
                                 </div>
                                 <div className='col-lg-2'>
-                                    <button type="button" className="btn btn-info" onClick={() => { append(); }}> + </button>
-                                    <button type="button" className="btn btn-danger" onClick={() => remove(index)}> - </button>
+                                <h6> <br></br></h6>
+                                    <button type="button" className="btn btn-info" onClick={() => { attributeAppend(); }}> + </button>
+                                    <button type="button" className="btn btn-danger" onClick={() => attributeRemove(index)}> - </button>
+                                </div>
+                            </div>
+                            );
+                        })}
+                    </div>
+            </div>
+        </div>
+
+        <div className="white-box">
+            <div className="row">
+                    <div className='col-lg-12'>
+                        <h3> Add Image </h3><hr></hr>
+                        {imageFields.map((item, index) => {
+                            return (
+                            <div key={item.id}>
+                                <div className='col-lg-5'>
+                                    <h6>Color name</h6>
+                                        <input type="text" className="form-control" placeholder='Enter Color name'  {...register(`image.${index}.colors`, { required: false })} />
+                                </div>
+                                <div className='col-lg-5'>
+                                <h6> Photos</h6>
+                                <input type="file" className="form-control" placeholder='Enter Color name'  {...register(`image.${index}.pic`, { required: false })} />
+                                    {/* <Controller render={({ field }) => <input {...field} />} name={`image.${index}.pic`} control={control} /> */}
+                                </div>
+                                <div className='col-lg-2'>
+                                <h6> <br></br></h6>
+                                    <button type="button" className="btn btn-info" onClick={() => { imageAppend(); }}> + </button>
+                                    <button type="button" className="btn btn-danger" onClick={() => imageRemove(index)}> - </button>
                                 </div>
                             </div>
                             );
@@ -341,48 +394,7 @@ import Select from 'react-select'
                     </div>
             </div>
         </div>
-        {/* <div className="white-box">
-            <div className="row">
-                <div className="col-lg-12">
-                    <h3>Prodect Attribute</h3><hr></hr>
-                        <div className="form-group col-lg-6">
-                            <h6><b> Attribute</b></h6>
-                            <select className="form-control" {...register("attribute", { required: false })} >
-                                <option>Please select</option>
-                                {attributess &&
-                                    attributess.map((a, i) => (
-                                        <>
-                                        {!a.deletedAt ?(
-                                            <option key={i} value={a._id}>
-                                            {a.attributeName }
-                                            </option>
-                                            ):null}
-                                        </>
-                                    ))}
-                            </select>
-                        </div>
-                </div>
-            </div>
-        </div> */}
-                {/* <div className="white-box">
-            <div className="row">
-                <h3>Product Other</h3><hr></hr>
-                <div className="col-lg-12">
-                        <div className="form-group  col-lg-7">
-                            <h6><b> product height </b></h6>
-                            <input  type="text" className="form-control" {...register("height", { required: false })} />
-                        </div>
-                        <div className="form-group col-lg-7">
-                            <h6><b> product width</b></h6>
-                            <input type="text" className="form-control" {...register("width", { required: false })} />
-                        </div>
-                        <div className="form-group col-lg-7">
-                            <h6><b> product length </b></h6>
-                            <input type="text" className="form-control" {...register("leanth", { required: false })} />
-                        </div>
-                </div>
-            </div>
-        </div> */}
+
         </form>
     </>
    
