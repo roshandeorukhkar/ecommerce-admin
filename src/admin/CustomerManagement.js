@@ -14,7 +14,6 @@ const CustomerManagement = () =>{
                         <div className="container-fluid">
                                 <div className='row'>
                                     <div className='col-md-8'><p id="hedingTitle"> Customer List </p></div>
-                                    {/* <div className='col-md-4'><p><button type="submit" className="btn btn-info fa-pull-right" style={{height:'33px'}}><i className="fa fa-search"></i></button> <input type="text" id="search" placeholder='search' style={{float: 'right'}} /></p></div> */}
                                 </div>
                                 <div className="white-box">
                                     <div className="row">

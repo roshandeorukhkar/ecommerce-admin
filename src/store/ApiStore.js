@@ -131,3 +131,30 @@ export const storeUserList = (storeId) => {
     }).catch(error =>
         console.log("Errors : " , error))
 }
+// changes on status
+
+export const statusStore = (storeId) => {
+    return fetch(`${API}/store/status/${storeId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeStore = (storeId) => {
+    return fetch(`${API}/store/statusChange/${storeId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};

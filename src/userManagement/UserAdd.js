@@ -132,10 +132,9 @@ return(
 
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Mobile </b></h6>
-                                                <input onChange={handleChange('mobile')} type="text" maxLength={10} className="form-control" placeholder='Enter mobile' />
+                                                <input onChange={handleChange('mobile')} type="text" maxLength={10} className="form-control" placeholder='Enter mobile' onKeyPress={(event) => { if (!/[0-9]/.test(event.key)) { event.preventDefault(); }}} />
                                                 <span className='text-danger'>{values.mobileError}</span>
                                             </div>
-                                          
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Email </b></h6>
                                                 <input onChange={handleChange('email')} type="text" className="form-control" placeholder='Enter name' />

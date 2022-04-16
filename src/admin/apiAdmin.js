@@ -149,15 +149,16 @@ export const deleteSpecification = (productId) => {
     })
 };
 
-*/
+*/ // new product that use in useform 
 export const createProduct = (token, product) => {
+  //  console.log(product);
     return fetch(`${API}/product/create/`, {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             Accept: 'application/json',
-           // Authorization: `Bearer ${token}`
         },
-        body: product
+        body: JSON.stringify(product)
     })
         .then(response => {
             return response.json();
@@ -167,8 +168,35 @@ export const createProduct = (token, product) => {
         });
 };
 
+// export const createProduct = (token, product) => {
+//     return fetch(`${API}/product/create/`, {
+//         method: 'POST',
+//         headers: {
+//             Accept: 'application/json',
+//             Authorization: `Bearer ${token}`
+//         },
+//         body: product
+//     })
+//         .then(response => {
+//             return response.json();
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         });
+// };
+
 export const getCategory = categoryId => {
     return fetch(`${API}/category/${categoryId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const getSubCategory = categoryId => {
+    return fetch(`${API}/subcategory/${categoryId}`, {
         method: 'GET'
     })
         .then(response => {
@@ -187,12 +215,26 @@ export const getCategories = () => {
         .catch(err => console.log(err));
 };
 
-export const listOrders = (userId, token) => {
-    return fetch(`${API}/order/list/${userId}`, {
+//  export const listOrders = (userId, token) => {
+//     return fetch(`${API}/order/list/${userId}`, {
+//         method: 'GET',
+//         headers: {
+//             Accept: 'application/json',
+//             Authorization: `Bearer ${token}`
+//         }
+//     })
+//         .then(response => {
+//             return response.json();
+//         })
+//         .catch(err => console.log(err));
+// };
+// old commit 
+export const listOrders = () => {
+    return fetch(`${API}/order/list/`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
-            Authorization: `Bearer ${token}`
+          //  Authorization: `Bearer ${token}`
         }
     })
         .then(response => {
@@ -200,8 +242,6 @@ export const listOrders = (userId, token) => {
         })
         .catch(err => console.log(err));
 };
-
-
 
 export const createManufacturer = async (manufacture) => {
     try {
@@ -527,8 +567,6 @@ export const statusChangeSpecification = (productId, specification) => {
         .catch(err => console.log(err));
 };
 
-
-
 // show all user
 export const getCoustomer = () => {
     return fetch(`${API}/cust?limit=undefined`, {
@@ -641,6 +679,16 @@ export const createAttribute = async (attribute) => {
 
 export const getAttributes = () => {
     return fetch(`${API}/attribute`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const getDimanstions = attributeId => {
+    return fetch(`${API}/attribute/${attributeId}`, {
         method: 'GET'
     })
         .then(response => {

@@ -15,6 +15,7 @@ import './AccessModuleOption';
 import { accessModuleList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
 import { storeUserList } from "./ApiStore";
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const AddListRoleManagement = (props) => {
   const history = useHistory();
@@ -37,6 +38,7 @@ const AddListRoleManagement = (props) => {
   const [userList, setUserList] = useState([]);
   const [checkParams, setCheckParams] = useState(false);
   const [accessModules, setAccessModules] = useState([]);
+  const [statusOnOff ,setStatusOnOff] = useState(false);
 
   useEffect(() => {
     if (params.userRoleId != undefined) {
@@ -66,10 +68,19 @@ const AddListRoleManagement = (props) => {
 
   const getUserRoleById = () => {
     getUserRoleByIdData({ roleId: params.userRoleId }).then((data) => {
+     const assignToArray = {
+       value : data.user[0]._id,
+       label : data.user[0].name,
+     }
+     const accessModuleArray = [];
+      data.module.forEach((res) => {
+        accessModuleArray.push({ label : res.label ,value : res.name})
+      })
       setValues({
         roleName: data.roleName,
         accessModuleId: data.accessModuleId,
-        assingTo: data.user_id,
+        accessModuleLabel : accessModuleArray,
+        assingTo: assignToArray,
         userRoleId: data._id,
         storeId: storeId
       })
@@ -256,9 +267,15 @@ const AddListRoleManagement = (props) => {
       </div>
     )
   };
+
+  const handleStatusChange =  (event)  =>{
+    // console.log("---",event.target.checked);
+    setStatusOnOff(event.target.checked);
+  }
+
   const getSwitch = (storeStatus) => {
     return (
-      <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox", "size": "medium", "color": "primary" }} color='primary' checked />
+      <Switch checked={statusOnOff} onChange={handleStatusChange} inputProps={{ 'aria-label': 'controlled' }} />
     )
   };
 
@@ -309,14 +326,14 @@ const AddListRoleManagement = (props) => {
                     errorSpan={values.errorRoleName}
                   />
                   <div className="form-group col-md-6">
-                    <label className="col-sm-12 lable">Access Module</label>
+                    <label className="col-sm-12 lable">Access Module<span className='text-danger'>*</span></label>
                     <div className="col-sm-12">
                       <Select options={option} isMulti='true' value={values.accessModuleLabel} onChange={selectedOption}  />
                       <span className='error text-danger'>{values.errorAccessModuleId}</span>
                     </div>
                   </div>
                   <div className="form-group col-md-6">
-                    <label className="col-sm-12 lable">Assign To</label>
+                    <label className="col-sm-12 lable">Assign To<span className='text-danger'>*</span></label>
                     <div className="col-sm-12">
                       <Select options={userOption} value={values.assingTo} onChange={selectedUserOption}  />
                       <span className='error text-danger'>{values.errorAssingTo}</span>

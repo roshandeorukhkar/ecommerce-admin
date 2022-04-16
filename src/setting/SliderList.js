@@ -25,11 +25,13 @@ const SliderList = () => {
   }, []);
 
   const sliderDelete = (id) => {
-    deleteSlider(id).then((data) => {
-      console.log(data);
-      NotificationManager.success(data.message);
-      list();
-    });
+    if (window.confirm("Are you sure you want to delete this record?")) {
+      deleteSlider(id).then((data) => {
+        console.log(data);
+        NotificationManager.success(data.message);
+        list();
+      });
+    }
   };
 
   //Store List component
@@ -103,7 +105,7 @@ const SliderList = () => {
   const getImage = (path) => {
     return (
       <img
-        src={`../slider-images/${path}`}
+        src={path}
         alt="footer-logo"
         width="100"
         height="70"

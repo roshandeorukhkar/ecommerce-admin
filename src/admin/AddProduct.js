@@ -2,64 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import { createProduct, getCategories, getAttributes, Specification, getManufacturers } from './apiAdmin';
+import { createProduct, getCategories, getAttributes, Specification, getManufacturers , getDimanstions, getSubCategory  } from './apiAdmin';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
+import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
+import Select from 'react-select'
+
 
     const AddProduct = () => {
-    const [inputList, setInputList] = useState([{ dimension: "" }]);
+    // use for  validition
+    const { control, register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            dimanstions: {},
+            attribute: [{ Ids: "", Values: "" }]
+        }
+      });
+
+      const {
+        fields,
+        append,
+        remove
+      } = useFieldArray({
+        control,
+        name: "attribute"
+      });
     const [values, setValues] = useState({
-        name: '',
-        brand:'',
-        errorname: '',
-        description: '',
-        dimension:'',
-        attribute:'',
-        categoryval:'',
-        attributeval:'',
-        price: '',
-        errorprice:'',
-        category: '',
-        shipping: '',
-        quantity: '',
-        height:'',
-        width:'',
-        leanth:'',
-        photo: '',
         error: '',
-        createdProduct: '',
         redirectToProfile: false,
-        formData:new FormData()
     });
     
+
+    const { name, error, redirectToProfile } = values;
+
     const [attributess , setAttributess] = useState([]);
+    const [dimanstions , setDimanstions] = useState(null);
+    const [subcategories , setSubcategories] = useState(null);
     const [categories , setCategories] = useState([]);
     const [specifications , setSpecification] = useState([]);
     const [manufactures , setManufactures] = useState([]);
     const { user, token } = isAuthenticated();
 
-    const { name, description, price, attribute, height, width, leanth, dimension, category, quantity, brand, error, createdProduct, redirectToProfile, formData } = values;
-
-    //add multiple
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...inputList];
-        list[index] = value;
-        setInputList(list);
-        //console.log("test", e, value, list)
-        setValues({ ...values, dimension: list });
-    };
-    const handleRemoveClick = index => {
-        const list = [...inputList];
-        list.splice(index, 1);
-        setInputList(list);
-    };
-    const handleAddClick = () => {
-        setInputList([...inputList, { dimension: "" }]);
-    };
-    //end multiple
     
-    // load categories and set form data
+    // get categories 
     const init = () => {
         getCategories().then(data => {
             if (data.error) {
@@ -69,17 +53,21 @@ import { Redirect } from 'react-router-dom';
             }
         });
     };
-
+    // get attributes
     const listOfAttributes = () => {
         getAttributes().then(data => {
+           // console.log("data",data)
             if (data.error) {
                 console.log({ ...values, error: data.error });
             } else {
+               // console.log(data[0])
                 setAttributess(data);
+                
+                setDimanstions(data.dimension);
             }
         });
     };
-
+    // get specifications
     const listOfSpecification = () => {
         Specification().then(data => {
             if (data.error) {
@@ -89,7 +77,7 @@ import { Redirect } from 'react-router-dom';
             }
         });
     };
-
+   // get manufacturers
     const listOfManufacter = () => {
         getManufacturers().then(data => {
             if (data.error) {
@@ -100,6 +88,45 @@ import { Redirect } from 'react-router-dom';
         });
     };
 
+    const handleAttributes = (e) => {
+        getDimanstions(e.target.value).then(data =>{
+            if (data.error) {
+                console.log({ ...values, error: data.error });
+            } else {
+               
+                setDimanstions(generateSelectOptions(data.dimension));
+            }
+
+        });
+    } 
+    // category select show sub catagery
+    const handleCategory = (e) => {
+        const subcategory = [];
+        getSubCategory(e.target.value).then(data =>{
+            //console.log(e.target.value, "category id ................")
+              if (data.error) {
+                  console.log({ ...values, error: data.error });
+              } else {
+                data.map((v, i)=>{
+                    if(e.target.value == v.subcategory){
+                        subcategory.push({value: v._id, label: v.name, sub:v.subcategory});
+                    }
+                    // subcategory.push({value: v._id, label: v.name, sub:v.subcategory});
+                })
+               // console.log(subcategory, "abced")
+                setSubcategories(subcategory);
+              }
+          });
+      }   
+
+    const generateSelectOptions = (data) => {
+        let result = []
+        data.map((v, i)=>{
+            result.push({value: v, label: v})
+        })
+        return result;
+    }
+
     useEffect(() => {
         init();
         listOfAttributes();
@@ -107,42 +134,18 @@ import { Redirect } from 'react-router-dom';
         listOfManufacter();
     }, []);
 
-    const handleChange = name => event => {
-    console.log(name, "name");
-        const value = name === 'photo' ? event.target.files[0] : event.target.value;
-       formData.set(name, value);
-        setValues({ ...values, [name]: value , errorname:''});
-    };
-
-    const clickSubmit = event => {
-        event.preventDefault();
-        setValues({ ...values, error: false });
-         console.log(formData, values);
-         for ( var key in values ) {
-            formData.append(key, values[key]);
-        }
-       // console.log(dimension);
-        //return false; 
-        createProduct(token, formData).then(data => {
-            if (data.status == false) {
-                setValues({
-                  ...values,
-                  errorname: data.errors.name,
-                });
-              } 
+    const clickSubmit = (data) => {
+         console.log(data, "product")
+         createProduct(token, data).then(data => {
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } 
             else {
                 setValues({
                     ...values,
-                    name: '',
-                    description: '',
-                    photo: '',
-                    price: '',
-                    attribute:'',
-                    quantity: '',
-                    redirectToProfile: false,
-                    createdProduct: data.name
+                    redirectToProfile: false
                 });
-                NotificationManager.success('Product has been added successfully!');
+                 NotificationManager.success('Product has been added successfully!');
                 setTimeout(function(){                
                     setValues({
                         ...values,
@@ -153,21 +156,30 @@ import { Redirect } from 'react-router-dom';
         });
     };
 
+    const SelectBox = React.forwardRef(({ onChange, onBlur, options, isMulti, name }, ref ) => (
+          <Select isMulti={isMulti} ref={ref} onBlur={onBlur} onChange={onChange} options={options} />
+      ));
+    
     const newPostForm = () => (
     <>
-        <form > 
+        <form onSubmit={handleSubmit(clickSubmit)}> 
          <div className="white-box">
             <div className="row">
                 <h3>Product Information</h3><hr></hr>
                 <div className="col-lg-12">
                     <div className="form-group col-lg-6">
                         <h6><b>Product Name <span style={{color:'red'}}>*</span></b></h6>
-                        <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter product name' value={name}  required/>
-                        <span className='error text-danger'>{values.errorname}</span>
+                        <input type="text" className="form-control" placeholder='Enter product name' {...register("name", { required: true })} />
+                        {errors.name && <span className='text-danger'>Product name is required</span>}
                     </div>
                     <div className="form-group col-lg-6">
+                        <h6><b>Brand Name</b></h6>
+                        <input type="text" className="form-control" placeholder='Enter brand name' {...register("brand", { required: true })}/>
+                        {errors.brand && <span className='text-danger'>Brand name is required</span>}
+                    </div> 
+                    <div className="form-group col-lg-6">
                         <h6><b> Manufacturer </b></h6>
-                        <select onChange={handleChange('manufactures')} className="form-control" placeholder='select manufactures'>
+                        <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: false })}> 
                             <option>Please select</option>
                             {manufactures &&
                                 manufactures.map((s, i) => (
@@ -178,42 +190,41 @@ import { Redirect } from 'react-router-dom';
                                         </option>
                                     ):null}
                                 </>
-                                ))}
+                                ))} 
                         </select>
                     </div> 
                     <div className="form-group col-lg-6">
                             <h6><b> Category</b></h6>
-                            <select onChange={handleChange('category')} className="form-control" value={category}>
+                            <select className="form-control" {...register("category", { required: false })} onChange={handleCategory}>
                                 <option>Please select</option>
                                 {categories &&
                                     categories.map((c, i) => (
                                         <>
-                                             {!c.deletedAt && !c.subcategory && c.status == 1 ?(
+                                            {!c.deletedAt && !c.subcategory && c.status == 1 ?(
                                             <option key={i} value={c._id}>
                                                 {c.name }
                                             </option>
                                              ):null}
                                         </>
-                                      
                                     ))}
                             </select>
-                    </div> 
-                    {/* <div className="form-group col-lg-6">
-                            <h6><b>Sub Category</b></h6>
-                            <select onChange={handleChange('subcategory')} className="form-control" value={category}>
-                                <option>Please select</option>
-                                {categories &&
-                                    categories.map((c, i) => (
-                                        <option key={i} value={c._id}>
-                                            {c.name }
-                                        </option>
-                                    ))}
-                            </select>
-                    </div> */}
+                    </div>
                     <div className="form-group col-lg-6">
-                        <h6><b>Brand Name</b></h6>
-                        <input onChange={handleChange('brand')} type="text" className="form-control" placeholder='Enter brand name' value={brand} />
-                    </div> 
+                            <h6><b> Sub Category </b></h6>
+                            <select className="form-control" {...register("subcategory", { required: false })}  >
+                                <option>Please select</option>
+                                {subcategories &&
+                                    subcategories.map((s, i) => (
+                                        <>
+                                        {s.sub ?(
+                                            <option key={i} value={s.value}>
+                                                {s.label}
+                                            </option>
+                                        ):null}
+                                        </>
+                                    ))}
+                            </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,11 +234,11 @@ import { Redirect } from 'react-router-dom';
                 <div className="col-lg-12">
                         <div className="form-group col-lg-6">
                             <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
-                            <input onChange={handleChange('price')} type="number" placeholder='Enter price ' className="form-control" value={price} />
+                            <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: false })} />
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> Shipping</b></h6>
-                            <select onChange={handleChange('shipping')} className="form-control">
+                            <select className="form-control" {...register("shipping", { required: false })}>
                                 <option>Please select</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
@@ -235,7 +246,7 @@ import { Redirect } from 'react-router-dom';
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> product type</b></h6>
-                            <select onChange={handleChange('type')} className="form-control">
+                            <select  className="form-control" {...register("type", { required: false })}>
                                 <option>Please select</option>
                                 <option value="1">New Arrivale</option>
                                 <option value="2">Normal </option>
@@ -244,32 +255,12 @@ import { Redirect } from 'react-router-dom';
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> Quantity</b></h6>
-                            <input onChange={handleChange('quantity')} type="number" placeholder='Enter quantity' className="form-control" value={quantity} />
+                            <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: false })} />
                         </div> 
-                </div>
-            </div>
-        </div>
-        <div className="white-box">
-            <div className="row">
-                <div className="col-lg-12">
-                    <h3>Prodect Attribute</h3><hr></hr>
                         <div className="form-group col-lg-6">
-                            <h6><b> Attribute</b></h6>
-                            <select onChange={handleChange('attribute')} className="form-control" value={attribute}>
-                                <option>Please select</option>
-                                {attributess &&
-                                    attributess.map((a, i) => (
-                                        <>
-                                        {!a.deletedAt && a.status == 1 ?(
-                                            <option key={i} value={a._id}>
-                                            {a.attributeName }
-                                            </option>
-                                        
-                                            ):null}
-                                        </>
-                                    ))}
-                            </select>
-                        </div>
+                            <h6><b> Discount in Percentage</b></h6>
+                            <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: false })} />
+                        </div> 
                 </div>
             </div>
         </div>
@@ -279,81 +270,119 @@ import { Redirect } from 'react-router-dom';
                     <h3>Prodect Specification</h3><hr></hr>
                         <div className="form-group col-lg-6">
                             <h6><b> specification</b></h6>
-                            <select onChange={handleChange('specification')} className="form-control">
+                            <select  className="form-control" {...register("specification", { required: false })}>
                                 <option>Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
-                                        <>
-                                        {!s.deletedAt && s.status ==1 ?(
                                         <option key={i} value={s._id}>
                                             {s.manufacturerName }
                                         </option>
-                                         ):null}
-                                         </>
                                     ))}
                             </select>
                         </div>
                 </div>
             </div>
         </div>
-        <div className="white-box">
+          <div className="white-box">
             <div className="row">
-                <h3>Product Other</h3><hr></hr>
-                <div className="col-lg-12">
-                        <div className="form-group  col-lg-7">
-                            <h6><b> product height </b></h6>
-                            <input onChange={handleChange('height')} type="text" className="form-control" value={height} />
-                        </div>
-                        <div className="form-group col-lg-7">
-                            <h6><b> product width</b></h6>
-                            <input onChange={handleChange('width')} type="text" className="form-control" value={width} />
-                        </div>
-                        <div className="form-group col-lg-7">
-                            <h6><b> product length </b></h6>
-                            <input onChange={handleChange('leanth')} type="text" className="form-control" value={leanth} />
-                        </div>
-                </div>
-            </div>
-        </div>
-        <div className="white-box">
-            <div className="row">
-                <div className="col-lg-12">
-                    <h3>Prodect images</h3><hr></hr>
-                    {inputList.map((x, i) => {
-                        return (
-                            <div className="form-group"  key={i}>
-                                    <div className='col-lg-7'>
-                                        <input name="dimension" className="form-control" placeholder="Enter Values" value={x.dimension} onChange={e => handleInputChange(e, i)} />
-                                    </div>
-                                    <div className='form-group col-lg-1'>
-                                        {inputList.length !== 1 && <button className="btn btn-danger" onClick={() => handleRemoveClick(i)}><i className='fa fa-minus '></i></button>}
-                                        {inputList.length - 1 === i && <button onClick={handleAddClick} className="btn btn-info"><i className='fa fa-plus'></i></button>}
-                                    </div>
+                    <div className='col-lg-12'>
+                        <h3>Attribute Add multiple</h3><hr></hr>
+                        {fields.map((item, index) => {
+                            return (
+                            <div key={item.id}>
+                                <div className='col-lg-5'>
+                                    <select className="form-control" {...register(`attribute.${index}.Ids`, { required: false })}  onChange={handleAttributes} >
+                                            <option>Please select</option>
+                                                {attributess &&
+                                                    attributess.map((a, i) => (
+                                                        <>
+                                                        {!a.deletedAt ?(
+                                                            <option key={i} value={a._id} >
+                                                                {a.attributeName }
+                                                            </option>
+                                                            ):null}
+                                                        </>
+                                                    ))}
+                                    </select>
                                 </div>
-                        );
-                    })}
-
-                </div>
+                                <div className='col-lg-5'>
+                                    <Controller
+                                        name={`attribute.${index}.Values`}
+                                        control={control}
+                                        render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
+                                    />
+                                </div>
+                                <div className='col-lg-2'>
+                                    <button type="button" className="btn btn-info" onClick={() => { append(); }}> + </button>
+                                    <button type="button" className="btn btn-danger" onClick={() => remove(index)}> - </button>
+                                </div>
+                            </div>
+                            );
+                        })}
+                    </div>
             </div>
         </div>
+        
         <div className="white-box">
             <div className="row">
                 <h3>Product Description</h3>
                     <div className="form-group col-lg-6">
                         <h6><b> Description</b></h6>
-                        <textarea onChange={handleChange('description')} rows="4" className="form-control" value={description} />
+                        <textarea  rows="4" className="form-control"{...register("description", { required: false })} />
                     </div>
                     <div className="form-group col-lg-6 ">
                         <h6><b> Photo</b></h6>
                         <label className="btn btn-secondary">
-                            <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" multiple  />
+                            <input  type="file" accept="image/*"  {...register("photo", { required: false })}   />
                         </label>
                     </div>
                     <div className="form-group col-lg-9">
-                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} onClick={clickSubmit}> Submit </button>
+                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit"> Submit </button>
                     </div>
             </div>
         </div>
+        {/* <div className="white-box">
+            <div className="row">
+                <div className="col-lg-12">
+                    <h3>Prodect Attribute</h3><hr></hr>
+                        <div className="form-group col-lg-6">
+                            <h6><b> Attribute</b></h6>
+                            <select className="form-control" {...register("attribute", { required: false })} >
+                                <option>Please select</option>
+                                {attributess &&
+                                    attributess.map((a, i) => (
+                                        <>
+                                        {!a.deletedAt ?(
+                                            <option key={i} value={a._id}>
+                                            {a.attributeName }
+                                            </option>
+                                            ):null}
+                                        </>
+                                    ))}
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div> */}
+                {/* <div className="white-box">
+            <div className="row">
+                <h3>Product Other</h3><hr></hr>
+                <div className="col-lg-12">
+                        <div className="form-group  col-lg-7">
+                            <h6><b> product height </b></h6>
+                            <input  type="text" className="form-control" {...register("height", { required: false })} />
+                        </div>
+                        <div className="form-group col-lg-7">
+                            <h6><b> product width</b></h6>
+                            <input type="text" className="form-control" {...register("width", { required: false })} />
+                        </div>
+                        <div className="form-group col-lg-7">
+                            <h6><b> product length </b></h6>
+                            <input type="text" className="form-control" {...register("leanth", { required: false })} />
+                        </div>
+                </div>
+            </div>
+        </div> */}
         </form>
     </>
    

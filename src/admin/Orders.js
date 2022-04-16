@@ -1,169 +1,153 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../core/Layout";
-import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { listOrders, getStatusValues, updateOrderStatus } from "./apiAdmin";
-import moment from "moment";
+import { removeCustomer, listOrders } from "./apiAdmin";
+import { Switch } from '@mui/material';
+import { Redirect } from 'react-router-dom';
+import DataTableComponent from "../common/DataTableComponent";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Orders = () => {
-    const [orders, setOrders] = useState([]);
-    const [statusValues, setStatusValues] = useState([]);
 
-    const { user, token } = isAuthenticated();
+  const [values, setValues] = useState({
+        error: '',
+        redirectToProfile: false,
+        success: false
+   });
 
-    const loadOrders = () => {
-        listOrders(user._id, token).then(data => {
+    const { error, success, redirectToProfile } = values;
+
+    const [products, setProducts] = useState([]);
+
+    const loadProducts = () => {
+        listOrders().then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                setOrders(data);
+                setProducts(data);
             }
         });
     };
 
-    const loadStatusValues = () => {
-        getStatusValues(user._id, token).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                setStatusValues(data);
-            }
-        });
-    };
-
-    useEffect(() => {
-        loadOrders();
-        loadStatusValues();
-    }, []);
-
-    const showOrdersLength = () => {
-        if (orders.length > 0) {
-            return (
-                <h1 className="text-danger display-2">
-                    Total orders: {orders.length}
-                </h1>
-            );
-        } else {
-            return <h1 className="text-danger">No orders</h1>;
+  
+    const remove = productId => {
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+            removeCustomer(productId).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    NotificationManager.success('Customer has been deleted successfully!','',2000);
+                    loadProducts();
+                    setTimeout(function(){
+                        setValues({
+                            ...values,
+                            redirectToProfile:true
+                        })
+                    },2000)
+                }
+            });
         }
     };
 
-    const showInput = (key, value) => (
-        <div className="input-group mb-2 mr-sm-2">
-            <div className="input-group-prepend">
-                <div className="input-group-text">{key}</div>
-            </div>
-            <input
-                type="text"
-                value={value}
-                className="form-control"
-                readOnly
-            />
-        </div>
+    const deleteMessage = () => (
+        <div className="alert alert-danger" style={{ display: success ? '' : 'none' }}>
+           <a class="text-center" style={{color:'white'}}> Customer Deleted </a> 
+        </div>  
     );
-
-    const handleStatusChange = (e, orderId) => {
-        updateOrderStatus(user._id, token, orderId, e.target.value).then(
-            data => {
-                if (data.error) {
-                    console.log("Status update failed");
-                } else {
-                    loadOrders();
-                }
+    const redirectUser = () => {
+        if (redirectToProfile) {
+            if (!error) {
+                return <Redirect to="/admin/coustomers" />;
             }
-        );
+        }
     };
 
-    const showStatus = o => (
-        <div className="form-group">
-            <h3 className="mark mb-4">Status: {o.status}</h3>
-            <select
-                className="form-control"
-                onChange={e => handleStatusChange(e, o._id)}
-            >
-                <option>Update Status</option>
-                {statusValues.map((status, index) => (
-                    <option key={index} value={status}>
-                        {status}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
+
+    useEffect(() => {
+        loadProducts();
+    }, []);
+
+    const getDate = (date) => {
+        const newDate = date.split('T')[0];
+        const DATE = newDate.split('-');
+        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+    }
+
+    const columns = [
+        {
+            dataFiled:'id',
+            text:'ID',
+            hidden:true
+        },
+        {
+            dataField: 'name',
+            text: 'Product Name',
+            sort: true
+        }, 
+        {
+            dataField: 'quntity',
+            text: 'Quantity',
+            sort: true
+        }, 
+        {
+            dataField: 'fname',
+            text: 'Customer',
+        }, 
+        {
+            dataField: 'Location',
+            text: 'Location',
+        }, 
+        {
+            dataField: 'mobile',
+            text: 'Mobile',
+        }, 
+        {
+            dataField: 'status',
+            text: 'Status'
+        }, 
+        {
+            dataField: 'action',
+            text: 'action'
+      }];
+
+      const getButtons = (product) => {
+        return (
+            <div>
+                <Link to={`/admin/coustomers/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
+                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => remove(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+            </div>
+        )
+      };
+
+      const getSwitch = (product) => {
+        return (
+            <>
+                <button type="button" class="btn btn-primary">Success</button>
+            </>
+        )
+      };
+
+      const orderList = [];
+      products.forEach((item) => {
+        item['id'] = item._id;
+        item['fname'] = item.fname + item.lname;
+        item['mobile'] =item.mobile;
+        item['status'] = getSwitch(item);
+        item['action'] = getButtons(item);
+        orderList.push(item);
+      });
+
 
     return (
-        <Layout
-            title="Orders"
-            description={`G'day ${
-                user.name
-            }, you can manage all the orders here`}
-            className="container-fluid"
-        >
-            <div className="row">
-                <div className="col-md-8 offset-md-2">
-                    {showOrdersLength()}
-
-                    {orders.map((o, oIndex) => {
-                        return (
-                            <div
-                                className="mt-5"
-                                key={oIndex}
-                                style={{ borderBottom: "5px solid indigo" }}
-                            >
-                                <h2 className="mb-5">
-                                    <span className="bg-primary">
-                                        Order ID: {o._id}
-                                    </span>
-                                </h2>
-
-                                <ul className="list-group mb-2">
-                                    <li className="list-group-item">
-                                        {showStatus(o)}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Transaction ID: {o.transaction_id}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Amount: ${o.amount}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Ordered by: {o.user.name}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Ordered on:{" "}
-                                        {moment(o.createdAt).fromNow()}
-                                    </li>
-                                    <li className="list-group-item">
-                                        Delivery address: {o.address}
-                                    </li>
-                                </ul>
-
-                                <h3 className="mt-4 mb-4 font-italic">
-                                    Total products in the order:{" "}
-                                    {o.products.length}
-                                </h3>
-
-                                {o.products.map((p, pIndex) => (
-                                    <div
-                                        className="mb-4"
-                                        key={pIndex}
-                                        style={{
-                                            padding: "20px",
-                                            border: "1px solid indigo"
-                                        }}
-                                    >
-                                        {showInput("Product name", p.name)}
-                                        {showInput("Product price", p.price)}
-                                        {showInput("Product total", p.count)}
-                                        {showInput("Product Id", p._id)}
-                                    </div>
-                                ))}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-        </Layout>
+        <div className="row">
+        <div className="col-12">
+            {deleteMessage()}
+            {redirectUser()}
+            <NotificationContainer/>
+            <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={orderList}/> 
+        </div>
+    </div>
     );
 };
 

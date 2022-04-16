@@ -121,7 +121,7 @@ return(
                                                 <span className='error text-danger'>{values.errorsCategories}</span>
                                             </div>
                                             <div className="form-group col-lg-7">
-                                                 <h6><b>Select Category </b></h6>
+                                                 <h6><b>Select Parent Category </b></h6>
                                                 <select onChange={handleChange('subcategory')} className="form-control">
                                                     <option>Please select</option>
                                                     {categories &&

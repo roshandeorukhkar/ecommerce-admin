@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getUser, deleteUser} from "./apiUser";
+import { getUser, deleteUser, statusUser , statusChangeUser} from "./apiUser";
 import AdminLayout from '../core/AdminLayout';
 import { Link, useParams } from "react-router-dom";
 import { Switch } from '@mui/material';
@@ -19,6 +19,32 @@ const AllUser = () =>{
                 console.log(data.error);
             } else {
                 setUser(data);
+            }
+        });
+    };
+
+    const status = userId => {
+        const users = {
+            name: 0,
+         };
+        statusUser(userId, users).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadUser();
+            }
+        });
+    };
+
+    const statusChange = userId => {
+        const users = {
+            manufacturerName: 1,
+         };
+         statusChangeUser(userId, users).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadUser();
             }
         });
     };
@@ -88,10 +114,19 @@ const AllUser = () =>{
         )
       };
 
-      const getSwitch = (product) => {
+      const getSwitch = (user) => {
         return (
-            <Switch name="checkedA" inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"primary" }} color='primary'/>
-        )
+            <>
+            {user.status == 1 
+               ?(
+               <>
+               <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(user._id)} color='primary'/>
+               </>
+               ):
+               <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(user._id)} color='primary'/>
+           }
+           </> 
+           )
       };
 
       const productsList = [];

@@ -76,7 +76,20 @@ const AdminSidebar = () => {
     ) {
       manufacturersMenu = "1";
     }
+
+    var discountMenu = "0";
+    if (
+      pathname.startsWith("/admin/manufacturers") ||
+      pathname.startsWith("/admin/create/manufacturer") ||
+      pathname.startsWith("/admin/manufacturer/update/")
+    ) {
+      discountMenu = "1";
+    }
+
   }
+
+
+
 
   var settingMenu = "0";
   if (
@@ -108,6 +121,13 @@ const AdminSidebar = () => {
     pathname.startsWith("/admin/rolemanagement")
   ) {
     storeMenu = "1";
+  }
+
+  var orderMenu = "0";
+  if (
+    pathname.startsWith("/admin/orders")
+  ) {
+    orderMenu = "1";
   }
 
   return (
@@ -205,6 +225,14 @@ const AdminSidebar = () => {
                       Manufacturer
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      className={discountMenu == "1" ? "active" : ""}
+                      to="/admin/discount"
+                    >
+                      Discount
+                    </Link>
+                  </li>
                 </ul>
               </li>
 
@@ -215,8 +243,8 @@ const AdminSidebar = () => {
                 </Link>
               </li>
               {/* <li>
-                                <Link className={userMenu == '1' ? 'active' : ''} to="/admin/users" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></Link>
-                            </li> */}
+                   <Link className={userMenu == '1' ? 'active' : ''} to="/admin/users" aria-expanded="false"><i className="icon-user fa-fw"></i><span className="hide-menu"> User Management</span></Link>
+              </li> */}
               <li>
                 <Link
                   className={storeMenu == "1" ? "active" : ""}
@@ -228,7 +256,10 @@ const AdminSidebar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/admin/ordermanagement" aria-expanded="false">
+                <Link
+                  className={orderMenu == "1" ? "active" : ""}
+                   to="/admin/orders" 
+                   aria-expanded="false">
                   <i className="icon-grid fa-fw"></i>
                   <span className="hide-menu"> Orders Management</span>
                 </Link>
@@ -294,10 +325,11 @@ const AdminSidebar = () => {
                     <Link to="/admin/slider" className={sliderMenu == "1" ? "active" : ""} >Slider Setting</Link>
                   </li>
                   <li>
-                    <Link to="/admin/setting">Advertising Setting</Link>
+                    {" "}
+                    <Link to="/admin/advertis">Advertising Setting</Link>{" "}
                   </li>
                   <li>
-                    <Link to="/admin/setting">Partner Setting</Link>
+                    <Link to="/admin/partnerImage">Partner Setting</Link>
                   </li>
                 </ul>
               </li>

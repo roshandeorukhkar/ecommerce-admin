@@ -5,7 +5,8 @@ import AdminDashboard from './user/AdminDashboard';
 
 import AddProduct from './admin/AddProduct';
 import ListProduct from './admin/ProductList';
-import Orders from './user/Orders';
+import Orders from './admin/Orders';
+import OrderManagement from './admin/OrderManagement';
 import UpdateProduct from './admin/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
 import UpdateSubCategory from './admin/updateSubCategory';
@@ -44,6 +45,18 @@ import AllUser from './userManagement/AllUser';
 import SliderManagement from './setting/SliderManagement';
 import AddEditSlider from './setting/AddEditSlider';
 
+import Discount from './discountManagement/discount';
+import AddDiscount from './discountManagement/discountAdd';
+
+import TestDemo from './discountManagement/test';
+import AdvertisingManagement from './setting/AdvertisingManagement';
+import AddEditAdvertisImg from './setting/AddEditAdvertisImg';
+
+import PartnerManagement from './setting/PartnerManagement';
+import AddEditPartner from './setting/AddEditPartner';
+
+
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -53,7 +66,8 @@ const Routes = () => {
                 <AdminRoute path="/" exact component={AdminSignin} />
                 <AdminRoute path="/admin/create/category" exact component={AddCategory} />
                 <AdminRoute path="/admin/create/product" exact component={AddProduct} />
-                <AdminRoute path="/admin/orders" exact component={Orders} />
+                <AdminRoute path="/admin/order" exact component={Orders} />
+                <AdminRoute path="/admin/orders" exact component={OrderManagement} />
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
                 <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
                 <AdminRoute path="/admin/subcategory/update/:categoryId" exact component={UpdateSubCategory} />
@@ -87,7 +101,13 @@ const Routes = () => {
                 <AdminRoute path="/admin/slider" exact component={SliderManagement} />
                 <AdminRoute path="/admin/create/slider" exact component={AddEditSlider} />
                 <AdminRoute path="/admin/update/slider/:sliderId" exact component={AddEditSlider} />
-
+            <AdminRoute path="/admin/advertis" exact component={AdvertisingManagement} />
+                <AdminRoute path="/admin/create/advertis" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/update/advertis/:advertisId" exact component={AddEditAdvertisImg} />
+                <AdminRoute path="/admin/partnerImage" exact component={PartnerManagement} />
+                <AdminRoute path="/admin/create/partnerImage" exact component={AddEditPartner} />
+                <AdminRoute path="/admin/update/partnerImage/:partnerId" exact component={AddEditPartner} />
+                
             </Switch>
         </BrowserRouter>
     );

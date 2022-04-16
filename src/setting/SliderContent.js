@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FormMainTitle from "../common/FormMainTitle";
-import { saveSlider } from "./ApiSetting";
-import { Redirect } from "react-router-dom";
+import { saveSlider, getDataOfSlider } from "./ApiSetting";
+import { Redirect, useParams } from "react-router-dom";
 import {
   NotificationContainer,
   NotificationManager,
@@ -9,6 +9,8 @@ import {
 
 const SliderContent = () => {
   const [previewImg, setPreviewImg] = useState(null);
+  let params = useParams();
+  console.log("params",params);
   const [values, setValues] = useState({
     title: "",
     link: "",
@@ -18,6 +20,7 @@ const SliderContent = () => {
     imageError: "",
     titleError: "",
     sequenceError: "",
+    sliderId : "",
     redirect: false,
     formData: "",
   });
@@ -32,12 +35,35 @@ const SliderContent = () => {
     sequenceError,
     redirect,
     formData,
+    sliderId
   } = values;
 
   const imgTypes = ["image/png", "image/jpeg"];
 
+  const getDataById = () =>{
+    const id = params.sliderId;
+    getDataOfSlider(id).then((data)=>{
+      console.log("-----",data.data);
+      
+      setValues({
+        ...values,
+        title: data.data.title,
+        link: data.data.link,
+        sequence: data.data.sequence,
+        image: data.data.image,
+        description: data.data.description,
+        redirect: false,
+        sliderId: id,
+      });
+      setPreviewImg(data.data.image)
+    })
+  }
+
+
   useEffect(() => {
+    // getDataById();
     setValues({
+      ...values,
       formData: new FormData(),
     });
   }, []);
@@ -49,7 +75,6 @@ const SliderContent = () => {
     setValues({ ...values, [name]: event.target.value });
 
     //Privew image
-
     if (name === "sliderImg") {
       const selectedFile = event.target.files[0];
       if (selectedFile) {
@@ -67,6 +92,7 @@ const SliderContent = () => {
         console.log("Select your file");
       }
     }
+
   };
 
   const handleClick = (e) => {
@@ -123,7 +149,7 @@ const SliderContent = () => {
                 autoComplete="false"
               >
                 {redirectUser()}
-                <div className="form-group col-md-4 slider-preview-img">
+                <div className="form-group col-md-6 slider-preview-img">
                   <img
                     className="img-fluid"
                     src={
@@ -131,7 +157,7 @@ const SliderContent = () => {
                         ? previewImg
                         : "../assets/images/preview_Image.jpg"
                     }
-                    alt="footer-logo"
+                    alt="footer-logo" height={400} width={450}
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -209,6 +235,7 @@ const SliderContent = () => {
                   </div>
                 </div>
                 <div className="col-md-12 t-a-r">
+                {/* <input type="text" name="_id" value={sliderId}  /> */}
                   <button
                     type="submit"
                     className="btn btn-rounded-min btn-primary"
