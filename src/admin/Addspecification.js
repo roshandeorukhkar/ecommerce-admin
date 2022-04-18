@@ -5,8 +5,11 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createspecification } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+//import { NotificationContainer, NotificationManager } from 'react-notifications';
+//import 'react-notifications/lib/notifications.css';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Addspecification = () => {
 
@@ -32,14 +35,16 @@ const Addspecification = () => {
         event.preventDefault();
         setValues({ ...values, error: false });
         createspecification({ manufacturerName, specification_type, description }).then(data => {
-            //alert(data.error)
             if (data.status == false) {
                 setValues({
                     ...values,
                     errorsSpecificationName: data.errors.manufacturerName,
                     errorsSpecificationValue: data.errors.specification_type,
                 });
-                // NotificationManager.error(data.message);
+                //NotificationManager.error(data.message);
+                toast.success(data.message, {
+                    autoClose:500
+                })
             }
             else {
                 setValues({
@@ -53,17 +58,22 @@ const Addspecification = () => {
                     success: false,
                     redirectToProfile: false
                 });
-                setValues({
-                    ...values,
-                    redirectToProfile: true
+                toast.success('Added successfully!', {
+                    autoClose:500,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
                 })
-                NotificationManager.success('Specification has been added successfully!','',2000);
-                setTimeout(function () {
-                    setValues({
-                        ...values,
-                        redirectToProfile: true
-                    })
-                }, 2000)
+                //NotificationManager.success('Specification has been added successfully!','',2000);
+                //setTimeout(function () {
+                    //setValues({
+                        //...values,
+                        //redirectToProfile: true
+                    //})
+                //}, 2000)
             }
         });
     };
@@ -94,7 +104,8 @@ const Addspecification = () => {
                 <div className="page-wrapper">
                     <div className="container-fluid">
                         {/* <Select options={options} isMulti='true'/> */}
-                        <NotificationContainer />
+                        <ToastContainer />
+                        {/*<NotificationContainer />*/}
                         <div className='row'>
                             <div className='col-md-8'><h3 className="font-bold"> Add Specification</h3></div>
                             <div className='col-md-4'><Link to={`Manuspecification`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i className="fa fa-backward"></i> Back</button></Link></div>

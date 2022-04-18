@@ -27,9 +27,19 @@ const AdminSidebar = () => {
     pathname.startsWith("/admin/Manucategory/update") ||
     pathname.startsWith("/admin/manufacturers") ||
     pathname.startsWith("/admin/create/manufacturer") ||
-    pathname.startsWith("/admin/manufacturer/update/")
+    pathname.startsWith("/admin/manufacturer/update/") ||
+    pathname.startsWith("/admin/create/product") ||
+    pathname.startsWith("/admin/create/product")
   ) {
     myProductMenu = "1";
+
+    var productMenu = "0";
+    if (
+      pathname.startsWith("/admin/productlist") ||
+      pathname.startsWith("/admin/create/product") 
+    ) {
+      productMenu = "1";
+    }
 
     var specificationMenu = "0";
     if (
@@ -181,7 +191,7 @@ const AdminSidebar = () => {
                   }
                 >
                   <li>
-                    <Link to="/admin/productlist">Product List</Link>
+                    <Link to="/admin/productlist" className={productMenu == "1" ? "active" : ""}>Product List</Link>
                   </li>
                   <li>
                     <Link

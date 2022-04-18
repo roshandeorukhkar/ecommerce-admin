@@ -5,8 +5,10 @@ import { Link, Redirect } from 'react-router-dom';
 import { getSpecification, updatespecification } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Updatespecification = ({ match }) => {
@@ -85,6 +87,16 @@ const Updatespecification = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
+                toast.success('Updated successfully!', {
+                    autoClose:500,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+                /*
                 NotificationManager.success('Specification has been updated successfully!','',2000);
                 setTimeout(function(){
                     setValues({
@@ -92,6 +104,7 @@ const Updatespecification = ({ match }) => {
                         redirectToProfile:true
                     })
                 },2000)
+                */
             }
         });
     };
@@ -158,7 +171,7 @@ const Updatespecification = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            <NotificationContainer/>
+                                            {/*<NotificationContainer/>*/}
                                             {/* {showSuccess()} */}
                                             {showError()}
                                             {updateCategoryForm()}
@@ -169,7 +182,9 @@ const Updatespecification = ({ match }) => {
                             </div>
                         </div>
                     </div>
+                    <ToastContainer />
                 </div>
+                
             );
     };
 

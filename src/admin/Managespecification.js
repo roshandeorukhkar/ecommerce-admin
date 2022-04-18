@@ -5,8 +5,11 @@ import { deleteSpecification, Specification ,statusSpecification ,statusChangeSp
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
+//import 'react-notifications/lib/notifications.css';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Managespecification = () => {
 
@@ -42,7 +45,7 @@ const Managespecification = () => {
                     success:true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Specification has been deleted successfully!','',2000);
+                //NotificationManager.success('Specification has been deleted successfully!','',2000);
                 setTimeout(function(){
                     setValues({
                         ...values,
@@ -64,7 +67,13 @@ const Managespecification = () => {
                     
                     console.log(data.error);
                 } else {
-                    NotificationManager.success('Specification has been deleted successfully!','',2000);
+                    toast.success('Deleted successfully!', {
+                        autoClose:500,
+                        onClose: () => {
+                           //
+                        }
+                    })
+                    //NotificationManager.success('Specification has been deleted successfully!','',2000);
                     loadProducts();
                 }
             });
@@ -184,7 +193,8 @@ const Managespecification = () => {
             </div>
             <hr></hr>*/}
             <div className="col-12">
-                <NotificationContainer/>
+                <ToastContainer />
+                {/*<NotificationContainer/>*/}
                 <DataTableComponent keyField="manufacturerName" title="Product Specification" tableHeading={columns} tableList={productsList}/>
             </div>
         </div>
