@@ -66,17 +66,18 @@ const SliderList = () => {
     return DATE[2] + "-" + DATE[1] + "-" + DATE[0];
   };
 
+  // <Link
+        //   to={`/admin/update/slider/${imgId}`}
+        //   className="btn btn-outline btn-info m-5"
+        //   onClick={() => setCheckParams(!checkParams)}
+        //   aria-label="Edit"
+        // >
+        //   <i className="fa fa-pencil font-15"></i>
+        // </Link>
+
   const getButtons = (imgId) => {
     return (
       <div>
-        <Link
-          to={`/admin/update/slider/${imgId}`}
-          className="btn btn-outline btn-info m-5"
-          onClick={() => setCheckParams(!checkParams)}
-          aria-label="Edit"
-        >
-          <i className="fa fa-pencil font-15"></i>
-        </Link>
         <button
           className="btn btn-outline btn-danger"
           aria-label="Delete"
