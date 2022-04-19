@@ -43,8 +43,6 @@ const SliderContent = () => {
   const getDataById = () =>{
     const id = params.sliderId;
     getDataOfSlider(id).then((data)=>{
-      console.log("-----",data.data);
-      
       setValues({
         ...values,
         title: data.data.title,
@@ -240,6 +238,7 @@ const SliderContent = () => {
                     type="submit"
                     className="btn btn-rounded-min btn-primary"
                     onClick={handleClick}
+                    disabled = {false}
                   >
                     Add Slider
                   </button>
