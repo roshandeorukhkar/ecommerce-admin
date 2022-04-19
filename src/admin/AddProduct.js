@@ -44,7 +44,6 @@ import Select from 'react-select'
     
 
     const { name, error, redirectToProfile } = values;
-
     const [attributess , setAttributess] = useState([]);
     const [dimanstions , setDimanstions] = useState(null);
     const [subcategories , setSubcategories] = useState(null);
@@ -147,23 +146,25 @@ import Select from 'react-select'
 
     const clickSubmit = (data) => {
          console.log(data, "product")
+
+        // 
          createProduct(token, data).then(data => {
-            if (data.error) {
-                setValues({ ...values, error: data.error });
-            } 
-            else {
-                setValues({
-                    ...values,
-                    redirectToProfile: false
-                });
-                 NotificationManager.success('Product has been added successfully!');
-                setTimeout(function(){                
-                    setValues({
-                        ...values,
-                        redirectToProfile:true  
-                    })
-                },1000)
-            }
+            // if (data.error) {
+            //     setValues({ ...values, error: data.error });
+            // } 
+            // else {
+            //     setValues({
+            //         ...values,
+            //         redirectToProfile: false
+            //     });
+            //      NotificationManager.success('Product has been added successfully!');
+            //     setTimeout(function(){                
+            //         setValues({
+            //             ...values,
+            //             redirectToProfile:true  
+            //         })
+            //     },1000)
+            // }
         });
     };
 
@@ -244,7 +245,7 @@ import Select from 'react-select'
                 <h3>Product Details</h3><hr></hr>
                 <div className="col-lg-12">
                         <div className="form-group col-lg-6">
-                            <h6><b> Price <span style={{color:'red'}}>*</span></b></h6>
+                            <h6><b> Price </b></h6>
                             <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: false })} />
                         </div>
                         <div className="form-group col-lg-6">
@@ -347,7 +348,6 @@ import Select from 'react-select'
                     </div>
             </div>
         </div>
-
         <div className="white-box">
             <div className="row">
                     <div className='col-lg-12'>
@@ -375,20 +375,19 @@ import Select from 'react-select'
                     </div>
             </div>
         </div>
-        
         <div className="white-box">
             <div className="row">
                 <h3>Product Description</h3>
-                    <div className="form-group col-lg-6">
+                    <div className="form-group col-lg-9">
                         <h6><b> Description</b></h6>
                         <textarea  rows="4" className="form-control"{...register("description", { required: false })} />
                     </div>
-                    <div className="form-group col-lg-6 ">
+                    {/* <div className="form-group col-lg-6 ">
                         <h6><b> Photo</b></h6>
                         <label className="btn btn-secondary">
-                            <input  type="file" accept="image/*"  {...register("photo", { required: false })}   />
+                            <input  type="file" {...register("photo", { required: false })}   />
                         </label>
-                    </div>
+                    </div> */}
                     <div className="form-group col-lg-9">
                         <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit"> Submit </button>
                     </div>
