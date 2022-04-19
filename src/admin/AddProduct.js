@@ -147,7 +147,12 @@ import Select from 'react-select'
     const clickSubmit = (data) => {
          console.log(data, "product")
 
-        // 
+        //  const file = data.image[0];
+        //  const storageRef = AddProduct.storage().ref();
+        //  const fileRef = storageRef.child(file.name);
+        //  fileRef.put(file).then(() => {
+        //    console.log("Uploaded a file");
+        //  });
          createProduct(token, data).then(data => {
             // if (data.error) {
             //     setValues({ ...values, error: data.error });
