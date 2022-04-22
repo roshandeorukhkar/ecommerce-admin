@@ -40,10 +40,11 @@ import Select from 'react-select'
     const [values, setValues] = useState({
         error: '',
         redirectToProfile: false,
+        formData : new FormData()
     });
     
 
-    const { name, error, redirectToProfile } = values;
+    const { name, error, redirectToProfile,formData } = values;
     const [attributess , setAttributess] = useState([]);
     const [dimanstions , setDimanstions] = useState(null);
     const [subcategories , setSubcategories] = useState(null);
@@ -142,34 +143,54 @@ import Select from 'react-select'
         listOfAttributes();
         listOfSpecification();
         listOfManufacter();
+        setValues({
+            ...values,
+            formData : new FormData(),
+          });
     }, []);
 
     const clickSubmit = (data) => {
-         console.log(data, "product")
-
-        //  const file = data.image[0];
-        //  const storageRef = AddProduct.storage().ref();
-        //  const fileRef = storageRef.child(file.name);
-        //  fileRef.put(file).then(() => {
-        //    console.log("Uploaded a file");
-        //  });
-         createProduct(token, data).then(data => {
-            // if (data.error) {
-            //     setValues({ ...values, error: data.error });
-            // } 
-            // else {
-            //     setValues({
-            //         ...values,
-            //         redirectToProfile: false
-            //     });
-            //      NotificationManager.success('Product has been added successfully!');
-            //     setTimeout(function(){                
-            //         setValues({
-            //             ...values,
-            //             redirectToProfile:true  
-            //         })
-            //     },1000)
-            // }
+         formData.set("attribute",data.attribute);
+         formData.set("brand",data.brand);
+         formData.set("category",data.category);
+         formData.set("description",data.description);
+         formData.set("dimanstions",data.dimanstions);
+         formData.set("discount",data.discount);
+         formData.set("manufactures",data.manufactures);
+         formData.set("name",data.name);
+         formData.set("price",data.price);
+         formData.set("quantity",data.quantity);
+         formData.set("shipping",data.shipping);
+         formData.set("specification",data.specification);
+         formData.set("subcategory",data.subcategory);
+         formData.set("type",data.type);
+         data.image.map((img , i) => {
+            formData.set(`color${i}`,img.colors);
+            formData.set(`imgLength` , data.image.length);
+            formData.set(`colorImgLength${i}`,img.pic.length);
+            formData.set(`images${i}`,img.pic);
+            Array.from(img.pic).forEach((file , cnt) =>{
+                formData.set(`images${i}${cnt}`, file);
+            })
+        })
+        createProduct(token, formData).then(data => {
+            console.log("hello",data)
+            if (data.error) {
+                setValues({ ...values, error: data.error });
+            } 
+            else {
+                setValues({
+                    ...values,
+                    redirectToProfile: false
+                });
+                 NotificationManager.success('Product has been added successfully!');
+                setTimeout(function(){                
+                    setValues({
+                        ...values,
+                        redirectToProfile:true  
+                    })
+                },1000)
+            }
         });
     };
 
@@ -366,7 +387,7 @@ import Select from 'react-select'
                                 </div>
                                 <div className='col-lg-5'>
                                 <h6> Photos</h6>
-                                <input type="file" className="form-control" placeholder='Enter Color name'  {...register(`image.${index}.pic`, { required: false })} />
+                                <input type="file" className="form-control" placeholder='Enter Color name' accept='image/*'  {...register(`image.${index}.pic`, { required: false })} multiple />
                                     {/* <Controller render={({ field }) => <input {...field} />} name={`image.${index}.pic`} control={control} /> */}
                                 </div>
                                 <div className='col-lg-2'>

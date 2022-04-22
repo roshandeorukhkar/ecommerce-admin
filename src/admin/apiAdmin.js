@@ -154,11 +154,7 @@ export const createProduct = (token, product) => {
   //  console.log(product);
     return fetch(`${API}/product/create/`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-        },
-        body: JSON.stringify(product)
+        body: product
     })
         .then(response => {
             return response.json();
