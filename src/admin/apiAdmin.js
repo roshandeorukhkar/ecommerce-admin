@@ -421,8 +421,8 @@ export const getProduct = productId => {
         })
         .catch(err => console.log(err));
 };
-
-export const updateProduct = (productId, product) => {
+// old update product
+export const updateProducttest = (productId, product) => {
     return fetch(`${API}/product/${productId}/`, {
         method: 'PUT',
         headers: {
@@ -436,6 +436,23 @@ export const updateProduct = (productId, product) => {
         })
         .catch(err => console.log(err));
 };
+export const updateProduct = (productId, product) => {
+    //  console.log(product);
+      return fetch(`${API}/product/${productId}/`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+          },
+          body: JSON.stringify(product)
+      })
+          .then(response => {
+              return response.json();
+          })
+          .catch(err => {
+              console.log(err);
+          });
+  };
 
 
 export const createspecification = async (category) => {
