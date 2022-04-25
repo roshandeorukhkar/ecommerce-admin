@@ -150,7 +150,7 @@ import Select from 'react-select'
     }, []);
 
     const clickSubmit = (data) => {
-         formData.set("attribute",data.attribute);
+         formData.set("attribute",JSON.stringify(data.attribute));
          formData.set("brand",data.brand);
          formData.set("category",data.category);
          formData.set("description",data.description);
@@ -161,7 +161,7 @@ import Select from 'react-select'
          formData.set("price",data.price);
          formData.set("quantity",data.quantity);
          formData.set("shipping",data.shipping);
-         formData.set("specification",data.specification);
+         formData.set("specification",JSON.stringify(data.specification));
          formData.set("subcategory",data.subcategory);
          formData.set("type",data.type);
          data.image.map((img , i) => {
@@ -183,7 +183,7 @@ import Select from 'react-select'
                     ...values,
                     redirectToProfile: false
                 });
-                 NotificationManager.success('Product has been added successfully!');
+                NotificationManager.success('Product has been added successfully!');
                 setTimeout(function(){                
                     setValues({
                         ...values,
