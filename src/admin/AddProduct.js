@@ -153,6 +153,7 @@ import Select from 'react-select'
          formData.set("attribute",JSON.stringify(data.attribute));
          formData.set("brand",data.brand);
          formData.set("category",data.category);
+         formData.set("subcategory",data.subcategory);
          formData.set("description",data.description);
          formData.set("dimanstions",data.dimanstions);
          formData.set("discount",data.discount);
@@ -162,7 +163,6 @@ import Select from 'react-select'
          formData.set("quantity",data.quantity);
          formData.set("shipping",data.shipping);
          formData.set("specification",JSON.stringify(data.specification));
-         formData.set("subcategory",data.subcategory);
          formData.set("type",data.type);
          data.image.map((img , i) => {
             formData.set(`color${i}`,img.colors);
@@ -278,8 +278,8 @@ import Select from 'react-select'
                             <h6><b> Shipping</b></h6>
                             <select className="form-control" {...register("shipping", { required: false })}>
                                 <option>Please select</option>
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
                             </select>
                         </div>
                         <div className="form-group col-lg-6">
