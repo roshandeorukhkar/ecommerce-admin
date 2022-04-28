@@ -21,6 +21,7 @@ const Orders = () => {
 
     const loadProducts = () => {
         listOrders().then(data => {
+            console.log(data, "order......s")
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -80,27 +81,27 @@ const Orders = () => {
             text:'ID',
             hidden:true
         },
+        // {
+        //     dataField: 'prodect name',
+        //     text: 'Product Name',
+        //     sort: true
+        // }, 
+        // {
+        //     dataField: 'quntity',
+        //     text: 'Quantity',
+        //     sort: true
+        // }, 
         {
             dataField: 'name',
-            text: 'Product Name',
-            sort: true
-        }, 
-        {
-            dataField: 'quntity',
-            text: 'Quantity',
-            sort: true
-        }, 
-        {
-            dataField: 'fname',
             text: 'Customer',
         }, 
         {
-            dataField: 'Location',
+            dataField: 'address',
             text: 'Location',
         }, 
         {
-            dataField: 'mobile',
-            text: 'Mobile',
+            dataField: 'amount',
+            text: 'Amount',
         }, 
         {
             dataField: 'status',
@@ -131,7 +132,7 @@ const Orders = () => {
       const orderList = [];
       products.forEach((item) => {
         item['id'] = item._id;
-        item['fname'] = item.fname + item.lname;
+        item['name'] = item.products[0].name;
         item['mobile'] =item.mobile;
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);

@@ -25,15 +25,15 @@ const ManageProducts = () => {
     };
 
 
-    const destroy = productId => {
-        deleteProduct(productId).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadProducts();
-            }
-        });
-    };
+    // const destroy = productId => {
+    //     deleteProduct(productId).then(data => {
+    //         if (data.error) {
+    //             console.log(data.error);
+    //         } else {
+    //             loadProducts();
+    //         }
+    //     });
+    // };
 
     const destroys = productId => {
         if(window.confirm('Are you sure you want to delete this record?'))
