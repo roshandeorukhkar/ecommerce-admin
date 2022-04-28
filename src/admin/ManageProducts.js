@@ -19,6 +19,7 @@ const ManageProducts = () => {
                 console.log(data.error);
             } else {
                 setProducts(data);
+
             }
         });
     };
@@ -107,14 +108,15 @@ const ManageProducts = () => {
       }];
 
       const getImage = (path) =>{
+          //console.log(path,"sdfsdfsdfdsf")
         return(
-            <img
-            src={path}
-            alt="footer-logo"
-            width="100"
-            height="70"
-          ></img>
-        //   <img src={`../product-images/msg.png`} alt="footer-logo" width="100" height="70"></img>
+            <>
+          {Object.values(path).map((res, i) =>
+            i == 0 ? (
+              <img src={res[0]} width="100" height="70"/>
+            ) : null
+          )}
+        </>
         )
       }
 
@@ -145,7 +147,7 @@ const ManageProducts = () => {
       products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
-        item['image'] = getImage(item.images.red[0]            )
+        item['image'] = getImage(item.images)
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
