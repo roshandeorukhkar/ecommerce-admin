@@ -47,12 +47,8 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
     // handle input change
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
-        //console.log("value",value);
-        //console.log("value",index);
         const list = [...inputList];
-        //const sList = [];
         list[index] = value;
-        //sList.push(list);
         setInputList(list);
         setValues({ ...values, dimension: list });
     };

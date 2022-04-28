@@ -108,7 +108,13 @@ const ManageProducts = () => {
 
       const getImage = (path) =>{
         return(
-          <img src={`../product-images/msg.png`} alt="footer-logo" width="100" height="70"></img>
+            <img
+            src={path}
+            alt="footer-logo"
+            width="100"
+            height="70"
+          ></img>
+        //   <img src={`../product-images/msg.png`} alt="footer-logo" width="100" height="70"></img>
         )
       }
 
@@ -139,7 +145,7 @@ const ManageProducts = () => {
       products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
-        item['image'] = getImage(item.image)
+        item['image'] = getImage(item.images.red[0]            )
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);

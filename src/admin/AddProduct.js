@@ -13,8 +13,8 @@ import Select from 'react-select'
     const { control, register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             dimanstions: {},
-            attribute: [{ Ids: "", Values: "" }],
-            specification: [{ Id: "" }],
+            attribute: [{ Id: "", Values: "" }],
+            specification: [{ }],
             image: [{ colors: "", pic: "" }]
         }
       });
@@ -286,9 +286,9 @@ import Select from 'react-select'
                             <h6><b> product type</b></h6>
                             <select  className="form-control" {...register("type", { required: false })}>
                                 <option>Please select</option>
-                                <option value="1">New Arrivale</option>
-                                <option value="2">Normal </option>
-                                <option value="3">Comming soon </option>
+                                <option value="New Arrivale">New Arrivale</option>
+                                <option value="Normal">Normal </option>
+                                <option value="Comming soon">Comming soon </option>
                             </select>
                         </div>
                         <div className="form-group col-lg-6">
@@ -311,7 +311,7 @@ import Select from 'react-select'
                             return (
                             <div key={item.id}>
                                 <div className='col-lg-7'>
-                                <select  className="form-control" {...register(`specification.${index}.Id`, { required: false })}>
+                                <select  className="form-control" {...register(`specification.${index}`, { required: false })}>
                                 <option>Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
@@ -341,7 +341,7 @@ import Select from 'react-select'
                             <div key={item.id}>
                                 <div className='col-lg-5'>
                                     <h6>Attribute name</h6>
-                                    <select className="form-control" {...register(`attribute.${index}.Ids`, { required: false })}  onChange={handleAttributes} >
+                                    <select className="form-control" {...register(`attribute.${index}.Id`, { required: false })}  onChange={handleAttributes} >
                                             <option>Please select</option>
                                                 {attributess &&
                                                     attributess.map((a, i) => (
