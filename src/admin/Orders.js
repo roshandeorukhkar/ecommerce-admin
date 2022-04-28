@@ -91,6 +91,7 @@ const Orders = () => {
         //     text: 'Quantity',
         //     sort: true
         // }, 
+        
         {
             dataField: 'name',
             text: 'Product Name',
