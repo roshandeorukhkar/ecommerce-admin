@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Layout from "../core/Layout";
 import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { getProducts, deleteProduct , statusSpecification ,statusChangeSpecification} from "./apiAdmin";
+import { getProducts, deleteProduct , statusProducts ,statusChangeProducts, statusDeleteProducts} from "./apiAdmin";
 import DataTableComponent from "../common/DataTableComponent";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
@@ -35,17 +35,33 @@ const ManageProducts = () => {
         });
     };
 
+    const destroys = productId => {
+        if(window.confirm('Are you sure you want to delete this record?'))
+        {
+        const product = {
+            statusVlaue: new Date(),
+         };
+        statusDeleteProducts(productId, product).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                loadProducts();
+            }
+        });
+    }
+    };
+
     
 
     useEffect(() => {
         loadProducts();
     }, []);
 
-    const status = specificationId => {
-        const specification = {
-            manufacturerName: 0,
+    const status = productId => {
+        const product = {
+            statusVlaue: 0,
          };
-         statusSpecification(specificationId, specification).then(data => {
+         statusProducts(productId, product).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -55,11 +71,11 @@ const ManageProducts = () => {
     };
     
     
-    const statusChange = specificationId => {
-        const specification = {
-            manufacturerName: 1,
+    const statusChange = productId => {
+        const product = {
+            statusVlaue: 1,
          };
-         statusChangeSpecification(specificationId, specification).then(data => {
+         statusChangeProducts(productId, product).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -124,7 +140,8 @@ const ManageProducts = () => {
         return (
             <div>
                  <Link to={`/admin/product/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                 <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+                 <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroys(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
             </div>
         )
       };

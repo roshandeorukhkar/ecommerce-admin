@@ -550,6 +550,52 @@ export const deleteSpecificationSoft = (productId, category) => {
         .catch(err => console.log(err));
 };
 
+export const statusProducts = (productId, product) => {
+    return fetch(`${API}/product/status/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(product)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeProducts = (productId, product) => {
+    return fetch(`${API}/product/statusChange/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(product)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusDeleteProducts = (productId, product) => {
+    return fetch(`${API}/product/deletes/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(product)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+
 export const statusSpecification = (productId, specification) => {
     return fetch(`${API}/specification/status/${productId}`, {
         method: 'POST',
