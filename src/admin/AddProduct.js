@@ -18,7 +18,10 @@ import Select from 'react-select'
             image: [{ colors: "", pic: "" }]
         }
       });
-
+      const [data, setData] = useState({
+        loading: false,
+        disable :false
+    });
       const {
         fields: attributeFields,  // it use attribute 
         append: attributeAppend,
@@ -53,6 +56,7 @@ import Select from 'react-select'
     const [manufactures , setManufactures] = useState([]);
     const { user, token } = isAuthenticated();
 
+    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
     
     // get categories 
     const init = () => {
@@ -150,6 +154,7 @@ import Select from 'react-select'
     }, []);
 
     const clickSubmit = (data) => {
+        setData({ loading: true ,disable : true });
          formData.set("attribute",JSON.stringify(data.attribute));
          formData.set("brand",data.brand);
          formData.set("category",data.category);
@@ -176,6 +181,7 @@ import Select from 'react-select'
         createProduct(token, formData).then(data => {
             console.log("hello",data)
             if (data.error) {
+                setData({ loading: false ,disable : false });
                 setValues({ ...values, error: data.error });
             } 
             else {
@@ -419,8 +425,10 @@ import Select from 'react-select'
                             <input  type="file" {...register("photo", { required: false })}   />
                         </label>
                     </div> */}
+                    {showLoading(data.loading)}
+
                     <div className="form-group col-lg-9">
-                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit"> Submit </button>
+                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit" disabled={data.disable}> Submit </button>
                     </div>
             </div>
         </div>
