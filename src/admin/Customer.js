@@ -10,7 +10,7 @@ import 'react-notifications/lib/notifications.css';
 const Customer = () => {
     
     const [values, setValues] = useState({
-        error: '',
+       error: '',
        redirectToProfile: false,
        success: false
    });
@@ -74,7 +74,7 @@ const Customer = () => {
     const status = productId => {
        
         const category = {
-            status: 0,
+            statusV: 0,
         };
         statusCustomer(productId, category).then(data => {
             if (data.error) {

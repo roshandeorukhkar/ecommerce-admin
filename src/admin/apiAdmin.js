@@ -628,7 +628,7 @@ export const statusChangeSpecification = (productId, specification) => {
 
 // show all user
 export const getCoustomer = () => {
-    return fetch(`${API}/cust?limit=undefined`, {
+    return fetch(`${API}/cust`, {
         method: 'GET'
     })
         .then(response => {

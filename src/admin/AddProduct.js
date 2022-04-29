@@ -217,8 +217,8 @@ import Select from 'react-select'
                     </div> 
                     <div className="form-group col-lg-6">
                         <h6><b> Manufacturer </b></h6>
-                        <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: false })}> 
-                            <option>Please select</option>
+                        <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: true })}> 
+                            <option value="">Please select</option>
                             {manufactures &&
                                 manufactures.map((s, i) => (
                                     <>
@@ -230,11 +230,12 @@ import Select from 'react-select'
                                 </>
                                 ))} 
                         </select>
+                        {errors.manufactures && <span className='text-danger'>Select manufactures name </span>}
                     </div> 
                     <div className="form-group col-lg-6">
                             <h6><b> Category</b></h6>
-                            <select className="form-control" {...register("category", { required: false })} onChange={handleCategory}>
-                                <option>Please select</option>
+                            <select className="form-control" {...register("category", { required: true })} onChange={handleCategory}>
+                                <option value="">Please select</option>
                                 {categories &&
                                     categories.map((c, i) => (
                                         <>
@@ -246,11 +247,13 @@ import Select from 'react-select'
                                         </>
                                     ))}
                             </select>
+                            {errors.category && <span className='text-danger'>Select category </span>}
+
                     </div>
                     <div className="form-group col-lg-6">
                             <h6><b> Sub Category </b></h6>
-                            <select className="form-control" {...register("subcategory", { required: false })}  >
-                                <option>Please select</option>
+                            <select className="form-control" {...register("subcategory", { required: true })}  >
+                                <option value="">Please select</option>
                                 {subcategories &&
                                     subcategories.map((s, i) => (
                                         <>
@@ -262,6 +265,8 @@ import Select from 'react-select'
                                         </>
                                     ))}
                             </select>
+                            {errors.subcategory && <span className='text-danger'>Select subcategory </span>}
+
                     </div>
                 </div>
             </div>
