@@ -53,7 +53,7 @@ const Orders = () => {
 
     const deleteMessage = () => (
         <div className="alert alert-danger" style={{ display: success ? '' : 'none' }}>
-           <a class="text-center" style={{color:'white'}}> Customer Deleted </a> 
+           <a className="text-center" style={{color:'white'}}> Customer Deleted </a> 
         </div>  
     );
     const redirectUser = () => {
@@ -81,20 +81,15 @@ const Orders = () => {
             text:'ID',
             hidden:true
         },
-        // {
-        //     dataField: 'prodect name',
-        //     text: 'Product Name',
-        //     sort: true
-        // }, 
-        // {
-        //     dataField: 'quntity',
-        //     text: 'Quantity',
-        //     sort: true
-        // }, 
+  
 
         {
             dataField: 'name',
             text: 'Product Name ',
+        }, 
+        {
+            dataField: 'user',
+            text: 'Custome Name ',
         }, 
         {
             dataField: 'address',
@@ -125,15 +120,25 @@ const Orders = () => {
       const getSwitch = (product) => {
         return (
             <>
-                <button type="button" class="btn btn-primary">Success</button>
+                <button type="button" className="btn btn-primary">Success</button>
             </>
         )
       };
 
+      const getCustomer = (item) => {
+        return (
+            <>
+               <a>{item.user.firstName}</a>
+            </>
+        )
+      };
+
+ 
       const orderList = [];
       products.forEach((item) => {
         item['id'] = item._id;
         item['name'] = item.products[0].name;
+        item['user'] = item.user.firstName + ' ' + item.user.lastName ;
         item['mobile'] =item.mobile;
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
