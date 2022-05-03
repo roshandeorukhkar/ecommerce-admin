@@ -7,7 +7,9 @@ import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SubCategory = ({ match }) => {
     const params = useParams();
@@ -39,19 +41,22 @@ const SubCategory = ({ match }) => {
              if (data.error) {
                  console.log(data.error);
              } else {
-                NotificationManager.success('Sub category has been deleted successfully!','',2000);
+                toast.success('Deleted successfully!', {
+                    autoClose:600
+                })
+                // NotificationManager.success('Sub category has been deleted successfully!','',2000);
                  loadProducts();
                  /*setValues({
                      ...values,
                      success:true,
                      redirectToProfile: false
                  });*/
-                 setTimeout(function(){
-                     setValues({
-                         ...values,
-                         redirectToProfile:true
-                     })
-                 },2000)
+                //  setTimeout(function(){
+                //      setValues({
+                //          ...values,
+                //          redirectToProfile:true
+                //      })
+                //  },2000)
              }
          });
         }
@@ -173,7 +178,8 @@ const SubCategory = ({ match }) => {
         <div className="row">
             <AdminHeader />
             <AdminSidebar />
-            <NotificationContainer/>
+            <ToastContainer />
+            {/* <NotificationContainer/> */}
             <div className="page-wrapper">
                 <div className="container-fluid">
                 <div className='row'>
