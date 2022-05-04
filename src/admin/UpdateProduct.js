@@ -11,21 +11,7 @@ import Select from 'react-select'
 
 
 const UpdateProduct = ({ match }) => {
-
-    const { control, register, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: {
-              dimanstions: {},
-              attribute: [{ Ids: "", Values: "" }],
-              specification: [{ Id: "" }],
-              image: [{ colors: "", pic: "" }],  
-              //name:"product name" ,
-            //   brand:"sony"    
-        }
-      });
-
-    const [values, setValues] = useState({
-        name:''
-    });
+    const [values, setValues] = useState({});
     const [attributess , setAttributess] = useState([]);
     const [categories, setCategories] = useState([]);
     const [dimanstions , setDimanstions] = useState(null);
@@ -35,35 +21,36 @@ const UpdateProduct = ({ match }) => {
     const { user, token } = isAuthenticated();
 
     const { name, brand, price, quantity, description, discount, shipping, type, manuf, subcate, cate, attri, spe, redirectToProfile} = values;
-
-    // const handleChangename = name => event => {
-    //     setValues({ ...values, error: false, [name]: event.target.value });
-    // };
+    
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const init = productId => {
+         let defaultValues = {};
         getProduct(productId).then(data => {
+            defaultValues.name = data.name;
+            
             console.log(data, ".............................");
-            console.log(data.specification, "sepcification............")
+            // console.log(data.specification, "sepcification............")
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
                 // populate the state
-                setValues({
-                    ...values,
-                    name: data.name,
-                    brand: data.brand,
-                    description:data.description,
-                    quantity: data.quantity,
-                    price:data.price,
-                    discount:data.discount,
-                    shipping:data.shipping,
-                    type:data.type,
-                    manuf:data.manufactures,  
-                    cate:data.category._id,
-                    subcate:data.subcategory,
-                    attri:data.attribute[0]._id,
-                    spe:data.specification[0].Id 
-                });
+                // setValues({
+                //     name: data.name,
+                //     brand: data.brand,
+                //     description:data.description,
+                //     quantity: data.quantity,
+                //     price:data.price,
+                //     discount:data.discount,
+                //     shipping:data.shipping,
+                //     type:data.type,
+                //     manuf:data.manufactures,  
+                //     cate:data.category._id,
+                //     subcate:data.subcategory,
+                //     attri:data.attribute[0]._id,
+                //     spe:data.specification
+                // });
+                reset({specification: data.specification})
                 // load categories
                 initCategories();
             }
@@ -180,7 +167,6 @@ const UpdateProduct = ({ match }) => {
     }, []);
 
 
-
     const clickSubmit = (data) => {
          console.log(data, "product update.....");
         // updateProduct(match.params.productId, data).then(data => {
@@ -199,7 +185,7 @@ const UpdateProduct = ({ match }) => {
             //         })
             //     },1000)
             // }
-       // });
+      //  });
     };
 
     const SelectBox = React.forwardRef(({ onChange, onBlur, options, isMulti, name }, ref ) => (
@@ -214,7 +200,7 @@ const UpdateProduct = ({ match }) => {
                <div className="col-lg-12">
                    <div className="form-group col-lg-6">
                        <h6><b>Product Name <span style={{color:'red'}}>*</span></b></h6>
-                       <input type="text" className="form-control" {...register("name", { required: false })} defaultValue={name}  />
+                       <input type="text" className="form-control"  {...register("name", { required: false })}  defaultValue={name}  />
                    </div>
                    <div className="form-group col-lg-6">
                         <h6><b>Brand Name</b></h6>
@@ -378,20 +364,38 @@ const UpdateProduct = ({ match }) => {
        <div className="white-box">
             <div className="row">
                 <div className="row">
+
                     <div className='col-lg-12'>
                         <h3> Add Specification </h3><hr></hr>
                         {specificationFields.map((item, index) => {
+
                             return (
                             <div key={item.id}>
+
                                 <div className='col-lg-7'>
-                                <select  className="form-control" {...register(`specification.${index}.Id`, { required: false })} >
-                                <option>Please select {spe}</option>
-                                {specifications &&
+                                <select  className="form-control" {...register(`specification.${index}.Id`, { required: false })}  >
+                                {specifications && 
+                                specifications.map((s,i) =>
+                                 (
+                                     <>
+                                     <span>                                                    {JSON.stringify(item.id)}, {JSON.stringify(s._id)}</span>
+                                    (item.id == s._id) ?(
+                                        <option key={i} selected="selected" value={s._id}>
+                                            {s.manufacturerName}
+                                        </option>
+                                    ):(
+                                        <option key={i} value={s._id}>
+                                            {s.manufacturerName}
+                                        </option>
+                                    )
+                                    </>   
+                                ))}
+                                {/* {specifications &&
                                     specifications.map((s, i) => (
                                         <option key={i} value={s._id}>
-                                            {s.manufacturerName }
+                                            {s.manufacturerName}
                                         </option>
-                                    ))}
+                                    ))} */}
                             </select>
                                 </div>
                                 <div className='col-lg-2'>
@@ -509,6 +513,8 @@ const UpdateProduct = ({ match }) => {
             return <Redirect to="/admin/productlist" />;
         }
     };
+
+    console.log("specificationFields---",specificationFields)
 
     return (
         <div id="wrapper">
