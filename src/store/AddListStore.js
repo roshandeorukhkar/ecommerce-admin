@@ -11,11 +11,13 @@ import { statusChangeStore } from "../store/ApiStore";
 import StorePasswordInput from "./StorePasswordInput";
 import DataTableComponent from "../common/DataTableComponent";
 import { Switch } from "@mui/material";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
-import "react-notifications/lib/notifications.css";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+// import "react-notifications/lib/notifications.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import MobileInput from "./MobileInput";
 
 const AddListStore = () => {
@@ -95,7 +97,10 @@ const AddListStore = () => {
         {
             const deleteStoreID = deleteStoreId;
             deleteStore(deleteStoreID).then((data) => {
-                NotificationManager.success(data.message,'',2000);
+              toast.success('Deleted successfully!', {
+                autoClose:600
+              })
+              //NotificationManager.success(data.message,'',2000);
             });        
             getStoreList();
         }
@@ -134,7 +139,10 @@ const AddListStore = () => {
                     passwordError: data.errors.password,
                     emailError: data.errors.email,
                 });
-                NotificationManager.error('Email already exist...','',2000);
+                toast.error('Email already exist!', {
+                  autoClose:600
+                })
+                //NotificationManager.error('Email already exist...','',2000);
             } else {
                 setValues({
                     storeName: "",
@@ -152,7 +160,10 @@ const AddListStore = () => {
                     email: "",
                     emailError: "",
                 });
-                NotificationManager.success(data.message,'',2000);
+                toast.success(data.message, {
+                  autoClose:600
+                })
+                //NotificationManager.success(data.message,'',2000);
                 getStoreList();
                 if (params.storeId != 'undefined') {
                     history.push("/admin/storemanagement")
@@ -259,7 +270,8 @@ const AddListStore = () => {
     <>
       <div className="page-wrapper">
         <div className="container-fluid">
-          <NotificationContainer />
+          {/* <NotificationContainer /> */}
+          <ToastContainer />
           <FormMainTitle
             title="Store Management"
             onClick={() => setCheckParams(!checkParams)}
