@@ -4,9 +4,12 @@ import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createManufacturer } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+
 
 const AddManufacturer = () =>{
     
@@ -50,16 +53,25 @@ const clickSubmit = event => {
                NotificationManager:false,
                 redirectToProfile: false
             });
+            toast.success('Added successfully!', {
+                autoClose:600,
+                onClose: () => {
+                    setValues({
+                        ...values,
+                        redirectToProfile: true
+                    })
+                }
+            })
            // NotificationManager.success('');
-            NotificationManager.success('Manufacter has been added successfully!','',2000);
-            setTimeout(function(){                
-                setValues({
-                    ...values,
-                    redirectToProfile:true
+            // NotificationManager.success('Manufacter has been added successfully!','',2000);
+            // setTimeout(function(){                
+            //     setValues({
+            //         ...values,
+            //         redirectToProfile:true
                     
-                })
-               // NotificationManager.success('Manufacter has been added successfully!');
-            },2000)
+            //     })
+            //    // NotificationManager.success('Manufacter has been added successfully!');
+            // },2000)
         }
     });
 };
@@ -94,7 +106,8 @@ return(
                     </div>
                         <div className="white-box">
                             <div className="row">
-                                 <NotificationContainer/>
+                                <ToastContainer />
+                                {/* <NotificationContainer/> */}
                                 <div className="col-lg-12">
                                     <form>
                                         {/*{showSuccess()}

@@ -3,10 +3,12 @@ import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createProduct, getCategories, getAttributes, Specification, getManufacturers , getDimanstions, getSubCategory  } from './apiAdmin';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
     const AddProduct = () => {
     // use for  validition
@@ -57,7 +59,6 @@ import Select from 'react-select'
     const { user, token } = isAuthenticated();
 
     const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
-    
     // get categories 
     const init = () => {
         getCategories().then(data => {
@@ -189,13 +190,22 @@ import Select from 'react-select'
                     ...values,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Product has been added successfully!');
-                setTimeout(function(){                
-                    setValues({
-                        ...values,
-                        redirectToProfile:true  
-                    })
-                },1000)
+                toast.success('Added successfully!', {
+                    autoClose:600,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+                // NotificationManager.success('Product has been added successfully!');
+                // setTimeout(function(){                
+                //     setValues({
+                //         ...values,
+                //         redirectToProfile:true  
+                //     })
+                // },1000)
             }
         });
     };
@@ -223,8 +233,8 @@ import Select from 'react-select'
                     </div> 
                     <div className="form-group col-lg-6">
                         <h6><b> Manufacturer </b></h6>
-                        <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: false })}> 
-                            <option>Please select</option>
+                        <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: true })}> 
+                            <option value="">Please select</option>
                             {manufactures &&
                                 manufactures.map((s, i) => (
                                     <>
@@ -236,11 +246,12 @@ import Select from 'react-select'
                                 </>
                                 ))} 
                         </select>
+                        {errors.manufactures && <span className='text-danger'>Select manufactures name </span>}
                     </div> 
                     <div className="form-group col-lg-6">
                             <h6><b> Category</b></h6>
-                            <select className="form-control" {...register("category", { required: false })} onChange={handleCategory}>
-                                <option>Please select</option>
+                            <select className="form-control" {...register("category", { required: true })} onChange={handleCategory}>
+                                <option value="">Please select</option>
                                 {categories &&
                                     categories.map((c, i) => (
                                         <>
@@ -252,11 +263,13 @@ import Select from 'react-select'
                                         </>
                                     ))}
                             </select>
+                            {errors.category && <span className='text-danger'>Select category </span>}
+
                     </div>
                     <div className="form-group col-lg-6">
                             <h6><b> Sub Category </b></h6>
-                            <select className="form-control" {...register("subcategory", { required: false })}  >
-                                <option>Please select</option>
+                            <select className="form-control" {...register("subcategory", { required: true })}  >
+                                <option value="">Please select</option>
                                 {subcategories &&
                                     subcategories.map((s, i) => (
                                         <>
@@ -268,6 +281,8 @@ import Select from 'react-select'
                                         </>
                                     ))}
                             </select>
+                            {errors.subcategory && <span className='text-danger'>Select subcategory </span>}
+
                     </div>
                 </div>
             </div>
@@ -278,32 +293,39 @@ import Select from 'react-select'
                 <div className="col-lg-12">
                         <div className="form-group col-lg-6">
                             <h6><b> Price </b></h6>
-                            <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: false })} />
+                            <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: true })} />
+                            {errors.price && <span className='text-danger'>Enter Price </span>}
+
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> Shipping</b></h6>
-                            <select className="form-control" {...register("shipping", { required: false })}>
-                                <option>Please select</option>
+                            <select className="form-control" {...register("shipping", { required: true })}>
+                                <option value="">Please select</option>
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </select>
+                            {errors.shipping && <span className='text-danger'>Select shipping </span>}
+
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> product type</b></h6>
-                            <select  className="form-control" {...register("type", { required: false })}>
-                                <option>Please select</option>
+                            <select  className="form-control" {...register("type", { required: true })}>
+                                <option value="">Please select</option>
                                 <option value="New Arrivale">New Arrivale</option>
                                 <option value="Normal">Normal </option>
                                 <option value="Comming soon">Comming soon </option>
                             </select>
+                            {errors.type && <span className='text-danger'>Select Type </span>}
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> Quantity</b></h6>
-                            <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: false })} />
+                            <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: true })} />
+                            {errors.quantity && <span className='text-danger'>Enter Quantity  </span>}
                         </div> 
                         <div className="form-group col-lg-6">
                             <h6><b> Discount in Percentage</b></h6>
-                            <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: false })} />
+                            <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: true })} />
+                            {errors.discount && <span className='text-danger'>Enter Discount  </span>}
                         </div> 
                 </div>
             </div>
@@ -318,7 +340,7 @@ import Select from 'react-select'
                             <div key={item.id}>
                                 <div className='col-lg-7'>
                                 <select  className="form-control" {...register(`specification.${index}`, { required: false })}>
-                                <option>Please select</option>
+                                <option value="">Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
                                         <option key={i} value={s._id}>
@@ -326,6 +348,7 @@ import Select from 'react-select'
                                         </option>
                                     ))}
                             </select>
+
                                 </div>
                                 <div className='col-lg-2'>
                                     <button type="button" className="btn btn-info" onClick={() => { specificationAppend(); }}> + </button>
@@ -348,7 +371,7 @@ import Select from 'react-select'
                                 <div className='col-lg-5'>
                                     <h6>Attribute name</h6>
                                     <select className="form-control" {...register(`attribute.${index}.Id`, { required: false })}  onChange={handleAttributes} >
-                                            <option>Please select</option>
+                                            <option value="">Please select</option>
                                                 {attributess &&
                                                     attributess.map((a, i) => (
                                                         <>
@@ -412,16 +435,10 @@ import Select from 'react-select'
                 <h3>Product Description</h3>
                     <div className="form-group col-lg-9">
                         <h6><b> Description</b></h6>
-                        <textarea  rows="4" className="form-control"{...register("description", { required: false })} />
+                        <textarea  rows="4" className="form-control"{...register("description", { required: true })} />
+                        {errors.description && <span className='text-danger'>Enter description  </span>}
                     </div>
-                    {/* <div className="form-group col-lg-6 ">
-                        <h6><b> Photo</b></h6>
-                        <label className="btn btn-secondary">
-                            <input  type="file" {...register("photo", { required: false })}   />
-                        </label>
-                    </div> */}
                     {showLoading(data.loading)}
-
                     <div className="form-group col-lg-9">
                         <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit" disabled={data.disable}> Submit </button>
                     </div>
@@ -445,7 +462,8 @@ import Select from 'react-select'
             <AdminSidebar />
                 <div className="page-wrapper">
                     <div className="container-fluid">
-                        <NotificationContainer/>
+                        <ToastContainer />
+                        {/* <NotificationContainer/> */}
                         {redirectUser()}
                         {newPostForm()}   
                     </div>

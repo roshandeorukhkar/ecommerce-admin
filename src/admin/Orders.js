@@ -4,8 +4,10 @@ import { removeCustomer, listOrders } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Orders = () => {
 
@@ -38,14 +40,23 @@ const Orders = () => {
                 if (data.error) {
                     console.log(data.error);
                 } else {
-                    NotificationManager.success('Customer has been deleted successfully!','',2000);
-                    loadProducts();
-                    setTimeout(function(){
-                        setValues({
-                            ...values,
-                            redirectToProfile:true
-                        })
-                    },2000)
+                    toast.success('Deleted successfully!', {
+                        autoClose:600,
+                        onClose: () => {
+                            setValues({
+                                ...values,
+                                redirectToProfile: true
+                            })
+                        }
+                    })
+                    // NotificationManager.success('Customer has been deleted successfully!','',2000);
+                    // loadProducts();
+                    // setTimeout(function(){
+                    //     setValues({
+                    //         ...values,
+                    //         redirectToProfile:true
+                    //     })
+                    // },2000)
                 }
             });
         }
@@ -53,7 +64,7 @@ const Orders = () => {
 
     const deleteMessage = () => (
         <div className="alert alert-danger" style={{ display: success ? '' : 'none' }}>
-           <a class="text-center" style={{color:'white'}}> Customer Deleted </a> 
+           <a className="text-center" style={{color:'white'}}> Customer Deleted </a> 
         </div>  
     );
     const redirectUser = () => {
@@ -81,16 +92,6 @@ const Orders = () => {
             text:'ID',
             hidden:true
         },
-        // {
-        //     dataField: 'prodect name',
-        //     text: 'Product Name',
-        //     sort: true
-        // }, 
-        // {
-        //     dataField: 'quntity',
-        //     text: 'Quantity',
-        //     sort: true
-        // }, 
         {
             dataField: 'name',
             text: 'Product Name',
@@ -124,15 +125,25 @@ const Orders = () => {
       const getSwitch = (product) => {
         return (
             <>
-                <button type="button" class="btn btn-primary">Success</button>
+                <button type="button" className="btn btn-primary">Success</button>
             </>
         )
       };
 
+      const getCustomer = (item) => {
+        return (
+            <>
+               <a>{item.user.firstName}</a>
+            </>
+        )
+      };
+
+ 
       const orderList = [];
       products.forEach((item) => {
         item['id'] = item._id;
         item['name'] = item.products[0].name;
+        item['user'] = item.user.firstName + ' ' + item.user.lastName ;
         item['mobile'] =item.mobile;
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
@@ -145,7 +156,8 @@ const Orders = () => {
         <div className="col-12">
             {deleteMessage()}
             {redirectUser()}
-            <NotificationContainer/>
+            <ToastContainer />
+            {/* <NotificationContainer/> */}
             <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={orderList}/> 
         </div>
     </div>

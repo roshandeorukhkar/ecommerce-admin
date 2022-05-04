@@ -55,7 +55,7 @@ const Addspecification = () => {
                     redirectToProfile: false
                 });
                 toast.success('Added successfully!', {
-                    autoClose:500,
+                    autoClose:600,
                     onClose: () => {
                         setValues({
                             ...values,

@@ -6,7 +6,9 @@ import AdminSidebar from "../user/AdminSidebar";
 import { Redirect } from 'react-router-dom';
 import { getCategory, updateCategory } from './apiAdmin';
 import { Link , useParams} from "react-router-dom";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateSubCategory = ({ match }) => {
     const params = useParams();
@@ -77,13 +79,22 @@ const UpdateSubCategory = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Category has been updated successfully!','',2000);
-                setTimeout(function(){
-                    setValues({
-                        ...values,
-                        redirectToProfile:true
-                    })
-                },2000)
+                toast.success('Updated successfully!', {
+                    autoClose:600,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+                // NotificationManager.success('Category has been updated successfully!','',2000);
+                // setTimeout(function(){
+                //     setValues({
+                //         ...values,
+                //         redirectToProfile:true
+                //     })
+                // },2000)
             }
         });
     };
@@ -151,7 +162,8 @@ const UpdateSubCategory = ({ match }) => {
                        <div className="row">
                            <div className="col-lg-12">
                                <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                   <NotificationContainer/>
+                                    <ToastContainer />
+                                   {/* <NotificationContainer/> */}
                                    {/* {showSuccess()} */}
                                    {showError()}
                                    {updateCategoryForm()}

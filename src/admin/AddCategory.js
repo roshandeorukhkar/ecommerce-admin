@@ -5,7 +5,9 @@ import AdminSidebar from "../user/AdminSidebar";
 import { createCategory, getCategories } from "./apiAdmin";
 import { Redirect } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddManufacturer = () =>{
     
@@ -39,6 +41,9 @@ const clickSubmit = event => {
               errorsCategories: data.errors.name,
             });
             //NotificationManager.error(data.message);
+            toast.success('Please try again!', {
+                autoClose:600
+            })
           } 
         else {
             setValues({
@@ -51,13 +56,22 @@ const clickSubmit = event => {
                 success: true,
                 redirectToProfile: false
             });
-            NotificationManager.success('Category has been add successfully!','',2000);
-            setTimeout(function(){
-                setValues({
-                    ...values,
-                    redirectToProfile:true
-                })
-            },2000)
+            toast.success('Added successfully!', {
+                autoClose:600,
+                onClose: () => {
+                    setValues({
+                        ...values,
+                        redirectToProfile: true
+                    })
+                }
+            })
+            // NotificationManager.success('Category has been add successfully!','',2000);
+            // setTimeout(function(){
+            //     setValues({
+            //         ...values,
+            //         redirectToProfile:true
+            //     })
+            // },2000)
         }
     });
 };
@@ -110,7 +124,8 @@ return(
                             <div className="row">
                                 <div className="col-lg-12">
                                     <form onSubmit={clickSubmit} >
-                                    <NotificationContainer/>
+                                        <ToastContainer />    
+                                        {/* <NotificationContainer/> */}
                                         {/* {showSuccess()} */}
                                         {showError()}
                                         {redirectUser()}

@@ -5,9 +5,11 @@ import { Link, Redirect } from 'react-router-dom';
 import { getProduct, getCategories, updateProduct, Specification, getManufacturers, getSubCategory, getAttributes, getDimanstions } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UpdateProduct = ({ match }) => {
@@ -199,6 +201,17 @@ const UpdateProduct = ({ match }) => {
             //         })
             //     },1000)
             // }
+
+            // toast.success('Added successfully!', {
+            //     autoClose:600,
+            //     onClose: () => {
+            //         setValues({
+            //             ...values,
+            //             redirectToProfile: true
+            //         })
+            //     }
+            // })
+
        // });
     };
 
@@ -516,7 +529,8 @@ const UpdateProduct = ({ match }) => {
         <AdminSidebar />
             <div className="page-wrapper">
                 <div className="container-fluid">
-                    <NotificationContainer/>
+                    <ToastContainer />
+                    {/* <NotificationContainer/> */}
                     {redirectUser()}
                     {newPostForm()}   
                 </div>

@@ -3,9 +3,11 @@ import Layout from '../core/Layout';
 import { isAuthenticated } from '../auth';
 import { Link, Redirect } from 'react-router-dom';
 import { getManufacturer, updateManfacturer } from './apiAdmin';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const UpdateManufacturer = ({ match }) => {
@@ -76,13 +78,24 @@ const UpdateManufacturer = ({ match }) => {
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Manufacter has been updated successfully!','',2000);
-                setTimeout(function(){
-                    setValues({
-                        ...values,
-                        redirectToProfile:true
-                    })
-                },2000)
+
+                toast.success('Updated successfully!', {
+                    autoClose:600,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+                
+                // NotificationManager.success('Manufacter has been updated successfully!','',2000);
+                // setTimeout(function(){
+                //     setValues({
+                //         ...values,
+                //         redirectToProfile:true
+                //     })
+                // },2000)
             }
         });
     };
@@ -145,7 +158,8 @@ const UpdateManufacturer = ({ match }) => {
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                         <NotificationContainer/>
+                                            <ToastContainer />
+                                            {/* <NotificationContainer/> */}
                                             {/* {showSuccess()} */}
                                             {showError()}
                                             {updateCategoryForm()}

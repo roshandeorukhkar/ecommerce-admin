@@ -5,7 +5,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { getAttribute, updateAttribute } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateAttribute = ({ match }) => {
 const [inputList, setInputList] = useState([{ specification: "" }]);
@@ -92,7 +94,10 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                   errorsAttributeName: data.errors.attributeName,
                   errorsAttributeValue:data.errors.dimension,
                 });
-                NotificationManager.error(data.message);
+                // NotificationManager.error(data.message);
+                toast.success('Please try again!', {
+                    autoClose:600
+                })
               } 
             else {
                 setValues({
@@ -105,13 +110,24 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                     success: true,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Attribute has been updated successfully!','',2000);
-                setTimeout(function(){
-                    setValues({
-                        ...values,
-                        redirectToProfile:true
-                    })
-                },2000)
+
+                toast.success('Added successfully!', {
+                    autoClose:600,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+
+                // NotificationManager.success('Attribute has been updated successfully!','',2000);
+                // setTimeout(function(){
+                //     setValues({
+                //         ...values,
+                //         redirectToProfile:true
+                //     })
+                // },2000)
             }
         });
     };
@@ -193,7 +209,8 @@ const [inputList, setInputList] = useState([{ specification: "" }]);
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
-                                            <NotificationContainer/>
+                                            <ToastContainer />
+                                            {/* <NotificationContainer/> */}
                                             {/* {showSuccess()} */}
                                             {showError()}
                                             {updateAttributeForm()}
