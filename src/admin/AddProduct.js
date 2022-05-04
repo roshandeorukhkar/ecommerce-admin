@@ -3,10 +3,12 @@ import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createProduct, getCategories, getAttributes, Specification, getManufacturers , getDimanstions, getSubCategory  } from './apiAdmin';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
     const AddProduct = () => {
     // use for  validition
@@ -188,13 +190,22 @@ import Select from 'react-select'
                     ...values,
                     redirectToProfile: false
                 });
-                NotificationManager.success('Product has been added successfully!');
-                setTimeout(function(){                
-                    setValues({
-                        ...values,
-                        redirectToProfile:true  
-                    })
-                },1000)
+                toast.success('Added successfully!', {
+                    autoClose:600,
+                    onClose: () => {
+                        setValues({
+                            ...values,
+                            redirectToProfile: true
+                        })
+                    }
+                })
+                // NotificationManager.success('Product has been added successfully!');
+                // setTimeout(function(){                
+                //     setValues({
+                //         ...values,
+                //         redirectToProfile:true  
+                //     })
+                // },1000)
             }
         });
     };
@@ -333,7 +344,7 @@ import Select from 'react-select'
                                 {specifications &&
                                     specifications.map((s, i) => (
                                         <option key={i} value={s._id}>
-                                            {s.manufacturerName }
+                                            {s.manufacturerName }{" ( "}{s.specification_type}{" )"}
                                         </option>
                                     ))}
                             </select>
@@ -451,7 +462,8 @@ import Select from 'react-select'
             <AdminSidebar />
                 <div className="page-wrapper">
                     <div className="container-fluid">
-                        <NotificationContainer/>
+                        <ToastContainer />
+                        {/* <NotificationContainer/> */}
                         {redirectUser()}
                         {newPostForm()}   
                     </div>

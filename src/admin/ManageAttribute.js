@@ -5,8 +5,10 @@ import { deleteAttribute, getAttributes, deleteAttributeone ,statusAttributes ,s
 import { Switch } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
+//import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ManageAttribute = () => {
     const [values, setValues] = useState({
@@ -48,13 +50,22 @@ const ManageAttribute = () => {
                         success:true,
                         redirectToProfile: false
                     });*/
-                    NotificationManager.success('Attribute has been deleted successfully!','',2000);
-                    setTimeout(function(){
-                        setValues({
-                            ...values,
-                            redirectToProfile:true
-                        })
-                    },2000)
+                    toast.success('Deleted successfully!', {
+                        autoClose:600,
+                        onClose: () => {
+                            setValues({
+                                ...values,
+                                redirectToProfile: true
+                            })
+                        }
+                    })
+                    // NotificationManager.success('Attribute has been deleted successfully!','',2000);
+                    // setTimeout(function(){
+                    //     setValues({
+                    //         ...values,
+                    //         redirectToProfile:true
+                    //     })
+                    // },2000)
                 }
             });
         }
@@ -181,7 +192,8 @@ const columns = [
                 {deleteMessage()}
                 {redirectUser()}
                 <div className="col-md-12">
-                    <NotificationContainer/>
+                    <ToastContainer />
+                    {/* <NotificationContainer/> */}
                     <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> 
                 </div>
             </div>

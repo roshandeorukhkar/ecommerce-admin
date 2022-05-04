@@ -4,8 +4,10 @@ import { deleteCustomer, getCoustomer, statusCustomer, statusCheckCustomer, remo
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+// import {NotificationContainer, NotificationManager} from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Customer = () => {
     
@@ -53,19 +55,22 @@ const Customer = () => {
                 if (data.error) {
                     console.log(data.error);
                 } else {
-                    NotificationManager.success('Customer has been deleted successfully!','',2000);
+                    toast.success('Deleted successfully!', {
+                        autoClose:600
+                    })
+                    //NotificationManager.success('Customer has been deleted successfully!','',2000);
                     loadProducts();
                     /*setValues({
                         ...values,
                         success:true,
                         redirectToProfile: false
                     });*/
-                    setTimeout(function(){
-                        setValues({
-                            ...values,
-                            redirectToProfile:true
-                        })
-                    },2000)
+                    // setTimeout(function(){
+                    //     setValues({
+                    //         ...values,
+                    //         redirectToProfile:true
+                    //     })
+                    // },2000)
                 }
             });
         }
@@ -203,7 +208,8 @@ const Customer = () => {
             <div className="col-12">
                 {deleteMessage()}
                 {redirectUser()}
-                <NotificationContainer/>
+                <ToastContainer />
+                {/* <NotificationContainer/> */}
                 <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={productsList}/> 
             </div>
         </div>
