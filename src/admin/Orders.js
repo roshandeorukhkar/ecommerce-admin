@@ -97,6 +97,10 @@ const Orders = () => {
             text: 'Product Name',
         }, 
         {
+            dataField: 'user',
+            text: 'Customer Name',
+        }, 
+        {
             dataField: 'address',
             text: 'Location',
         }, 
