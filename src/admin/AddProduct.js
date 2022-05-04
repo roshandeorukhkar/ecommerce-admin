@@ -322,7 +322,7 @@ import Select from 'react-select'
                                 {specifications &&
                                     specifications.map((s, i) => (
                                         <option key={i} value={s._id}>
-                                            {s.manufacturerName }
+                                            {s.manufacturerName }{" ( "}{s.specification_type}{" )"}
                                         </option>
                                     ))}
                             </select>
