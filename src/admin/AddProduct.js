@@ -51,7 +51,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
     const { name, error, redirectToProfile,formData } = values;
     const [attributess , setAttributess] = useState([]);
-    const [dimanstions , setDimanstions] = useState(null);
+    const [dimanstions , setDimanstions] = useState({});
     const [subcategories , setSubcategories] = useState(null);
     const [categories , setCategories] = useState([]);
     const [specifications , setSpecification] = useState([]);
@@ -109,7 +109,6 @@ import 'react-toastify/dist/ReactToastify.css';
             if (data.error) {
                 console.log({ ...values, error: data.error });
             } else {
-               
                 setDimanstions(generateSelectOptions(data.dimension));
             }
 
@@ -180,7 +179,7 @@ import 'react-toastify/dist/ReactToastify.css';
             })
         })
         createProduct(token, formData).then(data => {
-            console.log("hello",data)
+          //  console.log("hello",formData)
             if (data.error) {
                 setData({ loading: false ,disable : false });
                 setValues({ ...values, error: data.error });
@@ -214,6 +213,7 @@ import 'react-toastify/dist/ReactToastify.css';
           <Select isMulti={isMulti} ref={ref} onBlur={onBlur} onChange={onChange} options={options} />
       ));
     
+     // console.log("shubha",dimanstions)
     const newPostForm = () => (
     <>
         <form onSubmit={handleSubmit(clickSubmit)}> 
@@ -222,17 +222,17 @@ import 'react-toastify/dist/ReactToastify.css';
                 <h3>Product Information</h3><hr></hr>
                 <div className="col-lg-12">
                     <div className="form-group col-lg-6">
-                        <h6><b>Product Name <span style={{color:'red'}}>*</span></b></h6>
+                        <h6><b>Product Name <span className='text-danger'>*</span></b></h6>
                         <input type="text" className="form-control" placeholder='Enter product name' {...register("name", { required: true })} />
                         {errors.name && <span className='text-danger'>Product name is required</span>}
                     </div>
                     <div className="form-group col-lg-6">
-                        <h6><b>Brand Name</b></h6>
+                        <h6><b>Brand Name<span className='text-danger'>*</span></b></h6>
                         <input type="text" className="form-control" placeholder='Enter brand name' {...register("brand", { required: true })}/>
                         {errors.brand && <span className='text-danger'>Brand name is required</span>}
                     </div> 
                     <div className="form-group col-lg-6">
-                        <h6><b> Manufacturer </b></h6>
+                        <h6><b> Manufacturer <span className='text-danger'>*</span></b></h6>
                         <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: true })}> 
                             <option value="">Please select</option>
                             {manufactures &&
@@ -249,7 +249,7 @@ import 'react-toastify/dist/ReactToastify.css';
                         {errors.manufactures && <span className='text-danger'>Select manufactures name </span>}
                     </div> 
                     <div className="form-group col-lg-6">
-                            <h6><b> Category</b></h6>
+                            <h6><b> Category<span className='text-danger'>*</span></b></h6>
                             <select className="form-control" {...register("category", { required: true })} onChange={handleCategory}>
                                 <option value="">Please select</option>
                                 {categories &&
@@ -267,7 +267,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
                     </div>
                     <div className="form-group col-lg-6">
-                            <h6><b> Sub Category </b></h6>
+                            <h6><b> Sub Category <span className='text-danger'>*</span></b></h6>
                             <select className="form-control" {...register("subcategory", { required: true })}  >
                                 <option value="">Please select</option>
                                 {subcategories &&
@@ -292,13 +292,13 @@ import 'react-toastify/dist/ReactToastify.css';
                 <h3>Product Details</h3><hr></hr>
                 <div className="col-lg-12">
                         <div className="form-group col-lg-6">
-                            <h6><b> Price </b></h6>
+                            <h6><b> Price <span className='text-danger'>*</span> </b></h6>
                             <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: true })} />
                             {errors.price && <span className='text-danger'>Enter Price </span>}
 
                         </div>
                         <div className="form-group col-lg-6">
-                            <h6><b> Shipping</b></h6>
+                            <h6><b> Shipping<span className='text-danger'>*</span></b></h6>
                             <select className="form-control" {...register("shipping", { required: true })}>
                                 <option value="">Please select</option>
                                 <option value="No">No</option>
@@ -308,7 +308,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
                         </div>
                         <div className="form-group col-lg-6">
-                            <h6><b> product type</b></h6>
+                            <h6><b> product type <span className='text-danger'>*</span></b></h6>
                             <select  className="form-control" {...register("type", { required: true })}>
                                 <option value="">Please select</option>
                                 <option value="New Arrivale">New Arrivale</option>
@@ -318,12 +318,12 @@ import 'react-toastify/dist/ReactToastify.css';
                             {errors.type && <span className='text-danger'>Select Type </span>}
                         </div>
                         <div className="form-group col-lg-6">
-                            <h6><b> Quantity</b></h6>
+                            <h6><b> Quantity<span className='text-danger'>*</span></b></h6>
                             <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: true })} />
                             {errors.quantity && <span className='text-danger'>Enter Quantity  </span>}
                         </div> 
                         <div className="form-group col-lg-6">
-                            <h6><b> Discount in Percentage</b></h6>
+                            <h6><b> Discount in Percentage<span className='text-danger'>*</span></b></h6>
                             <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: true })} />
                             {errors.discount && <span className='text-danger'>Enter Discount  </span>}
                         </div> 
@@ -337,8 +337,8 @@ import 'react-toastify/dist/ReactToastify.css';
                         <h3> Add Specification </h3><hr></hr>
                         {specificationFields.map((item, index) => {
                             return (
-                            <div key={item.id}>
-                                <div className='col-lg-7'>
+                            <div key={item.id} >
+                                <div className='col-lg-7 m-t-30'>
                                 <select  className="form-control" {...register(`specification.${index}`, { required: false })}>
                                 <option value="">Please select</option>
                                 {specifications &&
@@ -350,7 +350,7 @@ import 'react-toastify/dist/ReactToastify.css';
                             </select>
 
                                 </div>
-                                <div className='col-lg-2'>
+                                <div className='col-lg-2  m-t-30'>
                                     <button type="button" className="btn btn-info" onClick={() => { specificationAppend(); }}> + </button>
                                     <button type="button" className="btn btn-danger" onClick={() => specificationRemove(index)}> - </button>
                                 </div>
@@ -389,7 +389,11 @@ import 'react-toastify/dist/ReactToastify.css';
                                     <Controller
                                         name={`attribute.${index}.Values`}
                                         control={control}
-                                        render={({ field }) =><SelectBox {...field} isMulti='true' options={dimanstions}/>}
+                                        render={({ field }) =><SelectBox {...field}  isMulti='true' options={dimanstions}      
+                                             onChange={([selected]) => {
+                                             console.log("selected",selected)
+                                             return { value: selected ,label: selected };
+                                          }} />}
                                     />
                                 </div>
                                 <div className='col-lg-2'>
@@ -434,7 +438,7 @@ import 'react-toastify/dist/ReactToastify.css';
             <div className="row">
                 <h3>Product Description</h3>
                     <div className="form-group col-lg-9">
-                        <h6><b> Description</b></h6>
+                        <h6><b> Description<span className='text-danger'>*</span></b></h6>
                         <textarea  rows="4" className="form-control"{...register("description", { required: true })} />
                         {errors.description && <span className='text-danger'>Enter description  </span>}
                     </div>
