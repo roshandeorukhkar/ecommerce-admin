@@ -179,7 +179,6 @@ import 'react-toastify/dist/ReactToastify.css';
             })
         })
         createProduct(token, formData).then(data => {
-          //  console.log("hello",formData)
             if (data.error) {
                 setData({ loading: false ,disable : false });
                 setValues({ ...values, error: data.error });
@@ -198,13 +197,6 @@ import 'react-toastify/dist/ReactToastify.css';
                         })
                     }
                 })
-                // NotificationManager.success('Product has been added successfully!');
-                // setTimeout(function(){                
-                //     setValues({
-                //         ...values,
-                //         redirectToProfile:true  
-                //     })
-                // },1000)
             }
         });
     };
@@ -213,7 +205,6 @@ import 'react-toastify/dist/ReactToastify.css';
           <Select isMulti={isMulti} ref={ref} onBlur={onBlur} onChange={onChange} options={options} />
       ));
     
-     // console.log("shubha",dimanstions)
     const newPostForm = () => (
     <>
         <form onSubmit={handleSubmit(clickSubmit)}> 
@@ -390,10 +381,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                         name={`attribute.${index}.Values`}
                                         control={control}
                                         render={({ field }) =><SelectBox {...field}  isMulti='true' options={dimanstions}      
-                                             onChange={([selected]) => {
-                                             console.log("selected",selected)
-                                             return { value: selected ,label: selected };
-                                          }} />}
+                                              />}
                                     />
                                 </div>
                                 <div className='col-lg-2'>
