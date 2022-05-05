@@ -41,13 +41,14 @@ import 'react-toastify/dist/ReactToastify.css';
         append: imageAppend,
         remove: imageRemove
       } = useFieldArray({ control, name: "image" });
+      
 
     const [values, setValues] = useState({
         error: '',
         redirectToProfile: false,
         formData : new FormData()
     });
-    
+   
 
     const { name, error, redirectToProfile,formData } = values;
     const [attributess , setAttributess] = useState([]);
@@ -209,8 +210,8 @@ import 'react-toastify/dist/ReactToastify.css';
         });
     };
 
-    const SelectBox = React.forwardRef(({ onChange, onBlur, options, isMulti, name }, ref ) => (
-          <Select isMulti={isMulti} ref={ref} onBlur={onBlur} onChange={onChange} options={options} />
+    const SelectBox = React.forwardRef(({ onChange, onBlur, options, isMulti, name } ) => (
+          <Select isMulti={isMulti} onBlur={onBlur} onChange={onChange} options={options} />
       ));
     
      // console.log("shubha",dimanstions)
@@ -293,7 +294,12 @@ import 'react-toastify/dist/ReactToastify.css';
                 <div className="col-lg-12">
                         <div className="form-group col-lg-6">
                             <h6><b> Price <span className='text-danger'>*</span> </b></h6>
-                            <input  type="number" placeholder='Enter price ' className="form-control" {...register("price", { required: true })} />
+                            <input  type="text" placeholder='Enter price ' maxLength={15} className="form-control" {...register("price", { required: true })} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+
+                        event.preventDefault();
+                      }
+                    }} />
                             {errors.price && <span className='text-danger'>Enter Price </span>}
 
                         </div>
@@ -319,12 +325,20 @@ import 'react-toastify/dist/ReactToastify.css';
                         </div>
                         <div className="form-group col-lg-6">
                             <h6><b> Quantity<span className='text-danger'>*</span></b></h6>
-                            <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: true })} />
+                            <input  type="text" placeholder='Enter quantity' maxLength={5} className="form-control" {...register("quantity", { required: true })} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
                             {errors.quantity && <span className='text-danger'>Enter Quantity  </span>}
                         </div> 
                         <div className="form-group col-lg-6">
                             <h6><b> Discount in Percentage<span className='text-danger'>*</span></b></h6>
-                            <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: true })} />
+                            <input  type="text" placeholder='Enter discount' maxLength={3} className="form-control" {...register("discount", { required: true })} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
                             {errors.discount && <span className='text-danger'>Enter Discount  </span>}
                         </div> 
                 </div>
@@ -395,10 +409,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                         name={`attribute.${index}.Values`}
                                         control={control}
                                         render={({ field }) =><SelectBox {...field}  isMulti='true' options={dimanstions}      
-                                             onChange={([selected]) => {
-                                             console.log("selected",selected)
-                                             return { value: selected ,label: selected };
-                                          }} />}
+                                         />}
                                     />
                                 </div>
                                 <div className='col-lg-2'>
