@@ -24,6 +24,9 @@ const AdminSidebar = () => {
     pathname.startsWith("/admin/attribute/update") ||
     pathname.startsWith("/admin/Manucategory") ||
     pathname.startsWith("/admin/create/category") ||
+    pathname.startsWith("/admin/category/update") ||
+    pathname.startsWith("/admin/category/subupdate") ||
+    pathname.startsWith("/admin/subcategory/update") ||
     pathname.startsWith("/admin/Manucategory/update") ||
     pathname.startsWith("/admin/manufacturers") ||
     pathname.startsWith("/admin/create/manufacturer") ||
@@ -63,6 +66,9 @@ const AdminSidebar = () => {
     if (
       pathname.startsWith("/admin/Manucategory") ||
       pathname.startsWith("/admin/create/category") ||
+      pathname.startsWith("/admin/category/update") ||
+      pathname.startsWith("/admin/category/subupdate") ||
+      pathname.startsWith("/admin/subcategory/update") ||
       pathname.startsWith("/admin/Manucategory/update")
     ) {
       categoryMenu = "1";
@@ -79,9 +85,9 @@ const AdminSidebar = () => {
 
     var discountMenu = "0";
     if (
-      pathname.startsWith("/admin/manufacturers") ||
-      pathname.startsWith("/admin/create/manufacturer") ||
-      pathname.startsWith("/admin/manufacturer/update/")
+      pathname.startsWith("/admin/discount") ||
+      pathname.startsWith("/admin/create/discount") ||
+      pathname.startsWith("/admin/discount/update/")
     ) {
       discountMenu = "1";
     }

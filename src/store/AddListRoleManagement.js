@@ -9,8 +9,10 @@ import { getUserRoleByIdData } from "./ApiStore";
 import { deleteUserRole } from "./ApiStore";
 import DataTableComponent from "../common/DataTableComponent";
 import { Switch } from '@mui/material';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+// import { NotificationContainer, NotificationManager } from 'react-notifications';
+// import 'react-notifications/lib/notifications.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './AccessModuleOption';
 import { accessModuleList } from "./ApiStore";
 import { getStoreDataById } from "./ApiStore";
@@ -115,7 +117,10 @@ const AddListRoleManagement = (props) => {
     if(window.confirm('Are you sure you want to delete this record?'))
     {
         deleteUserRole(deleteId).then((data) => {
-        NotificationManager.error(data.message,'',2000);
+        //NotificationManager.error(data.message,'',2000);
+        toast.error(data.message, {
+          autoClose:600
+        })
         getUserRoleList();
 
         if (params.userRoleId != undefined){
@@ -172,7 +177,10 @@ const AddListRoleManagement = (props) => {
           errorAssingTo: data.errors.assingTo,
           errorAccessModuleId: data.errors.accessModuleId,
         });
-        NotificationManager.error(data.message,'',2000);
+        toast.error(data.message, {
+          autoClose:600
+        })
+        //NotificationManager.error(data.message,'',2000);
       } 
       else {
         setValues({
@@ -187,7 +195,10 @@ const AddListRoleManagement = (props) => {
           userRoleId: "",
           storeId: storeId
         });
-        NotificationManager.success(data.message,'',2000);
+        toast.success(data.message, {
+          autoClose:600
+        })
+        //NotificationManager.success(data.message,'',2000);
         setCheckParams(true);
         getUserRoleList();
         if (params.userRoleId != undefined) {
@@ -303,7 +314,8 @@ const AddListRoleManagement = (props) => {
     <>
       <div className="page-wrapper">
         <div className="container-fluid">
-          <NotificationContainer />
+          <ToastContainer />
+          {/* <NotificationContainer /> */}
           <FormMainTitle title={`Role Management of ${storeName}`}
             btnIcon="fa fa-backward"
             btnName="Back"

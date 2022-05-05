@@ -58,7 +58,7 @@ import 'react-toastify/dist/ReactToastify.css';
     const [manufactures , setManufactures] = useState([]);
     const { user, token } = isAuthenticated();
 
-    const showLoading = loading => loading && <h2 className="text-danger">Loading...</h2>;
+    const showLoading = loading => loading && <h6 className="text-danger">Please wait...</h6>;
     // get categories 
     const init = () => {
         getCategories().then(data => {
@@ -437,14 +437,15 @@ import 'react-toastify/dist/ReactToastify.css';
         <div className="white-box">
             <div className="row">
                 <h3>Product Description</h3>
-                    <div className="form-group col-lg-9">
-                        <h6><b> Description<span className='text-danger'>*</span></b></h6>
-                        <textarea  rows="4" className="form-control"{...register("description", { required: true })} />
+                    <div className="form-group col-lg-12">
+                        <h6><b> Description</b></h6>
+                        <textarea  rows="6" className="form-control"{...register("description", { required: true })} />
                         {errors.description && <span className='text-danger'>Enter description  </span>}
                     </div>
-                    {showLoading(data.loading)}
-                    <div className="form-group col-lg-9">
-                        <button  className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}} type="submit" disabled={data.disable}> Submit </button>
+                    
+                    <div className="form-group col-lg-12 text-center">
+                         {showLoading(data.loading)}
+                        <button  className="btn btn-info btn-md" style={{textAlign: 'Center', borderRadius:'7px'}} type="submit" disabled={data.disable}> Submit </button>
                     </div>
             </div>
         </div>

@@ -10,7 +10,8 @@ package-lock.json
 
 # production
 /build
-
+.env
+.idea/
 # misc
 .DS_Store
 .env.local
