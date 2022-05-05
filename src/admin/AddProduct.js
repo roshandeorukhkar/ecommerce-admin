@@ -334,9 +334,14 @@ import 'react-toastify/dist/ReactToastify.css';
                                 <option value="">Please select</option>
                                 {specifications &&
                                     specifications.map((s, i) => (
+                                        <>
+                                        {!s.deletedAt && s.status == 1 ?(
                                         <option key={i} value={s._id}>
                                             {s.manufacturerName }{" ( "}{s.specification_type}{" )"}
                                         </option>
+                                        ):null}
+                                        </>
+                                  
                                     ))}
                             </select>
 
@@ -366,7 +371,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                                 {attributess &&
                                                     attributess.map((a, i) => (
                                                         <>
-                                                        {!a.deletedAt ?(
+                                                        {!a.deletedAt && a.status == 1 ?(
                                                             <option key={i} value={a._id} >
                                                                 {a.attributeName }
                                                             </option>

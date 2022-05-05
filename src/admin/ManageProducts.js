@@ -164,7 +164,7 @@ const ManageProducts = () => {
       products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
-        item['image'] = getImage(item.images)
+        item['image'] = getImage(item.images);
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
