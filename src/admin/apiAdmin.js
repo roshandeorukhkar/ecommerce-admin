@@ -112,8 +112,8 @@ export const deletecategory1 = (productId) =>
 };
 
 export const deletecategory = (categoryId, category) => {
-    return fetch(`${API}/categorys/delete/${categoryId}`, {
-        method: 'POST',
+    return fetch(`${API}/category/${categoryId}`, {
+        method: 'delete',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
