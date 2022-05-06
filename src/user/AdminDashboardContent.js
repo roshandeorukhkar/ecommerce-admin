@@ -199,7 +199,7 @@ const AdminDashboardContent = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-md-12">
                             <div className="white-box user-table">
                                 <div className="row">
@@ -329,7 +329,7 @@ const AdminDashboardContent = () => {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {/* <!-- ===== Page-Container-End ===== --> */}
                 <AdminFooter />

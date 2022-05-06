@@ -17,11 +17,11 @@ const AdminHeader = () =>{
         <div className="top-left-part">
             <Link className="logo" to="index.html">
                 <b>
-                    <img src="/assets/plugins/images/logo.png" alt="home" />
+                    Logo{/* <img src="/assets/plugins/images/logo.png" alt="home" /> */}
                 </b>
                 <span>
                     {/* <img src="/assets/plugins/images/logo-text.png" alt="homepage" className="dark-logo" /> */}
-                   E-commerce
+                   Ecommerce
                 </span>
             </Link>
         </div>
@@ -31,19 +31,19 @@ const AdminHeader = () =>{
             </li>
         </ul> */}
         <ul className="nav navbar-top-links navbar-right pull-right">
-                <li className={`dropdown ${showNotification == true ? "open" : ""}`}>
+                {/* <li className={`dropdown ${showNotification == true ? "open" : ""}`}>
                 <Link to="#" className="dropdown-toggle waves-effect waves-light font-20" data-toggle="dropdown" onClick={() => setShowNotification(!showNotification)}>
                     <i className="icon-bell"></i>
                     <span className="badge badge-xs badge-danger">8</span>
                 </Link>
                <AdminNotification />
-            </li>
+            </li> */}
             <li className={`dropdown right-side-toggle ${showLogin == true ?"open" : "" }`}>
                 <Link to="#" className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
-                    <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  />
+                    {/* <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  /> */}
                     <p className='p-t-5'> 
                         <span className='font-bold text-dark'> Admin</span>
-                        <span className='font-12'>KeaSofttech@gmail.com</span>
+                        <span className='font-12'>admin@gmail.com</span>
                     </p>
                     <i className="icon-arrow-down m-t-15" ></i>
                 </Link>
@@ -51,7 +51,7 @@ const AdminHeader = () =>{
                     <li>
                         <div className="drop-title">
                             <p></p>
-                           <center> <Link to='/' className='btn btn-primary btn-outline'>Sign Out</Link></center>
+                           <center> <Link to='/' className='btn btn-primary btn-outline'>Logout</Link></center>
                         </div>
                     </li>
                 </ul>

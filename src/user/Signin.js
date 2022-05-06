@@ -36,14 +36,12 @@ const AdminSignin = () => {
                     <div className='white-box'>
                         {/* <div className='row'> */}
                         <div className="logoimage t-a-c" >
-                            <img className="img-fluid" src="../assets/images/logo.png" alt="logo" />
+                            {/* <img className="img-fluid" src="../assets/images/logo.png" alt="logo" /> */}
+                            <h1>Admin</h1>
                         </div>
                         <div className="login_form">
                             <form>
                                 <div className='admin_login'>
-                                    <div>
-                                        <i className='fa fa-mail'></i>
-                                    </div>
                                     <div className="form-group">
                                         <label>Email</label>
                                         <input
@@ -71,10 +69,10 @@ const AdminSignin = () => {
                                             Login
                                         </div>
                                     </div>
-                                    <div className='t-a-c'>
+                                    {/* <div className='t-a-c'>
                                         <i className='fa fa-lock'></i> 
-                                        <Link to="#" className='admin_link t-a-c'>forgotten Password</Link>
-                                    </div>
+                                        <Link to="#" className='admin_link t-a-c'> Forgotten Password</Link>
+                                    </div> */}
                                 </div>
                             </form>
                         </div>
