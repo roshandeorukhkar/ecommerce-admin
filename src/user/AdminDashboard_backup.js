@@ -73,7 +73,7 @@ const AdminDashboard = () => {
         <header className="navbar">
             <div className="logo">
                 <Link to="index.html">
-                <img className="img-fluid" src="../assets/images/logo.png" alt="logo" />
+                <img className="img-fluid" src="" alt="logo" />
                 </Link>
             </div>
             <div className="col-lg-9 col-6">

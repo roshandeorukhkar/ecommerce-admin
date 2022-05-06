@@ -3,7 +3,7 @@ import React from "react";
 const AdminFooter = () =>{
    return( <>
          <footer className="footer t-a-c">
-                © 2017 Cubic Admin
+         © Copyright 2021-22
             </footer>
     </>)
 }

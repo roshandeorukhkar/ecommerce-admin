@@ -96,9 +96,10 @@ export default function Header({ history }){
                 {/* <!-- responsive menu start--> */}
                 <div id="sidebar" className="d-block d-sm-block d-md-block d-lg-none d-xl-none">
                     <div className="pd_toggle_logo">
-                    <Link to="index.html">
+                    {/* <Link to="index.html">
                         <img src="../assets/images/logo.png" alt="img"/>
-                    </Link>
+                    </Link> */}
+                    <h1>Admin</h1>
                     </div>
                     <div id="toggle_close">&times;</div>
                     <div id='cssmenu'>

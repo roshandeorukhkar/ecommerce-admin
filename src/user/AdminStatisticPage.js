@@ -20,7 +20,8 @@ const AdminStatisticPage = () =>{
                             <Link className='fa-pull-right'>View Details</Link>
                         </h4>
                         <hr/>
-                        <div className='row'>
+                        <div class="alert alert-default text-center">No Data Available</div> 
+                        {/* <div className='row'>
                             <div className='col-lg-12 col-md-12 col-sm-12'>
                                 <h3 className='box-title'>This Week</h3>
                                 <div className="progress progress-md">
@@ -97,12 +98,12 @@ const AdminStatisticPage = () =>{
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 </div>
 
-                <div className='white-box'>
+                {/* <div className='white-box'>
                     <div className='row'>
                         <div className='col-lg-12'>
                             <h4 className='box-title'>Product Data
@@ -290,9 +291,9 @@ const AdminStatisticPage = () =>{
                             
                         </div>
                     </div>
-                </div>
+                </div> */}
                  {/* Box */}
-                 <div className='row'>
+                {/*  <div className='row'>
                      <div className='col-md-4 col-sm-12'>
                          <div className='white-box bg-primary color-box'>
                              <i className='fa fa-credit-card'></i><br/>
@@ -318,7 +319,7 @@ const AdminStatisticPage = () =>{
                              <Link className='text-white'>Try Now {'      '}<i className='icon-arrow-right'></i></Link>
                          </div>
                      </div>
-                 </div>
+                 </div> */}
 
 
             </div>

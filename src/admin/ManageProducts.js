@@ -10,6 +10,10 @@ import { Redirect } from 'react-router-dom';
 
 const ManageProducts = () => {
     const [products, setProducts] = useState([]);
+    const [showAll, setShowAll] = useState(false);
+
+    const showMore = () => setShowAll(true);
+    const showLess = () => setShowAll(false)
 
     const { user, token } = isAuthenticated();
 
@@ -55,7 +59,7 @@ const ManageProducts = () => {
 
     useEffect(() => {
         loadProducts();
-    }, []);
+    }, [showAll]);
 
     const status = productId => {
         const product = {
@@ -160,11 +164,25 @@ const ManageProducts = () => {
         )
       };
 
+      const getDescription = (description) => {
+          return(
+              <div>
+              {
+                  showAll ? description : String(description).substr(0, 40) +'......'}
+              {
+                  showAll?<Link to="#" onClick={showLess}><b> Show less</b></Link> :<Link to="#" onClick={showMore}><b>Show more</b></Link> 
+              }
+              
+            </div>
+          )
+      }
+
       const productList = [];
       products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
         item['image'] = getImage(item.images);
+        // item['description'] = getDescription(item.description);
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);
