@@ -3,7 +3,7 @@ import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createProduct, getCategories, getAttributes, Specification, getManufacturers , getDimanstions, getSubCategory  } from './apiAdmin';
-// import {NotificationContainer, NotificationManager} from 'react-notifications';
+//import {NotificationContainer, NotificationManager} from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
@@ -48,7 +48,6 @@ import 'react-toastify/dist/ReactToastify.css';
         redirectToProfile: false,
         formData : new FormData()
     });
-   
 
     const { name, error, redirectToProfile,formData } = values;
     const [attributess , setAttributess] = useState([]);
@@ -180,6 +179,7 @@ import 'react-toastify/dist/ReactToastify.css';
             })
         })
         createProduct(token, formData).then(data => {
+          //  console.log("hello",formData)
             if (data.error) {
                 setData({ loading: false ,disable : false });
                 setValues({ ...values, error: data.error });
@@ -201,11 +201,6 @@ import 'react-toastify/dist/ReactToastify.css';
             }
         });
     };
-
-    const SelectBox = React.forwardRef(({ onChange, onBlur, options, isMulti, name } ) => (
-          <Select isMulti={isMulti} onBlur={onBlur} onChange={onChange} options={options} />
-      ));
-    
     const newPostForm = () => (
     <>
         <form onSubmit={handleSubmit(clickSubmit)}> 
@@ -325,12 +320,11 @@ import 'react-toastify/dist/ReactToastify.css';
                         </div> 
                         <div className="form-group col-lg-6">
                             <h6><b> Discount in Percentage<span className='text-danger'>*</span></b></h6>
-                            <input  type="text" placeholder='Enter discount' maxLength={3} className="form-control" {...register("discount", { required: true })} onKeyPress={(event) => {
+                            <input  type="text" placeholder='Enter discount' maxLength={3} className="form-control" {...register("discount", { required: false })} onKeyPress={(event) => {
                       if (!/[0-9]/.test(event.key)) {
                         event.preventDefault();
                       }
                     }} />
-                            {errors.discount && <span className='text-danger'>Enter Discount  </span>}
                         </div> 
                 </div>
             </div>
@@ -399,8 +393,8 @@ import 'react-toastify/dist/ReactToastify.css';
                                     <Controller
                                         name={`attribute.${index}.Values`}
                                         control={control}
-                                        render={({ field }) =><SelectBox {...field}  isMulti='true' options={dimanstions}      
-                                              />}
+                                        render={({ field }) =><Select {...field}  isMulti='true' options={dimanstions}      
+                                         />}
                                     />
                                 </div>
                                 <div className='col-lg-2'>
