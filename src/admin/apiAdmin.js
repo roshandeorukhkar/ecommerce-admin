@@ -1,6 +1,20 @@
 import { API } from '../config';
 
-
+/*
+export const createCategory = data => {
+    return fetch(`${API}/category/create`,{
+        method: 'POST',
+        "headers" : {
+            Accept: 'application/json',
+         },
+         body :data
+    }).then(response => {
+        return response.json();
+    }).catch(error =>
+        console.log("error",error)
+    );
+}
+*/
 export const createCategory = async (category) => {
     try {
         const response = await fetch(`${API}/category/create`, {
@@ -16,7 +30,7 @@ export const createCategory = async (category) => {
     } catch (err) {
         console.log(err);
     }
-};
+}; 
 /*export const createCategory = (userId, token, category) => {
     return fetch(`${API}/category/create/${userId}`, {
         method: 'POST',
@@ -458,6 +472,23 @@ export const updateProduct = (productId, product) => {
 export const createspecification = async (category) => {
     try {
         const response = await fetch(`${API}/specification/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(category)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const createmenu = async (category) => {
+    try {
+        const response = await fetch(`${API}/menu/create`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

@@ -54,6 +54,7 @@ import AddEditAdvertisImg from './setting/AddEditAdvertisImg';
 
 import PartnerManagement from './setting/PartnerManagement';
 import AddEditPartner from './setting/AddEditPartner';
+import category_header_icon from './admin/category_header_icon';
 
 
 
@@ -109,7 +110,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/update/partnerImage/:partnerId" exact component={AddEditPartner} />
 
                 <AdminRoute path="/admin/test" exact component={TestDemo} />
-                
+                <AdminRoute path="/admin/category_header_icon" exact component={category_header_icon} />
             </Switch>
         </BrowserRouter>
     );

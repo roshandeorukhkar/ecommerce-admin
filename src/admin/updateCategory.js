@@ -13,6 +13,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const UpdateCategory = ({ match }) => {
     const [values, setValues] = useState({
         name: '',
+        navigation:'',
+        navigation_image:'',
         description:'',
         errorsCategories:'',
         error: '',
@@ -23,7 +25,7 @@ const UpdateCategory = ({ match }) => {
     // destructure user and token from localStorage
     const { user, token } = isAuthenticated();
 
-    const { name, description, error, redirectToProfile ,success } = values;
+    const { name, description,navigation,navigation_image, error, redirectToProfile ,success } = values;
 
     const init = categoryId => {
         getCategory(categoryId).then(data => {
@@ -34,7 +36,9 @@ const UpdateCategory = ({ match }) => {
                 setValues({
                     ...values,
                     name: data.name,
-                    description:data.description
+                    description:data.description,
+                    navigation:data.navigation,
+                    navigation_image:data.navigation_image
                 });
             }
         });
@@ -45,7 +49,14 @@ const UpdateCategory = ({ match }) => {
     }, []);
 
     const handleChange = name => event => {
-        setValues({ ...values, error: false, [name]: event.target.value, errorsCategories:'' });
+          if(name=='navigation') {
+            setValues({ ...values, error: false, [name]: event.target.checked, errorsCategories:'' });
+            
+           }
+           else {
+             setValues({ ...values, error: false, [name]: event.target.value, errorsCategories:'' });
+           }
+     
     };
 
 
@@ -54,8 +65,12 @@ const UpdateCategory = ({ match }) => {
         const category = {
             name: name,
             description:description,
+            navigation:navigation,
+            navigation_image:navigation_image
         };
-        updateCategory(match.params.categoryId, category).then(data => {
+        updateCategory(match.params.categoryId, category,navigation).then(data => {
+            console.log(navigation)
+            console.log(111)
             // if (data.error) {
             //     setValues({ ...values, error: data.error });
             // } 
@@ -70,6 +85,7 @@ const UpdateCategory = ({ match }) => {
                 setValues({
                     ...values,
                     name: data.name,
+                    navigation:data.navigation,
                     error: false,
                     success: true,
                     redirectToProfile: false
@@ -105,6 +121,17 @@ const UpdateCategory = ({ match }) => {
                     <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' value={name} name= "name"/>
                     <span className='error text-danger'>{values.errorsCategories}</span>
                 </div>
+                <div className="form-group col-lg-7">
+                <h6><b>Top navigation </b></h6>
+                <input onChange={handleChange('navigation')} name="navigation" type="checkbox" className="" checked={navigation} value={navigation} style={{width: '32px', height:'30px'}} />                             
+                </div>
+                <div id="navigation_id" className="form-group col-lg-7">
+                                                        <h6><b>Top navigation image</b></h6>
+                                                        <input onChange={handleChange('navigation_image')} name="navigation_image" type="file" className="" value={navigation_image} />
+
+
+                                                        
+                                                    </div>
                 <div className="form-group col-lg-7">
                     <h6><b>Category Description</b></h6>
                     <textarea onChange={handleChange('description')} rows="4" type="text" className="form-control" placeholder='Description'  value={description}></textarea>
