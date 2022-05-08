@@ -3,10 +3,12 @@ import FormMainTitle from "../common/FormMainTitle";
 import { saveSlider } from "./ApiSetting";
 import { saveAdvertise } from "./ApiSetting";
 import { Redirect } from "react-router-dom";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdvertisContent = () => {
   const [previewImg, setPreviewImg] = useState(null);
@@ -90,13 +92,22 @@ const AdvertisContent = () => {
           imageError: "",
           redirect: false,
         });
-        NotificationManager.success(data.data.message);
-        setTimeout(function () {
-          setValues({
-            ...values,
-            redirect: true,
-          });
-        }, 2000);
+        toast.success('Added successfully!', {
+          autoClose:600,
+          onClose: () => {
+            setValues({
+              ...values,
+              redirect: true
+            })
+          }
+        })
+        // NotificationManager.success(data.data.message);
+        // setTimeout(function () {
+        //   setValues({
+        //     ...values,
+        //     redirect: true,
+        //   });
+        // }, 2000);
       }
     });
   };
@@ -110,7 +121,8 @@ const AdvertisContent = () => {
   return (
     <div className="page-wrapper">
       <div className="container-fluid">
-        <NotificationContainer />
+        <ToastContainer />
+        {/* <NotificationContainer /> */}
         <FormMainTitle
           title="Add Advertise Image"
           btnName="Back"

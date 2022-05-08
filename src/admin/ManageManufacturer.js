@@ -148,7 +148,11 @@ const ManageManufacturer = () => {
     const getDate = (date) => {
         const newDate = date.split('T')[0];
         const DATE = newDate.split('-');
-        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+        return (
+            <div style={{width:'90px'}}>
+                {DATE[2] + '-' + DATE[1] + '-' + DATE[0]}
+            </div>  
+        )
     }
 
     const columns = [
@@ -178,15 +182,17 @@ const ManageManufacturer = () => {
         }, 
         {
             dataField: 'action',
-            text: 'action'
+            text: 'Action'
       }];
 
       const getButtons = (manufacture) => {
         return (
             <div>
-                 <Link to={`/admin/manufacturer/update/${manufacture._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                <div style={{width:'100px'}}>
+                 <Link to={`/admin/manufacturer/update/${manufacture._id}`}><button className='btn btn-outline btn-info m-5 btn-sm' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
                  {/* <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => destroy(manufacture._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button> */}
-                 <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(manufacture._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                 <button className='btn btn-outline btn-danger m-5 btn-sm' aria-label='Delete' onClick={() => destroy1(manufacture._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                 </div>
             </div>
         )
       };

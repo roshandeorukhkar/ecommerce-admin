@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import FormMainTitle from "../common/FormMainTitle";
 import { saveSlider, getDataOfSlider } from "./ApiSetting";
 import { Redirect, useParams } from "react-router-dom";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SliderContent = () => {
   const [previewImg, setPreviewImg] = useState(null);
@@ -112,13 +114,22 @@ const SliderContent = () => {
           imageError: "",
           redirect: false,
         });
-        NotificationManager.success(data.message);
-        setTimeout(function () {
-          setValues({
-            ...values,
-            redirect: true,
-          });
-        }, 2000);
+        toast.success('Added successfully!', {
+          autoClose:600,
+          onClose: () => {
+            setValues({
+              ...values,
+              redirect: true
+            })
+          }
+        })
+        // NotificationManager.success(data.message);
+        // setTimeout(function () {
+        //   setValues({
+        //     ...values,
+        //     redirect: true,
+        //   });
+        // }, 2000);
       }
     });
   };
@@ -132,7 +143,8 @@ const SliderContent = () => {
   return (
     <div className="page-wrapper">
       <div className="container-fluid">
-        <NotificationContainer />
+      <ToastContainer />
+        {/* <NotificationContainer /> */}
         <FormMainTitle
           title="Add Slider"
           btnName="Back"

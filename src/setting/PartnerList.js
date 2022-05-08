@@ -5,10 +5,12 @@ import FormMainTitle from "../common/FormMainTitle";
 import DataTableComponent from "../common/DataTableComponent";
 import { partnerImgListApi } from "./ApiSetting";
 import { deletePartnerImage } from "./ApiSetting";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerList = () => {
   const [list, setList] = useState([]);
@@ -28,7 +30,10 @@ const PartnerList = () => {
   const partnerImgDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this record?")) {
       deletePartnerImage(id).then((data) => {
-        NotificationManager.success(data.data.message);
+        //NotificationManager.success(data.data.message);
+        toast.success('Deleted successfully!', {
+          autoClose:600
+        })
         imagelist();
       });
     }
@@ -69,14 +74,14 @@ const PartnerList = () => {
   const getButtons = (imgId) => {
     return (
       <div>
-        <Link
+        {/* <Link
           to={`/admin/update/partnerImage/${imgId}`}
           className="btn btn-outline btn-info m-5"
           onClick={() => setCheckParams(!checkParams)}
           aria-label="Edit"
         >
           <i className="fa fa-pencil font-15"></i>
-        </Link>
+        </Link> */}
         <button
           className="btn btn-outline btn-danger"
           aria-label="Delete"
@@ -126,7 +131,8 @@ const PartnerList = () => {
   return (
     <div className="page-wrapper">
       <div className="container-fluid">
-        <NotificationContainer />
+      <ToastContainer />
+        {/* <NotificationContainer /> */}
         <FormMainTitle
           title="Partner Images Management"
           btnName="Add Partner Image"

@@ -146,7 +146,7 @@ const columns = [
     }, 
     {
         dataField: 'action',
-        text: 'action'
+        text: 'Action'
   }];
 
   const getButtons = (attribute) => {

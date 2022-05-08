@@ -91,7 +91,11 @@ const ManageProducts = () => {
     const getDate = (date) => {
         const newDate = date.split('T')[0];
         const DATE = newDate.split('-');
-        return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
+        return (
+            <div style={{width:'90px'}}>
+                {DATE[2] + '-' + DATE[1] + '-' + DATE[0]}
+            </div>    
+        );
     }
     const columns = [
         {
@@ -124,7 +128,7 @@ const ManageProducts = () => {
         }, 
         {
             dataField: 'action',
-            text: 'action'
+            text: 'Action'
       }];
 
       const getImage = (path) =>{
@@ -133,7 +137,7 @@ const ManageProducts = () => {
             <>
           {Object.values(path).map((res, i) =>
             i == 0 ? (
-              <img src={res[0]} width="100" height="70"/>
+              <img src={res[0]} width="50" />
             ) : null
           )}
         </>
@@ -143,9 +147,11 @@ const ManageProducts = () => {
       const getButtons = (product) => {
         return (
             <div>
-                 <Link to={`/admin/product/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-                 {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
-                 <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroys(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                <div style={{width:'100px'}}>
+                    <Link to={`/admin/product/update/${product._id}`}><button className='btn btn-outline btn-info m-5 btn-sm' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+                    {/* <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> */}
+                    <button className='btn btn-outline btn-danger m-5 btn-sm' aria-label='Delete' onClick={() => destroys(product._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button>
+                </div>
             </div>
         )
       };
@@ -168,9 +174,9 @@ const ManageProducts = () => {
           return(
               <div>
               {
-                  showAll ? description : String(description).substr(0, 40) +'......'}
+                  showAll ? description : String(description).substr(0, 40) +'...'}
               {
-                  showAll?<Link to="#" onClick={showLess}><b> Show less</b></Link> :<Link to="#" onClick={showMore}><b>Show more</b></Link> 
+                  showAll?<Link to="#" style={{fontSize:'12px'}} onClick={showLess}> Show less</Link> :<Link to="#" style={{fontSize:'12px'}} onClick={showMore}> Show more</Link> 
               }
               
             </div>
@@ -182,7 +188,7 @@ const ManageProducts = () => {
         if(!item.deletedAt){
         item['id'] = item._id;
         item['image'] = getImage(item.images);
-        // item['description'] = getDescription(item.description);
+        item['description'] = getDescription(item.description);
         item['createdAt'] = getDate(item.createdAt);
         item['status'] = getSwitch(item);
         item['action'] = getButtons(item);

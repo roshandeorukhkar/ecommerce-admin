@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import FormMainTitle from "../common/FormMainTitle";
 import { savePartnerImg } from "./ApiSetting";
 import { Redirect } from "react-router-dom";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PartnerContent = () =>{
     const [previewImg, setPreviewImg] = useState(null);
@@ -88,13 +90,22 @@ const PartnerContent = () =>{
             imageError: "",
             redirect: false,
           });
-          NotificationManager.success(data.data.message);
-          setTimeout(function () {
-            setValues({
-              ...values,
-              redirect: true,
-            });
-          }, 2000);
+          toast.success('Added successfully!', {
+            autoClose:600,
+            onClose: () => {
+              setValues({
+                ...values,
+                redirect: true
+              })
+            }
+          })
+          // NotificationManager.success(data.data.message);
+          // setTimeout(function () {
+          //   setValues({
+          //     ...values,
+          //     redirect: true,
+          //   });
+          // }, 2000);
         }
       });
     };
@@ -108,7 +119,8 @@ const PartnerContent = () =>{
     return (
       <div className="page-wrapper">
         <div className="container-fluid">
-          <NotificationContainer />
+        <ToastContainer />
+          {/* <NotificationContainer /> */}
           <FormMainTitle
             title="Add Partner Image"
             btnName="Back"

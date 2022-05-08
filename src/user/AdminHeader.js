@@ -42,7 +42,7 @@ const AdminHeader = () =>{
                 <Link to="#" className="dropdown-toggle right-side-toggler waves-effect waves-light b-r-0" data-toggle="dropdown"  style={{display: "inline-flex"}}  onClick={() => setShowLogin(!showLogin)}>
                     {/* <img src="/assets/plugins/images/users/hanna.jpg" alt="user-img" className="img-circle m-t-10 m-r-10 thumb-sm"  /> */}
                     <p className='p-t-5'> 
-                        <span className='font-bold text-dark'> Admin</span>
+                        <span className='font-bold text-dark'> Admin</span> 
                         <span className='font-12'>admin@gmail.com</span>
                     </p>
                     <i className="icon-arrow-down m-t-15" ></i>

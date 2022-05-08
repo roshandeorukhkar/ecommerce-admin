@@ -5,10 +5,12 @@ import FormMainTitle from "../common/FormMainTitle";
 import DataTableComponent from "../common/DataTableComponent";
 import { sliderList } from "./ApiSetting";
 import { deleteSlider } from "./ApiSetting";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+// import {
+//   NotificationContainer,
+//   NotificationManager,
+// } from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SliderList = () => {
   const [sliderArray, setSliderArray] = useState([]);
@@ -28,7 +30,10 @@ const SliderList = () => {
     if (window.confirm("Are you sure you want to delete this record?")) {
       deleteSlider(id).then((data) => {
         console.log(data);
-        NotificationManager.success(data.message);
+        //NotificationManager.success(data.message);
+        toast.success('Deleted successfully!', {
+          autoClose:600
+        })
         list();
       });
     }
@@ -109,7 +114,6 @@ const SliderList = () => {
         src={path}
         alt="footer-logo"
         width="100"
-        height="70"
       ></img>
     );
   };
@@ -127,7 +131,8 @@ const SliderList = () => {
   return (
     <div className="page-wrapper">
       <div className="container-fluid">
-        <NotificationContainer />
+        {/* <NotificationContainer /> */}
+        <ToastContainer />
         <FormMainTitle
           title="Slider Management"
           btnName="Add Slider"
