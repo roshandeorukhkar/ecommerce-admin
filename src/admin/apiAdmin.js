@@ -749,6 +749,24 @@ export const statusCheckCustomer = (productId, category) => {
         .catch(err => console.log(err));
 };
 
+//create tax API //
+export const createTax = async (tax) => {
+    try {
+        const response = await fetch(`${API}/tax/create`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              //  Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(tax)
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 //create Attribute API //
 export const createAttribute = async (attribute) => {
     try {

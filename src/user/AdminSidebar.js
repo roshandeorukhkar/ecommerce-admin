@@ -32,7 +32,8 @@ const AdminSidebar = () => {
     pathname.startsWith("/admin/create/manufacturer") ||
     pathname.startsWith("/admin/manufacturer/update/") ||
     pathname.startsWith("/admin/create/product") ||
-    pathname.startsWith("/admin/create/product")
+    pathname.startsWith("/admin/create/product") ||
+    pathname.startsWith("/admin/tax")
   ) {
     myProductMenu = "1";
 
@@ -90,6 +91,13 @@ const AdminSidebar = () => {
       pathname.startsWith("/admin/discount/update/")
     ) {
       discountMenu = "1";
+    }
+
+    var taxMenu = "0";
+    if (
+      pathname.startsWith("/admin/tax") 
+    ) {
+      taxMenu = "1";
     }
 
   }
@@ -237,6 +245,14 @@ const AdminSidebar = () => {
                       to="/admin/discount"
                     >
                       Discount
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className={taxMenu == "1" ? "active" : ""}
+                      to="/admin/tax"
+                    >
+                      Tax
                     </Link>
                   </li>
                 </ul>
