@@ -19,10 +19,10 @@ const UpdateProduct = ({ match }) => {
     const [dimanstions , setDimanstions] = useState(null);
     const [specifications , setSpecification] = useState([]);
     const [manufactures , setManufactures] = useState([]);
-    const [subcategories , setSubcategories] = useState(null);
+    const [subcategories , setSubcategories] = useState([]);
     const { user, token } = isAuthenticated();
 
-    const { name, brand, price, quantity, description, discount, shipping, type, manuf, subcate, cate, attri, spe, redirectToProfile} = values;
+    const { name, brand, price, quantity, description, discount, shipping, type, manuf, sub, cate, attri, spe, redirectToProfile} = values;
     
     const { control, register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -51,8 +51,20 @@ const UpdateProduct = ({ match }) => {
                 //     subcate:data.subcategory,
                 //     attri:data.attribute[0]._id,
                 //     spe:data.specification
-                // });
-                reset({specification: data.specification})
+                // // });
+                reset({specification: data.specification, 
+                    name:data.name,
+                    brand: data.brand,
+                    description:data.description,
+                    quantity: data.quantity,
+                    price:data.price,
+                    discount:data.discount,
+                    shipping:data.shipping,
+                    type:data.type,
+                    manuf:data.manufactures,  
+                    cate:data.category._id,
+                    subcategory:data.subcategory,
+                    })
                 // load categories
                 initCategories();
             }
@@ -268,12 +280,12 @@ const UpdateProduct = ({ match }) => {
                     </div>
                     <div className="form-group col-lg-6">
                             <h6><b> Sub Category </b></h6>
-                            <select className="form-control" {...register("subcategory", { required: false })} defaultValue={subcate} >
-                               {categories &&
-                                 categories.map((c, i) => (
+                            <select className="form-control" {...register("subcategory", { required: false })} defaultValue={sub} >
+                               {subcategories &&
+                                 subcategories.map((c, i) => (
                                     <>
                                     {!c.deletedAt && c.status == 1 ?(
-                                        subcate == c._id ?(
+                                        sub == c._id ?(
                                             <option key={i} value={c._id}>
                                                 {c.name }
                                              </option>
@@ -372,24 +384,23 @@ const UpdateProduct = ({ match }) => {
                         {specificationFields.map((item, index) => {
 
                             return (
-                            <div key={item.id}>
+                            <div key={index.id}>
 
                                 <div className='col-lg-7'>
                                 <select  className="form-control" {...register(`specification.${index}.Id`, { required: false })}  >
                                 {specifications && 
                                 specifications.map((s,i) =>
                                  (
-                                     <>
-                                     <span>                                                    {JSON.stringify(item.id)}, {JSON.stringify(s._id)}</span>
-                                    (item.id == s._id) ?(
-                                        <option key={i} selected="selected" value={s._id}>
+                                     <> 
+                                    {(item._id == s._id) ?(
+                                        <option key={i} selected value={s._id}>
                                             {s.manufacturerName}
                                         </option>
                                     ):(
                                         <option key={i} value={s._id}>
                                             {s.manufacturerName}
                                         </option>
-                                    )
+                                    )}
                                     </>   
                                 ))}
                                 {/* {specifications &&
