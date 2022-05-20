@@ -767,6 +767,87 @@ export const createTax = async (tax) => {
     }
 };
 
+export const getTaxes = () => {
+    return fetch(`${API}/tax`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const deleteTax = (taxId, category) => {
+    return fetch(`${API}/tax/delete/${taxId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const getTax = attributeId => {
+    return fetch(`${API}/tax/${attributeId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const updateTax = (taxId, tax) => {
+    return fetch(`${API}/tax/${taxId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(tax)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusTax = (taxId, tax) => {
+    return fetch(`${API}/tax/status/${taxId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(tax)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const statusChangeTax = (taxId, tax) => {
+    return fetch(`${API}/tax/statusChange/${taxId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(tax)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
 //create Attribute API //
 export const createAttribute = async (attribute) => {
     try {
@@ -784,6 +865,7 @@ export const createAttribute = async (attribute) => {
         console.log(err);
     }
 };
+
 
 export const getAttributes = () => {
     return fetch(`${API}/attribute`, {

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { isAuthenticated } from "../auth";
 import { Link } from "react-router-dom";
-import { deleteAttribute, getAttributes, deleteAttributeone ,statusAttributes ,statusChangeAttributes} from "./apiAdmin";
+import { deleteTax, getTaxes, statusTax ,statusChangeTax } from "./apiAdmin";
 import { Switch } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-//import {NotificationContainer, NotificationManager} from 'react-notifications';
-//import 'react-notifications/lib/notifications.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const ManageAttribute = () => {
+const ManageTax = () => {
     const [values, setValues] = useState({
        error: '',
        redirectToProfile: false,
@@ -18,38 +15,29 @@ const ManageAttribute = () => {
     });
     const { error, success, redirectToProfile } = values;
 
-    const [AttributeList, setAttribute] = useState([]);
-
-    const { user, token } = isAuthenticated();
-
-    const { attributeName } = isAuthenticated;
+    const [TaxList, setTax] = useState([]);
 
     const loadProducts = () => {
-        getAttributes().then(data => {
+        getTaxes().then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
-                setAttribute(data);
+                setTax(data);
             }
         });
     };
 
-    const destroy1 = attributeId => {
+    const destroy = taxId => {
         if(window.confirm('Are you sure you want to delete this record?'))
         {
-            const attribute = {
-                attributeName: new Date(),
+            const tax = {
+                deletedAt: new Date(),
             };
-            deleteAttributeone(attributeId, attribute).then(data => {
+            deleteTax(taxId, tax).then(data => {
                 if (data.error) {
                     console.log(data.error);
                 } else {
                     loadProducts();
-                    /*setValues({
-                        ...values,
-                        success:true,
-                        redirectToProfile: false
-                    });*/
                     toast.success('Deleted successfully!', {
                         autoClose:600,
                         onClose: () => {
@@ -59,13 +47,6 @@ const ManageAttribute = () => {
                             })
                         }
                     })
-                    // NotificationManager.success('Attribute has been deleted successfully!','',2000);
-                    // setTimeout(function(){
-                    //     setValues({
-                    //         ...values,
-                    //         redirectToProfile:true
-                    //     })
-                    // },2000)
                 }
             });
         }
@@ -76,10 +57,11 @@ const ManageAttribute = () => {
            <a class="text-center" style={{color:'white'}}> Attribute Deleted </a> 
         </div>  
     );
+    
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/attribute" />;
+                return <Redirect to="/admin/tax" />;
             }
         }
     };
@@ -94,11 +76,11 @@ const ManageAttribute = () => {
         return DATE[2] + '-' + DATE[1] + '-' + DATE[0];
     }
 
-    const status = attributeId => {
-        const attribute = {
-            attributeName: 0,
+    const status = taxId => {
+        const tax = {
+            taxStatus: 0,
          };
-         statusAttributes(attributeId, attribute).then(data => {
+         statusTax(taxId, tax).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -107,11 +89,11 @@ const ManageAttribute = () => {
         });
     };
     
-    const statusChange = attributeId => {
-        const attribute = {
-            attributeName: 1,
+    const statusChange = taxId => {
+        const tax = {
+            taxStatus: 1,
          };
-         statusChangeAttributes(attributeId, attribute).then(data => {
+         statusChangeTax(taxId, tax).then(data => {
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -119,21 +101,27 @@ const ManageAttribute = () => {
             }
         });
     };
-// Table 
-const columns = [
+    
+  // Table 
+  const columns = [
     {
         dataField: 'id',
         text: 'ID',
         hidden: true
     },
     {
-        dataField: 'attributeName',
-        text: 'Attribute Name',
+        dataField: 'taxName',
+        text: 'Tax Name',
         sort: true
     }, 
     {
-        dataField: 'description',
-        text: 'Attribute Description',
+        dataField: 'taxValue',
+        text: 'Tax Value',
+        sort: true
+    }, 
+    {
+        dataField: 'taxDescription',
+        text: 'Tax Description',
         sort: true
     }, 
     {
@@ -149,38 +137,38 @@ const columns = [
         text: 'Action'
   }];
 
-  const getButtons = (attribute) => {
+  const getButtons = (tax) => {
     return (
         <div>
-            <Link to={`/admin/attribute/update/${attribute._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
-            <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy1(attribute._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> 
+            <Link to={`/admin/tax/update/${tax._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Manufacturer"><i className='fa fa-pencil font-15'></i></button></Link>
+            <button className='btn btn-outline btn-danger m-5' aria-label='Delete' onClick={() => destroy(tax._id)} title="Soft Delete"><i className='fa fa-trash-o font-15'></i></button> 
         </div>
     )
   };
 
-  const getSwitch = (attribute) => {
+  const getSwitch = (tax) => {
     return (
         <>
-         {attribute.status == 1 
+         {tax.status == 1 
             ?(
             <>
-            <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(attribute._id)} color='primary'/>
+            <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(tax._id)} color='primary'/>
             </>
             ):
-            <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(attribute._id)} color='primary'/>
+            <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(tax._id)} color='primary'/>
         }
         </>
     )
   };
 
-  const attributeList = [];
-  AttributeList.forEach((item) => {
+  const taxList = [];
+  TaxList.forEach((item) => {
     if(!item.deletedAt){
     item['id'] = item._id;
     item['createdAt'] = getDate(item.createdAt);
     item['status'] = getSwitch(item);
     item['action'] = getButtons(item);
-    attributeList.push(item);
+    taxList.push(item);
     }
     else{
         console.log("error");
@@ -193,11 +181,10 @@ const columns = [
                 {redirectUser()}
                 <div className="col-md-12">
                     <ToastContainer />
-                    {/* <NotificationContainer/> */}
-                    <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={attributeList}/> 
+                    <DataTableComponent title="Test" keyField="id" tableHeading={columns} tableList={taxList}/> 
                 </div>
             </div>
     );
 };
 
-export default ManageAttribute;
+export default ManageTax;

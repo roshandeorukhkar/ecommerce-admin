@@ -58,6 +58,7 @@ import AddEditPartner from './setting/AddEditPartner';
 
 import Tax from './admin/Tax';
 import AddTax from './admin/AddTax';
+import UpdateTax from './admin/UpdateTax';
 
 const Routes = () => {
     return (
@@ -111,6 +112,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/update/partnerImage/:partnerId" exact component={AddEditPartner} />
                 <AdminRoute path="/admin/tax" exact component={Tax} />
                 <AdminRoute path="/admin/create/addTax" exact component={AddTax} />
+                <AdminRoute path="/admin/tax/update/:taxId" exact component={UpdateTax} />
 
                 <AdminRoute path="/admin/test" exact component={TestDemo} />
                 {/* <AdminRoute path="/admin/category_header_icon" exact component={category_header_icon} /> */}
