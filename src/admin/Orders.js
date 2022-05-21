@@ -146,7 +146,7 @@ const Orders = () => {
       const orderList = [];
       products.forEach((item) => {
         item['id'] = item._id;
-        item['name'] = item.products[0].name;
+        item['name'] = '';//item.products[0].name;
         item['user'] = '';//item.user.firstName + ' ' + item.user.lastName ;
         item['mobile'] =item.mobile;
         item['status'] = getSwitch(item);
