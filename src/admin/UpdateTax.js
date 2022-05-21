@@ -99,7 +99,7 @@ const UpdateAttribute = ({ match }) => {
                 <span className='error text-danger'>{values.errorsAttributeName}</span>
             </div>
             <div className="form-group col-sm-7">
-                <h6><b> Tax value</b></h6>
+                <h6><b><span style={{color:'red'}}>*</span> Tax Percentage (Without % Symbol)</b></h6>
                 <input onChange={handleChange('taxValue')} type="text" placeholder='Enter Value' className="form-control" value={taxValue} taxValue="taxValue" />
             </div>
             <div className="form-group col-sm-7">

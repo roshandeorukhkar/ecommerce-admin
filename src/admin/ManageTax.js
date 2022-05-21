@@ -101,7 +101,7 @@ const ManageTax = () => {
             }
         });
     };
-    
+
   // Table 
   const columns = [
     {
@@ -116,12 +116,12 @@ const ManageTax = () => {
     }, 
     {
         dataField: 'taxValue',
-        text: 'Tax Value',
+        text: 'Percentage',
         sort: true
     }, 
     {
         dataField: 'taxDescription',
-        text: 'Tax Description',
+        text: 'Description',
         sort: true
     }, 
     {
@@ -165,6 +165,7 @@ const ManageTax = () => {
   TaxList.forEach((item) => {
     if(!item.deletedAt){
     item['id'] = item._id;
+    item['taxValue'] = item.taxValue+'%';
     item['createdAt'] = getDate(item.createdAt);
     item['status'] = getSwitch(item);
     item['action'] = getButtons(item);
