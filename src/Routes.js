@@ -71,6 +71,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/create/product" exact component={AddProduct} />
                 <AdminRoute path="/admin/order" exact component={Orders} />
                 <AdminRoute path="/admin/orders" exact component={OrderManagement} />
+                <AdminRoute path="/admin/order/delete/:orderId" exact component={OrderManagement} />
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
                 <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
                 <AdminRoute path="/admin/subcategory/update/:categoryId" exact component={UpdateSubCategory} />

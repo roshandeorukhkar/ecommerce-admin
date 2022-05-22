@@ -253,6 +253,21 @@ export const listOrders = () => {
         .catch(err => console.log(err));
 };
 
+export const deleteOrder = (orderId, category) => {
+    return fetch(`${API}/order/delete/${orderId}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(category)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
 export const createManufacturer = async (manufacture) => {
     try {
         const response = await fetch(`${API}/manufacturer/create`, {
