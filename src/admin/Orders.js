@@ -144,10 +144,10 @@ const Orders = () => {
       orders.forEach((item) => {
           console.log(item.products);
         if(!item.deletedAt){
-            if(item.user !== null && item.products[0].hasOwnProperty('name'))
+            if(item.user !== null)
             {
                 item['id'] = item._id;
-                item['name'] = item.products[0].name;
+                item['name'] = '';//item.products[0].name;
                 item['user'] = item.user.firstName + ' ' + item.user.lastName;
                 item['mobile'] = item.mobile;
                 item['status'] = getSwitch(item);
