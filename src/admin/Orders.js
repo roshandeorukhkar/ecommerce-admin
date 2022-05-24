@@ -142,8 +142,9 @@ const Orders = () => {
  
       const orderList = [];
       orders.forEach((item) => {
+          console.log(item.products);
         if(!item.deletedAt){
-            if(item.user !== null)
+            if(item.user !== null && item.products[0].hasOwnProperty('name'))
             {
                 item['id'] = item._id;
                 item['name'] = item.products[0].name;
