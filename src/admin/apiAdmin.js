@@ -268,6 +268,32 @@ export const deleteOrder = (orderId, category) => {
         .catch(err => console.log(err));
 };
 
+export const getOrder = orderId => {
+    return fetch(`${API}/order/${orderId}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
+export const updateOrderData = (orderId, order) => {
+    return fetch(`${API}/order/update/${orderId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+           // Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(order)
+    })
+        .then(response => {
+            return response.json();
+        })
+        .catch(err => console.log(err));
+};
+
 export const createManufacturer = async (manufacture) => {
     try {
         const response = await fetch(`${API}/manufacturer/create`, {

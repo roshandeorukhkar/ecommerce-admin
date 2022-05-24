@@ -7,6 +7,8 @@ import AddProduct from './admin/AddProduct';
 import ListProduct from './admin/ProductList';
 import Orders from './admin/Orders';
 import OrderManagement from './admin/OrderManagement';
+import UpdateOrder from './admin/UpdateOrder';
+
 import UpdateProduct from './admin/UpdateProduct';
 import UpdateCategory from './admin/updateCategory';
 import UpdateSubCategory from './admin/updateSubCategory';
@@ -72,6 +74,7 @@ const Routes = () => {
                 <AdminRoute path="/admin/order" exact component={Orders} />
                 <AdminRoute path="/admin/orders" exact component={OrderManagement} />
                 <AdminRoute path="/admin/order/delete/:orderId" exact component={OrderManagement} />
+                <AdminRoute path="/admin/order/update/:orderId" exact component={UpdateOrder} />
                 <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
                 <AdminRoute path="/admin/category/update/:categoryId" exact component={UpdateCategory} />
                 <AdminRoute path="/admin/subcategory/update/:categoryId" exact component={UpdateSubCategory} />

@@ -21,7 +21,7 @@ const Orders = () => {
 
     const loadOrders = () => {
         listOrders().then(data => {
-            //console.log(data, "order......s")
+            console.log(data, "order......s")
             if (data.error) {
                 console.log(data.error);
             } else {
@@ -50,6 +50,7 @@ const Orders = () => {
                             })
                         }
                     })
+                    loadOrders();
                 }
             });
         }
@@ -109,7 +110,7 @@ const Orders = () => {
         return (
             <>
                 <div style={{width:'110px'}}>
-                    <Link to={`/admin/coustomers/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
+                    <Link to={`/admin/order/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
                     <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => remove(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
                 </div>
             </>
@@ -147,7 +148,7 @@ const Orders = () => {
             if(item.user !== null)
             {
                 item['id'] = item._id;
-                item['name'] = '';//item.products[0].name;
+                item['name'] = item.products[0].name;
                 item['user'] = item.user.firstName + ' ' + item.user.lastName;
                 item['mobile'] = item.mobile;
                 item['status'] = getSwitch(item);
