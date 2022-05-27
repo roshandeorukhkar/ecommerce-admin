@@ -89,12 +89,12 @@ return(
                                         {redirectUser()}
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b> Tax Name</b><span style={{color:'red'}}>*</span></h6>
+                                                <h6><b><span style={{color:'red'}}>*</span> Tax Name</b></h6>
                                                 <input onChange={handleChange('taxName')} type="text" className="form-control" placeholder='Enter Attribute' value={taxName} />
                                                 <span className='error text-danger'>{values.errorsTaxName}</span>
                                             </div>
                                             <div className="form-group col-sm-7"> 
-                                                <h6><b> Tax Value (Percentage)</b><span style={{color:'red'}}>*</span></h6>
+                                                <h6><b><span style={{color:'red'}}>*</span> Tax Percentage (Without % Symbol)</b></h6>
                                                 <input onChange={handleChange('taxValue')} type="text" className="form-control" placeholder='Enter Value' value={taxValue} />
                                                 <span className='error text-danger'>{values.errorsTaxValue}</span>
                                             </div>

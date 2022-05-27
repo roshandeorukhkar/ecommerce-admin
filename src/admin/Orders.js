@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { removeCustomer, listOrders } from "./apiAdmin";
+import { deleteOrder, listOrders } from "./apiAdmin";
 import { Switch } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import DataTableComponent from "../common/DataTableComponent";
-// import {NotificationContainer, NotificationManager} from 'react-notifications';
-// import 'react-notifications/lib/notifications.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Orders = () => {
+const Orders = () => { 
 
   const [values, setValues] = useState({
         error: '',
@@ -19,24 +17,27 @@ const Orders = () => {
 
     const { error, success, redirectToProfile } = values;
 
-    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
 
-    const loadProducts = () => {
+    const loadOrders = () => {
         listOrders().then(data => {
             console.log(data, "order......s")
             if (data.error) {
                 console.log(data.error);
             } else {
-                setProducts(data);
+                setOrders(data);
             }
         });
     };
 
   
-    const remove = productId => {
+    const remove = orderId => {
         if(window.confirm('Are you sure you want to delete this record?'))
         {
-            removeCustomer(productId).then(data => {
+            const order = {
+                deletedAt: new Date(),
+            };
+            deleteOrder(orderId,order).then(data => {
                 if (data.error) {
                     console.log(data.error);
                 } else {
@@ -49,35 +50,23 @@ const Orders = () => {
                             })
                         }
                     })
-                    // NotificationManager.success('Customer has been deleted successfully!','',2000);
-                    // loadProducts();
-                    // setTimeout(function(){
-                    //     setValues({
-                    //         ...values,
-                    //         redirectToProfile:true
-                    //     })
-                    // },2000)
+                    loadOrders();
                 }
             });
         }
     };
 
-    const deleteMessage = () => (
-        <div className="alert alert-danger" style={{ display: success ? '' : 'none' }}>
-           <a className="text-center" style={{color:'white'}}> Customer Deleted </a> 
-        </div>  
-    );
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/coustomers" />;
+                return <Redirect to="/admin/orders" />;
             }
         }
     };
 
 
     useEffect(() => {
-        loadProducts();
+        loadOrders();
     }, []);
 
     const getDate = (date) => {
@@ -114,22 +103,24 @@ const Orders = () => {
         }, 
         {
             dataField: 'action',
-            text: 'action'
+            text: 'Action'
       }];
 
       const getButtons = (product) => {
         return (
-            <div>
-                <Link to={`/admin/coustomers/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
-                <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => remove(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
-            </div>
+            <>
+                <div style={{width:'110px'}}>
+                    <Link to={`/admin/order/update/${product._id}`}><button className='btn btn-outline btn-info m-5' aria-label='Edit' title="Add Customer"><i className='fa fa-pencil font-15'></i></button></Link>
+                    <button className='btn btn-outline btn-danger' aria-label='Delete' onClick={() => remove(product._id)} title="Delet"><i className='fa fa-trash-o font-15'></i></button>
+                </div>
+            </>
         )
       };
 
-      const getSwitch = (product) => {
+      const getSwitch = (item) => {
         return (
             <>
-                <button type="button" className="btn btn-primary">Success</button>
+                <span>{item.status}</span>
             </>
         )
       };
@@ -142,26 +133,37 @@ const Orders = () => {
         )
       };
 
+      const getName = (item) => {
+        return (
+            <>
+                <span>{item.user.firstName + ' ' + item.user.lastName}</span>
+            </>
+        )
+      };
  
       const orderList = [];
-      products.forEach((item) => {
-        item['id'] = item._id;
-        item['name'] = item.products[0].name;
-        item['user'] = item.user.firstName + ' ' + item.user.lastName ;
-        item['mobile'] =item.mobile;
-        item['status'] = getSwitch(item);
-        item['action'] = getButtons(item);
-        orderList.push(item);
+      orders.forEach((item) => {
+          console.log(item.products);
+        if(!item.deletedAt){
+            if(item.user !== null)
+            {
+                item['id'] = item._id;
+                item['name'] = item.products[0].name;
+                item['user'] = item.user.firstName + ' ' + item.user.lastName;
+                item['mobile'] = item.mobile;
+                item['status'] = getSwitch(item);
+                item['action'] = getButtons(item);
+                orderList.push(item);
+            }
+        }
       });
 
 
     return (
         <div className="row">
         <div className="col-12">
-            {deleteMessage()}
             {redirectUser()}
             <ToastContainer />
-            {/* <NotificationContainer/> */}
             <DataTableComponent keyField="id" title="Test" tableHeading={columns} tableList={orderList}/> 
         </div>
     </div>

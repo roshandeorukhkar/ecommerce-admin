@@ -1,67 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { getTax, updateTax } from './apiAdmin';
+import { getOrder, updateOrderData } from './apiAdmin';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const UpdateTax = ({ match }) => {
+const UpdateOrder = ({ match }) => {
 
     const [values, setValues] = useState({
-        taxName: '',
-        taxDescription:'',
-        taxValue:'',
-        errorsTaxName:'',
-        errorsTaxValue:'',
+        status: '',
         error: '',
+        errorsStatus:'',
         success: false,
         redirectToProfile: false,
         formData: ''
     });
 
-    const { taxName, taxValue, taxDescription, error, success, redirectToProfile } = values;
+    const { status, error, success, redirectToProfile } = values;
 
-    const init = taxId => {
-        getTax(taxId).then(data => {
+    const init = orderId => {
+        getOrder(orderId).then(data => {
             if (data.error) {
                 setValues({ ...values, error: data.error });
             } else {
+                //data.status 
                 setValues({
                     ...values,
-                    taxName: data.taxName,
-                    taxValue:data.taxValue,
-                    taxDescription: data.taxDescription
+                    status: data.status
                 });
             }
         });
     };
 
     useEffect(() => {
-        init(match.params.taxId);
+        init(match.params.orderId);
     }, []);
 
-    const handleChange = taxName => event => {
-        setValues({ ...values, error: false, [taxName]: event.target.value, errorsTaxName:''});
+    const handleChange = status => event => {
+        setValues({ ...values, error: false, [status]: event.target.value, errorsStatus:''});
     };
 
-    const handleChange_des = taxDescription => event => {
-        setValues({ ...values, error: false, [taxDescription]: event.target.value });
-    };
-
-    const submitTaxForm = e => {
+    const submitOrderForm = e => {
         e.preventDefault();
-        const tax = {
-            taxName: taxName,
-            taxValue:taxValue,
-            taxDescription:taxDescription
+        const order = {
+            status: status
         };
-        updateTax(match.params.taxId,tax).then(data => {
+        updateOrderData(match.params.orderId,order).then(data => {
             if (data.status == false) {
                 setValues({
                   ...values,
-                  errorsTaxName: data.errors.taxName,
-                  errorsTaxValue:data.errors.taxValue,
+                  errorsStatus: data.errors.status
                 });
                 toast.success('Please try again!', {
                     autoClose:600
@@ -70,9 +59,7 @@ const UpdateTax = ({ match }) => {
             else {
                 setValues({
                     ...values,
-                    taxName: data.taxName,
-                    taxValue:data.taxValue,
-                    taxDescription:data.taxDescription,
+                    status: data.status,
                     error: false,
                     success: true,
                     redirectToProfile: false
@@ -90,21 +77,25 @@ const UpdateTax = ({ match }) => {
         });
     };
 
-    const updateTaxForm = () => (
+    const updateOrderForm = () => (
         <div className="">
-            <form className="mb-3" onSubmit={submitTaxForm}>
+            <form className="mb-3" onSubmit={submitOrderForm}>
+            {/* <div className="form-group col-sm-7">
+                <h6><b>Product Name</b></h6>
+                {'----'}
+            </div> */}
             <div className="form-group col-sm-7">
-                <h6><b><span style={{color:'red'}}>*</span> Tax Name</b></h6>
-                <input onChange={handleChange('taxName')} type="text" placeholder='Enter Name' className="form-control" value={taxName} taxName="taxName" />
-                <span className='error text-danger'>{values.errorsTaxName}</span>
-            </div>
-            <div className="form-group col-sm-7">
-                <h6><b><span style={{color:'red'}}>*</span> Tax Percentage (Without % Symbol)</b></h6>
-                <input onChange={handleChange('taxValue')} type="text" placeholder='Enter Value' className="form-control" value={taxValue} taxValue="taxValue" />
-            </div>
-            <div className="form-group col-sm-7">
-                <h6><b>Tax Description</b></h6>
-                <textarea onChange={handleChange_des('taxDescription')} rows="4" className="form-control" placeholder='Description' value={taxDescription} taxDescription="taxDescription"  />
+                <h6><b><span style={{color:'red'}}>*</span> Order Status</b></h6>
+                {/* <input onChange={handleChange('status')} type="text" placeholder='Enter Name' className="form-control" value={status} status="status" /> */}
+                <select className="form-control" onChange={handleChange('status')}>
+                    <option val="">Status</option>
+                    <option val="Not processed">Not processed</option>
+                    <option val="Processing">Processing</option>
+                    <option val="Shipped">Shipped</option>
+                    <option val="Delivered">Delivered</option>
+                    <option val="Cancelled">Cancelled</option>
+                </select>
+                <span className='error text-danger'>{values.errorsStatus}</span>
             </div>
             <div className="form-group col-md-7">
                 <button className="btn btn-info btn-md"style={{float: 'right', borderRadius:'7px'}}>Update</button>
@@ -125,7 +116,7 @@ const UpdateTax = ({ match }) => {
     const redirectUser = () => {
         if (redirectToProfile) {
             if (!error) {
-                return <Redirect to="/admin/tax" />;
+                return <Redirect to="/admin/orders" />;
             }
         }
     };
@@ -137,8 +128,8 @@ const UpdateTax = ({ match }) => {
                  <div className="page-wrapper">
                     <div className="container-fluid">
                         <div className='row'>
-                            <div className='col-md-8'><h3 className="font-bold"> Edit Tax</h3></div>
-                            <div className='col-md-4'><Link to={`/admin/tax`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
+                            <div className='col-md-8'><h3 className="font-bold"> Edit Order</h3></div>
+                            <div className='col-md-4'><Link to={`/admin/order`}><button type="submit" className="btn btn-outline btn-info fa-pull-right" id="addButton"><i class="fa fa-backward"></i> Back</button></Link></div>
                         </div>
                             <div className="white-box">
                                 <div className="row">
@@ -146,7 +137,7 @@ const UpdateTax = ({ match }) => {
                                         <div className="col-md-12 offset-md-2 m-b-250 mb-5">
                                             <ToastContainer />
                                             {showError()}
-                                            {updateTaxForm()}
+                                            {updateOrderForm()}
                                             {redirectUser()}
                                         </div>
                                     </div>
@@ -158,4 +149,4 @@ const UpdateTax = ({ match }) => {
             );
     };
 
-export default UpdateTax;
+export default UpdateOrder;
