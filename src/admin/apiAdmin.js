@@ -165,17 +165,16 @@ export const deleteSpecification = (productId) => {
 
 */ // new product that use in useform 
 export const createProduct = (token, product) => {
-  //  console.log(product);
     return fetch(`${API}/product/create/`, {
         method: 'POST',
         body: product
     })
-        .then(response => {
-            return response.json();
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    .then(response => {
+        return response.json();
+    })
+    .catch(err => {
+        console.log(err);
+    });
 };
 
 // export const createProduct = (token, product) => {

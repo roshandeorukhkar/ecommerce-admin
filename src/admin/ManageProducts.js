@@ -42,20 +42,18 @@ const ManageProducts = () => {
     const destroys = productId => {
         if(window.confirm('Are you sure you want to delete this record?'))
         {
-        const product = {
-            statusVlaue: new Date(),
-         };
-        statusDeleteProducts(productId, product).then(data => {
-            if (data.error) {
-                console.log(data.error);
-            } else {
-                loadProducts();
-            }
-        });
-    }
+            const product = {
+                statusVlaue: new Date(),
+            };
+            statusDeleteProducts(productId, product).then(data => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    loadProducts();
+                }
+            });
+        }
     };
-
-    
 
     useEffect(() => {
         loadProducts();
@@ -74,7 +72,6 @@ const ManageProducts = () => {
         });
     };
     
-    
     const statusChange = productId => {
         const product = {
             statusVlaue: 1,
@@ -89,8 +86,8 @@ const ManageProducts = () => {
     };
 
     const getDate = (date) => {
-        const newDate = date.split('T')[0];
-        const DATE = newDate.split('-');
+        const newDate = date.toString().split('T')[0];
+        const DATE = newDate.toString().split('-');
         return (
             <div style={{width:'90px'}}>
                 {DATE[2] + '-' + DATE[1] + '-' + DATE[0]}
@@ -129,22 +126,22 @@ const ManageProducts = () => {
         {
             dataField: 'action',
             text: 'Action'
-      }];
+        }
+    ];
 
       const getImage = (path) =>{
-          //console.log(path,"sdfsdfsdfdsf")
         return(
             <>
-          {Object.values(path).map((res, i) =>
-            i == 0 ? (
-              <img src={res[0]} width="50" />
-            ) : null
-          )}
-        </>
+            {Object.values(path).map((res, i) =>{
+                if(i == 0)
+                return <img src={res[0]} width="50" />
+                }
+            )}
+            </>
         )
       }
 
-      const getButtons = (product) => {
+    const getButtons = (product) => {
         return (
             <div>
                 <div style={{width:'100px'}}>
@@ -154,37 +151,37 @@ const ManageProducts = () => {
                 </div>
             </div>
         )
-      };
-      const getSwitch = (product) => {
+    };
+    const getSwitch = (product) => {
         return (
             <>
-                 {product.status == 1 
+                {product.status == 1 
                     ?(
                     <>
                         <Switch name="checkedA" checked inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => status(product._id)} color='primary'/>
                     </>
-                     ):
+                    ):
                         <Switch name="checkedA"  inputProps={{ "aria-label": "secondary checkbox","size": "medium","color":"Primary" }} onClick={() => statusChange(product._id)} color='primary'/>
                 }
             </>
         )
-      };
+    };
 
-      const getDescription = (description) => {
-          return(
-              <div>
-              {
-                  showAll ? description : String(description).substr(0, 40) +'...'}
-              {
-                  showAll?<Link to="#" style={{fontSize:'12px'}} onClick={showLess}> Show less</Link> :<Link to="#" style={{fontSize:'12px'}} onClick={showMore}> Show more</Link> 
-              }
-              
-            </div>
-          )
-      }
+    const getDescription = (description) => {
+        return(
+            <div>
+            {
+                showAll ? description : String(description).substr(0, 40) +'...'}
+            {
+                showAll?<Link to="#" style={{fontSize:'12px'}} onClick={showLess}> Show less</Link> :<Link to="#" style={{fontSize:'12px'}} onClick={showMore}> Show more</Link> 
+            }
+            
+        </div>
+        )
+    }
 
-      const productList = [];
-      products.forEach((item) => {
+    const productList = [];
+    products.forEach((item) => {
         if(!item.deletedAt){
         item['id'] = item._id;
         item['image'] = getImage(item.images);
@@ -197,7 +194,7 @@ const ManageProducts = () => {
         else{
             console.log("error");
         }
-      });
+    });
 
 
     return (
