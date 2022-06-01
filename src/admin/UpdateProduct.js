@@ -73,7 +73,7 @@ const UpdateProduct = ({ match }) => {
                     description:data.description,
                     quantity: data.quantity,
                     price:data.price,
-                    discount:data.discount,
+                    discount:0,
                     shipping:data.shipping,
                     type:data.type,
                     manuf:data.manufactures,  
@@ -410,10 +410,10 @@ const UpdateProduct = ({ match }) => {
                             <h6><b> Quantity</b></h6>
                             <input  type="number" placeholder='Enter quantity' className="form-control" {...register("quantity", { required: false })} defaultValue={quantity} />
                         </div> 
-                        <div className="form-group col-lg-6">
+                        {/* <div className="form-group col-lg-6">
                             <h6><b> Discount in Percentage</b></h6>
                             <input  type="number" placeholder='Enter discount' className="form-control" {...register("discount", { required: false })} defaultValue={discount} />
-                        </div> 
+                        </div>  */}
                 </div>
             </div>
        </div>

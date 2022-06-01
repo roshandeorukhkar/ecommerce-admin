@@ -188,7 +188,7 @@ import 'react-toastify/dist/ReactToastify.css';
             formData.set("subcategory",data.subcategory);
             formData.set("description",data.description);
             formData.set("dimanstions",data.dimanstions);
-            formData.set("discount",data.discount);
+            formData.set("discount",0);
             formData.set("manufactures",data.manufactures);
             formData.set("name",data.name);
             formData.set("price",data.price);
