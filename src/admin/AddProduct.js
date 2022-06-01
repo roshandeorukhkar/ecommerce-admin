@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+ import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
@@ -24,19 +24,19 @@ import 'react-toastify/dist/ReactToastify.css';
         loading: false,
         disable :false
     });
-      const {
+    const {
         fields: attributeFields,  // it use attribute 
         append: attributeAppend,
         remove: attributeRemove
-      } = useFieldArray({ control, name: "attribute" });
+    } = useFieldArray({ control, name: "attribute" });
 
       
 
-      const {
+    const {
         fields: imageFields, // image
         append: imageAppend,
         remove: imageRemove
-      } = useFieldArray({ control, name: "image" });
+    } = useFieldArray({ control, name: "image" });
       
 
     const [values, setValues] = useState({
@@ -76,9 +76,9 @@ import 'react-toastify/dist/ReactToastify.css';
                 console.log({ ...values, error: data.error });
             } else {
                 setAttributess(data);
-                let abc = []
-                abc.push(data)
-                setSetOfAttributes(abc)
+                let attr = []
+                attr.push(data)
+                setSetOfAttributes(attr)
                 setDimanstions(data.dimension);
             }
         });
@@ -167,16 +167,6 @@ import 'react-toastify/dist/ReactToastify.css';
             setFilteredAttributes(temp)
         }
     }
-
-    // const removeItemFromSelectedAttributes = (index) =>{
-    //     let temp = []
-    //     temp = [...temp, ...filteredAttributes]
-    //     const temp1 = temp.filter((item, i) => i !== index)
-    //     console.log("temp1--", temp1)
-    //     setFilteredAttributes(temp1)
-    //     const abd = attributess.filter(item => !temp1.includes(item._id))
-    //     setAttributess(abd)
-    // }
 
     const generateNewAttributeSet = (index) => {
         let attr = setOfAttributes
@@ -348,20 +338,20 @@ import 'react-toastify/dist/ReactToastify.css';
                             <div className="form-group col-lg-6">
                                 <h6><b> Quantity<span className='text-danger'>*</span></b></h6>
                                 <input  type="text" placeholder='Enter quantity' maxLength={5} className="form-control" {...register("quantity", { required: true })} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                            event.preventDefault();
-                        }
-                        }} />
+                                    if (!/[0-9]/.test(event.key)) {
+                                        event.preventDefault();
+                                    }
+                                }} />
                                 {errors.quantity && <span className='text-danger'>Enter Quantity  </span>}
                             </div> 
-                            <div className="form-group col-lg-6">
+                            {/* <div className="form-group col-lg-6">
                                 <h6><b> Discount in Percentage<span className='text-danger'>*</span></b></h6>
                                 <input  type="text" placeholder='Enter discount' maxLength={3} className="form-control" {...register("discount", { required: false })} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                            event.preventDefault();
-                        }
-                        }} />
-                            </div> 
+                                if (!/[0-9]/.test(event.key)) {
+                                    event.preventDefault();
+                                }
+                                }} />
+                            </div>  */}
                     </div>
                 </div>
             </div>
@@ -393,11 +383,11 @@ import 'react-toastify/dist/ReactToastify.css';
                         <h3> Add Attribute </h3><hr></hr>
                         {attributeFields.map((item, index) => {
                             return (
-                            <div key={item.id}>
-                                <div className='col-lg-5'>
-                                    <h6>Attribute name</h6>
-                                    <select className="form-control" {...register(`attribute.${index}.Id`, { required: false })}  onChange={(e)=>{handleAttributes(e, index)}} >
-                                        <option value="">Please select</option>
+                                <div key={item.id}>
+                                    <div className='col-lg-5'>
+                                        <h6>Attribute name</h6>
+                                        <select className="form-control" {...register(`attribute.${index}.Id`, { required: false })}  onChange={(e)=>{handleAttributes(e, index)}} >
+                                            <option value="">Please select</option>
                                             {setOfAttributes[index] &&
                                                 setOfAttributes[index].map((a, i) => (
                                                     <>
@@ -405,28 +395,29 @@ import 'react-toastify/dist/ReactToastify.css';
                                                         <option key={i} value={a._id} >
                                                             {a.attributeName }
                                                         </option>
-                                                        ):null}
+                                                        ):null
+                                                    }
                                                     </>
                                                 ))
                                             }
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <div className='col-lg-5'>
+                                        <h6>Attribute value</h6>
+                                        <Controller
+                                            name={`attribute.${index}.Values`}
+                                            control={control}
+                                            render={({ field }) =><Select {...field}  isMulti='true' options={dimanstions}/>}
+                                        />
+                                    </div>
+                                    <div className='col-lg-2'>
+                                        <h6> <br></br></h6>
+                                        <button type="button" className="btn btn-danger" onClick={() => attributeRemove(index)}> - </button>
+                                        {(attributeFields.length - 1) == index? (
+                                            <button type="button" className="btn btn-info" onClick={() => { attributeAppend(); generateNewAttributeSet(index); }}> + </button>
+                                        ):null}
+                                    </div>
                                 </div>
-                                <div className='col-lg-5'>
-                                    <h6>Attribute value</h6>
-                                    <Controller
-                                        name={`attribute.${index}.Values`}
-                                        control={control}
-                                        render={({ field }) =><Select {...field}  isMulti='true' options={dimanstions}/>}
-                                    />
-                                </div>
-                                <div className='col-lg-2'>
-                                    <h6> <br></br></h6>
-                                    <button type="button" className="btn btn-danger" onClick={() => attributeRemove(index)}> - </button>
-                                    {(attributeFields.length - 1) == index? (
-                                        <button type="button" className="btn btn-info" onClick={() => { attributeAppend(); generateNewAttributeSet(index); }}> + </button>
-                                    ):null}
-                                </div>
-                            </div>
                             );
                         })}
                     </div>
