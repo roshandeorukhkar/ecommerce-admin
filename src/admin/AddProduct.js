@@ -1,9 +1,9 @@
- import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { isAuthenticated } from '../auth';
 import AdminHeader from "../user/AdminHeader";
 import AdminSidebar from "../user/AdminSidebar";
 import { createProduct, getCategories, getAttributes, Specification, getManufacturers , getDimanstions, getSubCategory  } from './apiAdmin';
-//import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { storeList , getStoreDataById } from '../store/ApiStore';
 import { Redirect } from 'react-router-dom';
 import { useForm, Controller, useFieldArray } from "react-hook-form"; // user for 
 import Select from 'react-select'
@@ -24,13 +24,12 @@ import 'react-toastify/dist/ReactToastify.css';
         loading: false,
         disable :false
     });
+
     const {
         fields: attributeFields,  // it use attribute 
         append: attributeAppend,
         remove: attributeRemove
     } = useFieldArray({ control, name: "attribute" });
-
-      
 
     const {
         fields: imageFields, // image
@@ -46,7 +45,7 @@ import 'react-toastify/dist/ReactToastify.css';
     });
 
 
-    const { name, error, redirectToProfile,formData } = values;
+    const { redirectToProfile,formData } = values;
     const [attributess , setAttributess] = useState([]);
     const [dimanstions , setDimanstions] = useState({});
     const [subcategories , setSubcategories] = useState(null);
@@ -56,6 +55,7 @@ import 'react-toastify/dist/ReactToastify.css';
     const [setOfAttributes, setSetOfAttributes] = useState([])
     const [setOfImages, setSetOfImages] = useState([])
     const [manufactures , setManufactures] = useState([]);
+    const [storeData , setStoreData] = useState([]);
     const { user, token } = isAuthenticated();
 
     const showLoading = loading => loading && <h6 className="text-danger">Please wait...</h6>;
@@ -100,6 +100,17 @@ import 'react-toastify/dist/ReactToastify.css';
                 console.log({ ...values, error: data.error });
             } else {
                 setManufactures(data);
+            }
+        });
+    };
+
+    // load stote and set form data
+    const listOfStoreData = () => {
+        storeList().then(data => {
+            if (data.error) {
+                console.log({ ...values, error: data.error });
+            } else {
+                setStoreData(data);
             }
         });
     };
@@ -153,6 +164,7 @@ import 'react-toastify/dist/ReactToastify.css';
         listOfAttributes();
         listOfSpecification();
         listOfManufacter();
+        listOfStoreData();
         setValues({
             ...values,
             formData : new FormData(),
@@ -190,6 +202,7 @@ import 'react-toastify/dist/ReactToastify.css';
             formData.set("dimanstions",data.dimanstions);
             formData.set("discount",0);
             formData.set("manufactures",data.manufactures);
+            formData.set("storeData",data.storeData);
             formData.set("name",data.name);
             formData.set("price",data.price);
             formData.set("quantity",data.quantity);
@@ -239,11 +252,7 @@ import 'react-toastify/dist/ReactToastify.css';
                             <input type="text" className="form-control" placeholder='Enter product name' {...register("name", { required: true })} />
                             {errors.name && <span className='text-danger'>Product name is required</span>}
                         </div>
-                        <div className="form-group col-lg-6">
-                            <h6><b>Brand Name<span className='text-danger'>*</span></b></h6>
-                            <input type="text" className="form-control" placeholder='Enter brand name' {...register("brand", { required: true })}/>
-                            {errors.brand && <span className='text-danger'>Brand name is required</span>}
-                        </div> 
+                        
                         <div className="form-group col-lg-6">
                             <h6><b> Manufacturer <span className='text-danger'>*</span></b></h6>
                             <select className="form-control" placeholder='select manufactures'  {...register("manufactures", { required: true })}> 
@@ -261,41 +270,92 @@ import 'react-toastify/dist/ReactToastify.css';
                             </select>
                             {errors.manufactures && <span className='text-danger'>Select manufactures name </span>}
                         </div> 
-                        <div className="form-group col-lg-6">
-                                <h6><b> Category<span className='text-danger'>*</span></b></h6>
-                                <select className="form-control" {...register("category", { required: true })} onChange={handleCategory}>
-                                    <option value="">Please select</option>
-                                    {categories &&
-                                        categories.map((c, i) => (
-                                            <>
-                                                {!c.deletedAt && !c.subcategory && c.status == 1 ?(
-                                                <option key={i} value={c._id}>
-                                                    {c.name }
-                                                </option>
-                                                ):null}
-                                            </>
-                                        ))}
-                                </select>
-                                {errors.category && <span className='text-danger'>Select category </span>}
 
-                        </div>
                         <div className="form-group col-lg-6">
-                                <h6><b> Sub Category <span className='text-danger'>*</span></b></h6>
-                                <select className="form-control" {...register("subcategory", { required: true })}  >
-                                    <option value="">Please select</option>
-                                    {subcategories &&
-                                        subcategories.map((s, i) => (
+                            <h6><b> Category<span className='text-danger'>*</span></b></h6>
+                            <select className="form-control" {...register("category", { required: true })} onChange={handleCategory}>
+                                <option value="">Please select</option>
+                                {categories &&
+                                    categories.map((c, i) => (
+                                        <>
+                                            {!c.deletedAt && !c.subcategory && c.status == 1 ?(
+                                            <option key={i} value={c._id}>
+                                                {c.name }
+                                            </option>
+                                            ):null}
+                                        </>
+                                    ))
+                                }
+                            </select>
+                            {errors.category && <span className='text-danger'>Select category </span>}
+                        </div>
+
+                        <div className="form-group col-lg-6">
+                            <h6><b> Sub Category <span className='text-danger'>*</span></b></h6>
+                            <select className="form-control" {...register("subcategory", { required: true })}  >
+                                <option value="">Please select</option>
+                                {subcategories &&
+                                    subcategories.map((s, i) => (
+                                        <>
+                                        {s.sub ?(
+                                            <option key={i} value={s.value}>
+                                                {s.label}
+                                            </option>
+                                        ):null}
+                                        </>
+                                    ))}
+                            </select>
+                            {errors.subcategory && <span className='text-danger'>Select subcategory </span>}
+                        </div>
+
+                        <div className="form-group col-lg-6">
+                            <h6><b> Store <span className='text-danger'>*</span></b></h6>
+                            <select className="form-control" {...register("storeData", { required: true })}  >
+                                {storeData.result &&
+                                    storeData.result.map((s, i) => (
+                                        <>
+                                        {!s.deletedAt && s.status == 1 ?(
+                                            <option key={i} value={s._id}>
+                                                {s.storeId.storeName }
+                                            </option>
+                                        ):null}
+                                        </>
+                                    ))
+                                }   
+                            </select>
+
+
+                            {/* {(l)?
+                                <select className="form-control" {...register("storeData", { required: true })}  >
+                                    {storeData.result &&
+                                        storeData.result.map((s, i) => (
                                             <>
-                                            {s.sub ?(
-                                                <option key={i} value={s.value}>
-                                                    {s.label}
+                                            {!s.deletedAt && s.status == 1 ?(
+                                                <option key={i} value={s._id}>
+                                                    {s.storeId.storeName }
                                                 </option>
                                             ):null}
                                             </>
-                                        ))}
+                                        ))
+                                    }   
                                 </select>
-                                {errors.subcategory && <span className='text-danger'>Select subcategory </span>}
-
+                            :
+                                <>
+                                    {storeData.result &&
+                                        storeData.result.map((s, i) => (
+                                            <>
+                                            {!s.deletedAt && s.status == 1 ?(
+                                                <>
+                                                <input key={i} value={s._id}/>
+                                                    {s.storeId.storeName }
+                                                </>
+                                            ):null}
+                                            </>
+                                        ))
+                                    }
+                                </>
+                            } */}
+                            {errors.storeData && <span className='text-danger'>Select subcategory </span>}
                         </div>
                     </div>
                 </div>

@@ -311,14 +311,6 @@ const AddListStore = () => {
                     onChange={handleChange("address")}
                     errorSpan={values.addressError}
                   />
-                  {/* <AddStoreContent
-                                        label="Store Login ID"
-                                        placeholder="Enter Store Login ID"
-                                        type="text"
-                                        value={values.userName}
-                                        onChange={handleChange("userName")}
-                                        errorSpan={values.userNameError}
-                                    /> */}
                   <MobileInput
                     label="Mobile No"
                     placeholder="Enter Mobile No"
@@ -327,14 +319,7 @@ const AddListStore = () => {
                     onChange={handleChange("mobile")}
                     errorSpan={values.mobileError}
                   />
-                  <StorePasswordInput
-                    label="Store Password"
-                    placeholder="Enter Store Password"
-                    type="password"
-                    value={values.password}
-                    onChange={handleChange("password")}
-                    errorSpan={values.passwordError}
-                  />
+                  
                   <AddStoreContent
                     label="Email Id"
                     placeholder="Enter Email Id"
@@ -342,6 +327,14 @@ const AddListStore = () => {
                     value={values.email}
                     onChange={handleChange("email")}
                     errorSpan={values.emailError}
+                  />
+                  <StorePasswordInput
+                    label="Store Password"
+                    placeholder="Enter Store Password"
+                    type="password"
+                    value={values.password}
+                    onChange={handleChange("password")}
+                    errorSpan={values.passwordError}
                   />
                   <div className="col-md-6 t-a-r">
                     <br></br>

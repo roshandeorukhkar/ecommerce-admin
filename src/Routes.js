@@ -61,12 +61,16 @@ import AddEditPartner from './setting/AddEditPartner';
 import Tax from './admin/Tax';
 import AddTax from './admin/AddTax';
 import UpdateTax from './admin/UpdateTax';
-
+import StoreSignin from './store/StoreSignin';
+import StoreMain from './store/StoreMain';
 const Routes = () => {
     return (
         <BrowserRouter>
             <Switch>
                 <AdminRoute path="/admin" exact component={AdminMain} />
+                <AdminRoute path="/store" exact component={StoreMain} />
+                <AdminRoute path="/store/dashboard" exact component={AdminDashboard} />
+                <AdminRoute path="/store/signin" exact component={StoreSignin} />
                 <AdminRoute path="/admin/dashboard" exact component={AdminDashboard} />
                 <AdminRoute path="/" exact component={AdminSignin} />
                 <AdminRoute path="/admin/create/category" exact component={AddCategory} />

@@ -29,7 +29,7 @@ const [values, setValues] = useState({
         redirectToProfile: false
     });
 
-const { email, password, mobile, address, userId, storeId, name, success, error, redirectToProfile } = values;
+const { email, password, mobile, address, userId, storeId, name, error, redirectToProfile } = values;
 var role = 5;
 const loadUser = () => {
     getUser().then(data => {
@@ -118,12 +118,11 @@ return(
                                     <form>
                                         {redirectUser()}
 
-                                            <input hidden  value={values.userId}  />
-                                            <input hidden value={values.storeId} />
-                                            <input hidden value={values.role} />
+                                        <input hidden  value={values.userId}  />
+                                        <input hidden value={values.storeId} />
+                                        <input hidden value={values.role} />
                                             
                                         <div class="demoPage" style={{ background: '#ffffff', padding:'20px'}}>
-
                                             <div className="form-group col-lg-7">
                                                 <h6><b><span style={{color:'red'}}>*</span> Name </b></h6>
                                                 <input onChange={handleChange('name')} type="text" className="form-control" placeholder='Enter name' />
@@ -153,14 +152,14 @@ return(
                                             <div className="col-lg-7">
                                                 <button onClick={clickSubmit} className="btn btn-info btn-md" style={{float: 'right', borderRadius:'7px'}}> Submit </button>
                                             </div>
-                                    </div>
-                                </form>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> 
-        </div>
+                </div> 
+            </div>
     </>
 
     )
